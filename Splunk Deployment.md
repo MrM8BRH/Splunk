@@ -530,3 +530,29 @@ rpm -Uvh <Package>
 <q> <y> <y>
 /opt/splunk/bin/splunk restart
 ```
+##  Here's an example of how you can monitor a stanza in Splunk on both Windows and Linux.
+For Windows:
+```
+[monitor://C:\path\to\logs]
+disabled = false
+index = myindex
+host_segment = 5
+```
+ For Linux:
+ ```
+[monitor:///path/to/logs]
+disabled = false
+index = myindex
+host_segment = 5
+```
+```diff
+- Restart the service after modifying the monitor stanza.
+```
+For Windows:
+```
+Restart-Service -Name "SplunkForwarder" 
+```
+For Linux:
+```
+/opt/splunkforwarder/bin/splunk restart
+```

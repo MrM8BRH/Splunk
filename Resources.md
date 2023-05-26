@@ -1,5 +1,7 @@
 ## General
 
+[Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
+
 [Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
 
 [Security Log Defined](https://system32.eventsentry.com/)

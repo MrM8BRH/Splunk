@@ -42,3 +42,24 @@
 [n8n](https://n8n.io/)
 
 [Configuring Telegram Alerts in Splunk](https://airman604.medium.com/configuring-telegram-alerts-in-splunk-c29a54ed19f4)
+
+
+## Operating Systems
+### Based on RHEL
+[Oracle Linux](https://www.oracle.com/linux/)
+
+[CentOS Linux](https://www.centos.org/)
+
+[Rocky Linux](https://rockylinux.org/)
+
+[Alma Linux](https://almalinux.org/)
+
+### Based on Debian
+
+[Debian](https://www.debian.org/intro/index#software)
+
+[Ubuntu](https://ubuntu.com/server)
+
+### Others
+
+[OpenSUSE](https://www.opensuse.org/)

@@ -46,23 +46,11 @@
 
 [Cloudflare Technology Add-on for Splunk](https://splunkbase.splunk.com/app/5114)
 
-[Palo Alto Networks Add-on for Splunk](https://splunkbase.splunk.com/app/2757)
-
-[Fortinet FortiGate Add-On for Splunk](https://splunkbase.splunk.com/app/2846)
-
 [CrowdStrike Falcon Event Streams Technical Add-On](https://splunkbase.splunk.com/app/5082)
 
 [Splunk Add-on for VMware ESXi Logs](https://splunkbase.splunk.com/app/5603)
 
 [Splunk Add-on for Microsoft Office 365](https://splunkbase.splunk.com/app/4055)
-
-[Splunk DBX Add-on for Microsoft SQL Server JDBC](https://splunkbase.splunk.com/app/6150)
-
-[Splunk DBX Add-on for Oracle JDBC](https://splunkbase.splunk.com/app/6151)
-
-[Splunk DBX Add-on for MySQL JDBC](https://splunkbase.splunk.com/app/6154)
-
-[Splunk DBX Add-on for Postgres JDBC](https://splunkbase.splunk.com/app/6152)
 
 [PAVO Getwatchlist Add-on](https://splunkbase.splunk.com/app/635)
 
@@ -71,3 +59,29 @@
 [Splunk Add-on for JBoss](https://splunkbase.splunk.com/app/2954)
 
 [Splunk Add-on for Microsoft Office 365](https://splunkbase.splunk.com/app/4055)
+
+### Firewall
+
+[Palo Alto Networks Add-on for Splunk](https://splunkbase.splunk.com/app/2757)
+
+[Splunk Add-on for Juniper](https://splunkbase.splunk.com/app/2847)
+
+[Splunk Add-on for Imperva SecureSphere WAF](https://splunkbase.splunk.com/app/2874#/overview)
+
+[Splunk Add-on for Check Point Log Exporter](https://splunkbase.splunk.com/app/5478)
+
+[Splunk Add-on for Cisco FireSIGHT](https://splunkbase.splunk.com/app/1808#/overview)
+
+[Splunk Add-on for Cisco ASA](https://splunkbase.splunk.com/app/1620)
+
+[Fortinet FortiGate Add-On for Splunk](https://splunkbase.splunk.com/app/2846)
+
+### Database 
+
+[Splunk DBX Add-on for Microsoft SQL Server JDBC](https://splunkbase.splunk.com/app/6150)
+
+[Splunk DBX Add-on for Oracle JDBC](https://splunkbase.splunk.com/app/6151)
+
+[Splunk DBX Add-on for MySQL JDBC](https://splunkbase.splunk.com/app/6154)
+
+[Splunk DBX Add-on for Postgres JDBC](https://splunkbase.splunk.com/app/6152)

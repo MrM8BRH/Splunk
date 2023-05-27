@@ -8,6 +8,8 @@
 
 [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
+[Crontab Guru](https://crontab.guru/)
+
 [A collection of awesome resources for Splunk](https://github.com/sduff/awesome-splunk)
 
 [EventLogging](https://github.com/blackhillsinfosec/EventLogging)

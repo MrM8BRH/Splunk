@@ -8,8 +8,6 @@
 
 [CrowdStrike App](https://splunkbase.splunk.com/app/5094)
 
-[Splunk DB Connect](https://splunkbase.splunk.com/app/2686)
-
 [Cisco Networks App for Splunk Enterprise](https://splunkbase.splunk.com/app/1352)
 
 [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501)
@@ -33,6 +31,13 @@
 [TheHive/Cortex](https://splunkbase.splunk.com/app/5329)
 
 [Splunk Security Essentials](https://splunkbase.splunk.com/app/3435)
+
+### Database
+
+[Splunk DB Connect](https://splunkbase.splunk.com/app/2686)
+
+[Oracle EM Integration](https://splunkbase.splunk.com/app/5300)
+
 
 ## Addons
 

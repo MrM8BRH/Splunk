@@ -45,7 +45,15 @@
 
 [Configuring Telegram Alerts in Splunk](https://airman604.medium.com/configuring-telegram-alerts-in-splunk-c29a54ed19f4)
 
+[Splunk DB Connect guide for Databricks.md](https://github.com/databrickslabs/splunk-integration/blob/master/docs/markdown/Splunk%20DB%20Connect%20guide%20for%20Databricks.md)
 
+
+## JAVA
+```
+# PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
+# URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html#license-lightbox
+# Permission: chown splunk:splunk /opt/splunk
+```
 ## Operating Systems
 ### Based on RHEL
 [Oracle Linux](https://www.oracle.com/linux/)

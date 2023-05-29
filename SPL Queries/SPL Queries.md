@@ -3,11 +3,23 @@
 
 [Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
 
+[Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
+
+[SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
+
+[Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
+
 [SPL for aws datasets](https://github.com/chirag99969/SPL)
 
 [Regex v. Rex Commands in Splunk SPL](https://www.tekstream.com/blog/regex-v-rex-commands-in-splunk-spl/)
 
 [Splunk Cheat Sheet: Search and Query Commands](https://www.stationx.net/splunk-cheat-sheet/)
+
+## Windows Security Log Events
+
+[Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
+
+[Security Log Defined](https://system32.eventsentry.com/)
 
 ## Note
 These queries are examples only and may need to be adjusted to 

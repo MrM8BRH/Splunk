@@ -1,6 +1,8 @@
 ## External Links
 [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
 
+[GoSplunk](https://gosplunk.com/)
+
 [Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
 
 [Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
@@ -8,8 +10,6 @@
 [SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
 
 [Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
-
-[SPL for aws datasets](https://github.com/chirag99969/SPL)
 
 [Regex v. Rex Commands in Splunk SPL](https://www.tekstream.com/blog/regex-v-rex-commands-in-splunk-spl/)
 

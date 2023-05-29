@@ -32,6 +32,8 @@
 
 [Splunk Security Essentials](https://splunkbase.splunk.com/app/3435)
 
+[DA-ESS-MitreContent](https://github.com/seynur/DA-ESS-MitreContent)
+
 ### Database
 
 [Splunk DB Connect](https://splunkbase.splunk.com/app/2686)

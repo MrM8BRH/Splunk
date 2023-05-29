@@ -8,6 +8,10 @@
 
 [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
+[SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
+
+[Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
+
 [Crontab Guru](https://crontab.guru/)
 
 [A collection of awesome resources for Splunk](https://github.com/sduff/awesome-splunk)

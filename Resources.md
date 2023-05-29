@@ -2,21 +2,15 @@
 
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
 
-[Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
-
-[Security Log Defined](https://system32.eventsentry.com/)
-
-[Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
-
-[SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
-
-[Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
-
 [Crontab Guru](https://crontab.guru/)
 
 [A collection of awesome resources for Splunk](https://github.com/sduff/awesome-splunk)
 
-[EventLogging](https://github.com/blackhillsinfosec/EventLogging)
+[3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
+
+---
+
+## Splunk
 
 [Splunk - Resource Center](https://www.splunk.com/en_us/resources.html)
 
@@ -25,8 +19,6 @@
 [Splunk - Tips & Tricks](https://www.splunk.com/en_us/blog/tips-and-tricks.html)
 
 [Splunk Community](https://community.splunk.com/t5/Community/ct-p/en-us)
-
-[3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
 
 ---
 

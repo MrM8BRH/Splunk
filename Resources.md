@@ -8,7 +8,14 @@
 
 [3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
 
----
+
+## MITRE ATT&CK
+
+[ATTACK-CSV](https://github.com/kfriede/ATTACK-CSV)
+
+[ATT&CK Detections Collector](https://github.com/splunk/attack-detections-collector)
+
+[Splunk Security Content](https://github.com/splunk/security_content)
 
 ## Splunk
 
@@ -20,20 +27,15 @@
 
 [Splunk Community](https://community.splunk.com/t5/Community/ct-p/en-us)
 
----
-
 ## CrowdStrike
 
 [CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5](https://www.crowdstrike.com/wp-content/uploads/2022/12/CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5.pdf)
-
 
 ## Fortinet
 
 [Fortinet-Splunk-Deployment-Guide](https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf)
 
 [Splunk - Fortinet](https://lantern.splunk.com/Data_Descriptors/Fortinet)
-
----
 
 ## Integrations
 

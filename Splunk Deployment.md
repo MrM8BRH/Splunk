@@ -565,3 +565,8 @@ blacklist2 = EventCode="4625"
 blacklist3 = EventCode="4625" ComputerName="specific-comp-name" Message="Account\sName: \s+specific-user-name"
 blacklist4 = EventCode="4625" ComputerName="specific-comp-name" Message="specific-user-name"
 ```
+ 
+## A storage location for logs
+```
+/opt/splunk/var
+```

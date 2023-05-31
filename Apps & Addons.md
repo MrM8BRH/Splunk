@@ -18,6 +18,8 @@
 
 [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449)
 
+[MITRE ATTACK App for Splunk](https://splunkbase.splunk.com/app/4617)
+
 [ThreatHunting](https://splunkbase.splunk.com/app/4305)
 
 [SA-cim_vladiator](https://splunkbase.splunk.com/app/2968)
@@ -64,8 +66,6 @@
 [TA-misp_es](https://github.com/splunk/TA-misp_es)
 
 [Splunk Add-on for JBoss](https://splunkbase.splunk.com/app/2954)
-
-[Splunk Add-on for Microsoft Office 365](https://splunkbase.splunk.com/app/4055)
 
 ### Firewall
 

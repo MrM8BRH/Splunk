@@ -34,7 +34,9 @@
 
 [Splunk Security Essentials](https://splunkbase.splunk.com/app/3435)
 
-[DA-ESS-MitreContent](https://github.com/seynur/DA-ESS-MitreContent)
+[Alert Manager Enterprise](https://splunkbase.splunk.com/app/6730)
+
+[Splunk App for Lookup File Editing](https://splunkbase.splunk.com/app/1724)
 
 ### Database
 

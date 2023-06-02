@@ -235,9 +235,9 @@ frozenTimePeriodInSecs = 31556926
 [For Syslog Server]
 ```
 crontab –e
-0 5 * * * /var/log/syslog-ng/networks/ -type f -name \*.log -mtime +7 -exec rm {} \;
-0 5 * * * /var/log/syslog-ng/security/ -type f -name \*.log -mtime +7 -exec rm {} \;
-0 5 * * * /var/log/syslog-ng/default/ -type f -name \*.log -mtime +7 -exec rm {} \;
+0 5 * * * find /var/log/syslog-ng/networks/ -type f -name \*.log -mtime +7 -exec rm {} \;
+0 5 * * * find /var/log/syslog-ng/security/ -type f -name \*.log -mtime +7 -exec rm {} \;
+0 5 * * * find /var/log/syslog-ng/default/ -type f -name \*.log -mtime +7 -exec rm {} \;
 ```
 
 ## Enable More Auditing Policies on Windows

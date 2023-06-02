@@ -5,6 +5,8 @@
 
 [Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
 
+[Some Threat Hunting queries useful for blue teamers](https://github.com/BankSecurity/Threat_Hunting)
+
 [Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
 
 [SplunkDashboards](https://github.com/Truvis/SplunkDashboards)

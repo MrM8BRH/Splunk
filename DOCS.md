@@ -14,7 +14,7 @@ https://docs.splunk.com/Documentation/ES/7.1.1/User/SecurityPosturedashboard
 
 - [Splunk Enterprise Overview](https://docs.splunk.com/Documentation/Splunk/9.0.5/Overview/AboutSplunkEnterprise)
 
-- [Splunk Quick Reference Guide](file:///Users/abdallahbakr/Downloads/splunk-quick-reference-guide.pdf)
+- [Splunk Quick Reference Guide](https://www.splunk.com/pdfs/solution-guides/splunk-quick-reference-guide.pdf)
 
 - [Capacity Planning Manual](https://docs.splunk.com/Documentation/Splunk/9.0.5/Capacity/Distributeindexingandsearching)
 

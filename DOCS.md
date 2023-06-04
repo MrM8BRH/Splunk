@@ -1,14 +1,6 @@
-https://docs.splunk.com/Documentation/Splunk
+- [Splunk Enterprise Docs](https://docs.splunk.com/Documentation/Splunk)
 
-https://www.splunk.com/pdfs/solution-guides/splunk-quick-reference-guide.pdf
-
-https://docs.splunk.com/Documentation/Splunk/9.0.4/Security/Howtoself-signcertificates
-
-https://docs.splunk.com/Documentation/VersionCompatibility/current/Matrix/CompatMatrix
-
-https://docs.splunk.com/Documentation/Splunk/9.0.4/Installation/HowtoupgradeSplunk
-
-https://docs.splunk.com/Documentation/ES/7.1.1/User/SecurityPosturedashboard
+- [Splunk Products Version Compatibility Matrix](https://docs.splunk.com/Documentation/VersionCompatibility/current/Matrix/CompatMatrix)
 
 
 
@@ -45,6 +37,9 @@ https://docs.splunk.com/Documentation/ES/7.1.1/User/SecurityPosturedashboard
 
 - [Knowledge Manager Manual](https://docs.splunk.com/Documentation/Splunk/9.0.5/Knowledge/WhatisSplunkknowledge)
 
+- [Use Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/7.1.1/User/SecurityPosturedashboard)
+
+- [Splunk Validate Architecture](https://www.splunk.com/en_us/pdfs/tech-brief/splunk-validated-architectures.pdf)
 
 
 
@@ -53,4 +48,3 @@ https://docs.splunk.com/Documentation/ES/7.1.1/User/SecurityPosturedashboard
 
 - [Splunk Education](https://www.splunk.com/en_us/training.html?_gl=1*14n21qc*_ga*OTYwMTUzNzUzLjE2ODQ2NTc3MTU.*_ga_5EPM2P39FV*MTY4NTcxMDU4OS4xMi4xLjE2ODU3MTA5MjMuMjAuMC4w)
 
-- [Splunk Validate Architecture](https://www.splunk.com/en_us/pdfs/tech-brief/splunk-validated-architectures.pdf)

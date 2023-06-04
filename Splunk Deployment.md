@@ -121,10 +121,15 @@ Search Head -> Search Head + KV Store + License Master
 ```
 
 ## Splunk Forwarder (Linux)
-*   `rpm -ivh <Package>`
-*   `/opt/splunkforwarder/bin/splunk start --accept-license`
-*   `/opt/splunkforwarder/bin/splunk enable boot-start`
-*   `/opt/splunkforwarder/bin/splunk set deploy-poll <ip address>:8089`
+*   `Download`
+*   `sudo tar -xzvf splunkforwarder.tgz -C /opt`
+*   `cd /opt/SplunkForwarder`
+*   `./splunk start --accept-license`
+*   `./splunk enable boot-start -user splunk`
+*   `./splunk add forward-server <indexer-ip>:9997`
+*   `./splunk set deploy-poll <deployment-ip>:8089`
+*   `./splunk add monitor -auth admin:password /var/log/..etc`
+*   `Verify: go to data summary`
 
 
 ## Syslog-ng

@@ -575,3 +575,12 @@ blacklist4 = EventCode="4625" ComputerName="specific-comp-name" Message="specifi
 ```
 /opt/splunk/var
 ```
+ 
+## [Default certificate renewal](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920) 
+```
+/opt/splunk/bin/splunk createssl server-cert -d /opt/splunk/etc/auth -n SplunkServerDefaultCert
+cd /opt/splunk/etc/auth
+mv server.pem server.pem.orig
+mv SplunkServerDefaultCert.pem server.pem
+openssl x509 -in server.pem -text
+```

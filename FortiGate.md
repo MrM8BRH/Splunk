@@ -1,5 +1,6 @@
 - [FortiGate Add-on for Splunk](https://splunkbase.splunk.com/app/2846)
-- * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.
+ * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.
+ <br>
 
 Edit $SPLUNK_HOME/etc/apps/Splunk_TA_fortinet_fortigate/default/props.conf
 ```
@@ -11,9 +12,12 @@ SHOULD_LINEMERGE = false
 Restart Splunk
 
 --> Check:
-  Search & Reporting App, index=fortigate, Check for sourcetype feild (fortigate_traffic, fortigate_utm, fortigate_event)
+  - Search & Reporting App, index=fortigate, Check for sourcetype feild (fortigate_traffic, fortigate_utm, fortigate_event)
+  - Enterprise Security -> Security Domains
+<br>
+<br>
 
+[FortiGate Application for Splunk](https://splunkbase.splunk.com/app/2800)
 
-- [FortiGate Application for Splunk](https://splunkbase.splunk.com/app/2800)
-
-Settings, Data models, Fortinet FOS Log, accelrate
+  * Download and install the App
+  * Settings, Data models, Fortinet FOS Log, accelrate

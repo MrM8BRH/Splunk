@@ -1,5 +1,5 @@
 - [FortiGate Add-on for Splunk](https://splunkbase.splunk.com/app/2846)
- * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.
+  * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.
  <br>
 
 Edit $SPLUNK_HOME/etc/apps/Splunk_TA_fortinet_fortigate/default/props.conf

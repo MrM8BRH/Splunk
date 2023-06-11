@@ -30,6 +30,10 @@ These queries are examples only and may need to be adjusted to
 fit your specific use case and data sources. Additionally, they assume that the relevant logs are being ingested into Splunk and are searchable using the specified index or sourcetype.
 
 ## Splunk Queries
+To display a list of fields for an index
+```
+index="your index name here" | fieldsummary | table field
+```
 List of Login attempts of splunk local users
 ```
 index=_audit action="login attempt"

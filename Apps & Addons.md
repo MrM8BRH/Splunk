@@ -14,8 +14,6 @@
 
 [Palo Alto Networks App for Splunk](https://splunkbase.splunk.com/app/491)
 
-[Fortinet FortiGate App for Splunk](https://splunkbase.splunk.com/app/2800)
-
 [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449)
 
 [MITRE ATTACK App for Splunk](https://splunkbase.splunk.com/app/4617)
@@ -82,8 +80,6 @@
 [Splunk Add-on for Cisco FireSIGHT](https://splunkbase.splunk.com/app/1808#/overview)
 
 [Splunk Add-on for Cisco ASA](https://splunkbase.splunk.com/app/1620)
-
-[Fortinet FortiGate Add-On for Splunk](https://splunkbase.splunk.com/app/2846)
 
 ### Database 
 

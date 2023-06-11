@@ -31,12 +31,6 @@
 
 [CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5](https://www.crowdstrike.com/wp-content/uploads/2022/12/CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5.pdf)
 
-## Fortinet
-
-[Fortinet-Splunk-Deployment-Guide](https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf)
-
-[Splunk - Fortinet](https://lantern.splunk.com/Data_Descriptors/Fortinet)
-
 ## Integrations
 
 [n8n](https://n8n.io/)

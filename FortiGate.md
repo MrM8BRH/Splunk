@@ -21,3 +21,8 @@
 
   * Download and install the App
   * Settings, Data models, Fortinet FOS Log, accelrate
+---
+<br>
+
+Resources:
+ - https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf

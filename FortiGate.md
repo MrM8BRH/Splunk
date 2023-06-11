@@ -25,4 +25,6 @@
 <br>
 
 Resources:
- - https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf
+ - [Splunk - Fortinet](https://lantern.splunk.com/Data_Descriptors/Fortinet) 
+ - [Fortinet-Splunk-Deployment-Guide](https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf)
+

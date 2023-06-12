@@ -135,14 +135,6 @@ Search Head -> Search Head + KV Store + License Master
 ## Syslog-ng
 [Install Syslog-ng]
 
-* On RHEL 7: Enable the so-called “optional” repository , which contains a number of packages that are required to start syslog-ng:
-
- `subscription-manager repos --enable rhel-7-server-optional-rpms`
-* On RHEL 8: Enable the so-called "suplementary" repository
-
- `subscription-manager repos --enable rhel-8-for-x86_64-supplementary-rpms`
-* On RHEL 9 and compatibles check: https://docs.fedoraproject.org/en-US/epel/#_el9
-
 [#] CentOS 7
 ```
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

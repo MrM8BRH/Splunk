@@ -2,7 +2,7 @@
 
 - [Splunk Products Version Compatibility Matrix](https://docs.splunk.com/Documentation/VersionCompatibility/current/Matrix/CompatMatrix)
 
-
+<br>
 
 - [Splunk Enterprise Overview](https://docs.splunk.com/Documentation/Splunk/9.0.5/Overview/AboutSplunkEnterprise)
 
@@ -14,10 +14,13 @@
 
 - [Admin Manual](https://docs.splunk.com/Documentation/Splunk/9.0.5/Admin/Howtousethismanual)
 
+<br>
 
 - [Distributed Deployment Manual](https://docs.splunk.com/Documentation/Splunk/9.0.5/Deploy/Distributedoverview)
 
 - [Managing Indexes & Indexers](https://docs.splunk.com/Documentation/Splunk/9.0.5/Indexer/Aboutindexesandindexers)
+
+- [Manage app and add-on objects](https://docs.splunk.com/Documentation/Splunk/9.0.5/Admin/Managingappobjects)
 
 - [Distributed Search](https://docs.splunk.com/Documentation/Splunk/9.0.5/DistSearch/Whatisdistributedsearch)
 
@@ -41,8 +44,7 @@
 
 - [Splunk Validate Architecture](https://www.splunk.com/en_us/pdfs/tech-brief/splunk-validated-architectures.pdf)
 
-
-
+<br>
 
 - [Splunk Community](https://docs.splunk.com/Documentation/Community/current/community/AboutCommunity)
 

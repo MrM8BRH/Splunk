@@ -18,6 +18,19 @@ If you face dependencies issues:
  ```
  apt install syslog-ng
  ```
+ <br>
+ 
+ [#] Enable receivng logs on port 514
+ ```
+ 
+ ```
+ 
+ 
+ ### Syslog-ng for CentOS and RHEL
+ https://www.syslog-ng.com/community/b/blog/posts/installing-latest-syslog-ng-on-rhel-and-other-rpm-distributions
+ <br>
+ ---
+
 
 - [FortiGate Add-on for Splunk](https://splunkbase.splunk.com/app/2846)
   * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.

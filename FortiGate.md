@@ -1,3 +1,7 @@
+- Install & configure Syslog-ng server
+
+- Send logs from FortiGate to Syslog-ng
+
 - [FortiGate Add-on for Splunk](https://splunkbase.splunk.com/app/2846)
   * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.
  <br>

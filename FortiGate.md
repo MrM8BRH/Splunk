@@ -1,6 +1,23 @@
-- Install & configure Syslog-ng server
+# FortiGate Application for Splunk Installation & Configuration
 
-- Send logs from FortiGate to Syslog-ng
+## Install Syslog-ng
+### Syslog-ng for debian
+
+```apt install syslog-ng```
+
+If you face dependencies issues:
+ ```
+ wget -qO - https://ose-repo.syslog-ng.com/apt/syslog-ng-ose-pub.asc | sudo apt-key add -
+ ```
+ ```
+ echo "deb https://ose-repo.syslog-ng.com/apt/ nightly ubuntu-jammy" | sudo tee -a /etc/apt/sources.list.d/syslog-ng-ose.list
+ ```
+ ```
+ apt update
+ ```
+ ```
+ apt install syslog-ng
+ ```
 
 - [FortiGate Add-on for Splunk](https://splunkbase.splunk.com/app/2846)
   * You can install FortiGate Add-on for Splunk on search head, indexer, forwarder or single instance Splunk server.

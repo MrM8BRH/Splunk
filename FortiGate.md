@@ -100,6 +100,8 @@ log { source(s_syd); destination(d_d); };
  ```
  
  [#] Configure FortiGate to send logs to Syslog-ng server on port 514.
+ <br>
+ <br>
  
  ## Splunk Universal Forwarder Configuration
  
@@ -141,7 +143,7 @@ disabled = false
 
 ## Troubleshooting
 
- Ont the search head server, Edit ```$SPLUNK_HOME/etc/apps/Splunk_TA_fortinet_fortigate/default/props.conf```
+ On the search head server, Edit ```$SPLUNK_HOME/etc/apps/Splunk_TA_fortinet_fortigate/default/props.conf```
  ```
  [fortinet]
  TRANSFORMS-force_sourcetype_fgt = force_sourcetype_fgt_traffic,force_sourcetype_fgt_utm,force_sourcetype_fgt_event

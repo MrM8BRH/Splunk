@@ -81,8 +81,6 @@ reboot
 max_upload_size = 1024
 enableSplunkWebSSL = true
 ```
-*   `chown -R splunk:splunk /opt/splunk`
-*   `chmod 755 /opt/splunk/etc/system/local/web.conf`
 *   `/opt/splunk/bin/splunk restart`
 
 ## Indexer Server

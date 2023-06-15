@@ -6,6 +6,8 @@
 
 [IT Essentials Work](https://splunkbase.splunk.com/app/5403)
 
+[InfoSec App for Splunk](https://splunkbase.splunk.com/app/4240)
+
 [CrowdStrike App](https://splunkbase.splunk.com/app/5094)
 
 [Cisco Networks App for Splunk Enterprise](https://splunkbase.splunk.com/app/1352)
@@ -90,3 +92,10 @@
 [Splunk DBX Add-on for MySQL JDBC](https://splunkbase.splunk.com/app/6154)
 
 [Splunk DBX Add-on for Postgres JDBC](https://splunkbase.splunk.com/app/6152)
+
+## Tenable
+[Tenable App for Splunk](https://splunkbase.splunk.com/app/4061)
+
+[Tenable Add-On for Splunk](https://splunkbase.splunk.com/app/4060)
+
+[Nessus Security Scans Dashboards App](https://splunkbase.splunk.com/app/6821)

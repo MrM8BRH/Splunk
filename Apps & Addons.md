@@ -15,6 +15,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
+| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |

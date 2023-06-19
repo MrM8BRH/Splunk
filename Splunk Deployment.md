@@ -102,18 +102,22 @@ server = 192.168.1.50:9997
 ```
 #### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
-*   `cp -r /opt/splunk/etc/apps/Splunk\_TA\_windows /opt/splunk/etc/deployment-apps`
-*   `mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local`
-*   `cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/`
-*   `nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/inputs.conf`
+```
+cp -r /opt/splunk/etc/apps/Splunk\_TA\_windows /opt/splunk/etc/deployment-apps
+mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local
+cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/
+nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/inputs.conf
+```
 *   `chown -R splunk:splunk /opt/splunk`
 *   `/opt/splunk/bin/splunk restart`
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux
-*   `cp -r /opt/splunk/etc/apps/Splunk\_TA\_nix /opt/splunk/etc/deployment-apps`
-*   `mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local`
-*   `cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/`
-*   `nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/inputs.conf`
+```
+cp -r /opt/splunk/etc/apps/Splunk\_TA\_nix /opt/splunk/etc/deployment-apps
+mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local
+cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/
+nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/inputs.conf
+```
 *   `chown -R splunk:splunk /opt/splunk`
 *   `/opt/splunk/bin/splunk restart`
 

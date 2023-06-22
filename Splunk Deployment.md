@@ -924,3 +924,17 @@ server = 192.168.1.50:9997
 
 [tcpout-server://192.168.1.50:9997]
 ```
+## Disable Splunk Web
+```
+sudo nano /opt/splunk/etc/system/local/web.conf
+```
+* Add the following lines.
+```
+[settings]
+startwebserver = 0
+```
+* Save the changes and exit the text editor.
+* Restart the Splunk service for the changes to take effect. 
+```
+sudo systemctl restart splunk
+```

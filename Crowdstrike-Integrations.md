@@ -80,4 +80,22 @@ Vunlnerabilites Information.
 
 ## Crowdstrike Application for Splunk Installation
 https://splunkbase.splunk.com/app/5094
+
+<br>
+
+## CrowdStrike Falcon Devices Technical Add-On
+This supporting add-on comes with prebuilt content for CrowdStrike device data to be easily used with Splunk Enterprise Security's asset database.
+
+[Download Link](https://splunkbase.splunk.com/app/6573)
+
+[Documentation](https://splunk-sa-crowdstrike.ztsplunker.com)
+
+<br>
+
+## SA-CrowdStrikeIdentities for Enterprise Security
+This supporting add-on comes with prebuilt content for CrowdStrike Identity data to be easily used with Splunk Enterprise Security's Identity database.
+
+[Download Link](https://splunkbase.splunk.com/app/6930)
+
+[Documentation](https://splunk-sa-crowdstrike-id.ztsplunker.com/)
    

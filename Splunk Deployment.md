@@ -100,6 +100,7 @@ server = 192.168.1.50:9997
 
 [tcpout-server://192.168.1.50:9997]
 ```
+*    `Settings -> Forwarder management -> Server Classes`
 #### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
 ```
@@ -108,8 +109,10 @@ mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local
 cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/
 nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/inputs.conf
 ```
-*   `chown -R splunk:splunk /opt/splunk`
-*   `/opt/splunk/bin/splunk restart`
+```
+chown -R splunk:splunk /opt/splunk
+/opt/splunk/bin/splunk restart
+```
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux
 ```
@@ -118,32 +121,40 @@ mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local
 cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/
 nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/inputs.conf
 ```
-*   `chown -R splunk:splunk /opt/splunk`
-*   `/opt/splunk/bin/splunk restart`
+```
+chown -R splunk:splunk /opt/splunk
+/opt/splunk/bin/splunk restart
+```
 
 ## SearchHead Server
  ```
 outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + Deployment)
 - Install Apps & Addons
+- Apps -> Manage Apps
+- Apps -> Search & Reporting ->  Data Summary 
+- Monitoring Console -> Settings -> Alerts Setup
+- Monitoring Console -> Settings -> Forwarder Monitoring Setup
+- Monitoring Console -> Forwarders -> forwarder_instance
 - Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-- Monitoring Console -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] ) +
-Edit Roles
-Indexer -> Indexer
-Deployment -> Deployment
-Search Head -> Search Head + KV Store + License Master
+- Monitoring Console -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
+   Edit Roles
+              Indexer -> Indexer
+              Deployment -> Deployment
+              Search Head -> Search Head + KV Store + License Master
 ```
 
 ## Splunk Forwarder (Linux)
-*   `Download`
-*   `sudo tar -xzvf splunkforwarder.tgz -C /opt`
-*   `cd /opt/SplunkForwarder`
-*   `./splunk start --accept-license`
-*   `./splunk enable boot-start -user splunk`
-*   `./splunk add forward-server <indexer-ip>:9997`
-*   `./splunk set deploy-poll <deployment-ip>:8089`
-*   `./splunk add monitor -auth admin:password /var/log/..etc`
-*   `Verify: go to data summary`
+*   `/opt/SplunkForwarder/bin/splunk start --accept-license`
+*   `/opt/SplunkForwarder/bin/splunk enable boot-start -user splunk`
 
+<br>
+
+*   `/opt/SplunkForwarder/bin/splunk add forward-server <indexer-ip>:9997`
+*   `/opt/SplunkForwarder/bin/splunk set deploy-poll <deployment-ip>:8089`
+
+<br>
+
+*   `/opt/SplunkForwarder/bin/splunk add monitor -auth admin:password /var/log/..etc`
 
 ## Syslog-ng
 [Install Syslog-ng]
@@ -232,7 +243,7 @@ log { source(s_syd); destination(d_d); };
 ```
 </details>
 
-## Log Retention:
+## Log Rotation:
 [For Indexer Server]
 ```
 # Append frozenTimePeriodInSecs in indexes.conf

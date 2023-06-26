@@ -84,8 +84,9 @@ enableSplunkWebSSL = true
 *   `/opt/splunk/bin/splunk restart`
 
 ## Indexer Server
-*   `Forwarding and reciving > Add new`
-*   `Add indexes : wineventlog, linux, fortigate, crowdstrike .. etc`
+*   `Settings -> Forwarding and reciving -> Configure receiving`
+*   `Settings -> Indexes`
+*   `Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
 *   `Install Addons`
 
 ## Deployment Server

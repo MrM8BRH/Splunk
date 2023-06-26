@@ -136,7 +136,7 @@ outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + 
 - Monitoring Console -> Settings -> Forwarder Monitoring Setup
 - Monitoring Console -> Forwarders -> forwarder_instance
 - Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-- Monitoring Console -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
+- Monitoring Console -> Settings -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
    Edit Roles
               Indexer -> Indexer
               Deployment -> Deployment

@@ -41,29 +41,12 @@
 
 [Splunk DB Connect guide for Databricks.md](https://github.com/databrickslabs/splunk-integration/blob/master/docs/markdown/Splunk%20DB%20Connect%20guide%20for%20Databricks.md)
 
-
-## JAVA
-```
-# PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
-# URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html#license-lightbox
-# Permission: chown splunk:splunk /opt/splunk
-```
 ## Operating Systems
-### Based on RHEL
-[Oracle Linux](https://www.oracle.com/linux/)
-
-[CentOS Linux](https://www.centos.org/)
-
-[Rocky Linux](https://rockylinux.org/)
-
-[Alma Linux](https://almalinux.org/)
-
-### Based on Debian
-
-[Debian](https://www.debian.org/intro/index#software)
-
-[Ubuntu](https://ubuntu.com/server)
-
-### Others
-
-[OpenSUSE](https://www.opensuse.org/)
+|     Name     | Based on |                   Website                   |
+|--------------|----------|---------------------------------------------|
+| Oracle Linux | RHEL     | https://www.oracle.com/linux/               |
+| CentOS Linux | RHEL     | https://www.centos.org/                     |
+| Rocky Linux  | RHEL     | https://rockylinux.org/                     |
+| Alma Linux   | RHEL     | https://almalinux.org/                      |
+| Debian       | Debian   | https://www.debian.org/intro/index#software |
+| Ubuntu       | Debian   | https://ubuntu.com/server                   |

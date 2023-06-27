@@ -29,17 +29,11 @@
 
 [Splunk Community](https://community.splunk.com/t5/Community/ct-p/en-us)
 
-## CrowdStrike
-
-[CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5](https://www.crowdstrike.com/wp-content/uploads/2022/12/CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5.pdf)
-
 ## Integrations
 
 [n8n](https://n8n.io/)
 
 [Configuring Telegram Alerts in Splunk](https://airman604.medium.com/configuring-telegram-alerts-in-splunk-c29a54ed19f4)
-
-[Splunk DB Connect guide for Databricks.md](https://github.com/databrickslabs/splunk-integration/blob/master/docs/markdown/Splunk%20DB%20Connect%20guide%20for%20Databricks.md)
 
 ## Operating Systems
 |     Name     | Based on |                   Website                   |

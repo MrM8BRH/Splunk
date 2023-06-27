@@ -112,4 +112,6 @@ This supporting add-on comes with prebuilt content for CrowdStrike Identity data
 [Download Link](https://splunkbase.splunk.com/app/6930)
 
 [Documentation](https://splunk-sa-crowdstrike-id.ztsplunker.com/)
-   
+
+## CrowdStrike Falcon Device Technical Add-On Guide v3.1.5
+[Documentation](https://www.crowdstrike.com/wp-content/uploads/2022/12/CrowdStrike-Falcon-Device-Technical-Add-On-Guide-v3.1.5.pdf)

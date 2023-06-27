@@ -627,3 +627,10 @@ startwebserver = 0
 ```
 sudo systemctl restart splunk
 ```
+
+## JAVA for DB Connect app
+```
+# PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
+# URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
+# Permission: chown -R splunk:splunk /opt/splunk
+```

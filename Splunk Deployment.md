@@ -130,9 +130,9 @@ chown -R splunk:splunk /opt/splunk
 ## SearchHead Server
  ```
 outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + Deployment)
-- Install Apps & Addons
-- Apps -> Manage Apps
-- Apps -> Search & Reporting ->  Data Summary 
+- Install/Hide Apps & Addons (Apps -> Manage Apps)
+- Apps -> Search & Reporting ->  Data Summary
+- Settings -> Server settings -> Email settings 
 - Monitoring Console -> Settings -> Alerts Setup
 - Monitoring Console -> Settings -> Forwarder Monitoring Setup
 - Monitoring Console -> Forwarders -> forwarder_instance

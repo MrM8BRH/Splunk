@@ -144,6 +144,13 @@ outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + 
               Deployment -> Deployment
               Search Head -> Search Head + KV Store + License Master
 ```
+Enterprise Security App
+```
+Configure -> Content -> Content Management (Type: Correlation Search)
+Configure -> General -> General Settings (Distributed Configuration Management)
+Configure -> Data Enrichment -> Threat Intelligence Management
+Configure -> Data Enrichment -> Asset and Identity Management (Identity Lookups)
+```
 
 ## Splunk Forwarder (Linux)
 *   `/opt/SplunkForwarder/bin/splunk start --accept-license`

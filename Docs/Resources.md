@@ -8,6 +8,8 @@
 
 [3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
 
+[Gnomock Splunk](https://github.com/orlangure/gnomock/tree/master/preset/splunk)
+
 
 ## MITRE ATT&CK
 
@@ -15,11 +17,13 @@
 
 ## Splunk
 
-[ATT&CK Detections Collector](https://github.com/splunk/attack-detections-collector)
+[An Ansible role for Splunk admins - Github](https://github.com/splunk/ansible-role-for-splunk)
 
-[Splunk Security Content](https://github.com/splunk/security_content)
+[ATT&CK Detections Collector - Github](https://github.com/splunk/attack-detections-collector)
 
-[Attack_Data](https://github.com/splunk/attack_data/)
+[Splunk Security Content - Github](https://github.com/splunk/security_content)
+
+[Attack_Data - Github](https://github.com/splunk/attack_data/)
 
 [Splunk - Resource Center](https://www.splunk.com/en_us/resources.html)
 

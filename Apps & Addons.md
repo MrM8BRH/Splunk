@@ -25,6 +25,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
 | Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | Alert Manager Enterprise           | Datapunctum AG             | https://splunkbase.splunk.com/app/6730 |
+| dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
 

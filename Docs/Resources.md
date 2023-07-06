@@ -1,5 +1,7 @@
 ## General
 
+[Splunk_Fundamentals](https://github.com/paulinoprojects/Splunk_Fundamentals)
+
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
 
 [Crontab Guru](https://crontab.guru/)

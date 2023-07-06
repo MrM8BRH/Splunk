@@ -165,6 +165,7 @@ Configure -> Data Enrichment -> Asset and Identity Management (Identity Lookups)
 
 *   `/opt/SplunkForwarder/bin/splunk add monitor -auth admin:password /var/log/..etc`
 
+## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Syslog-ng.md)
 
 ## Log Rotation:
 [For Indexer Server]

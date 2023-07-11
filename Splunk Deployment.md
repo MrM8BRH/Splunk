@@ -91,8 +91,9 @@ enableSplunkWebSSL = true
 
 ## Deployment Server
 *   `Install Windows/Linux Addons`
-*   `mkdir /opt/splunk/etc/deployment-apps/output ; cd output ; mkdir local ; cd local`
-*   `touch outputs.conf ; nano outputs.conf`
+*   `mkdir -p /opt/splunk/etc/deployment-apps/output/local`
+*   `cd /opt/splunk/etc/deployment-apps/output/local`
+*   `nano outputs.conf`
 ```
 [tcpout] defaultGroup = default-autolb-group
 
@@ -101,7 +102,7 @@ server = 192.168.1.50:9997
 
 [tcpout-server://192.168.1.50:9997]
 ```
-*    `Settings -> Forwarder management -> Server Classes`
+
 #### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
 ```
@@ -122,6 +123,14 @@ mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local
 cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/
 nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/inputs.conf
 ```
+*    `Settings -> Forwarder management -> Server Classes`
+```
+Create:
+- output -> *
+- windows
+- linux
+```
+
 ```
 chown -R splunk:splunk /opt/splunk
 /opt/splunk/bin/splunk restart

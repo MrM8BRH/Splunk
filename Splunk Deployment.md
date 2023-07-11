@@ -159,7 +159,12 @@ Configure -> Data Enrichment -> Asset and Identity Management (Identity Lookups)
 <br>
 
 *   `/opt/SplunkForwarder/bin/splunk add forward-server <indexer-ip>:9997`
+*   `/opt/SplunkForwarder/bin/splunk remove forward-server <indexer-ip>:9997`
+
+<br>
+
 *   `/opt/SplunkForwarder/bin/splunk set deploy-poll <deployment-ip>:8089`
+*   `nano /opt/SplunkForwarder/etc/system/local/deploymentclient.conf`
 
 <br>
 

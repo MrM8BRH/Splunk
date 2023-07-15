@@ -469,6 +469,13 @@ rpm -Uvh <Package>
 <q> <y> <y>
 /opt/splunk/bin/splunk restart
 ```
+
+## Uninstall Splunk on Linux
+```
+rpm -e `rpm -qa | grep -i splunk`
+sudo rm -r /opt/splunk
+```
+
 ##  Here's an example of how you can monitor a stanza in Splunk on both Windows and Linux.
 For Windows:
 ```

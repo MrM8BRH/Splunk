@@ -1,12 +1,14 @@
-## General
+## General & Best Practices
+
+[Splunk Best Practices](https://www.aplura.com/splunk-best-practices/)
+
+[Splunk Tutorial](https://www.tutorialspoint.com/splunk/splunk_tutorial.pdf)
+
+[Search Best Practices](https://www.splunk.com/en_us/blog/customers/splunk-clara-fication-search-best-practices.html)
 
 [Splunk on Big Data](https://splunkonbigdata.com/)
 
 [Splunk_Fundamentals](https://github.com/paulinoprojects/Splunk_Fundamentals)
-
-[Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
-
-[Crontab Guru](https://crontab.guru/)
 
 [A collection of awesome resources for Splunk](https://github.com/sduff/awesome-splunk)
 
@@ -14,6 +16,13 @@
 
 [Gnomock Splunk](https://github.com/orlangure/gnomock/tree/master/preset/splunk)
 
+## License
+
+[Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
+
+## Crontab
+
+[Crontab Guru](https://crontab.guru/)
 
 ## MITRE ATT&CK
 

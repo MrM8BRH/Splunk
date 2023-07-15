@@ -462,18 +462,6 @@ Author: [Yousef Hawwari](https://github.com/yousefhawwari)
 ```
 </details>
 
-
-## Split a .pfx File into .pem and .key Files Using OpenSSL
-The following command will generate a private key file without a password from your .pfx file (requires password):
-
-`openssl pkcs12 -in certificate.pfx -out privateKey.key -nocerts -nodes`
-
-The following command will generate a .pem certificate file from your .pfx file which will include any intermediate and root certificates that may be included in the .pfx file. (requires password):
-
-`openssl pkcs12 -in certificate.pfx -out certificate.pem -nokeys -clcerts`
-
-`/opt/splunk/etc/auth`
-
 ## Upgrade Splunk Enterprise
 ```
 rpm -Uvh <Package>
@@ -522,15 +510,6 @@ blacklist4 = EventCode="4625" ComputerName="specific-comp-name" Message="specifi
 /opt/splunk/var
 ```
  
-## [Default certificate renewal](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920) 
-```
-/opt/splunk/bin/splunk createssl server-cert -d /opt/splunk/etc/auth -n SplunkServerDefaultCert
-cd /opt/splunk/etc/auth
-mv server.pem server.pem.orig
-mv SplunkServerDefaultCert.pem server.pem
-openssl x509 -in server.pem -text
-```
-
 ## Forwarding Splunk's internal logs to the indexers
 *    `nano /opt/splunk/etc/system/local/outputs.conf`
 ```

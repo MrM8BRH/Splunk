@@ -30,6 +30,12 @@
 
 [Splunkable/Splunk Training Courses](https://www.youtube.com/playlist?list=PL4_WMjvnNwYp1c8Aq6GhLxZgVFJPcaW_q)
 
+## Reddit
+
+[Splunk](https://www.reddit.com/r/Splunk/)
+
+[blueteamsec](https://www.reddit.com/r/blueteamsec/)
+
 ## License
 
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)

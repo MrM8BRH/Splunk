@@ -208,6 +208,8 @@ Reload the configuration for the Splunk Deployment Server
               Indexer -> Indexer
               Deployment -> Deployment
               Search Head -> Search Head + KV Store + License Master
+- Turning off indexing on the Search Head ("outputs.conf" file in the "/opt/splunk/etc/system/local") : 
+We will make indexAndForward flag = false
 ```
 Enterprise Security App
 ```

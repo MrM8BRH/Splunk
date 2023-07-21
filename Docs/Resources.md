@@ -40,10 +40,6 @@
 
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
 
-## Crontab
-
-[Crontab Guru](https://crontab.guru/)
-
 ## MITRE ATT&CK
 
 [ATTACK-CSV](https://github.com/kfriede/ATTACK-CSV)

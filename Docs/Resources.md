@@ -2,6 +2,8 @@
 
 [Splunk Best Practices](https://www.aplura.com/splunk-best-practices/)
 
+[Splunk 6.5 Cluster Administration](https://github.com/juanlittledevil/splunk-cluster-training)
+
 [Splunk Tutorial](https://www.tutorialspoint.com/splunk/splunk_tutorial.pdf)
 
 [Search Best Practices](https://www.splunk.com/en_us/blog/customers/splunk-clara-fication-search-best-practices.html)

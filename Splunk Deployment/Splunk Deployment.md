@@ -13,14 +13,27 @@ dnf install -y net-tools nano bind-utils chkconfig
 ```
 
 ## Disable SELinux
-*   `sestatus`
-*   `nano /etc/selinux/config`
-*   `SELINUX=disabled`
+```
+# Check the current status and mode of SELinux.
+sestatus
+
+# Opens the SELinux configuration file using the nano text editor.
+nano /etc/selinux/config
+
+# A configuration option that can be set in the SELinux configuration file to disable SELinux on the system,
+# preventing it from enforcing security policies.
+SELINUX=disabled
+```
 
 ## Disable Firewall
 ```
+# Stops the "firewalld" service immediately.
 systemctl stop firewalld
+
+# Disables the "firewalld" service from starting automatically on system boot.
 systemctl disable firewalld
+
+# Checks the current status of the "firewalld" service.
 systemctl status firewalld
 ```
 
@@ -70,10 +83,17 @@ echo "splunk               hard    nofile          65535" >> /etc/security/limit
 reboot
 ```
 
-## Splunk (Linux)
-*   `rpm -ivh <Package>`
-*   `/opt/splunk/bin/splunk start --accept-license`
-*   `/opt/splunk/bin/splunk enable boot-start`
+## Splunk Enterprise (Linux)
+```
+# Install Splunk using RPM:
+rpm -ivh <Package>
+
+# Start Splunk and accept the license:
+/opt/splunk/bin/splunk start --accept-license
+
+# Enable Splunk to start on boot:
+/opt/splunk/bin/splunk enable boot-start
+```
 
 ## Enable SSL:
 *   `vi /opt/splunk/etc/system/local/web.conf`
@@ -125,16 +145,16 @@ server = 192.168.1.50:9997
 #### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
 ```
-# Copy the 'Splunk_TA_windows' app to the deployment-apps directory
+# Copy the 'Splunk_TA_windows' app to the deployment-apps directory.
 cp -r /opt/splunk/etc/apps/Splunk_TA_windows /opt/splunk/etc/deployment-apps
 
-# Create the 'local' directory within the 'Splunk_TA_windows' app
+# Create the 'local' directory within the 'Splunk_TA_windows' app.
 mkdir -p /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local
 
-# Copy the 'inputs.conf' file to the 'local' directory
+# Copy the 'inputs.conf' file to the 'local' directory.
 cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/
 
-# Edit the 'inputs.conf' file using the nano editor
+# Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
 ```
@@ -144,16 +164,16 @@ chown -R splunk:splunk /opt/splunk
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux
 ```bash
-# Copy the 'Splunk_TA_nix' app to the deployment-apps directory
+# Copy the 'Splunk_TA_nix' app to the deployment-apps directory.
 cp -r /opt/splunk/etc/apps/Splunk_TA_nix /opt/splunk/etc/deployment-apps
 
-# Create the 'local' directory within the 'Splunk_TA_nix' app
+# Create the 'local' directory within the 'Splunk_TA_nix' app.
 mkdir -p /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local
 
-# Copy the 'inputs.conf' file to the 'local' directory
+# Copy the 'inputs.conf' file to the 'local' directory.
 cp /opt/splunk/etc/deployment-apps/Splunk_TA_nix/default/inputs.conf /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/
 
-# Edit the 'inputs.conf' file using the nano editor
+# Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 ```
 *    `Settings -> Forwarder management -> Server Classes`
@@ -175,7 +195,6 @@ Reload the configuration for the Splunk Deployment Server
 
 ## SearchHead Server
  ```
-outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + Deployment)
 - Install/Hide Apps & Addons (Apps -> Manage Apps)
 - Apps -> Search & Reporting ->  Data Summary
 - Settings -> Server settings -> General settings 
@@ -183,8 +202,8 @@ outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + 
 - Settings -> Monitoring Console -> Settings -> Alerts Setup
 - Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
 - Settings -> Monitoring Console -> Forwarders -> forwarder_instance
+- Settings -> Distributed search -> Search peers - New Search peers ( Add [Indexer:8089 + Deployment:8089] )
 - Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-- Settings -> Monitoring Console -> Settings -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
    Edit Roles
               Indexer -> Indexer
               Deployment -> Deployment
@@ -195,7 +214,8 @@ Enterprise Security App
 Configure -> Content -> Content Management (Type: Correlation Search)
 Configure -> General -> General Settings (Distributed Configuration Management)
 Configure -> Data Enrichment -> Threat Intelligence Management
-Configure -> Data Enrichment -> Asset and Identity Management (Identity Lookups)
+Configure -> Data Enrichment -> Asset and Identity Management -> (Asset Lookups + Identity Lookups) -> New -> LDAP Lookup
+Configure -> Data Enrichment -> Asset and Identity Management -> Correlation Setup -> Enable for all sourcetypes
 ```
 
 ## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Syslog-ng.md)
@@ -471,17 +491,25 @@ Author: [Yousef Hawwari](https://github.com/yousefhawwari)
 ```
 </details>
 
-## Upgrade Splunk Enterprise on Linux
+## Upgrade Splunk Enterprise (Linux)
 ```
+# Upgrade Splunk using RPM:
 rpm -Uvh <Package>
+
+# Check the status of Splunk:
 /opt/splunk/bin/splunk status
+
+# Accept the license and perform a restart:
 <q> <y> <y>
 /opt/splunk/bin/splunk restart
 ```
 
-## Uninstall Splunk Enterprise on Linux
+## Uninstall Splunk Enterprise (Linux)
 ```
+# Uninstall Splunk using RPM:
 rpm -e `rpm -qa | grep -i splunk`
+
+# Remove the Splunk installation directory:
 sudo rm -r /opt/splunk
 ```
  

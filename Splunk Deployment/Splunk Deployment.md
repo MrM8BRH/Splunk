@@ -504,6 +504,15 @@ rpm -Uvh <Package>
 /opt/splunk/bin/splunk restart
 ```
 
+## License
+```
+# Lists the current licenses installed and activated on your Splunk instance.
+/opt/splunk/bin/splunk list license
+
+# Remove a specific license from the Splunk instance, identified by the license hash.
+/opt/splunk/bin/splunk remove license <hash>
+```
+
 ## Uninstall Splunk Enterprise (Linux)
 ```
 # Uninstall Splunk using RPM:

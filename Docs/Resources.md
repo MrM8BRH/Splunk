@@ -36,8 +36,6 @@
 
 [Splunk](https://www.reddit.com/r/Splunk/)
 
-[blueteamsec](https://www.reddit.com/r/blueteamsec/)
-
 ## License
 
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
@@ -63,12 +61,6 @@
 [Splunk - Tips & Tricks](https://www.splunk.com/en_us/blog/tips-and-tricks.html)
 
 [Splunk Community](https://community.splunk.com/t5/Community/ct-p/en-us)
-
-## Integrations
-
-[n8n](https://n8n.io/)
-
-[Configuring Telegram Alerts in Splunk](https://airman604.medium.com/configuring-telegram-alerts-in-splunk-c29a54ed19f4)
 
 ## Operating Systems
 |     Name     | Based on |                   Website                   |

@@ -85,9 +85,16 @@ enableSplunkWebSSL = true
 
 ## Indexer Server
 *   `Settings -> Forwarding and reciving -> Configure receiving`
-*   `Settings -> Indexes`
-*   `Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
+*   `Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
 *   `Install Addons`
+
+Log Retention:
+
+- `find /opt/splunk/ -name "indexes.conf"`
+```
+[your_index_name]
+frozenTimePeriodInSecs = 31556926
+```
 
 ## Deployment Server
 *   `Install Windows/Linux Addons`
@@ -106,10 +113,17 @@ server = 192.168.1.50:9997
 #### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
 ```
-cp -r /opt/splunk/etc/apps/Splunk\_TA\_windows /opt/splunk/etc/deployment-apps
-mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local
-cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/
-nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_windows/local/inputs.conf
+# Copy the 'Splunk_TA_windows' app to the deployment-apps directory
+cp -r /opt/splunk/etc/apps/Splunk_TA_windows /opt/splunk/etc/deployment-apps
+
+# Create the 'local' directory within the 'Splunk_TA_windows' app
+mkdir -p /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local
+
+# Copy the 'inputs.conf' file to the 'local' directory
+cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/
+
+# Edit the 'inputs.conf' file using the nano editor
+nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
 ```
 chown -R splunk:splunk /opt/splunk
@@ -117,11 +131,18 @@ chown -R splunk:splunk /opt/splunk
 ```
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux
-```
-cp -r /opt/splunk/etc/apps/Splunk\_TA\_nix /opt/splunk/etc/deployment-apps
-mkdir -p /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local
-cp /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/default/inputs.conf /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/
-nano /opt/splunk/etc/deployment_apps/Splunk\_TA\_nix/local/inputs.conf
+```bash
+# Copy the 'Splunk_TA_nix' app to the deployment-apps directory
+cp -r /opt/splunk/etc/apps/Splunk_TA_nix /opt/splunk/etc/deployment-apps
+
+# Create the 'local' directory within the 'Splunk_TA_nix' app
+mkdir -p /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local
+
+# Copy the 'inputs.conf' file to the 'local' directory
+cp /opt/splunk/etc/deployment-apps/Splunk_TA_nix/default/inputs.conf /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/
+
+# Edit the 'inputs.conf' file using the nano editor
+nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 ```
 *    `Settings -> Forwarder management -> Server Classes`
 ```
@@ -143,11 +164,11 @@ outputs.conf (Deployment Server) -> /opt/splunk/etc/system/local (Search Head + 
 - Apps -> Search & Reporting ->  Data Summary
 - Settings -> Server settings -> General settings 
 - Settings -> Server settings -> Email settings
-- Monitoring Console -> Settings -> Alerts Setup
-- Monitoring Console -> Settings -> Forwarder Monitoring Setup
-- Monitoring Console -> Forwarders -> forwarder_instance
-- Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-- Monitoring Console -> Settings -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
+- Settings -> Monitoring Console -> Settings -> Alerts Setup
+- Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
+- Settings -> Monitoring Console -> Forwarders -> forwarder_instance
+- Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
+- Settings -> Monitoring Console -> Settings -> General Setup -> Distuibuted ( Add [Indexer:8089 + Deployment:8089] )
    Edit Roles
               Indexer -> Indexer
               Deployment -> Deployment
@@ -180,16 +201,6 @@ Configure -> Data Enrichment -> Asset and Identity Management (Identity Lookups)
 *   `/opt/SplunkForwarder/bin/splunk add monitor -auth admin:password /var/log/..etc`
 
 ## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Syslog-ng.md)
-
-## Log Rotation:
-[For Indexer Server]
-```
-# Append frozenTimePeriodInSecs in indexes.conf
-# /opt/splunk/etc/apps
-# /opt/splunk/etc/system
-# find / -name "indexes.conf"
-frozenTimePeriodInSecs = 31556926
-```
 
 ## Enable More Auditing Policies on Windows
 *   Run - Group Policy > Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration

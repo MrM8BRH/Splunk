@@ -6,7 +6,7 @@ timedatectl set-timezone Asia/Jerusalem
 ## Change Hostname
 ```
 hostname
-hostnamectl set-hostname <hostname.Domain>
+hostnamectl set-hostname <hostname>
 ```
 
 ## Change IP Address, DNS Server, Gateway
@@ -25,6 +25,14 @@ DNS2=<DNS2>                                       *****
 
 ## Change NTP Server
 
+### chronyd
+```
+systemctl status chronyd
+systemctl start chronyd
+systemctl enable chronyd
+```
+
+### NTP
 ```
 dnf install ntp
 systemctl start ntp

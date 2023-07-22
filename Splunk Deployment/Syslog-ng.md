@@ -137,3 +137,13 @@ crontab -e
 0 5 * * * find /var/log/syslog-ng/security/ -type f -name \*.log -mtime +7 -exec rm {} \;
 0 5 * * * find /var/log/syslog-ng/default/ -type f -name \*.log -mtime +7 -exec rm {} \;
 ```
+
+## Resources
+
+https://splunk.github.io/splunk-connect-for-syslog/main/
+
+https://splunkbase.splunk.com/app/4740
+
+https://www.splunk.com/en_us/blog/tips-and-tricks/syslog-ng-and-hec-scalable-aggregated-data-collection-in-splunk.html
+
+https://conf.splunk.com/files/2017/slides/the-critical-syslog-tricks-that-no-one-seems-to-know-about.pdf

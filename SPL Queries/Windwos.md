@@ -1,11 +1,46 @@
-Identify failed login attempts on Windows:
+Identify Windows account password changes:
 ```
-index=wineventlog source="*:Security" EventCode=4625
+index=wineventlog source="*:Security" (EventCode=4723 OR EventCode=4724) | table host,source,action,dvc,name,user,user_group
+```
+
+Identify Windows security-related logon session events:
+```
+index=wineventlog source="*:Security" (EventCode=4624 OR EventCode=4647) | search user!="SYSTEM" | table _time,host,source,action,name,user,user_group
+```
+
+Identify Windows account disabled events:
+```
+index=wineventlog source="*:Security" (EventCode=4725 OR EventCode=4726) | table _time,host,source,action,name,user,user_group
+```
+
+Identify Windows account logon events:
+```
+index=wineventlog source="*:Security" EventCode=4624 Logon_Type!=3 | search  user!="SYSTEM" | table host,source,action,dvc,name,user,user_group
+```
+
+Detect Windows account logoff events:
+```
+index=wineventlog source="*:Security" EventCode=4634 | table host,source,action,dvc,name,user,user_group
+```
+
+Monitor Windows account creations:
+```
+index=wineventlog source="*:Security" (EventCode=4720 OR EventCode=4722) | table host,source,action,dvc,name,user,user_group
 ```
 
 Monitor successful logins on Windows:
 ```
-index=wineventlog source="*:Security" EventCode=4624
+index=wineventlog source="*:Security" EventCode=4624 | table host,source,action,app,dvc,name,user,user_group
+```
+
+Identify Windows security-related policy changes:
+```
+index=wineventlog source="*:Security" (EventCode=4719 OR EventCode=4904 OR EventCode=4905) | table _time,host,source,action,subject,user,object_attrs
+```
+
+Identify failed login attempts on Windows:
+```
+index=wineventlog source="*:Security" EventCode=4625
 ```
 
 Detect account lockouts on Windows:
@@ -16,11 +51,6 @@ index=wineventlog source="*:Security" EventCode=4740
 Identify Windows security group modifications:
 ```
 index=wineventlog source="*:Security" (EventCode=4727 OR EventCode=4728 OR EventCode=4731)
-```
-
-Monitor Windows account creations:
-```
-index=wineventlog source="*:Security" (EventCode=4720 OR EventCode=4722)
 ```
 
 Detect changes to Windows security policy settings:
@@ -43,24 +73,9 @@ Detect Windows system shutdown or restart events:
 index=wineventlog source="*:Security" (EventCode=4608 OR EventCode=4609)
 ```
 
-Identify Windows account password changes:
-```
-index=wineventlog source="*:Security" (EventCode=4723 OR EventCode=4724)
-```
-
 Monitor Windows service creation or modification events:
 ```
 index=wineventlog source="*:Security" (EventCode=4697 OR EventCode=4698)
-```
-
-Identify Windows account logon events:
-```
-index=wineventlog source="*:Security" EventCode=4624 Logon_Type!=3
-```
-
-Detect Windows account logoff events:
-```
-index=wineventlog source="*:Security" EventCode=4634
 ```
 
 Monitor Windows account lockout duration and threshold changes:
@@ -68,19 +83,9 @@ Monitor Windows account lockout duration and threshold changes:
 index=wineventlog source="*:Security" EventCode=4767
 ```
 
-Identify Windows security-related policy changes:
-```
-index=wineventlog source="*:Security" (EventCode=4719 OR EventCode=4904 OR EventCode=4905)
-```
-
 Monitor Windows file and folder permission changes:
 ```
 index=wineventlog source="*:Security" (EventCode=4663 OR EventCode=4670)
-```
-
-Identify Windows account disabled events:
-```
-index=wineventlog source="*:Security" (EventCode=4725 OR EventCode=4726)
 ```
 
 Detect Windows account privilege changes:
@@ -110,12 +115,12 @@ index=wineventlog source="*:Security" (EventCode=4728 OR EventCode=4732)
 
 Detect Windows account impersonation events:
 ```
-index=wineventlog source="*:Security" EventCode=4648
+index=wineventlog source="*:Security" EventCode=4648 | table _time,host,source,action,name,user,user_group
 ```
 
 Monitor Windows security-related account management events:
 ```
-index=wineventlog source="*:Security" (EventCode=4720 OR EventCode=4726 OR EventCode=4728 OR EventCode=4732)
+index=wineventlog source="*:Security" EventCode=4648 | table _time,host,source,action,name,user,user_group
 ```
 
 Identify Windows process termination events:
@@ -201,11 +206,6 @@ index=wineventlog source="*:Security" (EventCode=1100 OR EventCode=1108)
 Monitor Windows account password expiration warnings:
 ```
 index=wineventlog source="*:Security" EventCode=769
-```
-
-Identify Windows security-related logon session events:
-```
-index=wineventlog source="*:Security" (EventCode=4624 OR EventCode=4647)
 ```
 
 Detect Windows account privilege use failures:

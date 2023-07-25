@@ -1,6 +1,6 @@
 # FortiGate Application for Splunk Installation & Configuration
 
-## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Syslog-ng.md)
+## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
  
 ## Splunk Universal Forwarder Configuration
  

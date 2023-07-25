@@ -220,7 +220,7 @@ Configure -> Data Enrichment -> Asset and Identity Management -> (Asset Lookups 
 Configure -> Data Enrichment -> Asset and Identity Management -> Correlation Setup -> Enable for all sourcetypes
 ```
 
-## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Syslog-ng.md)
+## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
 
 ## Enable More Auditing Policies on Windows
 *   Run - Group Policy > Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration

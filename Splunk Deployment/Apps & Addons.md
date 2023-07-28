@@ -121,6 +121,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Cisco
 |                                   Name                  |          Built by         |                   URL                  |
 |---------------------------------------------------------|---------------------------|----------------------------------------|
+| Cisco Secure Firewall App for Splunk                    | Cisco Security            | https://splunkbase.splunk.com/app/4388 |
+| Cisco Secure eStreamer Client Add-On for Splunk         | Cisco Security            | https://splunkbase.splunk.com/app/3662 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
 | Cisco ACI App for Splunk Enterprise                     | Cisco Systems             | https://splunkbase.splunk.com/app/1896 |

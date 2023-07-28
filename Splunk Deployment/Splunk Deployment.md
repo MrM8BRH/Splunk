@@ -494,6 +494,11 @@ Author: [Yousef Hawwari](https://github.com/yousefhawwari)
 </details>
 
 ## Upgrade Splunk Enterprise (Linux)
+[How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
+
+[Splunk products version compatibility matrix](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/CompatMatrix)
+
+[Compatibility between forwarders and Splunk Enterprise indexers](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/Compatibilitybetweenforwardersandindexers)
 ```
 # Upgrade Splunk using RPM:
 rpm -Uvh <Package>

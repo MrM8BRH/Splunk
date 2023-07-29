@@ -138,6 +138,56 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
       </table>
     </panel>
   </row>
+  <row>
+    <panel>
+      <table>
+        <title>Splunk errors in last 24 hours</title>
+        <search>
+          <query>index=_internal " error " NOT debug source=*splunkd.log*</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Search Peer Not Responding</title>
+        <search>
+          <query>| rest splunk_server=local /services/search/distributed/peers/
+| where status!="Up" AND disabled=0
+| fields peerName, status
+| rename peerName as Instance, status as Status</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Find out all successful splunk configuration changes by user</title>
+        <search>
+          <query>index=_audit action=edit* info=granted operation!="list" host=* object=*
+| transaction action user operation host maxspan=30s
+| stats values(action) as action values(object) as modified_object by
+_time,operation,user,host
+| rename user as modified_by
+| table _time action modified_object modified_by</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
 </form>
 ```
 </details>

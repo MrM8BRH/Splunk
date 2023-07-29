@@ -38,7 +38,7 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
  
 ```
 <form version="1.1" theme="dark">
-  <label>Splunk</label>
+  <label>Splunk Dashboard</label>
   <fieldset submitButton="true" autoRun="true">
     <input type="time" token="field1">
       <label></label>
@@ -79,7 +79,7 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
   </row>
   <row>
     <panel>
-      <table>
+      <chart>
         <title>Splunk users search activity</title>
         <search>
           <query>index=_audit splunk_server=local action=search (id=* OR search_id=*) 
@@ -96,27 +96,57 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
-        <option name="drilldown">none</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Display disk space utilized by each app in splunk</title>
+        <search>
+          <query>index=_internal metrics kb group=per_sourcetype_thruput | eval sizeMB =
+round(kb/1024,2)| stats sum(sizeMB) by series | sort -sum(sizeMB) | rename sum(sizeMB)
+AS "Size on Disk (MB)"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
         <option name="refresh.display">progressbar</option>
-      </table>
+      </chart>
     </panel>
   </row>
   <row>
     <panel>
-      <table>
+      <chart>
         <title>License usage by index</title>
         <search>
           <query>index=_internal source=*license_usage.log type="Usage" splunk_server=*
 | eval Date=strftime(_time, "%Y/%m/%d")
 | eventstats sum(b) as volume by idx, Date
 | eval GB=round(volume/1024/1024/1024, 5) 
-| timechart first(GB) AS volume by idx</query>
+| chart first(GB) AS volume by idx | rename idx as index</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
-        <option name="drilldown">none</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
         <option name="refresh.display">progressbar</option>
-      </table>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>DBSizeGB per Index</title>
+        <search>
+          <query>| rest /services/data/indexes 
+| eval currentDBSizeGB = round(sum(currentDBSizeMB)/1024, 2) 
+| stats sum(currentDBSizeGB) as totalDBSizeGB by title, splunk_server</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
     </panel>
   </row>
   <row>
@@ -185,6 +215,19 @@ _time,operation,user,host
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Version of all apps and add-ons installed on Splunk</title>
+        <search>
+          <query>| rest /services/apps/local | search disabled=0 core=0|dedup label | table label version</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
       </table>
     </panel>
   </row>

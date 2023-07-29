@@ -42,11 +42,11 @@ index=_audit action="login attempt"
 ```
 License usage by index
 ```
-index=_internal source=*license_usage.log type="Usage" splunk_server=* 
-| eval Date=strftime(_time, "%Y/%m/%d") 
-| eventstats sum(b) as volume by idx, Date 
-| eval MB=round(volume/1024/1024,5) 
-| timechart first(MB) AS volume by idx
+index=_internal source=*license_usage.log type="Usage" splunk_server=*
+| eval Date=strftime(_time, "%Y/%m/%d")
+| eventstats sum(b) as volume by idx, Date
+| eval GB=round(volume/1024/1024/1024, 5) 
+| timechart first(GB) AS volume by idx
 ```
 List of Forwarders Installed
 ```

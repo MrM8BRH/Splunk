@@ -95,7 +95,7 @@ rpm -ivh <Package>
 /opt/splunk/bin/splunk enable boot-start
 ```
 
-## Enable SSL:
+## Enable SSL
 *   `vi /opt/splunk/etc/system/local/web.conf`
 ```text-plain
 [settings]
@@ -117,18 +117,25 @@ server = 192.168.1.50:9997
 
 ## Indexer Server
 *   `Settings -> Forwarding and reciving -> Configure receiving`
+*   `Settings -> Licensing -> (Change to peer)`
+*   `Settings -> Distributed search -> Search peers`
+*   `Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]`
 *   `Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
 *   `Install Addons`
 
-Log Retention:
+Log Retention
 
 - `find /opt/splunk/ -name "indexes.conf"`
 ```
 [your_index_name]
 frozenTimePeriodInSecs = 31556926
 ```
+*   `Disable Splunk Web`
 
 ## Deployment Server
+*   `Settings -> Licensing -> (Change to peer)`
+*   `Settings -> Distributed search -> Search peers`
+*   `Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]`
 *   `Install Windows/Linux Addons`
 *   `mkdir -p /opt/splunk/etc/deployment-apps/output/local`
 *   `cd /opt/splunk/etc/deployment-apps/output/local`
@@ -157,10 +164,7 @@ cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/sp
 # Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
-```
-chown -R splunk:splunk /opt/splunk
-/opt/splunk/bin/splunk restart
-```
+
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux
 ```bash
@@ -179,13 +183,12 @@ nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 *    `Settings -> Forwarder management -> Server Classes`
 ```
 Create:
-- output -> *
+- output -> Clients (*)
 - windows
 - linux
 ```
 
 ```
-chown -R splunk:splunk /opt/splunk
 /opt/splunk/bin/splunk restart
 ```
 Reload the configuration for the Splunk Deployment Server
@@ -203,6 +206,7 @@ Reload the configuration for the Splunk Deployment Server
 - Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
 - Settings -> Monitoring Console -> Forwarders -> forwarder_instance
 - Settings -> Distributed search -> Search peers - New Search peers ( Add [Indexer:8089 + Deployment:8089] )
+- Settings -> Licensing -> (Change to peer)
 - Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
    Edit Roles
               Indexer -> Indexer

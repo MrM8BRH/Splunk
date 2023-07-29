@@ -1,10 +1,12 @@
 ## Windows Security Log Events
+[Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
 
 [Security Log Defined](https://system32.eventsentry.com/)
 
 [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
 ## External Links
+
 [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
 
 [GoSplunk](https://gosplunk.com/)

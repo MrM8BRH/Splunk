@@ -1,3 +1,13 @@
+Passwords Never Changed - Active Accounts
+```
+| ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, dn, pwdLastSet
+```
+
+Passwords Last Changed - Active Accounts 
+```
+| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, pwdLastSet
+```
+
 Identify Windows account password changes:
 ```
 index=wineventlog source="*:Security" (EventCode=4723 OR EventCode=4724) | table host,source,action,dvc,name,user,user_group

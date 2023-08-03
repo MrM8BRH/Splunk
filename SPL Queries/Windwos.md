@@ -1,11 +1,16 @@
-Passwords Never Changed - Active Accounts
+Passwords Never Changed - Active Accounts:
 ```
 | ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, dn, pwdLastSet
 ```
 
-Passwords Last Changed - Active Accounts 
+Passwords Last Changed - Active Accounts:
 ```
 | ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, pwdLastSet
+```
+
+Check for Disabled User Accounts:
+```
+| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))" attrs="sAMAccountName" | table sAMAccountName,dn
 ```
 
 Identify Windows account password changes:
@@ -358,3 +363,66 @@ Identify Windows security-related events for changes in audit policy category se
 index=wineventlog source="*:Security" (EventCode=4717 OR EventCode=4906)
 ```
 
+
+
+### Active Directory Reports
+
+Member Added/Removed
+```
+host="*" index="wineventlog" EventCode=4761 OR EventCode=4762 OR EventCode=4728 OR EventCode=4729 |eval time = strftime(_time,"%c") |table time,name,MemberName,Group_Name,src_user |rename time as "Time" , name as "Action" , MemberName as "Member Name Added/Removed" , Group_Name as "Group Name" , src_user as "Member Added/Removed By :"
+```
+
+Security Group mgmt changed:
+```
+host="*" index="wineventlog" EventCode=4735 OR EventCode=4737 |eval time = strftime(_time,"%c") |table time,name,src_user,TargetUserName,dest,session_id |rename time as "Time" , name as "Action" , src_user as "Source User", TargetUserName as " Target Group " , dest as " Destination DC" , session_id as "Session ID"
+```
+
+User Enabled/Disabled:
+```
+host="*" index="wineventlog" EventCode=4722 OR EventCode=4725 |eval time = strftime(_time,"%c") |table time,name,user,src_user |rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Account Enabled/Disabled By"
+```
+
+UserAccount Locked/Unlocked:
+```
+host="*" index="wineventlog" signature="A user account was locked out" OR signature="A user account was unlocked" |eval time = strftime(_time,"%c") |table time,dest_nt_domain,Group_Name,name,src_user |rename time as "Time" , Group_Name as "User Name" , dest_nt_domain as "Hostname", name as "Action" , src_user as "Locked/Unlocked By"
+```
+
+UserAccount Changed:
+```
+host="*" index="wineventlog" signature="A user account was changed" |eval time = strftime(_time,"%c") |table time,name,user,src_user,dest |rename time as "Time" , name as "Action" , user as " Target User" , src_user as "Changed By" , dest as "Destination DC"
+```
+
+User Created:
+```
+host="*" index="wineventlog" EventCode=4720 |eval time = strftime(_time,"%c") |table time,name,user,Logon_ID,src_user,dest |rename time as "Time" , name as "Action" , user as "Created User" , Logon_ID as "Session ID" ,src_user as "User Created By :", dest as "Destination DC"
+```
+
+AdminActions:
+```
+host="*" index="wineventlog" EventCode!=4624 AND EventCode!=4634 user="" OR user="Administrator" |eval time = strftime(_time,"%c") | transaction name maxspan=30s |table time,name,user,src,dest |rename time as "Time" , name as "Action" , user as "Admin User" , dest as "Destination DC", src as "Device"
+```
+
+Domain Policy Changed/Reset Passowrd:
+```
+host="*" index="wineventlog" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" |eval time = strftime(_time,"%c") |table time,name,user,src_user |rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Password Changed/Reset By"
+```
+
+HelpDesk Actions:
+```
+host="*" index="wineventlog" EventCode!=4624 AND EventCode!=4634 user="A.B" OR user="A.B" OR user="A.B"|eval time = strftime(_time,"%c") | transaction name maxspan=1m |table time,name,user,src,dest |rename time as "Time" , name as "Action" , user as "Help Desk User" , dest as " Destination DC", src as "Device"
+```
+
+Network User Login:
+```
+host="*" index="wineventlog" LogonType=3 | eval time = strftime(_time,"%c") | transaction name, user maxspan=1m |table time,name,src_ip,user |rename time as "Time" , name as "Action" , src_ip as "Destination IP Address" , user as "User Name"
+```
+
+User Deleted:
+```
+host="*" index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : " , dest as "Destination DC"
+```
+
+User Deleted By Admin:
+```
+host="*" index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : ", user as "Deleted User: " , dest as "Destination DC"
+```

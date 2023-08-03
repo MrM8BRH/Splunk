@@ -59,7 +59,7 @@ For Linux:
 ```
 /opt/splunkforwarder/bin/splunk restart
 ```
-## Blacklist EventCode
+## Blacklist/Whitelist EventCode
 ```
 [WinEventLog://Security]
 disabled = 0
@@ -67,4 +67,5 @@ blacklist1 = EventCode="4662" Message="Object Type:s+(?!groupPolicyContainer)"
 blacklist2 = EventCode="4625"
 blacklist3 = EventCode="4625" ComputerName="specific-comp-name" Message="Account\sName: \s+specific-user-name"
 blacklist4 = EventCode="4625" ComputerName="specific-comp-name" Message="specific-user-name"
+whitelist = 4722,4725,4740,4767,4738,4720,4723,4724,4726,4735,4737,4761,4762,4728,4729,4776,4780,4688,4648
 ```

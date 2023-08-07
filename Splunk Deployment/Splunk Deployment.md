@@ -517,6 +517,8 @@ rpm -Uvh <Package>
 
 ## License
 ```
+/opt/splunk/bin/splunk btool server list --debug license
+
 # Lists the current licenses installed and activated on your Splunk instance.
 /opt/splunk/bin/splunk list license
 

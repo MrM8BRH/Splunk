@@ -1,3 +1,5 @@
+[Cisco + Splunk Integrations Add-on List ](https://community.cisco.com/t5/security-knowledge-base/cisco-splunk-integrations-add-on-list/ta-p/4399146)
+
 ### Apps/Addons
 [Cisco Networks App for Splunk Enterprise](https://splunkbase.splunk.com/app/1352)
 

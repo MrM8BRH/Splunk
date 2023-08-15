@@ -1,6 +1,10 @@
 [Cisco + Splunk Integrations Add-on List ](https://community.cisco.com/t5/security-knowledge-base/cisco-splunk-integrations-add-on-list/ta-p/4399146)
 
 ### Apps/Addons
+[Cisco Secure Network Analytics (Stealthwatch) App for Splunk Enterprise](https://splunkbase.splunk.com/app/6398)
+
+[Cisco StealthWatch Add-On](https://splunkbase.splunk.com/app/3827)
+
 [Cisco Networks App for Splunk Enterprise](https://splunkbase.splunk.com/app/1352)
 
 [Cisco Networks Add-on for Splunk Enterprise](https://splunkbase.splunk.com/app/1467)

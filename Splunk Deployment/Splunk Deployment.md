@@ -561,3 +561,6 @@ sudo systemctl restart splunk
 # URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
 # Permission: chown -R splunk:splunk /opt/splunk
 ```
+## Uninstall an app or add-on
+- Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
+- You may need to remove user-specific directories created for your app or add-on by deleting any files found here: `$SPLUNK_HOME/etc/users/*/<appname>`.

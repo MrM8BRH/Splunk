@@ -9,8 +9,6 @@
 
 [Cisco Networks Add-on for Splunk Enterprise](https://splunkbase.splunk.com/app/1467)
 
-[Cisco Networks Add-on for Splunk Enterprise](https://splunkbase.splunk.com/app/1467)
-
 [TA-cisco_ios ](https://github.com/inspired/TA-cisco_ios)
 
 [Splunk Add-on for Cisco ASA](https://splunkbase.splunk.com/app/1620)

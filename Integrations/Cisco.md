@@ -9,17 +9,16 @@
 
 [Cisco Networks Add-on for Splunk Enterprise](https://splunkbase.splunk.com/app/1467)
 
-[Splunk App for Stream](https://splunkbase.splunk.com/app/1809)
-
-[Splunk Add-on for Stream Wire Data](https://splunkbase.splunk.com/app/5234)
-
-[Splunk Add-on for Stream Forwarders](https://splunkbase.splunk.com/app/5238)
-
 [Cisco Networks Add-on for Splunk Enterprise](https://splunkbase.splunk.com/app/1467)
 
 [TA-cisco_ios ](https://github.com/inspired/TA-cisco_ios)
 
 [Splunk Add-on for Cisco ASA](https://splunkbase.splunk.com/app/1620)
+
+---
+[eStreamer eNcore for Splunk Operations Guide v4.09](https://www.cisco.com/c/en/us/td/docs/security/firepower/670/api/eStreamer_enCore/eStreamereNcoreSplunkOperationsGuide_409.html)
+
+[How to Configure Log Sending from Cisco Firepower to Splunk [2023]](https://underdefense.com/guides/how-to-configure-log-sending-from-cisco-firepower-to-splunk/)
 
 ---
 ### Splunking NetFlow with Splunk Stream
@@ -28,9 +27,5 @@
 [Splunking Netflow with Splunk Stream - Part 2: Basic Netflow Analytics](https://www.splunk.com/en_us/blog/tips-and-tricks/splunking-netflow-with-splunk-stream-part-2-basic-netflow-analytics.html)
 
 ---
-[How to Configure Log Sending from Cisco Firepower to Splunk [2023]](https://underdefense.com/guides/how-to-configure-log-sending-from-cisco-firepower-to-splunk/)
-
 Youtube:
 [Configuring FTD devices to send Syslog to Splunk](https://www.youtube.com/watch?v=GjKavkRbUVg)
-
-![image](https://github.com/MrM8BRH/Splunk/assets/34133187/544e00c2-3d41-46c2-96c4-d71761613374)

@@ -1,3 +1,6 @@
+## Extending a logical volume in a virtual machine running Red Hat or Cent OS
+https://kb.vmware.com/s/article/1006371
+
 ## Change Timezone
 ```
 timedatectl

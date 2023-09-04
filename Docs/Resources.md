@@ -11,6 +11,8 @@
 
 [3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
 
+[How Splunk Enterprise calculates disk storage](https://docs.splunk.com/Documentation/Splunk/9.1.1/Capacity/HowSplunkcalculatesdiskstorage)
+
 [System requirements for use of Splunk Enterprise on-premises](https://docs.splunk.com/Documentation/Splunk/9.1.1/Installation/Systemrequirements)
 
 [Reference hardware](https://docs.splunk.com/Documentation/Splunk/9.1.1/Capacity/Referencehardware)

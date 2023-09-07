@@ -122,15 +122,21 @@ server = 192.168.1.50:9997
 *   `Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]`
 *   `Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
 *   `Install Addons`
+*   `Disable Splunk Web`
 
 Log Retention
 
-- `find /opt/splunk/ -name "indexes.conf"`
+`mv /opt/splunk/etc/system/local/indexes.conf /opt/splunk/etc/system/local/indexes.conf.bkp`
+
+`nano /opt/splunk/etc/system/local/indexes.conf`
 ```
-[your_index_name]
-frozenTimePeriodInSecs = 31556926
+[default]
+# Retain hot/warm buckets for 90 days (around 3 months)
+maxHotSpanSecs = 7776000
+# Move to frozen after 1 year (around 365 days)
+frozenTimePeriodInSecs = 31536000
 ```
-*   `Disable Splunk Web`
+![Untitled](https://github.com/MrM8BRH/Splunk/assets/34133187/3e054f83-c4ea-42ec-8a33-e5f4af970543)
 
 ## Deployment Server
 *   `Settings -> Licensing -> (Change to peer)`

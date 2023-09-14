@@ -51,6 +51,20 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
   <row>
     <panel>
       <table>
+        <title>Metadata information for hosts across all indexes.</title>
+        <search>
+          <query>| metadata type=hosts index=*
+| eval firstTime=strftime(firstTime, "%Y-%m-%d %H:%M:%S"), lastTime=strftime(lastTime, "%Y-%m-%d %H:%M:%S"), recentTime=strftime(recentTime, "%Y-%m-%d %H:%M:%S")</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
         <title>List of Login Attempts to Splunk</title>
         <search>
           <query>index=_audit tag=authentication | stats count by user, info | sort - info</query>

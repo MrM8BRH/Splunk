@@ -9,8 +9,11 @@
 # Start Splunk Forwarder and accept the license:
 /opt/splunkforwarder/bin/splunk start --accept-license
 
+# Stop Splunk Forwarder after accepting the license
+/opt/splunkforwarder/bin/splunk stop
+
 # Enable the Splunk Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start -user splunk
+/opt/splunkforwarder/bin/splunk enable boot-start
 
 # Add a forward server (indexer) to send data:
 /opt/splunkforwarder/bin/splunk add forward-server <indexer-ip>:9997

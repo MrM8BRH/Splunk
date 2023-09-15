@@ -5,7 +5,11 @@
 
 [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
+[Windows Security Events You Should Monitor](https://medium.com/@alizourob4/windows-security-events-you-should-monitor-eebb7a034bbf)
+
 ## External Links
+
+[Security Content](https://research.splunk.com/tags/)
 
 [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
 

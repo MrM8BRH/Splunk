@@ -131,10 +131,8 @@ Log Retention
 `nano /opt/splunk/etc/system/local/indexes.conf`
 ```
 [default]
-# Retain hot/warm buckets for 90 days (around 3 months)
 maxHotSpanSecs = 7776000
-# Move to frozen after 1 year (around 365 days)
-frozenTimePeriodInSecs = 31536000
+frozenTimePeriodInSecs = 23652000
 ```
 ![Untitled](https://github.com/MrM8BRH/Splunk/assets/34133187/3e054f83-c4ea-42ec-8a33-e5f4af970543)
 

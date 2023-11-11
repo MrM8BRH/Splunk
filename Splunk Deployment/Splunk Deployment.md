@@ -124,7 +124,7 @@ server = 192.168.1.50:9997
 *   `Install Addons`
 *   `Disable Splunk Web`
 
-Log Retention
+**Log Retention**
 
 `mv /opt/splunk/etc/system/local/indexes.conf /opt/splunk/etc/system/local/indexes.conf.bkp`
 
@@ -137,7 +137,7 @@ maxHotSpanSecs = 7776000
 # frozenTimePeriodInSecs sets the maximum age of data in the "cold" bucket to 275 days.
 frozenTimePeriodInSecs = 23760000
 ```
-![Untitled](https://github.com/MrM8BRH/Splunk/assets/34133187/3e054f83-c4ea-42ec-8a33-e5f4af970543)
+![idx-bucket](https://github.com/MrM8BRH/Splunk/assets/34133187/0a490730-a70b-4162-ab32-74c44ece95ff)
 
 ## Deployment Server
 *   `Settings -> Licensing -> (Change to peer)`

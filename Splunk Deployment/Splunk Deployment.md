@@ -9,7 +9,7 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 ```
 yum update -y
 yum install -y dnf
-dnf install -y net-tools nano bind-utils chkconfig
+dnf install -y net-tools nano bind-utils chkconfig wget bzip2
 ```
 
 ## Disable SELinux
@@ -132,7 +132,11 @@ Log Retention
 ```
 [default]
 maxHotSpanSecs = 7776000
-frozenTimePeriodInSecs = 23652000
+# Setting the maximum duration for the "hot/warm" span to 7776000 seconds (90 days).
+maxHotSpanSecs = 7776000
+
+# Setting the duration for the frozen time period to 23760000 seconds (275 days).
+frozenTimePeriodInSecs = 23760000
 ```
 ![Untitled](https://github.com/MrM8BRH/Splunk/assets/34133187/3e054f83-c4ea-42ec-8a33-e5f4af970543)
 
@@ -209,8 +213,8 @@ Reload the configuration for the Splunk Deployment Server
 - Settings -> Monitoring Console -> Settings -> Alerts Setup
 - Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
 - Settings -> Monitoring Console -> Forwarders -> forwarder_instance
-- Settings -> Distributed search -> Search peers - New Search peers ( Add [Indexer:8089 + Deployment:8089] )
-- Settings -> Licensing -> (Change to peer)
+- Settings -> Licensing -> (Change license group)
+- Settings -> Distributed search -> Search peers
 - Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
    Edit Roles
               Indexer -> Indexer

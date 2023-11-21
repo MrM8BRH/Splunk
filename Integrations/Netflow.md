@@ -77,9 +77,9 @@ crontab -e
 ```
 Ensure no process is using UDP port 2055, kill if found. Then, reset netflow log and start Netflow V9:
 ```
-* * * * * netstat -tulpn | awk '$4 ~ /:2055$/ {sub(/\/.*/, "", $NF); print $NF}' | xargs -r kill -9 ; /bin/rm -f /var/log/netflow && touch /var/log/netflow ; (cd /root/goflow/cmd/goflow && ./goflow -kafka=false -sflow=false -nfl=false -logfmt=json -nf.addr=<IP Addr> -nf.port=2055 -workers=3 -message.fields="Type,TimeReceived,SequenceNum,TimeFlowStart,TimeFlowEnd,Bytes,Packets,SrcAddr,DstAddr,Proto,SrcPort,DstPort,InIf,OutIf,SrcMac,DstMac,SrcVlan,DstVlan,VlanId,TCPFlags,IcmpType,FragmentId,NextHop" >> /var/log/netflow)
+* * * * * netstat -tulpn | awk '$4 ~ /:2055$/ {sub(/\/.*/, "", $NF); print $NF}' | xargs -r kill -9 ; echo "" > /var/log/netflow ; (cd /root/goflow/cmd/goflow && ./goflow -kafka=false -sflow=false -nfl=false -logfmt=json -nf.addr=<IP Addr> -nf.port=2055 -workers=3 -message.fields="Type,TimeReceived,SequenceNum,TimeFlowStart,TimeFlowEnd,Bytes,Packets,SrcAddr,DstAddr,Proto,SrcPort,DstPort,InIf,OutIf,SrcMac,DstMac,SrcVlan,DstVlan,VlanId,TCPFlags,IcmpType,FragmentId,NextHop" >> /var/log/netflow)
 ```
 Ensure no process is using UDP port 9995, kill if found. Then, reset netflow log and start Netflow V5:
 ```
-* * * * * netstat -tulpn | awk '$4 ~ /:9995$/ {sub(/\/.*/, "", $NF); print $NF}' | xargs -r kill -9 ; /bin/rm -f /var/log/netflow && touch /var/log/netflow ; (cd /root/goflow/cmd/goflow && ./goflow -kafka=false -sflow=false -nf=false -logfmt=json -nfl.addr=<IP Addr> -nfl.port=9995 -workers=3 -message.fields="Type,TimeReceived,SequenceNum,TimeFlowStart,TimeFlowEnd,Bytes,Packets,SrcAddr,DstAddr,Proto,SrcPort,DstPort,InIf,OutIf,SrcMac,DstMac,SrcVlan,DstVlan,VlanId,TCPFlags,IcmpType,FragmentId,NextHop" >> /var/log/netflow)
+* * * * * netstat -tulpn | awk '$4 ~ /:9995$/ {sub(/\/.*/, "", $NF); print $NF}' | xargs -r kill -9 ; echo "" > /var/log/netflow ; (cd /root/goflow/cmd/goflow && ./goflow -kafka=false -sflow=false -nf=false -logfmt=json -nfl.addr=<IP Addr> -nfl.port=9995 -workers=3 -message.fields="Type,TimeReceived,SequenceNum,TimeFlowStart,TimeFlowEnd,Bytes,Packets,SrcAddr,DstAddr,Proto,SrcPort,DstPort,InIf,OutIf,SrcMac,DstMac,SrcVlan,DstVlan,VlanId,TCPFlags,IcmpType,FragmentId,NextHop" >> /var/log/netflow)
 ```

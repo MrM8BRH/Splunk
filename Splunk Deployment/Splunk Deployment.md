@@ -91,7 +91,7 @@ rpm -ivh <Package>
 # Start Splunk and accept the license:
 /opt/splunk/bin/splunk start --accept-license
 
-# Change the ownership of the splunk directory and everything under it to the user that you want to run the software.
+# Change the ownership of the splunk directory.
 chown -R splunk:splunk /opt/splunk
 
 # Enable Splunk to start on boot:

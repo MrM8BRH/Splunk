@@ -42,7 +42,7 @@ systemctl status firewalld
 Author: [Barakat Abweh](https://github.com/barakat-abweh/disable-transparent-Huge-Pages) 
 
 *   `nano /etc/systemd/system/disable-thp.service`
-```text-plain
+```
 [Unit]
 Description=Disable Transparent Huge Pages (THP)
 
@@ -91,8 +91,11 @@ rpm -ivh <Package>
 # Start Splunk and accept the license:
 /opt/splunk/bin/splunk start --accept-license
 
+# Change the ownership of the splunk directory and everything under it to the user that you want to run the software.
+chown -R splunk:splunk /opt/splunk
+
 # Enable Splunk to start on boot:
-/opt/splunk/bin/splunk enable boot-start
+/opt/splunk/bin/splunk enable boot-start -user splunk
 ```
 
 ## Enable SSL

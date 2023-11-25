@@ -6,14 +6,20 @@
 
 ## Install & Configure UF on Linux
 ```
-# Start Splunk Forwarder and accept the license:
+# Install Splunk Universal Forwarder using RPM:
+rpm -ivh <Package>
+
+# Start Splunk Universal Forwarder and accept the license:
 /opt/splunkforwarder/bin/splunk start --accept-license
 
-# Stop Splunk Forwarder after accepting the license
+# Change the ownership of the splunk universal forwarder directory.
+chown -R splunk:splunk /opt/splunkforwarder
+
+# Stop Splunk Universal Forwarder after accepting the license
 /opt/splunkforwarder/bin/splunk stop
 
-# Enable the Splunk Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start
+# Enable the Splunk Universal Forwarder to start on boot:
+/opt/splunkforwarder/bin/splunk enable boot-start -user splunk
 
 # Add a forward server (indexer) to send data:
 /opt/splunkforwarder/bin/splunk add forward-server <indexer-ip>:9997

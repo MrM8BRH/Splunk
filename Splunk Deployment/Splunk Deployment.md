@@ -514,14 +514,19 @@ Author: [Yousef Hawwari](https://github.com/yousefhawwari)
 
 [Compatibility between forwarders and Splunk Enterprise indexers](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/Compatibilitybetweenforwardersandindexers)
 ```
-# Upgrade Splunk using RPM:
+# Stop Splunk
+/opt/splunk/bin/splunk stop
+
+# Upgrade Splunk using RPM
 rpm -Uvh <Package>
 
-# Check the status of Splunk:
+# Check the status of Splunk
 /opt/splunk/bin/splunk status
 
-# Accept the license and perform a restart:
+# Accept the license
 <q> <y> <y>
+
+# Restart Splunk
 /opt/splunk/bin/splunk restart
 ```
 

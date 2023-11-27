@@ -3,18 +3,14 @@
 
 On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content packs that enhance the capabilities of Splunk across different use cases and industries. These extensions offer ready-to-use configurations, dashboards, visualizations, search queries, and integrations with external systems, enabling users to quickly implement specific functionality without starting from scratch.
 
-### Addons
-|                      Name                     |  Built by  |                   URL                  |
-|-----------------------------------------------|------------|----------------------------------------|
-| Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
-| Splunk Add-on for Microsoft Windows           | Splunk Inc | https://splunkbase.splunk.com/app/742  |
-| Splunk Supporting Add-on for Active Directory | Splunk Inc | https://splunkbase.splunk.com/app/1151 |
-| Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
-| Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
-
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
+| Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
+| Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
+| ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
+| Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
+| App for External Attack Surface Management | Greg Ford          | https://splunkbase.splunk.com/app/7010 |
 | Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
@@ -29,6 +25,15 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
+
+### Addons
+|                      Name                     |  Built by  |                   URL                  |
+|-----------------------------------------------|------------|----------------------------------------|
+| Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
+| Splunk Add-on for Microsoft Windows           | Splunk Inc | https://splunkbase.splunk.com/app/742  |
+| Splunk Supporting Add-on for Active Directory | Splunk Inc | https://splunkbase.splunk.com/app/1151 |
+| Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
+| Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
 
 ### Database
 | Name                                            | Built by         | URL                                    |

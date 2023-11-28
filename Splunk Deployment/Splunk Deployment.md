@@ -530,6 +530,15 @@ rpm -Uvh <Package>
 /opt/splunk/bin/splunk restart
 ```
 
+## Uninstall Splunk Enterprise (Linux)
+```
+# Uninstall Splunk using RPM:
+rpm -e `rpm -qa | grep -i splunk`
+
+# Remove the Splunk installation directory:
+sudo rm -r /opt/splunk
+```
+
 ## License
 ```
 /opt/splunk/bin/splunk btool server list --debug license
@@ -541,15 +550,11 @@ rpm -Uvh <Package>
 /opt/splunk/bin/splunk remove license <hash>
 ```
 
-## Uninstall Splunk Enterprise (Linux)
+## Check Splunk Version
 ```
-# Uninstall Splunk using RPM:
-rpm -e `rpm -qa | grep -i splunk`
+cat /opt/splunk/etc/splunk.version
+```
 
-# Remove the Splunk installation directory:
-sudo rm -r /opt/splunk
-```
- 
 ## A storage location for logs
 ```
 cd /opt/splunk/var/lib/splunk
@@ -570,12 +575,13 @@ startwebserver = 0
 sudo systemctl restart splunk
 ```
 
+## Uninstall an app or add-on
+- Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
+- You may need to remove user-specific directories created for your app or add-on by deleting any files found here: `$SPLUNK_HOME/etc/users/*/<appname>`.
+
 ## JAVA for DB Connect app
 ```
 # PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
 # URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
 # Permission: chown -R splunk:splunk /opt/splunk
 ```
-## Uninstall an app or add-on
-- Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
-- You may need to remove user-specific directories created for your app or add-on by deleting any files found here: `$SPLUNK_HOME/etc/users/*/<appname>`.

@@ -526,6 +526,9 @@ rpm -Uvh <Package>
 # Accept the license
 <q> <y> <y>
 
+# Change the ownership of the splunk directory.
+chown -R splunk:splunk /opt/splunk
+
 # Restart Splunk
 /opt/splunk/bin/splunk restart
 ```

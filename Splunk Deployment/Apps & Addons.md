@@ -12,18 +12,19 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
 | App for External Attack Surface Management | Greg Ford          | https://splunkbase.splunk.com/app/7010 |
 | Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
+| Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
+| Thycotic Secret Server Dashboard   | Jackie Lentz               | https://splunkbase.splunk.com/app/5327 |
 | Splunk IT Service Intelligence     | Splunk Inc                 | https://splunkbase.splunk.com/app/1841 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
+| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
+| SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
 | MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
 | ThreatHunting                      | Olaf Hartong               | https://splunkbase.splunk.com/app/4305 |
-| SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
-| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | Alert Manager Enterprise           | Datapunctum AG             | https://splunkbase.splunk.com/app/6730 |
 | dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
-| Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
 
 ### Addons
@@ -63,6 +64,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |---------------------------------------------------------------|-----------------|----------------------------------------|
 | Microsoft 365 App for Splunk                                  | Splunk Works    | https://splunkbase.splunk.com/app/3786 |
 | Splunk Add-on for Microsoft Office 365                        | Splunk Inc      | https://splunkbase.splunk.com/app/4055 |
+| MS Windows AD Objects                                         | Steve Hogan     | https://splunkbase.splunk.com/app/3177 |
 | Blue team app for Office 365 and Azure                        | Korstiaan stam  | https://splunkbase.splunk.com/app/4667 |
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |

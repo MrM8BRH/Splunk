@@ -9,17 +9,14 @@
 # Install Splunk Universal Forwarder using RPM:
 rpm -ivh <Package>
 
-# Start Splunk Universal Forwarder and accept the license:
-/opt/splunkforwarder/bin/splunk start --accept-license
-
-# Change the ownership of the splunk universal forwarder directory.
-chown -R splunk:splunk /opt/splunkforwarder
-
-# Stop Splunk Universal Forwarder after accepting the license
-/opt/splunkforwarder/bin/splunk stop
+# Check Splunk status and accept the license with 'yes' as the answer
+/opt/splunkforwarder/bin/splunk status --accept-license --answer-yes
 
 # Enable the Splunk Universal Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start -user splunk
+/opt/splunkforwarder/bin/splunk enable boot-start -user splunkfwd
+
+# Start Splunk Universal Forwarder
+/opt/splunkforwarder/bin/splunk start
 
 # Add a forward server (indexer) to send data:
 /opt/splunkforwarder/bin/splunk add forward-server <indexer-ip>:9997

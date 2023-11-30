@@ -99,12 +99,22 @@ chown -R splunk:splunk /opt/splunk
 ```
 
 ## Enable SSL
-*   `vi /opt/splunk/etc/system/local/web.conf`
+*   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
 [settings]
 max_upload_size = 1024
 enableSplunkWebSSL = true
 ```
+*   `/opt/splunk/bin/splunk restart`
+
+## Optimization Recommendations
+In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
+*   `nano /opt/splunk/etc/system/local/limits.conf`
+```
+base_max_searches = 10
+max_searches_per_cpu = 6
+```
+These adjustments should be aligned with our system requirements and available resources.
 *   `/opt/splunk/bin/splunk restart`
 
 ## Forwarding Splunk's internal logs to the indexers

@@ -104,6 +104,7 @@ enableSplunkWebSSL = true
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
+[search]
 base_max_searches = 10
 max_searches_per_cpu = 6
 ```

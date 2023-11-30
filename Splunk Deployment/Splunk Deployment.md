@@ -88,14 +88,8 @@ reboot
 # Install Splunk using RPM:
 rpm -ivh <Package>
 
-# Start Splunk and accept the license:
-/opt/splunk/bin/splunk start --accept-license
-
-# Change the ownership of the splunk directory.
-chown -R splunk:splunk /opt/splunk
-
-# Enable Splunk to start on boot:
-/opt/splunk/bin/splunk enable boot-start -user splunk
+# Enable Splunk to start on boot and accept the license:
+/opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
 ```
 
 ## Enable SSL
@@ -105,7 +99,6 @@ chown -R splunk:splunk /opt/splunk
 max_upload_size = 1024
 enableSplunkWebSSL = true
 ```
-*   `/opt/splunk/bin/splunk restart`
 
 ## Optimization Recommendations
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
@@ -115,7 +108,7 @@ base_max_searches = 10
 max_searches_per_cpu = 6
 ```
 These adjustments should be aligned with our system requirements and available resources.
-*   `/opt/splunk/bin/splunk restart`
+*   `/opt/splunk/bin/splunk start`
 
 ## Forwarding Splunk's internal logs to the indexers
 *    `nano /opt/splunk/etc/system/local/outputs.conf`

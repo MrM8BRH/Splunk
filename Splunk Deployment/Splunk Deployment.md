@@ -88,7 +88,7 @@ reboot
 # Install Splunk using RPM:
 rpm -ivh <Package>
 
-# Enable Splunk to start on boot and accept the license:
+# Enable Splunk to start on boot and accept the license with 'yes' as the answer:
 /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
 ```
 

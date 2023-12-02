@@ -1,5 +1,7 @@
-## Installation
-### CentOS
+Syslog-ng (Old)
+---------------
+### Installation
+#### CentOS
 [#] CentOS 7
 ```
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -31,7 +33,7 @@ systemctl start syslog-ng
 ```
 
 
-### Debian
+#### Debian
 ```
 apt install syslog-ng
 ```
@@ -46,20 +48,20 @@ apt update
 apt install syslog-ng
 ```
 
-## Configuration
-### CentOS
+### Configuration
+#### CentOS
 ```
 cp /etc/syslog-ng/syslog-ng.conf /etc/syslog-ng/syslog-ng.conf.backup
 nano /etc/syslog-ng/syslog-ng.conf
 ```
-### Debian
+#### Debian
 ```
 cp /etc/syslog-ng.conf /etc/syslog-ng.conf.bkp
 nano /etc/syslog-ng.conf
 ```
 
 
-## Config File
+### Config File
 <details>
  
  <summary>Conf File</summary>
@@ -126,7 +128,7 @@ log { source(s_syd); destination(d_d); };
  systemctl restart syslog-ng
  ```
 
-## Log Rotation
+### Log Rotation
  
 ```
 crontab -e
@@ -138,12 +140,182 @@ crontab -e
 0 5 * * * find /var/log/syslog-ng/default/ -type f -name \*.log -mtime +7 -exec rm {} \;
 ```
 
-## Resources
+SC4S (New)
+----------
+### Index Configuration (Indexer Server)
+SC4S is pre-configured to map each sourcetype to a typical index. For new installations, it is best practice to create them in Splunk when using the SC4S defaults. SC4S can be easily customized to use different indexes if desired.
+- email
+- epav
+- epintel
+- infraops
+- netauth
+- netdlp
+- netdns
+- netfw
+- netids
+- netlb
+- netops
+- netwaf
+- netproxy
+- netipam
+- oswin
+- oswinsec
+- osnix
+- print
+- em_metrics (Optional opt-in for SC4S operational metrics; ensure this is created as a **metrics** index)
 
-https://splunk.github.io/splunk-connect-for-syslog/main/
+### Configure Splunk HTTP Event Collector (Indexer Server)
+- **Create a New Token:**
+   - Name: SC4S
+   - Options: Default settings
 
-https://splunkbase.splunk.com/app/4740
+### Install Related Splunk Apps (Search Head & Indexer Server)
+Install the [IT Essentials Work](https://splunkbase.splunk.com/app/5403) app using the following commands:
 
-https://www.splunk.com/en_us/blog/tips-and-tricks/syslog-ng-and-hec-scalable-aggregated-data-collection-in-splunk.html
+```bash
+/opt/splunk/bin/splunk stop
+tar -xvf it-essentials-work_<version>.spl -C /opt/splunk/etc/apps
+chown -R splunk:splunk /opt/splunk
+/opt/splunk/bin/splunk start
+```
 
-https://conf.splunk.com/files/2017/slides/the-critical-syslog-tricks-that-no-one-seems-to-know-about.pdf
+### Install and Configure SC4S (Syslog Server)
+```
+touch SC4S-Splunk-Connect-for-Syslog.sh
+chmod +x SC4S-Splunk-Connect-for-Syslog.sh
+nano SC4S-Splunk-Connect-for-Syslog.sh
+```
+Modify the following values prior to running the script:
+- HEC_URL
+- HEC_TOKEN
+```
+#!/bin/bash
+
+###########
+# https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/
+# https://github.com/splunk/splunk-connect-for-syslog
+# https://raw.githubusercontent.com/J-C-B/community-splunk-scripts/master/SC4S-Splunk-Connect-for-Syslog-centos8.sh
+###########
+
+# Set URL and Tokens here
+HEC_URL="https://192.168.1.50:8088"
+HEC_TOKEN="7e92d326-408e-4679-aa50-c3c7c407f151"
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+yellow=`tput setaf 3`
+reset=`tput sgr0`
+
+dnf install -y conntrack podman
+
+echo "
+net.core.rmem_default = 33554432
+net.core.rmem_max = 33554432
+net.core.netdev_max_backlog = 10000
+" >> /etc/sysctl.conf
+
+sysctl -p
+
+echo "
+[Unit]
+Description=SC4S Container
+Wants=NetworkManager.service network-online.target
+After=NetworkManager.service network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Environment=\"SC4S_IMAGE=ghcr.io/splunk/splunk-connect-for-syslog/container3:latest\"
+
+# Required mount point for syslog-ng persist data (including disk buffer)
+Environment=\"SC4S_PERSIST_MOUNT=splunk-sc4s-var:/var/lib/syslog-ng\"
+
+# Optional mount point for local overrides and configurations; see notes in docs
+Environment=\"SC4S_LOCAL_MOUNT=/opt/sc4s/local:/etc/syslog-ng/conf.d/local:z\"
+
+# Optional mount point for local disk archive (EWMM output) files
+Environment=\"SC4S_ARCHIVE_MOUNT=/opt/sc4s/archive:/var/lib/syslog-ng/archive:z\"
+
+# Map location of TLS custom TLS
+Environment=\"SC4S_TLS_MOUNT=/opt/sc4s/tls:/etc/syslog-ng/tls:z\"
+
+TimeoutStartSec=0
+
+ExecStartPre=/usr/bin/podman pull \$SC4S_IMAGE
+
+# Note: /usr/bin/bash will not be valid path for all OS
+# when startup fails on running bash check if the path is correct
+ExecStartPre=/usr/bin/bash -c \"/usr/bin/systemctl set-environment SC4SHOST=$(hostname -s)\"
+
+ExecStart=/usr/bin/podman run \
+        -e \"SC4S_CONTAINER_HOST=\${SC4SHOST}\" \
+        -v \"\$SC4S_PERSIST_MOUNT\" \
+        -v \"\$SC4S_LOCAL_MOUNT\" \
+        -v \"\$SC4S_ARCHIVE_MOUNT\" \
+        -v \"\$SC4S_TLS_MOUNT\" \
+        --env-file=/opt/sc4s/env_file \
+        --health-cmd="/healthcheck.sh" \\
+        --health-interval=10s --health-retries=6 --health-timeout=6s \
+        --network host \
+        --name SC4S \
+        --rm \$SC4S_IMAGE
+
+Restart=on-abnormal
+" > /lib/systemd/system/sc4s.service
+
+podman volume create splunk-sc4s-var
+mkdir -p /opt/sc4s/ /opt/sc4s/local /opt/sc4s/archive /opt/sc4s/tls
+
+echo "
+SC4S_DEST_SPLUNK_HEC_DEFAULT_URL=$HEC_URL
+SC4S_DEST_SPLUNK_HEC_DEFAULT_TOKEN=$HEC_TOKEN
+#SC4S_DEFAULT_TIMEZONE=Asia/Jerusalem
+#Uncomment the following line if using untrusted SSL certificates
+SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
+# TLS Config, for McAfee etc
+SC4S_SOURCE_TLS_ENABLE=yes
+SC4S_LISTEN_DEFAULT_TLS_PORT=6514
+SC4S_SOURCE_TLS_OPTIONS=no-tlsv12
+SC4S_SOURCE_TLS_CIPHER_SUITE=ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+" > /opt/sc4s/env_file
+
+echo "${yellow}Generating Cert for TLS${reset}"
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -subj "/C=NZ/ST=NI/L=Home/O=SC4S Name/OU=Org/CN=sc4sbuilder" -keyout /opt/sc4s/tls/server.key -out /opt/sc4s/tls/server.pem
+echo "${yellow}Your /opt/sc4s/env_file looks like this${reset}"
+cat /opt/sc4s/env_file
+echo "${yellow}Starting SC4S - This might take a while first time as the container is downloaded${reset}"
+systemctl daemon-reload 
+systemctl enable sc4s
+systemctl start sc4s
+
+# Send a test event
+echo "SC4S - TEST" > /dev/udp/127.0.0.1/514
+sleep 10
+podman logs SC4S
+podman ps
+
+# Sleep to allow TLS to come up
+sleep 20
+netstat -tulpn | grep LISTEN
+
+#### Use command below and then type to test
+#openssl s_client -connect localhost:6514
+
+#### Use command below for full tls test if required (adjust as needed)
+#podman run -ti drwetter/testssl.sh --severity MEDIUM --ip 127.0.0.1 sc4sbuilder:6514
+```
+
+```
+./SC4S-Splunk-Connect-for-Syslog.sh
+```
+
+### Configure Additional PKI Trust Anchors (Syslog Server)
+Additional trusted (private) Certificate Authorities can be added by following these steps:
+- **Location:**
+   Append each PEM formatted certificate to the file `/opt/sc4s/tls/trusted.pem`.
+
+Example:
+```
+cat /path/to/your/certificate.pem >> /opt/sc4s/tls/trusted.pem
+```

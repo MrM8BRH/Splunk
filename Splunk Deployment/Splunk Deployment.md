@@ -146,6 +146,25 @@ frozenTimePeriodInSecs = 23760000
 ```
 ![idx-bucket](https://github.com/MrM8BRH/Splunk/assets/34133187/0a490730-a70b-4162-ab32-74c44ece95ff)
 
+Bucket States Overview
+| Bucket State | Description | Searchable? |
+|--------------|-------------|-------------|
+| Hot          | New data is written to hot buckets. Each index has one or more hot buckets. | Yes         |
+| Warm         | Buckets rolled from hot. New data is not written to warm buckets. An index has many warm buckets. | Yes         |
+| Cold         | Buckets rolled from warm and moved to a different location. An index has many cold buckets. | Yes         |
+| Frozen       | Buckets rolled from cold. The indexer deletes frozen buckets, but you can choose to archive them first. Archived buckets can later be thawed. | No          |
+| Thawed       | Buckets restored from an archive. If you archive frozen buckets, you can later return them to the index by thawing them. | Yes         |
+
+Default Index (defaultdb) Directory Structure
+| Bucket State | Default Location                                       | Notes                                                                    |
+|--------------|--------------------------------------------------------|--------------------------------------------------------------------------|
+| Hot          | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each hot bucket occupies its own subdirectory.                            |
+| Warm         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each warm bucket occupies its own subdirectory.                           |
+| Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
+| Frozen       | When buckets freeze, they get deleted or archived into a location that you specify. | Deletion is the default. See [Archive indexed data](http://docs.splunk.com/Documentation/Splunk/latest/Indexer/Automatearchiving) for information on how to archive the data instead. |
+| Thawed       | `$SPLUNK_HOME/var/lib/splunk/defaultdb/thaweddb/*`    | Buckets that are archived and later thawed reside in this directory. See [Restore archived data](http://docs.splunk.com/Documentation/Splunk/latest/Indexer/Restorearchiveddata) for information on restoring archived data to a thawed state. |
+
+
 ## Deployment Server
 *   `Settings -> Licensing -> (Change to peer)`
 *   `Settings -> Distributed search -> Search peers`

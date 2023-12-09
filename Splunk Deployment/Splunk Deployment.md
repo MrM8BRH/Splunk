@@ -564,11 +564,21 @@ chown -R splunk:splunk /opt/splunk
 
 ## Uninstall Splunk Enterprise (Linux)
 ```
+# Stop Splunk
+/opt/splunk/bin/splunk stop
+
 # Uninstall Splunk using RPM:
 rpm -e `rpm -qa | grep -i splunk`
 
+# Uninstall Splunk using Dpkg:
+dpkg -P splunk
+
 # Remove the Splunk installation directory:
 sudo rm -r /opt/splunk
+
+# Delete the splunk user and group, if they exist.
+userdel splunk
+groupdel splunk
 ```
 
 ## License

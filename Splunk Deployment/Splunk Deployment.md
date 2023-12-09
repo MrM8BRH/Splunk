@@ -86,7 +86,13 @@ reboot
 ## Splunk Enterprise (Linux)
 ```
 # Install Splunk using RPM:
-rpm -ivh <Package>
+rpm -ivh splunk_package_name.rpm
+
+# Install Splunk using Dpkg:
+dpkg -i splunkforwarder_package_name.deb
+
+# Install Splunk using Tar:
+tar xvzf splunk_package_name.tgz -C /opt
 
 # Enable Splunk to start on boot and accept the license with 'yes' as the answer:
 /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes

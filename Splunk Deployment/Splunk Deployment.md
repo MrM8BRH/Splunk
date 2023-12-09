@@ -89,7 +89,7 @@ reboot
 rpm -ivh splunk_package_name.rpm
 
 # Install Splunk using Dpkg:
-dpkg -i splunkforwarder_package_name.deb
+dpkg -i splunk_package_name.deb
 
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt

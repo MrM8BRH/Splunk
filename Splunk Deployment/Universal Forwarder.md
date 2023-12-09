@@ -7,7 +7,13 @@
 ## Install & Configure UF on Linux
 ```
 # Install Splunk Universal Forwarder using RPM:
-rpm -ivh <Package>
+rpm -ivh splunkforwarder_package_name.rpm
+
+# Install Splunk Universal Forwarder using Dpkg:
+dpkg -i splunkforwarder_package_name.deb
+
+# Install Splunk Universal Forwarder using Tar:
+tar xvzf splunkforwarder_package_name.tgz -C /opt
 
 # Check Splunk status and accept the license with 'yes' as the answer
 /opt/splunkforwarder/bin/splunk status --accept-license --answer-yes

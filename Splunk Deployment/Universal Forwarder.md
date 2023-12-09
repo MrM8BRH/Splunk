@@ -4,7 +4,7 @@
 
 [Configure the Splunk Add-on for Windows](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration)
 
-## Install & Configure UF on Linux
+## Install & Configure Splunk Universal Forwarder on Linux
 ```
 # Install Splunk Universal Forwarder using RPM:
 rpm -ivh splunkforwarder_package_name.rpm
@@ -39,10 +39,23 @@ nano /opt/splunkforwarder/etc/system/local/deploymentclient.conf
 # Add a monitored file or directory to forward data:
 /opt/splunkforwarder/bin/splunk add monitor -auth admin:password /var/log/..etc
 ```
-## Uninstall UF on Linux
+## Uninstall Splunk Universal Forwarder on Linux
 ```
-rpm -e `rpm -qa | grep -i splunk`
-sudo rm -r /opt/splunkforwarder/
+# Stop Splunk Universal Forwarder
+/opt/splunkforwarder/bin/splunk stop
+
+# RedHat Linux
+rpm -e `rpm -qa | grep -i splunkforwarder`
+
+# Debian Linux
+dpkg -P splunkforwarder
+
+# Remove the Splunk Universal Forwarder installation directory:
+sudo rm -r /opt/splunkforwarder
+
+# Delete the splunkfwd user and group, if they exist.
+userdel splunkfwd
+groupdel splunkfwd
 ```
 
 ##  Here's an example of how you can monitor a stanza in Splunk on both Windows and Linux.

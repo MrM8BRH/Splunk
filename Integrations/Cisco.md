@@ -16,7 +16,7 @@
 ---
 [Ingesting Netflow into Stream App without using HTTP Forwarders](https://www.reddit.com/r/Splunk/comments/b4supu/ingesting_netflow_into_stream_app_without_using/)
 
-[eStreamer eNcore for Splunk Operations Guide v4.09](https://www.cisco.com/c/en/us/td/docs/security/firepower/670/api/eStreamer_enCore/eStreamereNcoreSplunkOperationsGuide_409.html)
+[eStreamer -  User Guide for Cisco Secure Firewall (f.k.a. Firepower) App for Splunk](https://www.cisco.com/c/en/us/td/docs/security/firepower/splunk/Cisco_Firepower_App_for_Splunk_User_Guide.html) + [Splunkbase - Cisco Secure Firewall App for Splunk](https://splunkbase.splunk.com/app/4388)
 
 [How to Configure Log Sending from Cisco Firepower to Splunk [2023]](https://underdefense.com/guides/how-to-configure-log-sending-from-cisco-firepower-to-splunk/)
 

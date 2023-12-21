@@ -627,3 +627,33 @@ sudo systemctl restart splunk
 # URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
 # Permission: chown -R splunk:splunk /opt/splunk
 ```
+
+## Splunk Admin Password Reset
+#### Stop Splunk Service
+```
+/opt/splunk/bin/splunk stop
+```
+#### Move Existing Passwd File to Backup Location
+```
+mv /opt/splunk/etc/passwd /opt/splunk/etc/passwd.bkp
+```
+#### Generate Password Hash
+```
+/opt/splunk/bin/splunk hash-passwd 'your-new-password'
+```
+#### Create User-Seed.Conf File
+```
+nano /opt/splunk/etc/system/local/user-seed.conf
+```
+Containing the username and password (or password hash) you want to use:
+```
+[user_info]
+USERNAME = admin
+HASHED_PASSWORD = myPassword
+```
+#### Restart Splunk
+```
+/opt/splunk/bin/splunk restart
+```
+#### Log In with New Password
+After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 

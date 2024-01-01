@@ -209,14 +209,6 @@ reset=`tput sgr0`
 dnf install -y conntrack podman
 
 echo "
-net.core.rmem_default = 33554432
-net.core.rmem_max = 33554432
-net.core.netdev_max_backlog = 10000
-" >> /etc/sysctl.conf
-
-sysctl -p
-
-echo "
 [Unit]
 Description=SC4S Container
 Wants=NetworkManager.service network-online.target

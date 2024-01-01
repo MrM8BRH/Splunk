@@ -60,8 +60,8 @@ systemctl start disable-thp
 systemctl enable disable-thp
 ```
 
-## Extend-ulimit-open-files
-*   `nano Extend-ulimit-open-files.sh`
+## Modify System Files for Splunk Installation
+*   `nano script.sh`
 ```text-plain
 #!/bin/bash
 # backup .conf files:
@@ -94,9 +94,12 @@ sh -c 'echo "DefaultTasksMax=16000" >> /etc/systemd/system.conf'
 sh -c 'echo "DefaultTasksMax=16000" >> /etc/systemd/user.conf'
 sh -c 'echo "fs.file-max = 64000" >> /etc/sysctl.conf'
 sh -c 'echo "net.core.somaxconn = 64000" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.rmem_default = 33554432" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.netdev_max_backlog = 10000" >> /etc/sysctl.conf'
 ```
-*   `chmod +x Extend-ulimit-open-files.sh`
-*   `./Extend-ulimit-open-files.sh`
+*   `chmod +x script.sh`
+*   `./script.sh`
 ```diff
 - After completing the above, restart the system
 reboot

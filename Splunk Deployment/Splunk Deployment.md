@@ -39,7 +39,7 @@ systemctl status firewalld
 
 ## Disable Transparent Huge Pages (THP)
 
-Author: [Barakat Abweh](https://github.com/barakat-abweh/disable-transparent-Huge-Pages) 
+[How to disable Transparent Huge Pages on CentOS](https://blacksaildivision.com/how-to-disable-transparent-huge-pages-on-centos)
 
 *   `nano /etc/systemd/system/disable-thp.service`
 ```
@@ -61,20 +61,35 @@ systemctl enable disable-thp
 ```
 
 ## Extend-ulimit-open-files
-
-Author: [Barakat Abweh](https://github.com/barakat-abweh/extend-ulimit-open-files)
 *   `nano Extend-ulimit-open-files.sh`
 ```text-plain
-# !/bin/bash
-echo "fs.file-max=65535" >/etc/sysctl.conf
-cp /etc/systemd/user.conf /etc/systemd/user.conf.bckup
-cp /etc/systemd/system.conf /etc/systemd/system.conf.bckup
-sed -i 's/^#DefaultLimitNOFILE=/DefaultLimitNOFILE=65535/' /etc/systemd/user.conf
-sed -i 's/^#DefaultLimitNOFILE=/DefaultLimitNOFILE=65535/' /etc/systemd/system.conf
-echo "splunk               soft    nproc           65535" >> /etc/security/limits.conf
-echo "splunk               hard    nproc           65535" >> /etc/security/limits.conf
-echo "splunk               soft    nofile          65535" >> /etc/security/limits.conf
-echo "splunk               hard    nofile          65535" >> /etc/security/limits.conf
+#!/bin/bash
+# backup .conf files:
+cp -f /etc/security/limits.conf{,.bak}
+cp -f /etc/systemd/system.conf{,.bak}
+cp -f /etc/systemd/user.conf{,.bak}
+cp -f /etc/sysctl.conf{,.bak}
+# adding parameters
+sh -c 'echo "* soft  nproc   64000" >> /etc/security/limits.conf'
+sh -c 'echo "* hard  nproc   64000" >> /etc/security/limits.conf'
+sh -c 'echo "* soft  nofile  64000" >> /etc/security/limits.conf'
+sh -c 'echo "* hard  nofile  64000" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  soft  nproc   64000" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  hard  nproc   64000" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  soft  nofile  64000" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  hard  nofile  64000" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  soft  data   unlimited" >> /etc/security/limits.conf'
+sh -c 'echo "splunk  hard  data   unlimited" >> /etc/security/limits.conf'
+sh -c 'echo "DefaultLimitNOFILE=64000" >> /etc/systemd/system.conf'
+sh -c 'echo "DefaultLimitNOFILE=64000" >> /etc/systemd/user.conf'
+sh -c 'echo "DefaultLimitNPROC=16000" >> /etc/systemd/system.conf'
+sh -c 'echo "DefaultLimitNPROC=16000" >> /etc/systemd/user.conf'
+sh -c 'echo "DefaultLimitDATA=1073741824" >> /etc/systemd/system.conf'
+sh -c 'echo "DefaultLimitDATA=1073741824" >> /etc/systemd/user.conf'
+sh -c 'echo "DefaultLimitFSIZE=infinity" >> /etc/systemd/system.conf'
+sh -c 'echo "DefaultLimitFSIZE=infinity" >> /etc/systemd/user.conf'
+sh -c 'echo "fs.file-max = 64000" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.somaxconn = 64000" >> /etc/sysctl.conf'
 ```
 *   `chmod +x Extend-ulimit-open-files.sh`
 *   `./Extend-ulimit-open-files.sh`

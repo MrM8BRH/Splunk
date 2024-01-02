@@ -2,36 +2,12 @@ Syslog-ng (Old)
 ---------------
 ### Installation
 #### CentOS
-[#] CentOS 7
 ```
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-rpm -Uvh epel-release-latest-7.noarch.rpm
-```
-
-[#] CentOS 8
-```
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-rpm -Uvh epel-release-latest-8.noarch.rpm
-```
-
-`cd /etc/yum.repos.d/`
-
-[#] CentOS 7
-```
-wget https://copr.fedorainfracloud.org/coprs/czanik/syslog-ng336/repo/epel-7/czanik-syslog-ng41-epel-7.repo
-```
-
-[#] CentOS 8
-```
-wget https://copr.fedorainfracloud.org/coprs/czanik/syslog-ng336/repo/epel-8/czanik-syslog-ng41-epel-8.repo
-```
-
-```
-dnf install syslog-ng
+dnf install -y epel-release
+dnf install -y syslog-ng
 systemctl enable syslog-ng
 systemctl start syslog-ng
 ```
-
 
 #### Debian
 ```
@@ -42,8 +18,6 @@ If you face dependencies issues:
 ```
 wget -qO - https://ose-repo.syslog-ng.com/apt/syslog-ng-ose-pub.asc | sudo apt-key add -
 echo "deb https://ose-repo.syslog-ng.com/apt/ nightly ubuntu-jammy" | sudo tee -a /etc/apt/sources.list.d/syslog-ng-ose.list
-```
-```
 apt update
 apt install syslog-ng
 ```
@@ -59,7 +33,6 @@ nano /etc/syslog-ng/syslog-ng.conf
 cp /etc/syslog-ng.conf /etc/syslog-ng.conf.bkp
 nano /etc/syslog-ng.conf
 ```
-
 
 ### Config File
 <details>

@@ -142,13 +142,15 @@ server = 192.168.1.50:9997
 ```
 
 ## Indexer Server
-*   `Settings -> Forwarding and reciving -> Configure receiving`
-*   `Settings -> Licensing -> (Change to peer)`
-*   `Settings -> Distributed search -> Search peers`
-*   `Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]`
-*   `Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc`
-*   `Install Addons`
-*   `Disable Splunk Web`
+```
+Settings -> Forwarding and reciving -> Configure receiving
+Settings -> Licensing -> (Change to peer)
+Settings -> Distributed search -> Search peers
+Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
+Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
+Install Addons
+- Disable Splunk Web
+```
 
 **Log Retention**
 
@@ -185,13 +187,17 @@ Default Index (defaultdb) Directory Structure
 
 
 ## Deployment Server
-*   `Settings -> Licensing -> (Change to peer)`
-*   `Settings -> Distributed search -> Search peers`
-*   `Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]`
-*   `Install Windows/Linux Addons`
-*   `mkdir -p /opt/splunk/etc/deployment-apps/output/local`
-*   `cd /opt/splunk/etc/deployment-apps/output/local`
-*   `nano outputs.conf`
+```
+- Settings -> Licensing -> (Change to peer)
+- Settings -> Distributed search -> Search peers
+- Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
+- Install Windows/Linux Addons
+```
+```
+- mkdir -p /opt/splunk/etc/deployment-apps/output/local
+- cd /opt/splunk/etc/deployment-apps/output/local
+- nano outputs.conf
+```
 ```
 [tcpout] defaultGroup = default-autolb-group
 

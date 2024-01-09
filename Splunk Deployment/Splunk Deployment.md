@@ -25,38 +25,27 @@ SELINUX=disabled
 ```
 
 ## Disable Firewall
+#### Redhat
 ```
-# Stops the "firewalld" service immediately.
 systemctl stop firewalld
-
-# Disables the "firewalld" service from starting automatically on system boot.
 systemctl disable firewalld
-
-# Checks the current status of the "firewalld" service.
-systemctl status firewalld
+```
+#### Debian
+```
+systemctl stop ufw
+systemctl disable ufw
 ```
 
 ## Disable Transparent Huge Pages (THP)
-
-[How to disable Transparent Huge Pages on CentOS](https://blacksaildivision.com/how-to-disable-transparent-huge-pages-on-centos)
-
-*   `nano /etc/systemd/system/disable-thp.service`
 ```
-[Unit]
-Description=Disable Transparent Huge Pages (THP)
+echo "
+echo never > /sys/kernel/mm/transparent_hugepage/defrag 
+echo never > /sys/kernel/mm/transparent_hugepage/enabled " >> /etc/rc.d/rc.local
 
-[Service]
-Type=simple
-ExecStart=/bin/sh -c "echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled && echo 'never' > /sys/kernel/mm/transparent_hugepage/defrag"
+chmod a+x /etc/rc.d/rc.local
 
-[Install]
-WantedBy=multi-user.target
-```
-
-```
-systemctl daemon-reload
-systemctl start disable-thp
-systemctl enable disable-thp
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
 ```
 
 ## Modify System Files for Splunk Installation
@@ -67,7 +56,6 @@ systemctl enable disable-thp
 cp -f /etc/security/limits.conf{,.bak}
 cp -f /etc/systemd/system.conf{,.bak}
 cp -f /etc/systemd/user.conf{,.bak}
-cp -f /etc/sysctl.conf{,.bak}
 # adding parameters
 sh -c 'echo "* soft  nproc   64000" >> /etc/security/limits.conf'
 sh -c 'echo "* hard  nproc   64000" >> /etc/security/limits.conf'
@@ -91,11 +79,6 @@ sh -c 'echo "DefaultLimitFSIZE=infinity" >> /etc/systemd/system.conf'
 sh -c 'echo "DefaultLimitFSIZE=infinity" >> /etc/systemd/user.conf'
 sh -c 'echo "DefaultTasksMax=16000" >> /etc/systemd/system.conf'
 sh -c 'echo "DefaultTasksMax=16000" >> /etc/systemd/user.conf'
-sh -c 'echo "fs.file-max = 64000" >> /etc/sysctl.conf'
-sh -c 'echo "net.core.somaxconn = 64000" >> /etc/sysctl.conf'
-sh -c 'echo "net.core.rmem_default = 33554432" >> /etc/sysctl.conf'
-sh -c 'echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf'
-sh -c 'echo "net.core.netdev_max_backlog = 10000" >> /etc/sysctl.conf'
 ```
 *   `chmod +x script.sh`
 *   `./script.sh`
@@ -115,8 +98,8 @@ dpkg -i splunk_package_name.deb
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt
 
-# Enable Splunk to start on boot and accept the license with 'yes' as the answer:
-/opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
+# Enable Splunk to start on boot and accept the license:
+/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk --accept-license
 ```
 
 ## Enable SSL

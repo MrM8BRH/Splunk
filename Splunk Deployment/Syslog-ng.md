@@ -21,6 +21,22 @@ echo "deb https://ose-repo.syslog-ng.com/apt/ nightly ubuntu-jammy" | sudo tee -
 apt update
 apt install syslog-ng
 ```
+#### Script
+`nano script.sh`
+```
+#!/bin/bash
+# backup .conf files:
+cp -f /etc/sysctl.conf{,.bak}
+# adding parameters
+sh -c 'echo "fs.file-max = 65535" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.somaxconn = 65535" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.rmem_default = 33554432" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf'
+sh -c 'echo "net.core.netdev_max_backlog = 10000" >> /etc/sysctl.conf'
+```
+`chmod +x script.sh`
+
+`./script.sh`
 
 ### Configuration
 #### CentOS

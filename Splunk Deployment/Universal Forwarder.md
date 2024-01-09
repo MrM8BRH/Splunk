@@ -15,11 +15,11 @@ dpkg -i splunkforwarder_package_name.deb
 # Install Splunk Universal Forwarder using Tar:
 tar xvzf splunkforwarder_package_name.tgz -C /opt
 
-# Check Splunk status and accept the license with 'yes' as the answer
-/opt/splunkforwarder/bin/splunk status --accept-license --answer-yes
+# Check Splunk status and accept the license 
+/opt/splunkforwarder/bin/splunk status --accept-license
 
 # Enable the Splunk Universal Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start -user splunkfwd
+/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd
 
 # Start Splunk Universal Forwarder
 /opt/splunkforwarder/bin/splunk start

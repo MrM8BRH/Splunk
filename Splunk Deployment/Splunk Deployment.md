@@ -37,15 +37,23 @@ systemctl disable ufw
 ```
 
 ## Disable Transparent Huge Pages (THP)
+*   `nano /etc/systemd/system/disable-thp.service`
 ```
-echo "
-echo never > /sys/kernel/mm/transparent_hugepage/defrag 
-echo never > /sys/kernel/mm/transparent_hugepage/enabled " >> /etc/rc.d/rc.local
+[Unit]
+Description=Disable Transparent Huge Pages (THP)
 
-chmod a+x /etc/rc.d/rc.local
+[Service]
+Type=simple
+ExecStart=/bin/sh -c "echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled && echo 'never' > /sys/kernel/mm/transparent_hugepage/defrag"
 
-echo never > /sys/kernel/mm/transparent_hugepage/defrag
-echo never > /sys/kernel/mm/transparent_hugepage/enabled
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+systemctl daemon-reload
+systemctl start disable-thp
+systemctl enable disable-thp
 ```
 
 ```diff

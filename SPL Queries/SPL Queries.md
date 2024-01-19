@@ -252,3 +252,22 @@ _time,operation,user,host
 </form>
 ```
 </details>
+
+---
+
+Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
+```
+index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Truncating" 
+| rex "line length >= (?<line_length>\d+)" 
+| stats values(host) as host values(data_host) as data_host count last(_raw) as common_events last(_time) as _time max(line_length) as max_line_length by data_sourcetype log_level 
+| table _time host data_host data_sourcetype log_level max_line_length count common_events 
+| rename data_sourcetype as sourcetype 
+| eval number=max_line_length 
+| eval recommeneded_truncate=max_line_length+100000 
+| eval recommeneded_truncate=recommeneded_truncate-(recommeneded_truncate%100000) 
+| eval recommended_config="# props.conf
+ ["+sourcetype+"]
+ TRUNCATE = "+recommeneded_truncate 
+| table _time host data_host sourcetype log_level max_line_length recommeneded_truncate recommended_config count common_events 
+| sort -count
+```

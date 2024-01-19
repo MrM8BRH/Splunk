@@ -90,7 +90,6 @@ TasksMax=8192
 [Set limits using the /etc/systemd configuration files](https://docs.splunk.com/Documentation/Splunk/latest/Troubleshooting/ulimitErrors#Set_limits_using_the_.2Fetc.2Fsystemd_configuration_files)
 ```
 systemctl daemon-reload
-systemctl restart Splunkd.service
 ```
 
 ## Enable SSL
@@ -110,7 +109,10 @@ base_max_searches = 10
 max_searches_per_cpu = 6
 ```
 These adjustments should be aligned with our system requirements and available resources.
-*   `/opt/splunk/bin/splunk start`
+
+## Start and enable Splunk service
+- `systemctl start Splunkd.service`
+- `systemctl enable Splunkd.service`
 
 ## Forwarding Splunk's internal logs to the indexers
 *    `nano /opt/splunk/etc/system/local/outputs.conf`

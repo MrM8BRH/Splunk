@@ -83,7 +83,7 @@ Add or change the values in the file:
 ```
 LimitNOFILE=64000
 LimitNPROC=16000
-LimitDATA=8589934592
+LimitDATA=20000000000
 LimitFSIZE=infinity
 TasksMax=8192
 ```

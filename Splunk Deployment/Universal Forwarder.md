@@ -64,14 +64,18 @@ For Windows:
 [monitor://C:\path\to\logs]
 disabled = false
 index = myindex
-host_segment = 5
+sourcetype = source_type
+# host = hostname
+# host_segment = 5
 ```
  For Linux:
  ```
 [monitor:///path/to/logs]
 disabled = false
 index = myindex
-host_segment = 5
+sourcetype = source_type
+# host = hostname
+# host_segment = 5
 ```
 ```diff
 - Restart the service after modifying the monitor stanza.

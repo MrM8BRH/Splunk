@@ -1,9 +1,3 @@
-[Install a Windows universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller)
-
-[Install a *nix universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/Installanixuniversalforwarder)
-
-[Configure the Splunk Add-on for Windows](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration)
-
 ## Install & Configure Splunk Universal Forwarder on Linux
 ```
 # Install Splunk Universal Forwarder using RPM:
@@ -98,3 +92,27 @@ blacklist3 = EventCode="4625" ComputerName="specific-comp-name" Message="Account
 blacklist4 = EventCode="4625" ComputerName="specific-comp-name" Message="specific-user-name"
 whitelist = 4722,4725,4740,4767,4738,4720,4723,4724,4726,4735,4737,4761,4762,4728,4729,4776,4780,4688,4648
 ```
+
+## Discard specific events and keep the rest
+1. This example discards all `sshd` events in `/var/log/messages` by sending them to `nullQueue`:
+```
+[source::/var/log/messages]
+TRANSFORMS-null= setnull
+```
+2. Create a corresponding stanza in `transforms.conf`. Set `DEST_KEY` to "queue" and `FORMAT` to "nullQueue":
+```
+[setnull]
+REGEX = \[sshd\]
+DEST_KEY = queue
+FORMAT = nullQueue
+```
+3. Restart Splunk Enterprise.
+
+Resources
+---------
+- [Install a Windows universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller)
+- [Install a *nix universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/Installanixuniversalforwarder)
+- [Configure the Splunk Add-on for Windows](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration)
+- [Route and filter data](https://docs.splunk.com/Documentation/Splunk/latest/Forwarding/Routeandfilterdatad#Route_and_filter_data)
+- [Create advanced filters with the 'whitelist' and 'blacklist' settings](https://docs.splunk.com/Documentation/Splunk/latest/Data/MonitorWindowseventlogdata#Create_advanced_filters_with_the_.27whitelist.27_and_.27blacklist.27_settings)
+- [Set up client filters](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Filterclients)

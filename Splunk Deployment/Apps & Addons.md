@@ -3,22 +3,41 @@
 
 On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content packs that enhance the capabilities of Splunk across different use cases and industries. These extensions offer ready-to-use configurations, dashboards, visualizations, search queries, and integrations with external systems, enabling users to quickly implement specific functionality without starting from scratch.
 
+### Enterprise Security
+|                Name                |          Built by          |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| Splunk Enterprise Security         | Splunk Inc                 | https://splunkbase.splunk.com/app/263  |
+| Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
+| ES Mothership App for Splunk       | Splunk Works               | https://splunkbase.splunk.com/app/4746 |
+| ES Choreographer                   | Gabriel Vasseur            | https://splunkbase.splunk.com/app/6309 |
+| ES Helper                          | Kinney Group               | https://splunkbase.splunk.com/app/5638 |
+| Update Notable Command for ES      | Doug Brown                 | https://splunkbase.splunk.com/app/5211 |
+| SA-Investigator for Enterprise Security           | Splunk Works                | https://splunkbase.splunk.com/app/3749 |
+| Machine Learning Cloud Service Add-on for Enterprise Security           | Splunk Works                 | https://splunkbase.splunk.com/app/5091 |
+| SA-CrowdstrikeDevices for Splunk Enterprise Security           | Splunk Works                 | https://splunkbase.splunk.com/app/6573 |
+| SA-CrowdstrikeIntelIndicators for Enterprise Security           | Arcus Data                 | https://splunkbase.splunk.com/app/7064 |
+| SA-CortexXDRDevices for Enterprise Security           | Arcus Data                 | https://splunkbase.splunk.com/app/7063 |
+| SA-CrowdStrikeIdentities for Enterprise Security           | Zach TheSplunker                 | https://splunkbase.splunk.com/app/6930 |
+| SCADAfence for Splunk ES and OT           | SCADAfence Inc                 | https://splunkbase.splunk.com/app/6198 |
+| ServiceNow Security Operations Event Ingestion Addon for Splunk ES           | ServiceNow SecOps Applications                 | https://splunkbase.splunk.com/app/4770 |
+| PowerConnect for SAP Solutions - ES Content Pack           | Software ONE                 | https://splunkbase.splunk.com/app/6674 |
+
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
+| InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
+| Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
+| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
+| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
+| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
 | ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
 | App for External Attack Surface Management | Greg Ford          | https://splunkbase.splunk.com/app/7010 |
-| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
-| InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
-| Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
 | Thycotic Secret Server Dashboard   | Jackie Lentz               | https://splunkbase.splunk.com/app/5327 |
 | Splunk IT Service Intelligence     | Splunk Inc                 | https://splunkbase.splunk.com/app/1841 |
-| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
-| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
 | MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |

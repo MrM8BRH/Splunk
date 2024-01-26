@@ -206,6 +206,7 @@ cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/sp
 # Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
+[Configure event cleanup best practices in props.conf](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration#Configure_event_cleanup_best_practices_in_props.conf)
 
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux

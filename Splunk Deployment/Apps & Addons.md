@@ -22,6 +22,19 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | ServiceNow Security Operations Event Ingestion Addon for Splunk ES           | ServiceNow SecOps Applications                 | https://splunkbase.splunk.com/app/4770 |
 | PowerConnect for SAP Solutions - ES Content Pack           | Software ONE                 | https://splunkbase.splunk.com/app/6674 |
 
+### Windows
+|                      Name                     |  Built by  |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| MS Windows AD Objects                         | Steve Hogan | https://splunkbase.splunk.com/app/3177 |
+| Splunk Add-on for Microsoft Windows           | Splunk Inc | https://splunkbase.splunk.com/app/742  |
+| Splunk Supporting Add-on for Active Directory | Splunk Inc | https://splunkbase.splunk.com/app/1151 |
+
+### Linux
+|                Name                |          Built by          |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
+| Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
+
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
@@ -29,7 +42,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
-| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
 | ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
@@ -49,9 +61,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
-| Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
-| Splunk Add-on for Microsoft Windows           | Splunk Inc | https://splunkbase.splunk.com/app/742  |
-| Splunk Supporting Add-on for Active Directory | Splunk Inc | https://splunkbase.splunk.com/app/1151 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
 | Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
 

@@ -271,3 +271,8 @@ index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Tru
 | table _time host data_host sourcetype log_level max_line_length recommeneded_truncate recommended_config count common_events 
 | sort -count
 ```
+
+Splunk query to list all sourcetypes
+```
+| metadata type=sourcetypes index=*
+```

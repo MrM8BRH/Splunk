@@ -96,7 +96,7 @@ systemctl daemon-reload
 *   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
 [settings]
-max_upload_size = 1024
+max_upload_size = 2048
 enableSplunkWebSSL = true
 ```
 

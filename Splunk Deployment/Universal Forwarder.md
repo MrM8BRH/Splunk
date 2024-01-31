@@ -108,6 +108,15 @@ FORMAT = nullQueue
 ```
 3. Restart Splunk Enterprise.
 
+REGEX
+Website for testing: `https://regex101.com/`
+
+Examples:
+```
+\bgroup="N\/A"
+\bsshd\b
+\bn\/?a(?:[aeiouAEIOU]*|)\b|\bN\/?A(?:[aeiouAEIOU]*|)\b
+```
 Resources
 ---------
 - [Install a Windows universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller)

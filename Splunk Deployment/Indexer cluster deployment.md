@@ -11,6 +11,9 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
 <div align="center">
 <img src="https://github.com/MrM8BRH/Splunk/assets/34133187/8f0eebaf-6daa-439a-a637-d37f7b4c462c">
 </div>
+<div align="center">
+<img src="https://github.com/MrM8BRH/Splunk/assets/34133187/3d0d28eb-3769-412c-a173-ad3e9b8be631">
+</div>
 
 ## Deploy a cluster
    Configure the manager node with the CLI
@@ -111,7 +114,23 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ```
    /opt/splunk/bin/splunk help clustering
    ```
+   Managing Indexes in Indexer Clusters
+   1. All indexes are defined in `indexes.conf`
+   2. All peer nodes use the same `indexes.conf`
+   3. Master node distributes `indexes.conf`
+   4. Configuration bundle in `/opt/splunk/etc/master-apps/` on master node
+   5. Deployed to `/opt/splunk/etc/slave-apps/` on peer nodes
+   6. Master node intiates rolling restart
 
+   Configuration Bundle Deployment
+   1. Deployed from master node using Splunk Web or CLI
+   2. Initiates rolling restart of all peer nodes if needed
+   ```
+   /opt/splunk/bin/splunk validate cluster-bundle --check-restart
+   /opt/splunk/bin/splunk apply cluster-bundle
+   /opt/splunk/bin/splunk show cluster-bundle-status
+   /opt/splunk/bin/splunk rollback cluster-bundle
+   ```
 ---
 
 

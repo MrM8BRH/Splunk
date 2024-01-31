@@ -1,3 +1,9 @@
+## IOPS test command for linux
+```
+dnf install -y fio
+fio --name=benchmark --size=1G --runtime=30 --filename=tempfile --ioengine=libaio --rw=randread --iodepth=32
+```
+
 ## Change Timezone
 ```
 timedatectl

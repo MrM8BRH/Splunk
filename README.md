@@ -25,6 +25,7 @@ Table of Contents
     - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
     - [Firewall rules](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Firewall%20rules.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
+    - [Indexer cluster deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Indexer%20cluster%20deployment.md)
 
 2. Integrations
     - [FortiGate](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/FortiGate.md)

@@ -105,9 +105,21 @@ splunkdConnectionTimeout = 3000
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
+[default]
+max_mem_usage_mb = 8192
+
 [search]
-base_max_searches = 10
-max_searches_per_cpu = 6
+base_max_searches = 30
+max_searches_per_cpu = 5
+
+[mvcombine]
+max_mem_usage_mb = 1024
+
+[mvexpand]
+max_mem_usage_mb = 1024
+
+[sort]
+maxfiles = 128
 ```
 These adjustments should be aligned with our system requirements and available resources.
 

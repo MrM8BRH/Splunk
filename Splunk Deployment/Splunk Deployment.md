@@ -155,8 +155,6 @@ Install Addons
 
 **Log Retention**
 
-`mv /opt/splunk/etc/system/local/indexes.conf /opt/splunk/etc/system/local/indexes.conf.bkp`
-
 `nano /opt/splunk/etc/system/local/indexes.conf`
 ```
 [default]
@@ -183,8 +181,6 @@ Default Index (defaultdb) Directory Structure
 | Hot          | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each hot bucket occupies its own subdirectory.                            |
 | Warm         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each warm bucket occupies its own subdirectory.                           |
 | Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
-| Frozen       | When buckets freeze, they get deleted or archived into a location that you specify. | Deletion is the default. See [Archive indexed data](http://docs.splunk.com/Documentation/Splunk/latest/Indexer/Automatearchiving) for information on how to archive the data instead. |
-| Thawed       | `$SPLUNK_HOME/var/lib/splunk/defaultdb/thaweddb/*`    | Buckets that are archived and later thawed reside in this directory. See [Restore archived data](http://docs.splunk.com/Documentation/Splunk/latest/Indexer/Restorearchiveddata) for information on restoring archived data to a thawed state. |
 
 
 ## Deployment Server
@@ -200,6 +196,10 @@ Default Index (defaultdb) Directory Structure
 - nano outputs.conf
 ```
 ```
+# Turn off indexing
+[indexAndForward]
+index = false
+
 [tcpout] defaultGroup = default-autolb-group
 
 [tcpout:default-autolb-group]

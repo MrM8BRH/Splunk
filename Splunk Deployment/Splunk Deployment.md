@@ -4,14 +4,67 @@ https://docs.centos.org/en-US/centos/install-guide/downloading/
 ### Quick Installation Guide
 https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 
-## Tools and Dependencies
+## Preparing a System Before Splunk Installation
+
+### Update the system & Install additional tools
 ```
 yum update -y
 yum install -y dnf
-dnf install -y net-tools nano bind-utils chkconfig wget bzip2
+dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen iotop htop ioping fio bzip2
 ```
 
-## Disable SELinux
+### Change Timezone
+```
+timedatectl
+timedatectl set-timezone Asia/Jerusalem
+```
+
+### Change Hostname
+```
+hostname
+hostnamectl set-hostname <hostname>
+```
+
+### Change IP Address, DNS Server, Gateway
+*   `ip a`
+*   `vi /etc/sysconfig/network-scripts/ifcfg-<int>`
+  
+```
+ONBOOT=yes
+IPADDR=<IP>                                       *****
+PREFIX=                                           *****
+GATEWAY=<GW>                                      *****
+DNS1=<DNS1>                                       *****
+DNS2=<DNS2>                                       *****
+```
+*   `systemctl restart network.service`
+
+### Change NTP Server
+
+#### chronyd
+```
+systemctl status chronyd
+systemctl start chronyd
+systemctl enable chronyd
+```
+
+#### NTP
+```
+dnf install ntp
+systemctl start ntp
+systemctl enable ntp
+```
+
+*   `nano /etc/ntp.conf`
+
+*   server "IP Address"
+  
+```
+systemctl restart ntpd
+ntpq -p
+```
+
+### Disable SELinux
 ```
 # Check the current status and mode of SELinux.
 sestatus
@@ -24,19 +77,14 @@ nano /etc/selinux/config
 SELINUX=disabled
 ```
 
-## Disable Firewall
-#### Redhat
+### Disable Firewall
 ```
 systemctl stop firewalld
 systemctl disable firewalld
 ```
-#### Debian
-```
-systemctl stop ufw
-systemctl disable ufw
-```
 
-## Disable Transparent Huge Pages (THP)
+
+### Disable Transparent Huge Pages (THP)
 *   `nano /etc/systemd/system/disable-thp.service`
 ```
 [Unit]
@@ -65,9 +113,6 @@ reboot
 ```
 # Install Splunk using RPM:
 rpm -ivh splunk_package_name.rpm
-
-# Install Splunk using Dpkg:
-dpkg -i splunk_package_name.deb
 
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt
@@ -323,9 +368,6 @@ chown -R splunk:splunk /opt/splunk
 # Uninstall Splunk using RPM:
 rpm -e `rpm -qa | grep -i splunk`
 
-# Uninstall Splunk using Dpkg:
-dpkg -P splunk
-
 # Remove the Splunk installation directory:
 sudo rm -r /opt/splunk
 
@@ -410,3 +452,20 @@ HASHED_PASSWORD = myPassword
 ```
 #### Log In with New Password
 After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 
+
+
+### Kvstore
+```
+# Path
+/var/lib/splunk/kvstore/mongo
+
+# Status
+/opt/splunk/bin/splunk show kvstore-status
+
+# Clean
+/opt/splunk/bin/splunk clean kvstore -local
+
+# Migrate
+/opt/splunk/bin/splunk stop
+/opt/splunk/bin/splunk migrate migrate-kvstore
+```

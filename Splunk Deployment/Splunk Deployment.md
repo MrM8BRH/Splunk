@@ -98,6 +98,7 @@ systemctl daemon-reload
 [settings]
 max_upload_size = 2048
 enableSplunkWebSSL = true
+splunkdConnectionTimeout = 3000
 ```
 
 ## Optimization Recommendations

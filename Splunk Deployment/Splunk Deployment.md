@@ -121,7 +121,7 @@ tar xvzf splunk_package_name.tgz -C /opt
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk --accept-license
 ```
 
-## Splunkd.service
+### Splunkd.service
 `nano /etc/systemd/system/Splunkd.service`
 
 Add or change the values in the file:
@@ -137,7 +137,7 @@ TasksMax=8192
 systemctl daemon-reload
 ```
 
-## Enable SSL
+### Enable SSL
 *   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
 [settings]
@@ -146,7 +146,7 @@ enableSplunkWebSSL = true
 splunkdConnectionTimeout = 3000
 ```
 
-## Optimization Recommendations
+### Optimization Recommendations
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
@@ -168,11 +168,11 @@ maxfiles = 128
 ```
 These adjustments should be aligned with our system requirements and available resources.
 
-## Start and enable Splunk service
+### Start and enable Splunk service
 - `systemctl start Splunkd.service`
 - `systemctl enable Splunkd.service`
 
-## Forwarding Splunk's internal logs to the indexers
+### Forwarding Splunk's internal logs to the indexers
 *    `nano /opt/splunk/etc/system/local/outputs.conf`
 ```
 # Turn off indexing
@@ -198,7 +198,7 @@ Install Addons
 - Disable Splunk Web
 ```
 
-**Log Retention**
+### Log Retention
 
 `nano /opt/splunk/etc/system/local/indexes.conf`
 ```
@@ -317,21 +317,11 @@ Reload the configuration for the Splunk Deployment Server
               Indexer -> Indexer
               Deployment -> Deployment
               Search Head -> Search Head + KV Store + License Master
-- Turning off indexing on the Search Head ("outputs.conf" file in the "/opt/splunk/etc/system/local") : 
-We will make indexAndForward flag = false
-```
-Enterprise Security App
-```
-Configure -> Content -> Content Management (Type: Correlation Search)
-Configure -> General -> General Settings (Distributed Configuration Management)
-Configure -> Data Enrichment -> Threat Intelligence Management
-Configure -> Data Enrichment -> Asset and Identity Management -> (Asset Lookups + Identity Lookups) -> New -> LDAP Lookup
-Configure -> Data Enrichment -> Asset and Identity Management -> Correlation Setup -> Enable for all sourcetypes
 ```
 
 ## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
 
-## Enable More Auditing Policies on Windows
+### Enable More Auditing Policies on Windows
 *   Run - Group Policy > Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration
 
 ## Upgrade Splunk Enterprise (Linux)
@@ -424,20 +414,17 @@ sudo systemctl restart splunk
 ```
 
 ## Splunk Admin Password Reset
-#### Stop Splunk Service
 ```
+# Stop Splunk Service
 /opt/splunk/bin/splunk stop
-```
-#### Move Existing Passwd File to Backup Location
-```
+
+# Move Existing Passwd File to Backup Location
 mv /opt/splunk/etc/passwd /opt/splunk/etc/passwd.bkp
-```
-#### Generate Password Hash
-```
+
+# Generate Password Hash
 /opt/splunk/bin/splunk hash-passwd 'your-new-password'
-```
-#### Create User-Seed.Conf File
-```
+
+# Create User-Seed.Conf File
 nano /opt/splunk/etc/system/local/user-seed.conf
 ```
 Containing the username and password (or password hash) you want to use:
@@ -446,7 +433,7 @@ Containing the username and password (or password hash) you want to use:
 USERNAME = admin
 HASHED_PASSWORD = myPassword
 ```
-#### Restart Splunk
+Restart Splunk
 ```
 /opt/splunk/bin/splunk restart
 ```

@@ -281,3 +281,8 @@ To see where what you are collecting data from (extend this to 7 days or somethi
 ```
 | tstats latest(_time) as latest_indexed WHERE index=* by host
 ```
+
+Convert epoch time to a human readable time
+```
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+```

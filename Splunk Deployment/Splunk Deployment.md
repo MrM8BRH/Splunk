@@ -117,6 +117,10 @@ These adjustments should be aligned with our system requirements and available r
 ## Forwarding Splunk's internal logs to the indexers
 *    `nano /opt/splunk/etc/system/local/outputs.conf`
 ```
+# Turn off indexing
+[indexAndForward]
+index = false
+
 [tcpout] defaultGroup = default-autolb-group
 
 [tcpout:default-autolb-group]

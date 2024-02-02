@@ -26,6 +26,7 @@ Table of Contents
     - [Firewall rules](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Firewall%20rules.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
     - [Indexer cluster deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Indexer%20cluster%20deployment.md)
+    - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20ES.md)
 
 2. Integrations
     - [FortiGate](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/FortiGate.md)
@@ -37,13 +38,20 @@ Table of Contents
     - [Twilio SMS](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Twilio%20SMS.md)
     - [Splunk Mobile](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Splunk%20Mobile.md)
 
-3. SSL
+3. Docs
+    - [Resources](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Resources.md)
+    - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
+    - [Crontab](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Crontab.md)
+    - [DEPLOYING SPLUNK® ENTERPRISE INSIDE](https://github.com/MrM8BRH/Splunk/blob/main/Docs/DEPLOYING%20SPLUNK%C2%AE%20ENTERPRISE%20INSIDE.pdf)
+    - [splunk-validated-architectures](https://github.com/MrM8BRH/Splunk/blob/main/Docs/splunk-validated-architectures.pdf)
+
+4. SSL
     - [SSL](https://github.com/MrM8BRH/Splunk/blob/main/SSL/SSL.md)
     - [Splunk-SSL-Presentation](https://github.com/MrM8BRH/Splunk/blob/main/SSL/Splunk-SSL-Presentation.pdf)
     - [conf2015_DWaddle_DefensePointSecurity_deploying_SplunkSSLBestPractices](https://github.com/MrM8BRH/Splunk/blob/main/SSL/conf2015_DWaddle_DefensePointSecurity_deploying_SplunkSSLBestPractices.pdf)
 
 
-4. SPL Queries
+5. SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
     - [Windows | AD](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/Windows%20%7C%20AD.md)
     - PDF
@@ -60,12 +68,7 @@ Table of Contents
         - [Windows Event Log Analysis & incident Response Guide](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/PDF/Windows%20Event%20Log%20Analysis%20%26%20incident%20Response%20Guide%20.pdf)
         - [windows event log cheat sheet](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/PDF/windows%20event%20log%20cheat%20sheet.pdf)
 
-5. Docs
-    - [Crontab](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Crontab.md)
-    - [DEPLOYING SPLUNK® ENTERPRISE INSIDE](https://github.com/MrM8BRH/Splunk/blob/main/Docs/DEPLOYING%20SPLUNK%C2%AE%20ENTERPRISE%20INSIDE.pdf)
-    - [Resources](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Resources.md)
-    - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
-    - [splunk-validated-architectures](https://github.com/MrM8BRH/Splunk/blob/main/Docs/splunk-validated-architectures.pdf)
+
 
 6. Cheatsheets
     - [Splunk Admin (Real Time) - Day 18 - Phase 2](https://github.com/MrM8BRH/Splunk/blob/main/Cheatsheets/Splunk%20Admin%20(Real%20Time)%20-%20Day%2018%20-%20Phase%202.pdf)

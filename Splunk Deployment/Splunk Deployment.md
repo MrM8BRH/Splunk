@@ -346,8 +346,8 @@ rpm -Uvh <Package>
 # Change the ownership of the splunk directory.
 chown -R splunk:splunk /opt/splunk
 
-# Restart Splunk
-/opt/splunk/bin/splunk restart
+# Start Splunk
+/opt/splunk/bin/splunk start
 ```
 
 ## Uninstall Splunk Enterprise (Linux)

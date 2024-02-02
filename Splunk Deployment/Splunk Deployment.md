@@ -185,8 +185,9 @@ In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/L
 max_mem_usage_mb = 8192
 
 [search]
-base_max_searches = 30
-max_searches_per_cpu = 5
+base_max_searches = 6
+max_searches_per_cpu = 16
+max_rt_search_multiplier = 3
 
 [mvcombine]
 max_mem_usage_mb = 1024

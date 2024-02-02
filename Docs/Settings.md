@@ -3,6 +3,38 @@
 dnf install -y fio
 fio --name=benchmark --size=1G --runtime=30 --filename=tempfile --ioengine=libaio --rw=randread --iodepth=32
 ```
+## Useful commands
+```
+# System info
+nmtui
+lscpu
+uname - a
+free -m
+hostnamectl
+timedatectl
+
+# Storage
+du -csh
+lsblk
+df -h /
+fdisk -l
+fdisk /dev/sda
+vgdisplay
+
+# Network
+route -n
+ip a
+
+# Process
+pgrep
+pkill
+ps -elf
+
+# Permissions
+visudo
+chmod
+chown
+```
 
 ## Storage Options
 

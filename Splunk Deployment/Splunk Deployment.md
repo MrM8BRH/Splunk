@@ -6,26 +6,37 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 
 ## Preparing a System Before Splunk Installation
 
-### Update the system & Install additional tools
+<details>
+<summary><h3>Update the system & Install additional tools</h3></summary>
+
 ```
 yum update -y
 yum install -y dnf
 dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen iotop htop ioping fio bzip2
 ```
+</details>
 
-### Change Timezone
+<details>
+<summary><h3>Change Timezone</h3></summary>
+
 ```
 timedatectl
 timedatectl set-timezone Asia/Jerusalem
 ```
+</details>
 
-### Change Hostname
+<details>
+<summary><h3>Change Hostname</h3></summary>
+
 ```
-hostname
+hostnamectl
 hostnamectl set-hostname <hostname>
 ```
+</details>
 
-### Change IP Address, DNS Server, Gateway
+<details>
+<summary><h3>Change IP Address, DNS Server, Gateway</h3></summary>
+
 *   `ip a`
 *   `vi /etc/sysconfig/network-scripts/ifcfg-<int>`
   
@@ -38,11 +49,21 @@ DNS1=<DNS1>                                       *****
 DNS2=<DNS2>                                       *****
 ```
 *   `systemctl restart network.service`
+</details>
 
-### Change NTP Server
+<details>
+<summary><h3>Change NTP Server</h3></summary>
 
 #### chronyd
 ```
+# Verfiy
+timedatectl
+chronyc sources
+
+# Configuration
+nano /etc/chrony.conf
+
+# Service
 systemctl status chronyd
 systemctl start chronyd
 systemctl enable chronyd
@@ -63,8 +84,11 @@ systemctl enable ntp
 systemctl restart ntpd
 ntpq -p
 ```
+</details>
 
-### Disable SELinux
+<details>
+<summary><h3>Disable SELinux</h3></summary>
+
 ```
 # Check the current status and mode of SELinux.
 sestatus
@@ -76,15 +100,21 @@ nano /etc/selinux/config
 # preventing it from enforcing security policies.
 SELINUX=disabled
 ```
+</details>
 
-### Disable Firewall
+<details>
+<summary><h3>Disable Firewall</h3></summary>
+
 ```
 systemctl stop firewalld
 systemctl disable firewalld
 ```
+</details>
 
 
-### Disable Transparent Huge Pages (THP)
+<details>
+<summary><h3>Disable Transparent Huge Pages (THP)</h3></summary>
+
 *   `nano /etc/systemd/system/disable-thp.service`
 ```
 [Unit]
@@ -103,6 +133,7 @@ systemctl daemon-reload
 systemctl start disable-thp
 systemctl enable disable-thp
 ```
+</details>
 
 ```diff
 - After completing the above, restart the system

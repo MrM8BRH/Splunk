@@ -299,7 +299,48 @@ cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/sp
 # Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
-[Configure event cleanup best practices in props.conf](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration#Configure_event_cleanup_best_practices_in_props.conf)
+<details>
+<summary>Configure event cleanup best practices in props.conf</summary>
+
+Create or navigate to /opt/splunk/etc/apps/Splunk_TA_windows/local/props.conf
+```
+[source::WinEventLog:System]
+   SEDCMD-clean_info_text_from_winsystem_events_this_event = s/This [Ee]vent is generated[\S\s\r\n]+$//g
+   
+[source::WinEventLog:Security]
+   SEDCMD-windows_security_event_formater = s/(?m)(^\s+[^:]+\:)\s+-?$/\1/g
+   SEDCMD-windows_security_event_formater_null_sid_id = s/(?m)(:)(\s+NULL SID)$/\1/g s/(?m)(ID:)(\s+0x0)$/\1/g
+   SEDCMD-cleansrcip = s/(Source Network Address:    (\:\:1|127\.0\.0\.1))/Source Network Address:/
+   SEDCMD-cleansrcport = s/(Source Port:\s*0)/Source Port:/
+   SEDCMD-remove_ffff = s/::ffff://g
+   SEDCMD-clean_info_text_from_winsecurity_events_certificate_information = s/Certificate information is only[\S\s\r\n]+$//g
+   SEDCMD-clean_info_text_from_winsecurity_events_token_elevation_type = s/Token Elevation Type indicates[\S\s\r\n]+$//g
+   SEDCMD-clean_info_text_from_winsecurity_events_this_event = s/This event is generated[\S\s\r\n]+$//g
+
+#For XmlWinEventLog:Security
+   SEDCMD-cleanxmlsrcport = s/<Data Name='IpPort'>0<\/Data>/<Data Name='IpPort'><\/Data>/
+   SEDCMD-cleanxmlsrcip = s/<Data Name='IpAddress'>(\:\:1|127\.0\.0\.1)<\/Data>/<Data Name='IpAddress'><\/Data>/
+
+[source::WinEventLog:ForwardedEvents]
+   SEDCMD-remove_ffff = s/::ffff://g
+   SEDCMD-cleansrcipxml = s/<Data Name='IpAddress'>(\:\:1|127\.0\.0\.1)<\/Data>/<Data Name='IpAddress'><\/Data>/
+   SEDCMD-cleansrcportxml=s/<Data Name='IpPort'>0<\/Data>/<Data Name='IpPort'><\/Data>/
+   SEDCMD-clean_rendering_info_block = s/<RenderingInfo Culture='.*'>(?s)(.*)<\/RenderingInfo>//
+   
+[WMI:WinEventLog:System]
+   SEDCMD-clean_info_text_from_winsystem_events_this_event = s/This event is generated[\S\s\r\n]+$//g
+   
+[WMI:WinEventLog:Security]
+   SEDCMD-windows_security_event_formater = s/(?m)(^\s+[^:]+\:)\s+-?$/\1/g
+   SEDCMD-windows_security_event_formater_null_sid_id = s/(?m)(:)(\s+NULL SID)$/\1/g s/(?m)(ID:)(\s+0x0)$/\1/g
+   SEDCMD-cleansrcip = s/(Source Network Address:    (\:\:1|127\.0\.0\.1))/Source Network Address:/
+   SEDCMD-cleansrcport = s/(Source Port:\s*0)/Source Port:/
+   SEDCMD-remove_ffff = s/::ffff://g
+   SEDCMD-clean_info_text_from_winsecurity_events_certificate_information = s/Certificate information is only[\S\s\r\n]+$//g
+   SEDCMD-clean_info_text_from_winsecurity_events_token_elevation_type = s/Token Elevation Type indicates[\S\s\r\n]+$//g
+   SEDCMD-clean_info_text_from_winsecurity_events_this_event = s/This event is generated[\S\s\r\n]+$//g</li>
+```
+</details>
 
 #### Linux addon
 *   Install Splunk Add-on for Unix and Linux

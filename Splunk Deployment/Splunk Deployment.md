@@ -223,7 +223,6 @@ server = 192.168.1.50:9997
 ```
 Settings -> Forwarding and reciving -> Configure receiving
 Settings -> Licensing -> (Change to peer)
-Settings -> Distributed search -> Search peers
 Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
 Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
 Install Addons
@@ -263,7 +262,6 @@ Default Index (defaultdb) Directory Structure
 ## Deployment Server
 ```
 - Settings -> Licensing -> (Change to peer)
-- Settings -> Distributed search -> Search peers
 - Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
 - Install Windows/Linux Addons
 ```

@@ -44,6 +44,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
+| Splunk Quick Health Check App      |                            | https://github.com/iopsmon/splunk_quick_health_check |
 | ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
 | App for External Attack Surface Management | Greg Ford          | https://splunkbase.splunk.com/app/7010 |

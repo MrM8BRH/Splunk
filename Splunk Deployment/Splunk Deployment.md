@@ -436,27 +436,6 @@ sudo rm -r /opt/splunk
 userdel splunk
 groupdel splunk
 ```
-
-## License
-```
-/opt/splunk/bin/splunk btool server list --debug license
-
-# Lists the current licenses installed and activated on your Splunk instance.
-/opt/splunk/bin/splunk list license
-
-# Remove a specific license from the Splunk instance, identified by the license hash.
-/opt/splunk/bin/splunk remove license <hash>
-```
-
-## Check Splunk Version
-```
-cat /opt/splunk/etc/splunk.version
-```
-
-## A storage location for logs
-```
-cd /opt/splunk/var/lib/splunk
-```
  
 ## Disable Splunk Web
 ```
@@ -512,8 +491,19 @@ Restart Splunk
 After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 
 
 
-### Kvstore
+Troubleshoot & Others
 ```
+|  License  |
+# Lists the current licenses installed and activated on your Splunk instance.
+/opt/splunk/bin/splunk list license
+
+# Remove a specific license from the Splunk instance, identified by the license hash.
+/opt/splunk/bin/splunk remove license <hash>
+
+|  A storage location for logs  |
+cd /opt/splunk/var/lib/splunk
+
+|  Kvstore  |
 # Path
 /var/lib/splunk/kvstore/mongo
 
@@ -526,4 +516,21 @@ After the restart, a new `passwd` file will be generated, and you should be able
 # Migrate
 /opt/splunk/bin/splunk stop
 /opt/splunk/bin/splunk migrate migrate-kvstore
+
+|  Troubleshoot  |
+# Check Splunk Version
+/opt/splunk/bin/splunk -version
+
+# Troubleshoot configurations
+/opt/splunk/bin/splunk btool check --debug
+# Troubleshoot license
+/opt/splunk/bin/splunk btool server list --debug license
+
+# Files
+/opt/splunk/var/log/splunk/splunkd.log
+/opt/splunk/var/log/splunk/splunkd_access.log
+/opt/splunk/var/log/splunk/splunkd_ui_access.log
+
+# Troubleshoot your tailed files
+curl https://serverhost:8089/services/admin/inputstatus/TailingProcessor:FileStatus
 ```

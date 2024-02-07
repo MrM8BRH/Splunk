@@ -12,9 +12,14 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
   
 [Types of distributed deployments](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics)
 - Departmental. A single instance that combines indexing and search management functions.
-- Small enterprise. One search head with two or three indexers.
+- [Small enterprise.](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Searchheadwithindexers) One search head with two or three indexers.
 - Medium enterprise. A small search head cluster, with several indexers.
 - Large enterprise. A large search head cluster, with large numbers of indexers.
+
+[Which instance should host the console?](https://docs.splunk.com/Documentation/Splunk/latest/DMC/WheretohostDMC)
+
+[Implement a deployment server cluster](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
+
 </details>
 
 <details>

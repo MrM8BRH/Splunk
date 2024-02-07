@@ -389,6 +389,7 @@ Reload the configuration for the Splunk Deployment Server
 - Apps -> Search & Reporting ->  Data Summary
 - Settings -> Distributed search -> Search peers (Indexers + Search heads)
 - Apps -> Manage Apps -> Disable (Monitoring Console)
+- Activity -> Jobs
 ```
 
 ## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)

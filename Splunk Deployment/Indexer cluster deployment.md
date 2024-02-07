@@ -182,6 +182,7 @@ autoLBVolume = 1048576
 Resources
 ---------
 - [Indexer cluster deployment overview](https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Clusterdeploymentoverview)
+- [Managing Indexers and Clusters of Indexers](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
 - [Deploy a search head cluster](https://docs.splunk.com/Documentation/Splunk/latest/DistSearch/SHCdeploymentoverview)
 - [High availability deployment: Indexer cluster](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Indexercluster)
 - [Where to create an index in a clustered environment?](https://community.splunk.com/t5/Getting-Data-In/Where-to-create-an-index-in-a-clustered-environment/m-p/425263)

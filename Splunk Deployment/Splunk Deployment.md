@@ -1,11 +1,25 @@
-## CentOS
+<details>
+<summary><h2>CentOS</h2></summary>
+  
 ### Downloading
 https://docs.centos.org/en-US/centos/install-guide/downloading/
 ### Quick Installation Guide
 https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
+</details>
 
-## Preparing a System Before Splunk Installation
+<details>
+<summary><h2>Distributed Deployment</h2></summary>
+  
+[Types of distributed deployments](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics)
+- Departmental. A single instance that combines indexing and search management functions.
+- Small enterprise. One search head with two or three indexers.
+- Medium enterprise. A small search head cluster, with several indexers.
+- Large enterprise. A large search head cluster, with large numbers of indexers.
+</details>
 
+<details>
+<summary><h2>Preparing a System Before Splunk Installation</h2></summary>
+  
 <details>
 <summary><h3>Update the system & Install additional tools</h3></summary>
 
@@ -139,6 +153,7 @@ systemctl enable disable-thp
 - After completing the above, restart the system
 reboot
 ```
+</details>
 
 ## Splunk Enterprise (Linux)
 ```
@@ -400,11 +415,6 @@ Reload the configuration for the Splunk Deployment Server
 - Apps -> Manage Apps -> Disable (Monitoring Console)
 - Activity -> Jobs
 ```
-
-## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
-
-### Enable More Auditing Policies on Windows
-*   Run - Group Policy > Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration
 
 <details>
 <summary><h2>Upgrade Splunk Enterprise (Linux)</h2></summary>

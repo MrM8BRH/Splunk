@@ -152,7 +152,9 @@ tar xvzf splunk_package_name.tgz -C /opt
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk --accept-license
 ```
 
-### Splunkd.service
+<details>
+<summary><h3>Splunkd.service</h3></summary>
+  
 `nano /etc/systemd/system/Splunkd.service`
 
 Add or change the values in the file:
@@ -167,8 +169,11 @@ TasksMax=8192
 ```
 systemctl daemon-reload
 ```
+</details>
 
-### Enable SSL
+<details>
+<summary><h3>Enable SSL</h3></summary>
+  
 *   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
 [settings]
@@ -176,8 +181,11 @@ max_upload_size = 2048
 enableSplunkWebSSL = true
 splunkdConnectionTimeout = 3000
 ```
+</details>
 
-### Optimization Recommendations
+<details>
+<summary><h3>Optimization Recommendations</h3></summary>
+  
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
@@ -199,6 +207,7 @@ max_mem_usage_mb = 1024
 maxfiles = 128
 ```
 These adjustments should be aligned with our system requirements and available resources.
+</details>
 
 ### Start and enable Splunk service
 - `systemctl start Splunkd.service`
@@ -397,7 +406,9 @@ Reload the configuration for the Splunk Deployment Server
 ### Enable More Auditing Policies on Windows
 *   Run - Group Policy > Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration
 
-## Upgrade Splunk Enterprise (Linux)
+<details>
+<summary><h2>Upgrade Splunk Enterprise (Linux)</h2></summary>
+  
 [How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
 
 [Splunk products version compatibility matrix](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/CompatMatrix)
@@ -422,8 +433,11 @@ chown -R splunk:splunk /opt/splunk
 # Start Splunk
 /opt/splunk/bin/splunk start
 ```
+</details>
 
-## Uninstall Splunk Enterprise (Linux)
+<details>
+<summary><h2>Uninstall Splunk Enterprise (Linux)</h2></summary>
+
 ```
 # Stop Splunk
 /opt/splunk/bin/splunk stop
@@ -438,8 +452,11 @@ sudo rm -r /opt/splunk
 userdel splunk
 groupdel splunk
 ```
+</details>
  
-## Disable Splunk Web
+<details>
+<summary><h2>Disable Splunk Web</h2></summary>
+  
 ```
 sudo nano /opt/splunk/etc/system/local/web.conf
 ```
@@ -453,6 +470,7 @@ startwebserver = 0
 ```
 sudo systemctl restart splunk
 ```
+</details>
 
 ## Uninstall an app or add-on
 - Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
@@ -465,7 +483,9 @@ sudo systemctl restart splunk
 # Permission: chown -R splunk:splunk /opt/splunk
 ```
 
-## Splunk Admin Password Reset
+<details>
+<summary><h2>Splunk Admin Password Reset</h2></summary>
+  
 ```
 # Stop Splunk Service
 /opt/splunk/bin/splunk stop
@@ -491,9 +511,9 @@ Restart Splunk
 ```
 #### Log In with New Password
 After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 
+</details>
 
-
-Troubleshoot & Others
+## Troubleshoot & Others
 ```
 #######  License  #######
 # Lists the current licenses installed and activated on your Splunk instance.

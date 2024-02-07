@@ -221,11 +221,12 @@ server = 192.168.1.50:9997
 
 ## Indexer Server
 ```
-Settings -> Forwarding and reciving -> Configure receiving
-Settings -> Licensing -> (Change to peer)
-Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
-Install Addons
+- Settings -> Forwarding and reciving -> Configure receiving
+- Settings -> Licensing -> (Change to peer [deployment server])
+- Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
+- Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
+- Apps -> Manage Apps -> Disable (Monitoring Console)
+- Install Addons
 - Disable Splunk Web
 ```
 
@@ -261,8 +262,17 @@ Default Index (defaultdb) Directory Structure
 
 ## Deployment Server
 ```
-- Settings -> Licensing -> (Change to peer)
+- Settings -> Licensing -> (Change license group)
+- Settings -> Server settings -> Email settings
+- Settings -> Distributed search -> Search peers (Indexers + Search heads)
+- Settings -> Monitoring Console -> Settings -> Alerts Setup
+- Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
+- Settings -> Monitoring Console -> Forwarders -> forwarder_instance
 - Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
+   Edit Roles
+              Indexer -> Indexer
+              Deployment -> Deployment + + KV Store + License Master
+              Search Head -> Search Head + KV Store
 - Install Windows/Linux Addons
 ```
 ```
@@ -373,21 +383,12 @@ Reload the configuration for the Splunk Deployment Server
 ```
 
 ## SearchHead Server
- ```
+```
+- Settings -> Licensing -> (Change to peer [deployment server])
 - Install/Hide Apps & Addons (Apps -> Manage Apps)
 - Apps -> Search & Reporting ->  Data Summary
-- Settings -> Server settings -> General settings 
-- Settings -> Server settings -> Email settings
-- Settings -> Monitoring Console -> Settings -> Alerts Setup
-- Settings -> Monitoring Console -> Settings -> Forwarder Monitoring Setup
-- Settings -> Monitoring Console -> Forwarders -> forwarder_instance
-- Settings -> Licensing -> (Change license group)
-- Settings -> Distributed search -> Search peers
-- Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
-   Edit Roles
-              Indexer -> Indexer
-              Deployment -> Deployment
-              Search Head -> Search Head + KV Store + License Master
+- Settings -> Distributed search -> Search peers (Indexers + Search heads)
+- Apps -> Manage Apps -> Disable (Monitoring Console)
 ```
 
 ## [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
@@ -493,17 +494,17 @@ After the restart, a new `passwd` file will be generated, and you should be able
 
 Troubleshoot & Others
 ```
-|  License  |
+#######  License  #######
 # Lists the current licenses installed and activated on your Splunk instance.
 /opt/splunk/bin/splunk list license
 
 # Remove a specific license from the Splunk instance, identified by the license hash.
 /opt/splunk/bin/splunk remove license <hash>
 
-|  A storage location for logs  |
+#######  A storage location for logs  #######
 cd /opt/splunk/var/lib/splunk
 
-|  Kvstore  |
+#######  Kvstore  #######
 # Path
 /var/lib/splunk/kvstore/mongo
 
@@ -517,7 +518,7 @@ cd /opt/splunk/var/lib/splunk
 /opt/splunk/bin/splunk stop
 /opt/splunk/bin/splunk migrate migrate-kvstore
 
-|  Troubleshoot  |
+#######  Troubleshoot  #######
 # Check Splunk Version
 /opt/splunk/bin/splunk -version
 

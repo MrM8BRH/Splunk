@@ -252,7 +252,6 @@ server = 192.168.1.50:9997
 ```
 - Settings -> Forwarding and reciving -> Configure receiving
 - Settings -> Licensing -> (Change to peer [deployment server])
-- Settings -> Monitoring Console -> Settings -> General Setup [Standalone -> Distributed]
 - Settings -> Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
 - Apps -> Manage Apps -> Disable (Monitoring Console)
 - Install Addons
@@ -415,8 +414,8 @@ Reload the configuration for the Splunk Deployment Server
 ```
 - Settings -> Licensing -> (Change to peer [deployment server])
 - Install/Hide Apps & Addons (Apps -> Manage Apps)
-- Apps -> Search & Reporting ->  Data Summary
 - Settings -> Distributed search -> Search peers (Indexers + Search heads)
+- Apps -> Search & Reporting ->  Data Summary
 - Apps -> Manage Apps -> Disable (Monitoring Console)
 - Activity -> Jobs
 ```

@@ -116,13 +116,66 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ```
    /opt/splunk/bin/splunk help clustering
    ```
-   Managing Indexes in Indexer Clusters
-   1. All indexes are defined in `indexes.conf`
-   2. All peer nodes use the same `indexes.conf`
-   3. Master node distributes `indexes.conf`
-   4. Configuration bundle in `/opt/splunk/etc/master-apps/` on master node
-   5. Deployed to `/opt/splunk/etc/slave-apps/` on peer nodes
-   6. Master node intiates rolling restart
+   
+   <details>
+   <summary>Configure indexes on manager node</summary>
+      
+   `nano /opt/splunk/etc/master-apps/_cluster/local/indexes.conf`
+      
+   ```
+   [default]
+   # maxHotSpanSecs sets the maximum age of data in the "hot" bucket to 90 days.
+   maxHotSpanSecs = 7776000
+   
+   # frozenTimePeriodInSecs sets the maximum age of data in the "cold" bucket to 275 days.
+   frozenTimePeriodInSecs = 23760000
+   
+   ################################################################################
+   # index definitions
+   ################################################################################
+   
+   [main]
+   repFactor = auto
+   
+   [history]
+   repFactor = auto
+   
+   [summary]
+   repFactor = auto
+   
+   [_internal]
+   repFactor = auto
+   
+   [_audit]
+   repFactor = auto
+   
+   [_thefishbucket]
+   repFactor = auto
+   
+   [_telemetry]
+   homePath   = $SPLUNK_DB/_telemetry/db
+   coldPath   = $SPLUNK_DB/_telemetry/colddb
+   thawedPath = $SPLUNK_DB/_telemetry/thaweddb
+   repFactor = auto
+   
+   [splunklogger]
+   repFactor = auto
+   
+   [wineventlog]
+   homePath   = $SPLUNK_DB/wineventlog/db
+   coldPath   = $SPLUNK_DB/wineventlog/colddb
+   thawedPath = $SPLUNK_DB/wineventlog/thaweddb
+   maxTotalDataSizeMB = 1048576
+   repFactor = auto
+   
+   [linux]
+   homePath   = $SPLUNK_DB/linux/db
+   coldPath   = $SPLUNK_DB/linux/colddb
+   thawedPath = $SPLUNK_DB/linux/thaweddb
+   maxTotalDataSizeMB = 512000
+   repFactor = auto
+   ```
+   </details>
 
    Configuration Bundle Deployment
    1. Deployed from master node using Splunk Web or CLI
@@ -174,6 +227,9 @@ Note: _After configuring the peers, you can start replicating data between the m
 
 Forwarder Outputs Example
 ```
+[tcpout]
+defaultGroup = my_peers_nodes
+
 [tcpout:my_peers_nodes]
 useACK = true
 server=10.10.10.1:9997,10.10.10.2:9997,10.10.10.3:9997

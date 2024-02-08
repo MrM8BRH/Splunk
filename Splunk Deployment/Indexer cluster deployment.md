@@ -30,6 +30,8 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    Verifying the cluster configuration using the CLI
    ```
    /opt/splunk/bin/splunk list cluster-config
+
+   # Manager node
    /opt/splunk/bin/splunk list cluster-peers
    /opt/splunk/bin/splunk show cluster-status
    ```

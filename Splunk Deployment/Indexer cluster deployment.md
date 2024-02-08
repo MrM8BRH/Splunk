@@ -151,7 +151,7 @@ Note: _Ensure that the manager node is also set up as a search head in the index
 
 Here is an example `outputs.conf` file:
 ```
-# Turn off indexing on the manager node
+# Turn off indexing
 [indexAndForward]
 index = false
  

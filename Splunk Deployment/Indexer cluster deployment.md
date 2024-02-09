@@ -63,7 +63,10 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
       /opt/splunk/bin/splunk rolling-restart cluster-peers
       /opt/splunk/bin/splunk rolling-restart cluster-peers -searchable true
       ```
-   Indexer Discovery
+   
+   <details>
+   <summary>Indexer Discovery</summary>
+
    
    Capability of indexer clusters that enables forwarders to connect dynamically to the full set of available peer nodes.
    
@@ -92,6 +95,11 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    master_uri = https://<ip>:8089
    pass4SymmKey = <IDSecret>
    ```
+   </details>
+   
+   <details>
+   <summary>Indexer Cluster Upgrade</summary>
+      
    Indexer Cluster Upgrade Considerations:
    1. Peer nodes must have the same OS family.
    2. Peer nodes must run exactly the same Splunk version.
@@ -104,6 +112,7 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    3. Enable maintenance mode.
    4. Upgrade the peer nodes.
    5. Disable maintenance mode.
+   </details>
 
    Remove Excess Buckets
    - Using the master dashboard (GUI)

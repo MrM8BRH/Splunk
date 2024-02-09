@@ -116,6 +116,31 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ```
    /opt/splunk/bin/splunk help clustering
    ```
+
+   <details>
+   <summary>Structure of the configuration bundle</summary>
+   
+   On the manager node
+   ```
+   $SPLUNK_HOME/etc/manager-apps/
+        _cluster/
+             default/
+             local/
+        <app-name>/
+        <app-name>/
+        ...
+   ```
+   On the peers
+   ``` 
+   $SPLUNK_HOME/etc/peer-apps/
+        _cluster/
+             default/
+             local/
+        <app-name>/
+        <app-name>/
+        ...
+   ```
+   </details>
    
    <details>
    <summary>Configure indexes on manager node</summary>

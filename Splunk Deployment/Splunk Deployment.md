@@ -258,8 +258,9 @@ server = 192.168.1.50:9997
 - Disable Splunk Web
 ```
 
-### Log Retention
-
+<details>
+<summary><h3>Log Retention</h3></summary>
+  
 `nano /opt/splunk/etc/system/local/indexes.conf`
 ```
 [default]
@@ -286,7 +287,7 @@ Default Index (defaultdb) Directory Structure
 | Hot          | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each hot bucket occupies its own subdirectory.                            |
 | Warm         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each warm bucket occupies its own subdirectory.                           |
 | Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
-
+</details>
 
 ## Deployment Server
 ```

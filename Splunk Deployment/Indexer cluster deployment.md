@@ -202,6 +202,29 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ```
    </details>
 
+   <details>
+   <summary>Enabling Phased Bundle Downloads</summary>
+
+   
+   ▶ This is recommended if a cluster master is pushing large bundles or even a smaller bundle but to a large cluster (20 or more indexers).
+   
+   ▶ To enable, set the following configuration within `server.conf`
+   ```
+   [clustering]
+   mode=master
+   max_peers_to_download_bundle = 1
+   ```
+   </details>
+
+   <details>
+   <summary>Keeping Track of Bundles</summary>
+
+   ▶ The bundles folder
+   ```
+   $SPLUNK_HOME/var/run/splunk/cluster/remote-bundle
+   ```
+   </details>
+
    Configuration Bundle Deployment
    1. Deployed from master node using Splunk Web or CLI
    2. Initiates rolling restart of all peer nodes if needed

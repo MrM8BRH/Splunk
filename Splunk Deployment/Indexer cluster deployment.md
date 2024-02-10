@@ -47,85 +47,6 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    /opt/splunk/etc/system/local/server.conf
    ```
    
-   Maintenance mode enabled/disabled on master node.
-   ```
-   /opt/splunk/bin/splunk enable maintenance-mode
-   /opt/splunk/bin/splunk show maintenance-mode
-   /opt/splunk/bin/splunk disable maintenance-mode
-   ```
-
-   Restarting Indexer Cluster Components:
-   - Restart the master node using `/opt/splunk/bin/splunk restart`
-   - Restart the search head using `/opt/splunk/bin/splunk restart`
-   - Perform a rolling restart of peer nodes:
-      ```
-      /opt/splunk/bin/splunk edit cluster-config -percent_peers_to_restart 20
-      /opt/splunk/bin/splunk rolling-restart cluster-peers
-      /opt/splunk/bin/splunk rolling-restart cluster-peers -searchable true
-      ```
-   
-   <details>
-   <summary>Indexer Discovery</summary>
-
-   
-   Capability of indexer clusters that enables forwarders to connect dynamically to the full set of available peer nodes.
-   
-   How?
-   1. Peer nodes provide their receiving ports to the master.
-   2. Forwarders poll the master for the list of available peer nodes.
-   3. Master transmits the peer nodes list to the forwarders.
-   4. The forwarders send data to the peer nodes using load balancing.
-   
-   Indexer Discovery Configuration
-   Master Node (Edit server.conf)
-   ```
-   [indexer_discovery]
-   pass4SymmKey = <IDSecret>
-   polling_rate = <1-10>
-   ```
-   
-   Forwarders (Edit outputs.conf)
-   ```
-   [tcpout:<group_name>]
-   indexerDiscovery = <ID_name>
-   useACK = true
-   autoLBFrequency = 120
-   
-   [indexer_discovery]
-   master_uri = https://<ip>:8089
-   pass4SymmKey = <IDSecret>
-   ```
-   </details>
-   
-   <details>
-   <summary>Indexer Cluster Upgrade</summary>
-      
-   Indexer Cluster Upgrade Considerations:
-   1. Peer nodes must have the same OS family.
-   2. Peer nodes must run exactly the same Splunk version.
-   3. Master node must run the highest Splunk version.
-   4. Search head must run higher Splunk version than the peer nodes.
-
-   Indexer Cluster Upgrade High-level Overview:
-   1. Upgrade the master node.
-   2. Upgrade the search heads.
-   3. Enable maintenance mode.
-   4. Upgrade the peer nodes.
-   5. Disable maintenance mode.
-   </details>
-
-   Remove Excess Buckets
-   - Using the master dashboard (GUI)
-   - Using the CLI:
-      ```
-      /opt/splunk/bin/splunk list excess-buckets [index-name]
-      /opt/splunk/bin/splunk remoev excess-buckets [index-name]
-      ```
-   List of commands and parameters related to clustering
-   ```
-   /opt/splunk/bin/splunk help clustering
-   ```
-
    <details>
    <summary>Structure of the configuration bundle</summary>
    
@@ -169,10 +90,10 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ################################################################################
    
    [main]
-   repFactor = auto
+   repFactor = 0
    
    [history]
-   repFactor = auto
+   repFactor = 0
    
    [summary]
    repFactor = auto
@@ -233,6 +154,85 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    $SPLUNK_HOME/var/run/splunk/cluster/remote-bundle
    ```
    </details>
+   
+   Restarting Indexer Cluster Components:
+   - Restart the master node using `/opt/splunk/bin/splunk restart`
+   - Restart the search head using `/opt/splunk/bin/splunk restart`
+   - Perform a rolling restart of peer nodes:
+      ```
+      /opt/splunk/bin/splunk edit cluster-config -percent_peers_to_restart 20
+      /opt/splunk/bin/splunk rolling-restart cluster-peers
+      /opt/splunk/bin/splunk rolling-restart cluster-peers -searchable true
+      ```
+   
+   <details>
+   <summary>Indexer Discovery</summary>
+
+   
+   Capability of indexer clusters that enables forwarders to connect dynamically to the full set of available peer nodes.
+   
+   How?
+   1. Peer nodes provide their receiving ports to the master.
+   2. Forwarders poll the master for the list of available peer nodes.
+   3. Master transmits the peer nodes list to the forwarders.
+   4. The forwarders send data to the peer nodes using load balancing.
+   
+   Indexer Discovery Configuration
+   Master Node (Edit server.conf)
+   ```
+   [indexer_discovery]
+   pass4SymmKey = <IDSecret>
+   polling_rate = <1-10>
+   ```
+   
+   Forwarders (Edit outputs.conf)
+   ```
+   [tcpout:<group_name>]
+   indexerDiscovery = <ID_name>
+   useACK = true
+   autoLBFrequency = 120
+   
+   [indexer_discovery]
+   master_uri = https://<ip>:8089
+   pass4SymmKey = <IDSecret>
+   ```
+   </details>
+   
+   <details>
+   <summary>Indexer Cluster Upgrade</summary>
+      
+   Indexer Cluster Upgrade Considerations:
+   1. Peer nodes must have the same OS family.
+   2. Peer nodes must run exactly the same Splunk version.
+   3. Master node must run the highest Splunk version.
+   4. Search head must run higher Splunk version than the peer nodes.
+
+   Indexer Cluster Upgrade High-level Overview:
+   1. Upgrade the master node.
+   2. Upgrade the search heads.
+   3. Enable maintenance mode.
+   4. Upgrade the peer nodes.
+   5. Disable maintenance mode.
+   </details>
+   
+   Maintenance mode enabled/disabled on master node.
+   ```
+   /opt/splunk/bin/splunk enable maintenance-mode
+   /opt/splunk/bin/splunk show maintenance-mode
+   /opt/splunk/bin/splunk disable maintenance-mode
+   ```
+
+   Remove Excess Buckets
+   - Using the master dashboard (GUI)
+   - Using the CLI:
+      ```
+      /opt/splunk/bin/splunk list excess-buckets [index-name]
+      /opt/splunk/bin/splunk remoev excess-buckets [index-name]
+      ```
+   List of commands and parameters related to clustering
+   ```
+   /opt/splunk/bin/splunk help clustering
+   ```
 
    Configuration Bundle Deployment
    1. Deployed from master node using Splunk Web or CLI

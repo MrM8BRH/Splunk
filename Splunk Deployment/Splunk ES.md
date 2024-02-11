@@ -87,6 +87,7 @@ Use Cases - Correlation Searches
 Resrouces
 ---------
 ### Enterprise Security
+- [Getting Started With Splunk Enterprise Security](https://lantern.splunk.com/Security/Getting_Started)
 - [Administer Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Introduction)
 - [Using threat intelligence in Splunk Enterprise Security](https://lantern.splunk.com/Security/UCE/Prioritized_Actions/Threat_intelligence/Using_threat_intelligence_in_Splunk_Enterprise_Security)
 - [Configuring and optimizing Enterprise Security](https://lantern.splunk.com/Security/Getting_Started/Configuring_and_optimizing_Enterprise_Security)

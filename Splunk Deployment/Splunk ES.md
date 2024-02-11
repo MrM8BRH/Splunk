@@ -70,6 +70,20 @@ Configuration
   - Content Management (Type: Correlation Search) → Enable | Create New Content
   - Use Case Library
 
+Use Cases - Correlation Searches
+--------------------------------
+ - DA-ESS-AccessProtection
+ - DA-ESS-EndpointProtection
+ - DA-ESS-IdentityManagement
+ - DA-ESS-NetworkProtection
+ - DA-ESS-ThreatIntelligence
+ - SA-AccessProtection
+ - SA-AuditAndDataProtection
+ - SA-EndpointProtection
+ - SA-IdentityManagement
+ - SA-NetworkProtection
+ - SA-ThreatIntelligence
+
 Resrouces
 ---------
 ### Enterprise Security

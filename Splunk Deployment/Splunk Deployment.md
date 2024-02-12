@@ -260,7 +260,18 @@ server = 192.168.1.50:9997
 
 <details>
 <summary><h3>Log Retention</h3></summary>
-  
+
+Storage Calculation
+```
+Retention:
+Storage per day * 0.5 * number of days
+
+Data model acceleration:
+Storage per day * 3.14
+
+Storage = Retention + DMA
+```
+
 `nano /opt/splunk/etc/system/local/indexes.conf`
 ```
 [default]

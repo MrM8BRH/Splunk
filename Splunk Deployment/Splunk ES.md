@@ -17,6 +17,7 @@ Required Apps/Addons
 - [Splunk Enterprise Security](https://splunkbase.splunk.com/app/263)
 - [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449)
 - [SA-Investigator for Enterprise Security](https://splunkbase.splunk.com/app/3749)
+- [MITRE ATTACK App for Splunk](https://splunkbase.splunk.com/app/4617)
 
 Optional
 - [InfoSec App for Splunk](https://splunkbase.splunk.com/app/4240)

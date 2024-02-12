@@ -264,7 +264,7 @@ server = 192.168.1.50:9997
 Storage Calculation
 ```
 Retention:
-Storage per day * 0.5 * number of days
+(Daily average indexing rate) x (retention policy) * 1/2
 
 Data model acceleration:
 Storage per day * 3.14

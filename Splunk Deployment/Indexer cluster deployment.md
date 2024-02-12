@@ -74,7 +74,9 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    
    <details>
    <summary>Configure indexes on manager node</summary>
-      
+
+   ​Note: Each indexer handles retention independently
+   
    `nano /opt/splunk/etc/master-apps/_cluster/local/indexes.conf`
       
    ```

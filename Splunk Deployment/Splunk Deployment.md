@@ -5,6 +5,11 @@
 https://docs.centos.org/en-US/centos/install-guide/downloading/
 ### Quick Installation Guide
 https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
+### Migration directions
+[Link](https://wiki.almalinux.org/elevate/ELevate-quickstart-guide.html)
+
+
+<img src="https://github.com/MrM8BRH/Splunk/assets/34133187/c55f2252-c151-4ed7-83b9-c0bbe6fc07c5">
 </details>
 
 <details>

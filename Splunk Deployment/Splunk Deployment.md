@@ -587,3 +587,14 @@ cd /opt/splunk/var/lib/splunk
 # Troubleshoot your tailed files
 curl https://serverhost:8089/services/admin/inputstatus/TailingProcessor:FileStatus
 ```
+## Increase the session timeout settings
+nano /opt/splunk/etc/system/local/server.conf
+```
+[general]
+sessionTimeout = 3h
+```
+nano /opt/splunk/etc/system/local/web.conf
+```
+[settings] 
+tools.sessions.timeout = 180
+```

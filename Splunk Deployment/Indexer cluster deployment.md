@@ -184,19 +184,23 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    ```
    [indexer_discovery]
    pass4SymmKey = <IDSecret>
-   polling_rate = <1-10>
+   indexerWeightByDiskCapacity = true
    ```
    
    Forwarders (Edit outputs.conf)
    ```
-   [tcpout:<group_name>]
-   indexerDiscovery = <ID_name>
-   useACK = true
-   autoLBFrequency = 120
-   
-   [indexer_discovery]
-   master_uri = https://<ip>:8089
+   [indexer_discovery:manager1]
+   manager_uri = https://<ip>:8089
    pass4SymmKey = <IDSecret>
+
+   [tcpout:group1]
+   indexerDiscovery = manager1
+   autoLBFrequency = 30
+   forceTimebasedAutoLB = true
+   useACK = true
+
+   [tcpout]
+   defaultGroup = group1
    ```
    </details>
    

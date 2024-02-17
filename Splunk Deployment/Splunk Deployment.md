@@ -598,3 +598,18 @@ nano /opt/splunk/etc/system/local/web.conf
 [settings] 
 tools.sessions.timeout = 180
 ```
+
+### Splunk Health Check & Best Practices
+- Perform Health Check Assessment using monitoring console.
+- Optimize ulimits and other parameters based on Splunk documentation and your environment.
+- Monitor /opt storage space and consider expansion if needed.
+- Assess index sizes and usage on indexer server, optimize as required.
+- Review and adjust log verbosity and frequency based on your needs.
+- Check Activity for running or queued jobs impacting performance.
+- Host Console Monitoring and License Manager on deployment server/manager node.
+- Check Splunk ES configuration.
+- Disable host-based Firewall and SElinux.
+- Disable Transparent Huge Pages.
+- Remove Apps and addons that not be used.
+- Enable Systemd for Splunk service for better management and stability.
+- limits.conf & props.conf: Verify and optimize configurations for performance and tuning gains.

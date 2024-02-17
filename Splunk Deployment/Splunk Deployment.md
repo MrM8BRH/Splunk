@@ -613,3 +613,4 @@ tools.sessions.timeout = 180
 - Remove Apps and addons that not be used.
 - Enable Systemd for Splunk service for better management and stability.
 - limits.conf & props.conf: Verify and optimize configurations for performance and tuning gains.
+- [Reducing skipped searches](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Searching_and_Reporting/Reducing_skipped_searches)

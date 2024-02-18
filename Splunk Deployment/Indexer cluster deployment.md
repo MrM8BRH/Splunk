@@ -249,6 +249,14 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    /opt/splunk/bin/splunk show cluster-bundle-status
    /opt/splunk/bin/splunk rollback cluster-bundle
    ```
+
+   Make data rebalance search-safe
+
+   Master Node (Edit server.conf)
+   ```
+   searchable_rebalance = true
+   rebalance_search_completion_timeout = 360
+   ```
 ---
 
 

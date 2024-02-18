@@ -310,6 +310,7 @@ autoLBVolume = 1048576
 
 Resources
 ---------
+- [Migrating from Single Instance to Indexer Cluster](https://www.crestdatasys.com/blogs/splunk-data-migration-single-instance-to-indexer-cluster/)
 - [Indexer cluster deployment overview](https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Clusterdeploymentoverview)
 - [Managing Indexers and Clusters of Indexers](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
 - [Deploy a search head cluster](https://docs.splunk.com/Documentation/Splunk/latest/DistSearch/SHCdeploymentoverview)

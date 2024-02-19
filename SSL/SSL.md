@@ -22,6 +22,7 @@ sslPassword = password
 ## Default certificate renewal
 [Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
 ```
+export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH
 /opt/splunk/bin/splunk createssl server-cert -d /opt/splunk/etc/auth -n SplunkServerDefaultCert
 cd /opt/splunk/etc/auth
 mv server.pem server.pem.orig

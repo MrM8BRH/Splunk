@@ -20,6 +20,7 @@ Required Apps/Addons
 - [MITRE ATTACK App for Splunk](https://splunkbase.splunk.com/app/4617)
 
 Optional
+- [ES Choreographer](https://splunkbase.splunk.com/app/6309)
 - [InfoSec App for Splunk](https://splunkbase.splunk.com/app/4240)
 
 Configuration

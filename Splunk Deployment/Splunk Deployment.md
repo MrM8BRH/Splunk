@@ -614,3 +614,13 @@ tools.sessions.timeout = 180
 - Enable Systemd for Splunk service for better management and stability.
 - limits.conf & props.conf: Verify and optimize configurations for performance and tuning gains.
 - [Reducing skipped searches](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Searching_and_Reporting/Reducing_skipped_searches)
+
+It's a best practice to disable KV-Store in all Splunk servers except Search Heads to use the resources for other purposes,
+
+even if, there are some Add-Ons, that must be installed on HFs or IDXs, that disabling KV-Store will give you error messages because they use KV-Store .
+
+Anyway, you can disable KV-Store adding to server.conf the following stanza:
+```
+[kvstore]
+disabled = true
+```

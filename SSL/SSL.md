@@ -14,12 +14,28 @@
 ```
 [settings]
 enableSplunkWebSSL = true
-privKeyPath = /opt/splunk/etc/auth/mycerts/mySplunkWebPrivateKey.key 
-serverCert = /opt/splunk/etc/auth/mycerts/mySplunkWebCertificate.pem
+privKeyPath = /opt/splunk/etc/auth/mycerts/myCertAuthPrivateKey.key
+serverCert = /opt/splunk/etc/auth/mycerts/myServerCertificate.pem
 sslPassword = password
 ```
 
 ## Default certificate renewal
+[Link](https://docs.splunk.com/Documentation/Splunk/9.2.0/Security/Howtoself-signcertificates)
+```
+# (1)
+export SPLUNK_HOME=/opt/splunk/
+mkdir $SPLUNK_HOME/etc/auth/mycerts
+cd $SPLUNK_HOME/etc/auth/mycerts
+openssl genrsa -aes256 -out myCertAuthPrivateKey.key 2048
+openssl req -new -key myCertAuthPrivateKey.key -out myCertAuthCertificate.csr
+openssl x509 -req -in myCertAuthCertificate.csr -sha512 -signkey myCertAuthPrivateKey.key -CAcreateserial -out myCertAuthCertificate.pem -days 1095
+# (2)
+touch myServerCertificate myServerCertificate.pem
+chmod 755 *
+openssl req -new -key myServerPrivateKey.key -out myServerCertificate.csr
+openssl x509 -req -in myServerCertificate.csr -SHA256 -CA myCertAuthCertificate.pem -CAkey myCertAuthPrivateKey.key -CAcreateserial -out myServerCertificate.pem -days 1095
+```
+
 [Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
 ```
 export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH

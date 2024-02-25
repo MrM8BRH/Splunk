@@ -603,6 +603,7 @@ tools.sessions.timeout = 180
 - Perform Health Check Assessment using monitoring console.
 - Optimize ulimits and other parameters based on Splunk documentation and your environment.
 - Monitor /opt storage space and consider expansion if needed.
+- Increase system resources if needed.
 - Assess index sizes and usage on indexer server, optimize as required.
 - Review and adjust log verbosity and frequency based on your needs.
 - Check Activity for running or queued jobs impacting performance.

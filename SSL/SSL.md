@@ -9,25 +9,25 @@
 
 [Test and troubleshoot TLS connections](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/Validateyourconfiguration)
 
-## SSL Configuration
-[web.conf](https://docs.splunk.com/Documentation/Splunk/latest/admin/webconf)
+## Default certificate renewal
+```
+export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH
+export SPLUNK_HOME=/opt/splunk/
+mkdir $SPLUNK_HOME/etc/auth/mycerts
+cd $SPLUNK_HOME/etc/auth/mycerts
+/opt/splunk/bin/openssl genrsa -aes256 -out myServerPrivateKey.key 2048
+openssl req -new -key myServerPrivateKey.key -out myServerCertificate.csr
+openssl x509 -req -in myServerCertificate.csr -sha512 -signkey myServerPrivateKey.key -CAcreateserial -out myServerCertificate.pem -days 3650
+chown -R splunk:splunk /opt/splunk
+```
+
+nano /opt/splunk/etc/system/local/web.conf
 ```
 [settings]
 enableSplunkWebSSL = true
 privKeyPath = /opt/splunk/etc/auth/mycerts/myServerPrivateKey.key
 serverCert = /opt/splunk/etc/auth/mycerts/myServerCertificate.pem
 sslPassword = password
-```
-
-## Default certificate renewal
-```
-export SPLUNK_HOME=/opt/splunk/
-mkdir $SPLUNK_HOME/etc/auth/mycerts
-cd $SPLUNK_HOME/etc/auth/mycerts
-openssl genrsa -aes256 -out myServerPrivateKey.key 2048
-openssl req -new -key myServerPrivateKey.key -out myServerCertificate.csr
-openssl x509 -req -in myServerCertificate.csr -sha512 -signkey myServerPrivateKey.key -CAcreateserial -out myServerCertificate.pem -days 3650
-chown -R splunk:splunk /opt/splunk
 ```
 
 [Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)

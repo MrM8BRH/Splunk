@@ -1,11 +1,11 @@
 <details>
-<summary><h2>CentOS</h2></summary>
+<summary><b>CentOS</b></summary>
   
-### Downloading
+##### Downloading
 https://docs.centos.org/en-US/centos/install-guide/downloading/
-### Quick Installation Guide
+##### Quick Installation Guide
 https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
-### Migration directions
+##### Migration directions
 [Link](https://wiki.almalinux.org/elevate/ELevate-quickstart-guide.html)
 
 
@@ -13,7 +13,7 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 </details>
 
 <details>
-<summary><h2>Distributed Deployment</h2></summary>
+<summary><b>Distributed Deployment</b></summary>
   
 [Types of distributed deployments](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics)
 - Departmental. A single instance that combines indexing and search management functions.
@@ -28,10 +28,10 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 </details>
 
 <details>
-<summary><h2>Preparing a System Before Splunk Installation</h2></summary>
+<summary><b>Preparing a System Before Splunk Installation</b></summary>
   
 <details>
-<summary><h3>Update the system & Install additional tools</h3></summary>
+<summary><b>Update the system & Install additional tools</b></summary>
 
 ```
 yum update -y
@@ -41,7 +41,7 @@ dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen
 </details>
 
 <details>
-<summary><h3>Change Timezone</h3></summary>
+<summary><b>Change Timezone</b></summary>
 
 ```
 timedatectl
@@ -50,7 +50,7 @@ timedatectl set-timezone Asia/Jerusalem
 </details>
 
 <details>
-<summary><h3>Change Hostname</h3></summary>
+<summary><b>Change Hostname</b></summary>
 
 ```
 hostnamectl
@@ -59,7 +59,7 @@ hostnamectl set-hostname <hostname>
 </details>
 
 <details>
-<summary><h3>Change IP Address, DNS Server, Gateway</h3></summary>
+<summary><b>Change IP Address, DNS Server, Gateway</b></summary>
 
 *   `ip a`
 *   `vi /etc/sysconfig/network-scripts/ifcfg-<int>`
@@ -76,7 +76,7 @@ DNS2=<DNS2>                                       *****
 </details>
 
 <details>
-<summary><h3>Change NTP Server</h3></summary>
+<summary><b>Change NTP Server</b></summary>
 
 #### chronyd
 ```
@@ -111,7 +111,7 @@ ntpq -p
 </details>
 
 <details>
-<summary><h3>Disable SELinux</h3></summary>
+<summary><b>Disable SELinux</b></summary>
 
 ```
 # Check the current status and mode of SELinux.
@@ -127,7 +127,7 @@ SELINUX=disabled
 </details>
 
 <details>
-<summary><h3>Disable Firewall</h3></summary>
+<summary><b>Disable Firewall</b></summary>
 
 ```
 systemctl stop firewalld
@@ -137,7 +137,7 @@ systemctl disable firewalld
 
 
 <details>
-<summary><h3>Disable Transparent Huge Pages (THP)</h3></summary>
+<summary><b>Disable Transparent Huge Pages (THP)</b></summary>
 
 *   `nano /etc/systemd/system/disable-thp.service`
 ```
@@ -165,7 +165,9 @@ reboot
 ```
 </details>
 
-## Splunk Enterprise (Linux)
+<details>
+<summary><b>Splunk Enterprise (Linux)</b></summary>
+
 ```
 # Install Splunk using RPM:
 rpm -ivh splunk_package_name.rpm
@@ -176,9 +178,10 @@ tar xvzf splunk_package_name.tgz -C /opt
 # Enable Splunk to start on boot and accept the license:
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk --accept-license
 ```
+</details>
 
 <details>
-<summary><h3>Splunkd.service</h3></summary>
+<summary><b>Splunkd.service</b></summary>
   
 `nano /etc/systemd/system/Splunkd.service`
 
@@ -197,7 +200,7 @@ systemctl daemon-reload
 </details>
 
 <details>
-<summary><h3>Enable SSL</h3></summary>
+<summary><b>Enable SSL</b></summary>
   
 *   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
@@ -209,7 +212,7 @@ splunkdConnectionTimeout = 3000
 </details>
 
 <details>
-<summary><h3>Optimization Recommendations</h3></summary>
+<summary><b>Optimization Recommendations</b></summary>
   
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
@@ -232,13 +235,16 @@ max_mem_usage_mb = 1024
 maxfiles = 128
 ```
 These adjustments should be aligned with our system requirements and available resources.
-</details>
 
-### Start and enable Splunk service
+
+##### Start and enable Splunk service
 - `systemctl start Splunkd.service`
 - `systemctl enable Splunkd.service`
+</details>
 
-### Forwarding Splunk's internal logs to the indexers
+<details>
+<summary><b>Forwarding Splunk's internal logs to the indexers</b></summary>
+
 *    `nano /opt/splunk/etc/system/local/outputs.conf`
 ```
 # Turn off indexing
@@ -252,8 +258,11 @@ server = 192.168.1.50:9997
 
 [tcpout-server://192.168.1.50:9997]
 ```
+</details>
 
-## Indexer Server
+<details>
+<summary><b>Indexer Server</b></summary>
+
 ```
 - Settings -> Forwarding and reciving -> Configure receiving
 - Settings -> Licensing -> (Change to peer [deployment server])
@@ -262,9 +271,10 @@ server = 192.168.1.50:9997
 - Install Addons
 - Disable Splunk Web
 ```
+</details>
 
 <details>
-<summary><h3>Log Retention</h3></summary>
+<summary><b>Log Retention</b></summary>
 
 Storage Calculation
 ```
@@ -305,7 +315,9 @@ Default Index (defaultdb) Directory Structure
 | Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
 </details>
 
-## Deployment Server
+<details>
+<summary><b>Deployment Server</b></summary>
+
 ```
 - Settings -> Licensing -> (Change license group)
 - Settings -> Server settings -> Email settings
@@ -338,7 +350,7 @@ server = 192.168.1.50:9997
 [tcpout-server://192.168.1.50:9997]
 ```
 
-#### Windows addon
+##### Windows addon
 *   Install Splunk Add-on for Microsoft Windows
 ```
 # Copy the 'Splunk_TA_windows' app to the deployment-apps directory.
@@ -396,7 +408,7 @@ Create or navigate to /opt/splunk/etc/apps/Splunk_TA_windows/local/props.conf
 ```
 </details>
 
-#### Linux addon
+##### Linux addon
 *   Install Splunk Add-on for Unix and Linux
 ```bash
 # Copy the 'Splunk_TA_nix' app to the deployment-apps directory.
@@ -426,8 +438,11 @@ Reload the configuration for the Splunk Deployment Server
 ```
 /opt/splunk/bin/splunk reload deploy-server
 ```
+</details>
 
-## SearchHead Server
+<details>
+<summary><b>SearchHead Server</b></summary>
+
 ```
 - Settings -> Licensing -> (Change to peer [deployment server])
 - Install/Hide Apps & Addons (Apps -> Manage Apps)
@@ -436,9 +451,10 @@ Reload the configuration for the Splunk Deployment Server
 - Apps -> Manage Apps -> Disable (Monitoring Console)
 - Activity -> Jobs
 ```
+</details>
 
 <details>
-<summary><h2>Upgrade Splunk Enterprise (Linux)</h2></summary>
+<summary><b>Upgrade Splunk Enterprise (Linux)</b></summary>
   
 [How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
 
@@ -467,7 +483,7 @@ chown -R splunk:splunk /opt/splunk
 </details>
 
 <details>
-<summary><h2>Uninstall Splunk Enterprise (Linux)</h2></summary>
+<summary><b>Uninstall Splunk Enterprise (Linux)</b></summary>
 
 ```
 # Stop Splunk
@@ -486,7 +502,7 @@ groupdel splunk
 </details>
  
 <details>
-<summary><h2>Disable Splunk Web</h2></summary>
+<summary><b>Disable Splunk Web</b></summary>
   
 ```
 sudo nano /opt/splunk/etc/system/local/web.conf
@@ -503,19 +519,15 @@ sudo systemctl restart splunk
 ```
 </details>
 
-## Uninstall an app or add-on
+<details>
+<summary><b>Uninstall an app or add-on</b></summary>
+
 - Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
 - You may need to remove user-specific directories created for your app or add-on by deleting any files found here: `$SPLUNK_HOME/etc/users/*/<appname>`.
-
-## JAVA for DB Connect app
-```
-# PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
-# URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
-# Permission: chown -R splunk:splunk /opt/splunk
-```
+</details>
 
 <details>
-<summary><h2>Splunk Admin Password Reset</h2></summary>
+<summary><b>Splunk Admin Password Reset</b></summary>
   
 ```
 # Stop Splunk Service
@@ -540,11 +552,13 @@ Restart Splunk
 ```
 /opt/splunk/bin/splunk restart
 ```
-#### Log In with New Password
+##### Log In with New Password
 After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 
 </details>
 
-## Troubleshoot & Others
+<details>
+<summary><b>Troubleshoot & Others</b></summary>
+
 ```
 #######  License  #######
 # Lists the current licenses installed and activated on your Splunk instance.
@@ -586,20 +600,25 @@ cd /opt/splunk/var/lib/splunk
 
 # Troubleshoot your tailed files
 curl https://serverhost:8089/services/admin/inputstatus/TailingProcessor:FileStatus
-```
-## Increase the session timeout settings
-nano /opt/splunk/etc/system/local/server.conf
-```
+
+# Increase the session timeout settings
+1. nano /opt/splunk/etc/system/local/server.conf
 [general]
 sessionTimeout = 3h
-```
-nano /opt/splunk/etc/system/local/web.conf
-```
+2. nano /opt/splunk/etc/system/local/web.conf
 [settings] 
 tools.sessions.timeout = 180
-```
 
-### Splunk Health Check & Best Practices
+# JAVA for DB Connect app
+PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
+URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
+Permission: chown -R splunk:splunk /opt/splunk
+```
+</details>
+
+<details>
+<summary><b>Splunk Health Check & Best Practices</b></summary>
+
 - Perform Health Check Assessment using monitoring console.
 - Optimize ulimits and other parameters based on Splunk documentation and your environment.
 - Monitor /opt storage space and consider expansion if needed.
@@ -625,3 +644,4 @@ Anyway, you can disable KV-Store adding to server.conf the following stanza:
 [kvstore]
 disabled = true
 ```
+</details>

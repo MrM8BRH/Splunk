@@ -286,3 +286,16 @@ Convert epoch time to a human readable time
 ```
 | eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 ```
+
+Check latest status of all modular inputs
+```
+| rest /services/admin/inputstatus/ModularInputs:modular%20input%20commands splunk_server=local count=0 
+| append [| rest /services/admin/inputstatus/ExecProcessor:exec%20commands splunk_server=local count=0] 
+| fields inputs*
+| transpose
+| rex field=column "inputs(?<script>\S+)(?:\s\((?<stanza>[^\(]+)\))?\.(?<key>(exit status description)|(time closed)|(time opened))"
+| eval value=coalesce('row 1', 'row 2'), stanza=coalesce(stanza, "default"), started=if(key=="time opened", value, started), stopped=if(key=="time closed", value, stopped)
+| rex field=value "exited\s+with\s+code\s+(?<exit_status>\d+)"
+| stats first(started) as started, first(stopped) as stopped, first(exit_status) as exit_status by script, stanza
+| eval errmsg=case(exit_status=="0", null(), isnotnull(exit_status), "A script exited abnormally with exit status: "+exit_status, isnull(started) or isnotnull(stopped), "A script is in an unknown state"), ignore=if(`script_error_msg_ignore`, 1, 0)
+```

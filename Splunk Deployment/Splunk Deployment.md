@@ -582,7 +582,13 @@ cd /opt/splunk/var/lib/splunk
 
 # Migrate
 /opt/splunk/bin/splunk stop
-/opt/splunk/bin/splunk migrate migrate-kvstore
+sudo rm /opt/splunk/var/run/splunk/kvstore_upgrade/*
+touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
+/opt/splunk/bin/splunk migrate kvstore-storage-engine --target-engine wiredTiger --enable-compression
+/opt/splunk/bin/splunk migrate migrate-kvstore # (1) - versionFile40
+/opt/splunk/bin/splunk migrate migrate-kvstore # (2) - versionFile42
+/opt/splunk/bin/splunk start
+/opt/splunk/bin/splunk show kvstore-status --verbose
 
 #######  Troubleshoot  #######
 # Check Splunk Version

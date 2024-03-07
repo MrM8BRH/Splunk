@@ -54,24 +54,11 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
   </fieldset>
   <row>
     <panel>
+      <title>Metadata information for hosts across all indexes.</title>
       <table>
-        <title>Metadata information for hosts across all indexes.</title>
         <search>
           <query>| metadata type=hosts index=*
 | eval firstTime=strftime(firstTime, "%Y-%m-%d %H:%M:%S"), lastTime=strftime(lastTime, "%Y-%m-%d %H:%M:%S"), recentTime=strftime(recentTime, "%Y-%m-%d %H:%M:%S")</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-        </search>
-        <option name="drilldown">none</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>List of Login Attempts to Splunk</title>
-        <search>
-          <query>index=_audit tag=authentication | stats count by user, info | sort - info</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
@@ -80,8 +67,8 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
       </table>
     </panel>
     <panel>
+      <title>List of Forwarders Installed.</title>
       <table>
-        <title>List of Forwarders Installed</title>
         <search>
           <query>index="_internal" sourcetype=splunkd group=tcpin_connections NOT eventType=* 
 | eval Hostname=if(isnull(hostname), sourceHost,hostname),version=if(isnull(version),"pre 4.2",version),architecture=if(isnull(arch),"n/a",arch) 
@@ -97,47 +84,53 @@ Author: [MrM8BRH](https://github.com/MrM8BRH)
   </row>
   <row>
     <panel>
-      <chart>
-        <title>Splunk users search activity</title>
+      <title>List of Login Attempts to Splunk.</title>
+      <table>
         <search>
-          <query>index=_audit splunk_server=local action=search (id=* OR search_id=*) 
-| eval search_id = if(isnull(search_id), id, search_id) 
-| replace '*' with * in search_id 
-| rex "search='search\s(?&lt;search&gt;.*?)',\sautojoin" 
-| search search_id!=scheduler_* 
-| convert num(total_run_time) 
-| eval user = if(user="n/a", null(), user) 
-| stats min(_time) as _time first(user) as user max(total_run_time) as total_run_time first(search) as search by search_id 
-| search search!=*_internal* search!=*_audit* 
-| chart sum(total_run_time) as "Total search time" count as "Search count" max(_time) as "Last use" by user 
-| fieldformat "Last use" = strftime('Last use', "%F %T.%Q")</query>
+          <query>index=_audit tag=authentication | eval time=strftime(_time,"%Y-%m-%d %H:%M:%S") | stats count by time, user, info | sort - info | rename time as Time, user as User, info as Action</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
-        <option name="charting.chart">pie</option>
-        <option name="charting.drilldown">none</option>
-      </chart>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
     </panel>
     <panel>
-      <chart>
-        <title>Display disk space utilized by each app in splunk</title>
+      <title>Host not sending logs for x days.</title>
+      <table>
         <search>
-          <query>index=_internal metrics kb group=per_sourcetype_thruput | eval sizeMB =
-round(kb/1024,2)| stats sum(sizeMB) by series | sort -sum(sizeMB) | rename sum(sizeMB)
-AS "Size on Disk (MB)"</query>
+          <query>| tstats count as countAtToday latest(_time) as lastTime where index!="*_" by host sourcetype index 
+| eval age=now()-lastTime 
+| sort age d 
+| fieldformat lastTime=strftime(lastTime,"%Y/%m/%d %H:%M:%S") 
+| eval age=round((age/60/60),1) 
+| search age&gt;=48 
+| eval age=age."hour" 
+| dedup host</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
-        <option name="charting.chart">pie</option>
-        <option name="charting.drilldown">none</option>
+        <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
-      </chart>
+      </table>
     </panel>
   </row>
   <row>
     <panel>
+      <title>Data Indexed in GB for Last 7 days per Indexer.</title>
+      <table>
+        <search>
+          <query>index=_internal source=*license_usage.log type="RolloverSummary" | eval _time=_time - 43200 | bin _time span=1d | eval GB=round(b/1024/1024/1024, 3) | stats sum(GB) by host _time | sort -_time</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>License usage by index.</title>
       <chart>
-        <title>License usage by index</title>
         <search>
           <query>index=_internal source=*license_usage.log type="Usage" splunk_server=*
 | eval Date=strftime(_time, "%Y/%m/%d")
@@ -147,30 +140,67 @@ AS "Size on Disk (MB)"</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
-        <option name="charting.chart">column</option>
+        <option name="charting.chart">pie</option>
         <option name="charting.drilldown">none</option>
         <option name="refresh.display">progressbar</option>
-      </chart>
-    </panel>
-    <panel>
-      <chart>
-        <title>DBSizeGB per Index</title>
-        <search>
-          <query>| rest /services/data/indexes 
-| eval currentDBSizeGB = round(sum(currentDBSizeMB)/1024, 2) 
-| stats sum(currentDBSizeGB) as totalDBSizeGB by title, splunk_server</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
-        </search>
-        <option name="charting.chart">column</option>
-        <option name="charting.drilldown">none</option>
       </chart>
     </panel>
   </row>
   <row>
     <panel>
+      <title>Find out all successful splunk configuration changes by user.</title>
       <table>
-        <title>Search History</title>
+        <search>
+          <query>index=_audit action=edit* info=granted operation!="list" host=* object=*
+| top limit=10 user
+| transaction action user operation host maxspan=30s
+| stats values(action) as action values(object) as modified_object by
+_time,operation,user,host
+| rename user as modified_by
+| table _time action modified_object modified_by</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Splunk errors in last 24 hours.</title>
+      <table>
+        <search>
+          <query>index=_internal " error " NOT debug source=*splunkd.log* | top limit=10 _raw</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Identifying Hosts not sending data for more than 6 hours.</title>
+      <table>
+        <search>
+          <query>| tstats latest(_time) as latest where index!="*_" earliest=-9h by host index sourcetype
+| eval recent = if(latest &gt; relative_time(now(),"-360m"),"1","0"), LastReceiptTime = strftime(latest,"%c")
+| where recent=0
+| sort LastReceiptTime
+| eval age=now()-latest
+| eval age=round((age/60/60),1)
+| eval age=age."hour"
+| fields - recent latest</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Show Searches with Details (Who | When | What).</title>
+      <table>
         <search>
           <query>index=_audit action=search sourcetype=audittrail search_id=* NOT (user=splunk-system-user) search!="'typeahead*"
 | rex "search\=\'(search|\s+)\s(?P&lt;search&gt;[\n\S\s]+?(?=\'))"
@@ -188,10 +218,17 @@ AS "Size on Disk (MB)"</query>
   </row>
   <row>
     <panel>
+      <title>Who is using Splunk by user, app and view.</title>
       <table>
-        <title>Splunk errors in last 24 hours</title>
         <search>
-          <query>index=_internal " error " NOT debug source=*splunkd.log*</query>
+          <query>index=_internal sourcetype="splunk_web_access" method="GET" status="200" user!=-
+| stats count latest(_time) as ViewTime by user app view
+| sort -count
+| eventstats sum(count) as countByApp list(view) as view list(count) as count list(ViewTime) as ViewTime by user app
+| convert timeformat="%a %m/%d/%Y %I:%M:%S %p" ctime(ViewTime)
+| dedup app
+| appendpipe [stats sum(count) as count by user | eval view = "Total Views"]
+| sort + user -countByApp</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
@@ -202,50 +239,17 @@ AS "Size on Disk (MB)"</query>
   </row>
   <row>
     <panel>
+      <title>Skipped searches and why.</title>
       <table>
-        <title>Search Peer Not Responding</title>
         <search>
-          <query>| rest splunk_server=local /services/search/distributed/peers/
-| where status!="Up" AND disabled=0
-| fields peerName, status
-| rename peerName as Instance, status as Status</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>Find out all successful splunk configuration changes by user</title>
-        <search>
-          <query>index=_audit action=edit* info=granted operation!="list" host=* object=*
-| transaction action user operation host maxspan=30s
-| stats values(action) as action values(object) as modified_object by
-_time,operation,user,host
-| rename user as modified_by
-| table _time action modified_object modified_by</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>Version of all apps and add-ons installed on Splunk</title>
-        <search>
-          <query>| rest /services/apps/local | search disabled=0 core=0|dedup label | table label version</query>
+          <query>index = _internal skipped sourcetype=scheduler status=skipped
+| stats count by app search_type reason savedsearch_name 
+| sort -count</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
         <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
       </table>
     </panel>
   </row>

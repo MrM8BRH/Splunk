@@ -43,14 +43,7 @@ chown
 ### Option 1: Resize Without Adding a New Disk
 
 ```bash
-# Resize the partition
-parted /dev/sda
-resizepart 2  # /dev/sda(2)
-End? [48.0GB]? 48.0+[new]GB
-q
-
-# Resize physical volume and logical volume
-pvresize /dev/sda2
+growpart /dev/sda 3
 lvextend -r -l +100%FREE /dev/mapper/centos-opt
 partprobe
 ```

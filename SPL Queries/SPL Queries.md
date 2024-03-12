@@ -5,6 +5,8 @@
 
 [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
+[Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
+
 [Windows Security Events You Should Monitor](https://medium.com/@alizourob4/windows-security-events-you-should-monitor-eebb7a034bbf)
 
 ## External Links

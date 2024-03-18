@@ -426,3 +426,38 @@ User Deleted By Admin:
 ```
 host="*" index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : ", user as "Deleted User: " , dest as "Destination DC"
 ```
+
+| Windows Event ID | Event Summary |
+|---|---|
+| 4720 | A user account was created |
+| 4722 | A user account was enabled |
+| 4723 | An attempt was made to change an account's password |
+| 4724 | An attempt was made to reset an accounts password |
+| 4725 | A user account was disabled |
+| 4726 | A user account was deleted |
+| 4738 | A user account was changed |
+| 4781 | The name of an account was changed |
+| 4782 | The password hash an account was accessed |
+| 4624 | An account was successfully logged on |
+| 4740 | A user account was locked out |
+| 4634 | An account was logged off |
+| 4625 | An account failed to log on |
+| 4648 | A logon was attempted using explicit credentials |
+| 4732 | A member was added to a security-enabled local group |
+| 4728 | A member was added to a security-enabled global group |
+| 4756 | A member was added to a security-enabled universal group |
+| 4733 | A member was removed from a security-enabled local group |
+| 4729 | A member was removed from a security-enabled global group |
+| 4757 | A member was removed from a security-enabled universal group |
+| 4657 | A registry value was modified |
+| 4672 | Special privileges assigned to new logon |
+| 4697 | A service was installed in the system |
+| 4698 | A scheduled task was created |
+| 4699 | A scheduled task was deleted |
+| 4700 | A scheduled task was enabled |
+| 4701 | A scheduled task was disabled |
+| 4702 | A scheduled task was updated |
+| 4608 | Windows is starting up |
+| 4609 | Windows is shutting down |
+| 4800 | The workstation was locked |
+| 4801 | The workstation was unlocked |

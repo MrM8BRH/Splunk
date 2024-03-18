@@ -1,4 +1,6 @@
 ## Windows Security Log Events
+[Appendix L: Events to Monitor](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor)
+
 [Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
 
 [Security Log Defined](https://system32.eventsentry.com/)

@@ -71,7 +71,7 @@ options {
 flush_lines (0);
 time_reopen (10);
 create_dirs(yes);
-log_fifo_size (2048);
+log_fifo_size (4096);
 log_msg_size(8192);
 chain_hostnames (no);
 use_dns (no);
@@ -79,7 +79,7 @@ use_fqdn (no);
 keep_hostname (yes);
 perm(0644);
 dir_perm(0755);
-time_reopen (10);
+time_reopen (1);
 };
 source s_syn {
 #    system();

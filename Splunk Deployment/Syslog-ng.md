@@ -69,7 +69,7 @@ nano /etc/syslog-ng.conf
 #       located in /etc/syslog-ng/conf.d/
 options {
 flush_lines (0);
-time_reopen (10);
+time_reopen (1);
 create_dirs(yes);
 log_fifo_size (4096);
 log_msg_size(8192);
@@ -79,7 +79,6 @@ use_fqdn (no);
 keep_hostname (yes);
 perm(0644);
 dir_perm(0755);
-time_reopen (1);
 };
 source s_syn {
 #    system();

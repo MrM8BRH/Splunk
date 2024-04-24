@@ -36,7 +36,7 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 ```
 yum update -y
 yum install -y dnf
-dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils
+dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils polkit.x86_64
 ```
 </details>
 

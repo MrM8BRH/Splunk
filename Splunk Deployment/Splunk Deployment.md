@@ -176,7 +176,9 @@ rpm -ivh splunk_package_name.rpm
 tar xvzf splunk_package_name.tgz -C /opt
 
 # Enable Splunk to start on boot and accept the license:
-/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk --accept-license
+/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -create-polkit-rules 1 -user splunk --accept-license
+
+chown -R splunk /opt/splunk
 ```
 </details>
 

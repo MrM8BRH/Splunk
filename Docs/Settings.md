@@ -42,15 +42,26 @@ chown
 
 ### Option 1: Resize Without Adding a New Disk
 
-```bash
+```
 growpart /dev/sda 3
 lvextend -r -l +100%FREE /dev/mapper/centos-opt
 partprobe
 ```
+OR
+```
+fdisk /dev/sda
+1. "d" to delete the only partition /dev/sda has.
+2. "n" to create a new one. Running "n" will make fdisk interactively ask you some parameters for partition creation, you can just hit enter so it uses the default values.
+3. Running the previous command does not write the changes to disk, to do this, you need to run the "w" command.
+partprobe
+lsblk
+xfs_growfs /dev/sda1
+```
+
 
 ### Option 2: Resize by Adding a New Disk
 
-```bash
+```
 # Create physical volume on the new disk
 pvcreate /dev/sda
 

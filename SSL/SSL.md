@@ -10,6 +10,7 @@
 [Test and troubleshoot TLS connections](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/Validateyourconfiguration)
 
 ## Default certificate renewal
+### WEB
 ```
 export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH
 export SPLUNK_HOME=/opt/splunk/
@@ -30,16 +31,15 @@ serverCert = /opt/splunk/etc/auth/mycerts/myServerCertificate.pem
 sslPassword = password
 ```
 
-[Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
+### SERVER
 ```
-export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH
-/opt/splunk/bin/splunk createssl server-cert -d /opt/splunk/etc/auth -n SplunkServerDefaultCert
 cd /opt/splunk/etc/auth
-mv server.pem server.pem.orig
-mv SplunkServerDefaultCert.pem server.pem
+mv server.pem server.pem.bkp
+chown -R splunk:splunk /opt/splunk
+/opt/splunk/bin/splunk restart
 openssl x509 -in server.pem -text
 ```
-
+[Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
 
 ## Split a .pfx File into .pem and .key Files Using OpenSSL
 The following command will generate a private key file without a password from your .pfx file (requires password):

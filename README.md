@@ -14,7 +14,14 @@
 <a href="https://techforpalestine.org/">
 <img src="https://badge.techforpalestine.org/default">
 </a>
-  
+
+<br>
+<br>
+Gartner Magic Quadrant for Security Information and Event Management (2024)
+<br>
+<br>
+<img width=400px; src="https://github.com/MrM8BRH/Splunk/assets/34133187/d8f3a444-dff1-4804-9da5-459707f13f91">
+
 </div>
 
 Table of Contents

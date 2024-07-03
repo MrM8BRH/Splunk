@@ -95,6 +95,7 @@ whitelist = 4722,4725,4740,4767,4738,4720,4723,4724,4726,4735,4737,4761,4762,472
 
 ## Discard specific events and keep the rest
 1. This example discards all `sshd` events in `/var/log/messages` by sending them to `nullQueue`:
+Under props.conf
 ```
 [source::/var/log/messages]
 TRANSFORMS-null= setnull

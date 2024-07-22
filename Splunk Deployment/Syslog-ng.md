@@ -168,6 +168,23 @@ chown -R splunk:splunk /opt/splunk
 ```
 
 ### Install and Configure SC4S (Syslog Server)
+Set the host OS kernel to match the default receiver buffer of SC4S, which is set to 16MB.
+
+a. Add the following to /etc/sysctl.conf:
+```
+net.core.rmem_default = 17039360
+net.core.rmem_max = 17039360
+```
+b. Apply to the kernel:
+```
+sysctl -p
+```
+
+Ensure the kernel is not dropping packets:
+```
+netstat -su | grep "receive errors"
+```
+SC4S Setup
 ```
 touch SC4S-Splunk-Connect-for-Syslog.sh
 chmod +x SC4S-Splunk-Connect-for-Syslog.sh

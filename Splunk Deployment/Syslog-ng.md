@@ -194,7 +194,7 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
-dnf install -y conntrack podman
+dnf install -y conntrack podman crun
 
 echo "
 [Unit]

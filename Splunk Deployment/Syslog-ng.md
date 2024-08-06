@@ -1,5 +1,7 @@
-Syslog-ng (Old)
----------------
+<details>
+
+<summary><b>Syslog-ng (Old)</b></summary>
+
 ### Installation
 #### CentOS
 ```
@@ -127,9 +129,15 @@ crontab -e
 0 5 * * * find /var/log/syslog-ng/security/ -type f -name \*.log -mtime +7 -exec rm {} \;
 0 5 * * * find /var/log/syslog-ng/default/ -type f -name \*.log -mtime +7 -exec rm {} \;
 ```
+</details>
 
-SC4S (New)
+
+
+
+Splunk Connect for Syslog (SC4S)
 ----------
+[Link](https://splunk.github.io/splunk-connect-for-syslog/main/)
+
 ### Index Configuration (Indexer Server)
 SC4S is pre-configured to map each sourcetype to a typical index. For new installations, it is best practice to create them in Splunk when using the SC4S defaults. SC4S can be easily customized to use different indexes if desired.
 - email
@@ -275,6 +283,13 @@ SC4S_SOURCE_TLS_ENABLE=yes
 SC4S_LISTEN_DEFAULT_TLS_PORT=6514
 SC4S_SOURCE_TLS_OPTIONS=no-tlsv12
 SC4S_SOURCE_TLS_CIPHER_SUITE=ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+SC4S_DISABLE_DROP_INVALID_CEF=yes
+SC4S_DISABLE_DROP_INVALID_VMWARE_CB_PROTECT=yes
+SC4S_DISABLE_DROP_INVALID_CISCO=yes
+SC4S_DISABLE_DROP_INVALID_VMWARE_VSPHERE=yes
+SC4S_DISABLE_DROP_INVALID_RAW_BSD=yes
+SC4S_DISABLE_DROP_INVALID_XML=yes
+SC4S_DISABLE_DROP_INVALID_HPE=yes
 " > /opt/sc4s/env_file
 
 echo "${yellow}Generating Cert for TLS${reset}"
@@ -315,4 +330,21 @@ Additional trusted (private) Certificate Authorities can be added by following t
 Example:
 ```
 cat /path/to/your/certificate.pem >> /opt/sc4s/tls/trusted.pem
+```
+
+<hr>
+
+Check podman/docker logs for errors
+```
+sudo podman|docker logs SC4S
+```
+
+Search on Splunk for successful installation of SC4S
+```
+index=* sourcetype=sc4s:events "starting up"
+```
+
+Send sample data to default udp port 514 of SC4S host
+```
+echo “Hello SC4S” > /dev/udp/<SC4S_ip>/514
 ```

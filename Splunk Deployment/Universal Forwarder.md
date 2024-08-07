@@ -39,6 +39,14 @@ gunzip <archive.tgz>
 
 # Extract tar file
 tar -xvf <archive.tar>
+
+# AIX
+## This command invokes the following system commands to register the forwarder in the System Resource Controller (SRC):
+mkssys -G splunk -s splunkd -p <path to splunkd> -u <splunk user> -a _internal_exec_splunkd -S -n 2 -f 9
+
+## When you enable automatic boot start, the SRC handles the run state of the forwarder. This means that you must use a different command to start and stop the forwarder manually:
+- /usr/bin/startsrc -s splunkd to start the forwarder.
+- /usr/bin/stopsrc -s splunkd to stop the forwarder.
 ```
 ## Uninstall Splunk Universal Forwarder on Linux
 ```

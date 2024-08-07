@@ -12,8 +12,12 @@ tar xvzf splunkforwarder_package_name.tgz -C /opt
 # Check Splunk status and accept the license 
 /opt/splunkforwarder/bin/splunk status --accept-license
 
+#  Set the deployment server (Splunk deployment client):
+/opt/splunkforwarder/bin/splunk set deploy-poll <deployment-ip>:8089
+
 # Enable the Splunk Universal Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd
+/opt/splunkforwarder/bin/splunk enable boot-start                                                           # (1)
+/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd       # (2)
 
 # Start Splunk Universal Forwarder
 /opt/splunkforwarder/bin/splunk start
@@ -24,14 +28,17 @@ tar xvzf splunkforwarder_package_name.tgz -C /opt
 # Remove a forward server (indexer):
 /opt/splunkforwarder/bin/splunk remove forward-server <indexer-ip>:9997
 
-#  Set the deployment server (Splunk deployment client):
-/opt/splunkforwarder/bin/splunk set deploy-poll <deployment-ip>:8089
-
 # Edit the deploymentclient.conf file:
 nano /opt/splunkforwarder/etc/system/local/deploymentclient.conf
 
-# Add a monitored file or directory to forward data:
-/opt/splunkforwarder/bin/splunk add monitor -auth admin:password /var/log/..etc
+# Library variable
+export $LD_LIBRARY_PATH=/usr/lib:/opt/splunkforwarder/lib
+
+# Extract tgz file
+gunzip <archive.tgz>
+
+# Extract tar file
+tar -xvf <archive.tar>
 ```
 ## Uninstall Splunk Universal Forwarder on Linux
 ```

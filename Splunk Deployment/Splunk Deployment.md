@@ -656,4 +656,11 @@ Anyway, you can disable KV-Store adding to server.conf the following stanza:
 [kvstore]
 disabled = true
 ```
+
+Data Model Best practices
+- Every accelerated data model should have specific indexes defined. 
+- Only enable acceleration for data models that are applicable for your environment. If you don’t have data sources for a specific data model, disable acceleration. 
+- Consider disabling acceleration for data models that are not powering correlation searches, especially if you’re not planning to use this data for security use cases in the future. 
+- Regularly review the data in your Splunk environment and update the index constraints as new data sources are added. Include updating these constraints as part of your data onboarding processes. 
+
 </details>

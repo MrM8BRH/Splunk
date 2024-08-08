@@ -227,6 +227,10 @@ base_max_searches = 6
 max_searches_per_cpu = 16
 max_rt_search_multiplier = 3
 
+[scheduler]
+max_searches_perc = 75
+auto_summary_perc = 100
+
 [mvcombine]
 max_mem_usage_mb = 1024
 

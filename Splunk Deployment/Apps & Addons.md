@@ -8,19 +8,11 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |------------------------------------|----------------------------|----------------------------------------|
 | Splunk Enterprise Security         | Splunk Inc                 | https://splunkbase.splunk.com/app/263  |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
-| ES Mothership App for Splunk       | Splunk Works               | https://splunkbase.splunk.com/app/4746 |
 | ES Choreographer                   | Gabriel Vasseur            | https://splunkbase.splunk.com/app/6309 |
-| ES Helper                          | Kinney Group               | https://splunkbase.splunk.com/app/5638 |
+| ESCU Companion App                 | Brandon Sternfield         | https://preview.splunkbase.splunk.com/app/7356 |
+| ES Mothership App for Splunk       | Splunk Works               | https://splunkbase.splunk.com/app/4746 |
 | Update Notable Command for ES      | Doug Brown                 | https://splunkbase.splunk.com/app/5211 |
 | SA-Investigator for Enterprise Security           | Splunk Works                | https://splunkbase.splunk.com/app/3749 |
-| Machine Learning Cloud Service Add-on for Enterprise Security           | Splunk Works                 | https://splunkbase.splunk.com/app/5091 |
-| SA-CrowdstrikeDevices for Splunk Enterprise Security           | Splunk Works                 | https://splunkbase.splunk.com/app/6573 |
-| SA-CrowdstrikeIntelIndicators for Enterprise Security           | Arcus Data                 | https://splunkbase.splunk.com/app/7064 |
-| SA-CortexXDRDevices for Enterprise Security           | Arcus Data                 | https://splunkbase.splunk.com/app/7063 |
-| SA-CrowdStrikeIdentities for Enterprise Security           | Zach TheSplunker                 | https://splunkbase.splunk.com/app/6930 |
-| SCADAfence for Splunk ES and OT           | SCADAfence Inc                 | https://splunkbase.splunk.com/app/6198 |
-| ServiceNow Security Operations Event Ingestion Addon for Splunk ES           | ServiceNow SecOps Applications                 | https://splunkbase.splunk.com/app/4770 |
-| PowerConnect for SAP Solutions - ES Content Pack           | Software ONE                 | https://splunkbase.splunk.com/app/6674 |
 
 ### Windows
 |                      Name                     |  Built by  |                   URL                  |
@@ -58,6 +50,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Alert Manager Enterprise           | Datapunctum AG             | https://splunkbase.splunk.com/app/6730 |
 | dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
 | Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
+| Alerts For Splunk Admins           | Gareth Anderson            | https://splunkbase.splunk.com/app/3796 |
+
 
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |

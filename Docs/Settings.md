@@ -34,6 +34,8 @@ ps -elf
 visudo
 chmod
 chown
+
+/sbin/sysctl -p  # Command load kernel settings from /etc/sysctl.conf. 
 ```
 
 ## Storage Options

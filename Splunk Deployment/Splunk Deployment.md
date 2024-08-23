@@ -189,9 +189,9 @@ chown -R splunk /opt/splunk
 
 Add or change the values in the file:
 ```
-LimitNOFILE=64000
+LimitNOFILE=65536
 LimitNPROC=16000
-LimitDATA=20000000000
+LimitDATA=8589934592
 LimitFSIZE=infinity
 TasksMax=8192
 ```

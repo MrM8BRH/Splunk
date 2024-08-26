@@ -88,6 +88,33 @@ Use Cases - Correlation Searches
  - SA-NetworkProtection
  - SA-ThreatIntelligence
 
+<details>
+<summary><b>Uninstall Splunk ES (Linux)</b></summary>
+
+```
+# Stop Splunk
+/opt/splunk/bin/splunk stop
+
+# Uninstall Splunk ES
+cd /opt/splunk/etc/apps
+rm -rf SplunkEnterpriseSecurity*
+rm -rf SA-*
+rm -rf DA-ESS*
+```
+</details>
+
+<details>
+<summary><b>Troubleshoot & Others</b></summary>
+
+```
+KV Store Logs file:
+cat /opt/splunk/var/log/splunk/mongod.log
+
+Permissions:
+chmod 600 /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key
+```
+</details>
+
 Resrouces
 ---------
 ### Enterprise Security

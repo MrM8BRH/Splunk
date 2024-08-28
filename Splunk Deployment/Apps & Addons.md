@@ -150,6 +150,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |                                   Name                  |          Built by         |                   URL                  |
 |---------------------------------------------------------|---------------------------|----------------------------------------|
 | Cisco Security Cloud                                    | Cisco Security            | https://splunkbase.splunk.com/app/7404 |
+| Splunk Add-on for Cisco ASA                             | Splunk Inc                | https://splunkbase.splunk.com/app/1620 |
 | Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |

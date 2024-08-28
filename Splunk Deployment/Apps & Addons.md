@@ -112,10 +112,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### F5
 | Name                        | Built by        | URL                                    |
 |-----------------------------|-----------------|----------------------------------------|
-| F5 BIG-IP LTM               | Splunk Inc      | https://splunkbase.splunk.com/app/5948 |
 | Splunk Add-on for F5 BIG-IP | Splunk Inc      | https://splunkbase.splunk.com/app/2680 |
 | F5 WAF Security             | Nexinto Nexinto | https://splunkbase.splunk.com/app/2873 |
-| F5 LTM Pool Monitoring      | Nomios Sas      | https://splunkbase.splunk.com/app/3857 |
 
 ### Tenable
 | Name                                 | Built by         | URL                                    |
@@ -151,8 +149,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Cisco
 |                                   Name                  |          Built by         |                   URL                  |
 |---------------------------------------------------------|---------------------------|----------------------------------------|
-| Cisco Secure Firewall App for Splunk                    | Cisco Security            | https://splunkbase.splunk.com/app/4388 |
-| Cisco Secure eStreamer Client Add-On for Splunk         | Cisco Security            | https://splunkbase.splunk.com/app/3662 |
+| Cisco Security Cloud                                    | Cisco Security            | https://splunkbase.splunk.com/app/7404 |
+| Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
 | Cisco ACI App for Splunk Enterprise                     | Cisco Systems             | https://splunkbase.splunk.com/app/1896 |
@@ -169,4 +167,3 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco WebEx Meetings App for Splunk              | Splunk Works              | https://splunkbase.splunk.com/app/4992 |
 | Cisco WebEx Meetings Add-on for Splunk           | Splunk Works              | https://splunkbase.splunk.com/app/4991 |
 | Splunk Add-on for Cisco Meraki                   | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
-| Cisco Umbrella Add-On for Splunk                 | Hurricane Labs            | https://splunkbase.splunk.com/app/3926 |

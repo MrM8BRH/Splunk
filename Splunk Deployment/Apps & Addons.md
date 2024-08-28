@@ -27,6 +27,13 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
 
+### Splunk Stream
+|                      Name                     |  Built by  |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| Splunk App for Stream                         | Splunk Inc | https://splunkbase.splunk.com/app/1809 |
+| Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
+| Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |
+
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
@@ -153,6 +160,9 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Cisco ASA                             | Splunk Inc                | https://splunkbase.splunk.com/app/1620 |
 | Cisco Secure Network Analytics (Stealthwatch) App       | Cisco Systems             | https://splunkbase.splunk.com/app/6398 |
 | Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
+| Cisco Umbrella Investigate Add-on                       | OpenDNS Cisco             | https://splunkbase.splunk.com/app/3324 |
+| Splunk Add-on for Cisco Identity Services               | Splunk Inc                | https://splunkbase.splunk.com/app/1915 |
+| Splunk for Cisco Identity Services (ISE)                | Jason Conger              | https://splunkbase.splunk.com/app/1589 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
 | Cisco ACI App for Splunk Enterprise                     | Cisco Systems             | https://splunkbase.splunk.com/app/1896 |

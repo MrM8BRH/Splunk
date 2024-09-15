@@ -223,12 +223,15 @@ In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/L
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
 [default]
-max_mem_usage_mb = 8192
+max_mem_usage_mb = 12288
 
 [search]
 base_max_searches = 6
-max_searches_per_cpu = 16
+max_searches_per_cpu = 10
 max_rt_search_multiplier = 3
+
+[searchresults]
+maxresultrows = 200000
 
 [scheduler]
 max_searches_perc = 75
@@ -241,9 +244,15 @@ max_mem_usage_mb = 1024
 max_mem_usage_mb = 1024
 
 [sort]
-maxfiles = 128
+maxfiles = 256
 ```
 These adjustments should be aligned with our system requirements and available resources.
+
+$SPLUNK_HOME/etc/system/local/server.conf
+```
+[general]
+conf_cache_memory_optimization = true 
+```
 
 
 ##### Start and enable Splunk service

@@ -83,28 +83,26 @@ perm(0644);
 dir_perm(0755);
 };
 source s_syn {
-#    system();
-#   internal();
 udp(ip(0.0.0.0) port(5514));
 };
 source s_syf {
-#    system();
-#   internal();
 udp(ip(0.0.0.0) port(6514));
 };
 source s_syd {
-#    system();
-#   internal();
 udp(ip(0.0.0.0) port(514));
 };
+
 destination d_n { file("/var/log/syslog-ng/networks/$HOST/$YEAR$MONTH$DAY.log"); };
 destination d_f { file("/var/log/syslog-ng/security/$HOST/$YEAR$MONTH$DAY.log"); };
 destination d_d { file("/var/log/syslog-ng/default/$HOST/$YEAR$MONTH$DAY.log"); };
+
 log { source(s_syn); destination(d_n); };
 log { source(s_syf); destination(d_f); };
 log { source(s_syd); destination(d_d); };
+
 # Source additional configuration files (.conf extension only)
 @include "/etc/syslog-ng/conf.d/*.conf"
+
 # vim:ft=syslog-ng:ai:si:ts=4:sw=4:et:
 ```
 </details>

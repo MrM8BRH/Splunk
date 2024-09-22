@@ -637,6 +637,13 @@ tools.sessions.timeout = 180
 PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
 URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
 Permission: chown -R splunk:splunk /opt/splunk
+
+# Header options
+nano /opt/splunk/etc/system/local/web.conf
+
+[settings]
+x_frame_options_sameorigin = true
+replyHeader.X-Frame-Options = SAMEORIGIN
 ```
 </details>
 

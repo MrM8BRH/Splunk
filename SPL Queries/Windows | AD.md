@@ -13,6 +13,11 @@ Check for Disabled User Accounts:
 | ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))" attrs="sAMAccountName" | table sAMAccountName,dn
 ```
 
+RDP Connections
+```
+index=wineventlog EventCode=4624 Logon_Type=2 OR Logon_Type=10 Source_Network_Address!="192.168.9.9" | table _time,Account_Domain,Account_Name,action,app,command,user,src,src_user,dest
+```
+
 Identify Windows account password changes:
 ```
 index=wineventlog source="*:Security" (EventCode=4723 OR EventCode=4724) | table host,source,action,dvc,name,user,user_group

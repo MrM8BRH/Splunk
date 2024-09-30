@@ -41,6 +41,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
+| Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
 | Splunk Quick Health Check App      |                            | https://github.com/iopsmon/splunk_quick_health_check |

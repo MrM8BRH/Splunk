@@ -644,6 +644,11 @@ nano /opt/splunk/etc/system/local/web.conf
 [settings]
 x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
+
+
+# Missing Forwarders
+https://community.splunk.com/t5/Getting-Data-In/monitoring-console-triggered-alerts-missing-forwarders-but-they/m-p/458517
+https://community.splunk.com/t5/Getting-Data-In/What-does-the-heartbeatFrequency-setting-do-in-outputs-conf/m-p/267281
 ```
 </details>
 

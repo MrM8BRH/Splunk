@@ -34,27 +34,36 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
 | Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |
 
-### Apps
+
+### Security
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
+| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
+| MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
+| App for External Attack Surface Management (EASM) | Greg Ford          | https://splunkbase.splunk.com/app/7027 |
+| Splunk UBA Monitoring App          | Splunk Works               | https://splunkbase.splunk.com/app/4441 |
+| APT Falconer                       | Splunk Works               | https://splunkbase.splunk.com/app/7469 |
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
-| Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
-| Splunk Quick Health Check App      |                            | https://github.com/iopsmon/splunk_quick_health_check |
-| ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
-| App for External Attack Surface Management | Greg Ford          | https://splunkbase.splunk.com/app/7010 |
+| Splunk App for Splunk Attack Analyzer | Splunk Inc              | https://splunkbase.splunk.com/app/7000 |
+| Splunk Add-On for Splunk Attack Analyzer | Splunk Inc           | https://splunkbase.splunk.com/app/6999 |
+
+### Apps
+|                Name                |          Built by          |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| Searchbase App for Splunk          | Splunk Works               | https://splunkbase.splunk.com/app/7188 |
+| Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |
+| URL Toolbox                        | Splunk Works               | https://splunkbase.splunk.com/app/2734 |
+| ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | Thycotic Secret Server Dashboard   | Jackie Lentz               | https://splunkbase.splunk.com/app/5327 |
 | Splunk IT Service Intelligence     | Splunk Inc                 | https://splunkbase.splunk.com/app/1841 |
-| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
-| MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
-| ThreatHunting                      | Olaf Hartong               | https://splunkbase.splunk.com/app/4305 |
 | Alert Manager Enterprise           | Datapunctum AG             | https://splunkbase.splunk.com/app/6730 |
 | dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
 | Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
@@ -64,8 +73,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
+| Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
 | Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
+| Kaspersky Add-on for Splunk                   | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
 
 ### Database
 | Name                                            | Built by         | URL                                    |
@@ -95,14 +106,11 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |---------------------------------------------------------------|-----------------|----------------------------------------|
 | Microsoft 365 App for Splunk                                  | Splunk Works    | https://splunkbase.splunk.com/app/3786 |
 | Splunk Add-on for Microsoft Office 365                        | Splunk Inc      | https://splunkbase.splunk.com/app/4055 |
-| MS Windows AD Objects                                         | Steve Hogan     | https://splunkbase.splunk.com/app/3177 |
-| Blue team app for Office 365 and Azure                        | Korstiaan stam  | https://splunkbase.splunk.com/app/4667 |
+| Microsoft Azure App for Splunk                                | Splunk Works    | https://splunkbase.splunk.com/app/4882 |
+| Splunk Add on for Microsoft Azure                             | Splunk Works    | https://splunkbase.splunk.com/app/3757 |
+| Microsoft Teams Add-on for Splunk                             | Splunk Works    | https://splunkbase.splunk.com/app/4994 |
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |
-| EWS for Office 365                                            | Splunk Inc      | https://splunkbase.splunk.com/app/5829 |
-| Microsoft 365 Defender                                        | Splunk Inc      | https://splunkbase.splunk.com/app/6563 |
-| MS Graph for Office 365                                       | Splunk Inc      | https://splunkbase.splunk.com/app/5824 |
-| Enosys Enhancement for Splunk Add-on for Microsoft Office 365 | Simon Sigre     | https://splunkbase.splunk.com/app/4704 |
 
 ### MISP & TheHive
 |      Name      |      Built by     |                   URL                  |
@@ -168,15 +176,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
 | Cisco ACI App for Splunk Enterprise                     | Cisco Systems             | https://splunkbase.splunk.com/app/1896 |
 | Cisco ACI Add-on for Splunk Enterprise                  | Cisco Systems             | https://splunkbase.splunk.com/app/1897 |
-| Cisco Nexus 9k App for Splunk Enterprise                | Cisco Systems             | https://splunkbase.splunk.com/app/1916 |
-| Cisco Nexus 9k Add-on for Splunk Enterprise             | Cisco Systems             | https://splunkbase.splunk.com/app/1917 |
-| Cisco Network Assurance Engine App for Splunk Enterprise    | Cisco Systems             | https://splunkbase.splunk.com/app/3821 |
-| Cisco Network Assurance Engine Add-on for Splunk Enterprise | Cisco Systems             | https://splunkbase.splunk.com/app/3820 |
-| Cisco Nexus Dashboard Insights App for Splunk    | Cisco Systems             | https://splunkbase.splunk.com/app/6117 |
-| Cisco Nexus Dashboard Insights Add-On for Splunk | Cisco Systems             | https://splunkbase.splunk.com/app/6118 |
-| Cisco SD-WAN App for Splunk                      | Cisco Systems             | https://splunkbase.splunk.com/app/6657 |
-| Cisco SD-WAN Add-on for Splunk                   | Cisco Systems             | https://splunkbase.splunk.com/app/6656 |
-| Cisco Firepower Threat Defense FTD Dashboards    | Juan Jose Ponce Dominguez | https://splunkbase.splunk.com/app/4010 |
-| Cisco WebEx Meetings App for Splunk              | Splunk Works              | https://splunkbase.splunk.com/app/4992 |
-| Cisco WebEx Meetings Add-on for Splunk           | Splunk Works              | https://splunkbase.splunk.com/app/4991 |
-| Splunk Add-on for Cisco Meraki                   | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
+| Cisco SD-WAN App for Splunk                             | Cisco Systems             | https://splunkbase.splunk.com/app/6657 |
+| Cisco SD-WAN Add-on for Splunk                          | Cisco Systems             | https://splunkbase.splunk.com/app/6656 |
+| Cisco WebEx Meetings App for Splunk                     | Splunk Works              | https://splunkbase.splunk.com/app/4992 |
+| Cisco WebEx Meetings Add-on for Splunk                  | Splunk Works              | https://splunkbase.splunk.com/app/4991 |
+| Splunk Add-on for Cisco Meraki                          | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |

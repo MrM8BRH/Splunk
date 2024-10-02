@@ -285,9 +285,13 @@ Splunk query to list all sourcetypes
 | metadata type=sourcetypes index=*
 ```
 
-To see where what you are collecting data from (extend this to 7 days or something)
+Missing forwarders (5 min = 900 sec)
 ```
-| tstats latest(_time) as latest_indexed WHERE index=* by host
+| REST /services/deployment/server/clients
+| eval difInSec=now()-lastPhoneHomeTime
+| eval time=strftime(lastPhoneHomeTime,"%Y-%m-%d %H:%M:%S")
+| search difInSec>900
+| table hostname, ip, diffInSec, time
 ```
 
 Convert epoch time to a human readable time

@@ -280,9 +280,9 @@ index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Tru
 | sort -count
 ```
 
-Splunk query to list all sourcetypes
+Convert epoch time to a human readable time
 ```
-| metadata type=sourcetypes index=*
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 ```
 
 Missing forwarders (5 min = 900 sec)
@@ -292,11 +292,6 @@ Missing forwarders (5 min = 900 sec)
 | eval time=strftime(lastPhoneHomeTime,"%Y-%m-%d %H:%M:%S")
 | search difInSec>900
 | table hostname, ip, diffInSec, time
-```
-
-Convert epoch time to a human readable time
-```
-| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 ```
 
 Check latest status of all modular inputs
@@ -310,23 +305,4 @@ Check latest status of all modular inputs
 | rex field=value "exited\s+with\s+code\s+(?<exit_status>\d+)"
 | stats first(started) as started, first(stopped) as stopped, first(exit_status) as exit_status by script, stanza
 | eval errmsg=case(exit_status=="0", null(), isnotnull(exit_status), "A script exited abnormally with exit status: "+exit_status, isnull(started) or isnotnull(stopped), "A script is in an unknown state"), ignore=if(`script_error_msg_ignore`, 1, 0)
-```
-
-Windows
-```
-source=WinEventLog:Security EventCode="4624" NOT user IN ($localuser1$*, $localuser2$*) Logon_Type="2" OR Logon_Type="10" 
-| fillnull value=* Source_Network_Address 
-| stats count by host Source_Network_Address Logon_Type user
-| eval bar="("+count+") "+Source_Network_Address 
-| eval bar_host="("+count+") "+host 
-| stats list(bar) as "(#) source(s)" values(bar_host) as "(#) host(s)" list(desc) as source_desc by user Logon_Type
-```
-
-Linux
-```
-sourcetype="linux_secure" "Accepted Publickey" OR "session opened" OR "Accepted password" 
-| stats count by host ip user app
-| eval bar="("+count+") "+ip
-| eval bar_host="("+count+") "+host 
-| stats list(bar) as "(#) source(s)" values(bar_host) as "(#) host(s)" list(desc) as source_desc by app user
 ```

@@ -456,6 +456,13 @@ Reload the configuration for the Splunk Deployment Server
 ```
 /opt/splunk/bin/splunk reload deploy-server
 ```
+Others
+```
+/opt/splunk/bin/splunk set servername host.domain.com
+/opt/splunk/bin/splunk set default-hostname host.domain.com
+/opt/splunk/bin/splunk btool deploymentclient list deployment-client 
+```
+
 </details>
 
 <details>

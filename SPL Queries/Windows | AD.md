@@ -1,3 +1,12 @@
+Linux Authentications
+```
+sourcetype="linux_secure" "Accepted Publickey" OR "session opened" OR "Accepted password" 
+| stats count by host ip user app
+| eval bar="("+count+") "+ip
+| eval bar_host="("+count+") "+host 
+| stats list(bar) as "(#) source(s)" values(bar_host) as "(#) host(s)" list(desc) as source_desc by app user
+```
+
 Passwords Never Changed - Active Accounts:
 ```
 | ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, dn, pwdLastSet

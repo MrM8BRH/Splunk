@@ -1,3 +1,5 @@
+[Configuring a Syslog server, and forwarding Linux Host logs](https://medium.com/@AustinNewtonTech/configuring-a-syslog-server-and-forwarding-linux-host-logs-3b782c7baa0f)
+
 <details>
 
 <summary><b>Syslog-ng (Old)</b></summary>

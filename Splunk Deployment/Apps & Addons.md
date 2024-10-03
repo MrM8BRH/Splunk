@@ -100,6 +100,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | CrowdStrike Falcon Devices Technical Add-On       | CrowdStrike | https://splunkbase.splunk.com/app/5570 |
 | CrowdStrike Falcon Spotlight Vulnerability Data   | CrowdStrike | https://splunkbase.splunk.com/app/6167 |
 | CrowdStrike Scheduled Search Technical Add-on     | CrowdStrike | https://splunkbase.splunk.com/app/6902 |
+| CrowdStrike Falcon FileVantage Technical Add-On   | CrowdStrike | https://splunkbase.splunk.com/app/7090 |
+| CrowdStrike Unified Alerts Technical Add-On       | CrowdStrike | https://splunkbase.splunk.com/app/7116 |
+| Crowdstrike Falcon Identity Protection add-on for Splunk | Zach TheSplunker | https://splunkbase.splunk.com/app/6893 |
+| SA-CrowdStrikeIdentities for Enterprise Security  | Zach TheSplunker | https://splunkbase.splunk.com/app/6930 |
 
 ### Microsoft
 |                              Name                             |     Built by    |                   URL                  |

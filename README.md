@@ -39,7 +39,7 @@ Table of Contents
     - [FortiGate](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/FortiGate.md)
     - [CrowdStrike](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/CrowdStrike.md)
     - [Cisco](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Cisco.md)
-    - [Office 365](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Office%20365.md)
+    - [Microsoft Azure](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Microsoft%20Azure.md)
     - [Tenable](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Tenable.md)
     - [Netflow](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Netflow.md)
     - [Twilio SMS](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Twilio%20SMS.md)

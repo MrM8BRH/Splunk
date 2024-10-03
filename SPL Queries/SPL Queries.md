@@ -294,6 +294,15 @@ Missing forwarders (5 min = 900 sec)
 | table hostname, ip, diffInSec, time
 ```
 
+Alert When There is No Data From a Specific Host
+```
+| tstats latest(_time) as latest where index=wineventlog OR index=windows OR index=linux earliest=-24h by host
+| eval recent = if(latest > relative_time(now(),"-5m"),1,0), realLatest = strftime(latest,"%c")
+| eval time=strftime(latest,"%Y-%m-%d %H:%M:%S")
+| where recent=0
+| table host,time
+```
+
 Check latest status of all modular inputs
 ```
 | rest /services/admin/inputstatus/ModularInputs:modular%20input%20commands splunk_server=local count=0 

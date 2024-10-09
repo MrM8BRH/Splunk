@@ -1,3 +1,35 @@
+## Enable SSHD logging
+```
+nano /etc/ssh/sshd_config
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+##################
+# SysLogFacility #
+#- DAEMON        #
+#- USER          #
+#- AUTH          #
+#- LOCAL0        #
+#- LOCAL1        #
+#- LOCAL2        #
+#- LOCAL3        #
+#- LOCAL4        #
+#- LOCAL5        #
+#- LOCAL6        #
+#- LOCAL7        #
+##################
+# Ref:
+# → https://docs.ssh.com/manuals/server-zos-admin/54/Configuring_Logging_in_sshd2.html
+# → https://docs.ssh.com/manuals/server-zos-admin/65/Server-auditing-SysLogFacility.html
+```
+![Screenshot-2023-07-19-at-5 48 42-PM](https://github.com/user-attachments/assets/c8180d9c-d4df-40a2-8582-19f6ae822971)
+
+## Enable Advanced Security Audit Policy
+![gedit](https://github.com/user-attachments/assets/083b597c-b467-4159-a889-9d71dbf6c22c)
+
+
 ## IOPS test command for linux
 ```
 dnf install -y fio

@@ -54,7 +54,7 @@ timedatectl set-timezone Asia/Jerusalem
 
 ```
 hostnamectl
-hostnamectl set-hostname <hostname>
+hostnamectl set-hostname host.domain.com
 ```
 </details>
 
@@ -255,12 +255,11 @@ conf_cache_memory_optimization = true
 sessionTimeout = 8h
 ```
 
-
-##### Start and enable Splunk service
-- `systemctl start Splunkd.service`
-- `systemctl enable Splunkd.service`
-</details>
-
+Change servername
+```
+/opt/splunk/bin/splunk set servername host.domain.com
+/opt/splunk/bin/splunk set default-hostname host.domain.com
+```
 <details>
 <summary><b>Forwarding Splunk's internal logs to the indexers</b></summary>
 
@@ -457,10 +456,8 @@ Reload the configuration for the Splunk Deployment Server
 ```
 /opt/splunk/bin/splunk reload deploy-server
 ```
-Others
+List Deployment Clients
 ```
-/opt/splunk/bin/splunk set servername host.domain.com
-/opt/splunk/bin/splunk set default-hostname host.domain.com
 /opt/splunk/bin/splunk btool deploymentclient list deployment-client 
 ```
 

@@ -248,10 +248,11 @@ maxfiles = 256
 ```
 These adjustments should be aligned with our system requirements and available resources.
 
-$SPLUNK_HOME/etc/system/local/server.conf
+nano /opt/splunk/etc/system/local/server.conf
 ```
 [general]
-conf_cache_memory_optimization = true 
+conf_cache_memory_optimization = true
+sessionTimeout = 8h
 ```
 
 

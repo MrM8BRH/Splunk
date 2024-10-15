@@ -260,6 +260,8 @@ Change servername
 /opt/splunk/bin/splunk set servername host.domain.com
 /opt/splunk/bin/splunk set default-hostname host.domain.com
 ```
+</details>
+  
 <details>
 <summary><b>Forwarding Splunk's internal logs to the indexers</b></summary>
 

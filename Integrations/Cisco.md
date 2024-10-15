@@ -1,3 +1,7 @@
+[Configure FMC to Send Audit Logs to a Syslog Server](https://www.cisco.com/c/en/us/support/docs/security/secure-firewall-management-center/221019-configure-fmc-to-send-audit-logs-to-a-sy.html)
+
+[Configure Logging on FTD via FMC](https://www.cisco.com/c/en/us/support/docs/security/firepower-ngfw/200479-Configure-Logging-on-FTD-via-FMC.html)
+
 [Ingesting Netflow into Stream App without using HTTP Forwarders](https://www.reddit.com/r/Splunk/comments/b4supu/ingesting_netflow_into_stream_app_without_using/)
 
 [How to Configure Log Sending from Cisco Firepower to Splunk [2023]](https://underdefense.com/guides/how-to-configure-log-sending-from-cisco-firepower-to-splunk/)

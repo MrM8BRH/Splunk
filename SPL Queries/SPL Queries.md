@@ -294,13 +294,13 @@ Missing forwarders (5 min = 900 sec)
 | table hostname, ip, diffInSec, time
 ```
 
-Alert When There is No Data From a Specific Host
+No Data from (Agent Based and Agentless) Last 4 Days
 ```
-| tstats latest(_time) as latest where index=wineventlog OR index=windows OR index=linux earliest=-24h by host
-| eval recent = if(latest > relative_time(now(),"-5m"),1,0), realLatest = strftime(latest,"%c")
+| tstats latest(_time) as latest where index=* earliest=-4d by host,index,sourcetype
+| eval recent = if(latest > relative_time(now(),"-24h"),1,0), realLatest = strftime(latest,"%c")
 | eval time=strftime(latest,"%Y-%m-%d %H:%M:%S")
 | where recent=0
-| table host,time
+| table host,time,host,index,sourcetype
 ```
 
 Check latest status of all modular inputs

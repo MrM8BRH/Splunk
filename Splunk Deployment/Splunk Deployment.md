@@ -33,10 +33,17 @@ https://docs.centos.org/en-US/centos/install-guide/Simple_Installation/
 <details>
 <summary><b>Update the system & Install additional tools</b></summary>
 
+RHEL family
 ```
 yum update -y
 yum install -y dnf
-dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils polkit.x86_64
+dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump fio bzip2 sysstat elfutils polkit.x86_64 telnet
+```
+Debian family
+```
+apt update -y
+apt full-upgrade -y
+apt install -y net-tools nano wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils telnet
 ```
 </details>
 

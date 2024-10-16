@@ -243,15 +243,6 @@ maxresultrows = 200000
 [scheduler]
 max_searches_perc = 75
 auto_summary_perc = 100
-
-[mvcombine]
-max_mem_usage_mb = 1024
-
-[mvexpand]
-max_mem_usage_mb = 1024
-
-[sort]
-maxfiles = 256
 ```
 These adjustments should be aligned with our system requirements and available resources.
 

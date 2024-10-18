@@ -26,7 +26,7 @@ Gartner Magic Quadrant for Security Information and Event Management (2024)
 
 Table of Contents
 -----------------
-1. Splunk Deployment
+- Splunk Deployment
     - [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
     - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
     - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
@@ -35,28 +35,20 @@ Table of Contents
     - [Indexer cluster deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Indexer%20cluster%20deployment.md)
     - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20ES.md)
 
-2. Integrations
+- Integrations
     - [FortiGate](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/FortiGate.md)
     - [CrowdStrike](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/CrowdStrike.md)
     - [Cisco](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Cisco.md)
     - [Microsoft Azure](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Microsoft%20Azure.md)
     - [Tenable](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Tenable.md)
     - [Netflow](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Netflow.md)
-    - [Twilio SMS](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Twilio%20SMS.md)
-    - [Splunk Mobile](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Splunk%20Mobile.md)
 
-3. Docs
-    - [Resources](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Resources.md)
+- Docs
     - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
     - [Crontab](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Crontab.md)
-    - [DEPLOYING SPLUNK® ENTERPRISE INSIDE](https://github.com/MrM8BRH/Splunk/blob/main/Docs/DEPLOYING%20SPLUNK%C2%AE%20ENTERPRISE%20INSIDE.pdf)
-    - [splunk-validated-architectures](https://github.com/MrM8BRH/Splunk/blob/main/Docs/splunk-validated-architectures.pdf)
 
-4. SSL
+- SSL
     - [SSL](https://github.com/MrM8BRH/Splunk/blob/main/SSL/SSL.md)
-    - [Splunk-SSL-Presentation](https://github.com/MrM8BRH/Splunk/blob/main/SSL/Splunk-SSL-Presentation.pdf)
-    - [conf2015_DWaddle_DefensePointSecurity_deploying_SplunkSSLBestPractices](https://github.com/MrM8BRH/Splunk/blob/main/SSL/conf2015_DWaddle_DefensePointSecurity_deploying_SplunkSSLBestPractices.pdf)
-
 
 5. SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)

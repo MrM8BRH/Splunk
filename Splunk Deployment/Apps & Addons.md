@@ -64,11 +64,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Thycotic Secret Server Dashboard   | Jackie Lentz               | https://splunkbase.splunk.com/app/5327 |
 | Splunk IT Service Intelligence     | Splunk Inc                 | https://splunkbase.splunk.com/app/1841 |
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
-| Alert Manager Enterprise           | Datapunctum AG             | https://splunkbase.splunk.com/app/6730 |
-| dnslookup                          | Travis Freeland            | https://splunkbase.splunk.com/app/1535 |
-| Eventgen                           | Splunk Inc                 | https://splunkbase.splunk.com/app/1924 |
-| Alerts For Splunk Admins           | Gareth Anderson            | https://splunkbase.splunk.com/app/3796 |
-
 
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |
@@ -87,9 +82,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk DBX Add-on for MySQL JDBC                | Splunk Inc       | https://splunkbase.splunk.com/app/6154 |
 | Splunk DBX Add-on for Oracle JDBC               | Splunk Inc       | https://splunkbase.splunk.com/app/6151 |
 | Splunk DBX Add-on for Postgres JDBC             | Splunk Inc       | https://splunkbase.splunk.com/app/6152 |
-| Splunk DBX Add-on for RedShift JDBC             | Splunk Inc       | https://splunkbase.splunk.com/app/6149 |
-| Splunk DBX Add-on for Snowflake JDBC            | Splunk Inc       | https://splunkbase.splunk.com/app/6153 |
-| Splunk DBX Add-on for InfluxDB JDBC             | Splunk Inc       | https://splunkbase.splunk.com/app/6759 |
 
 ### CrowdStrike
 | Name                                              | Built by    | URL                                    |
@@ -120,7 +112,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |      Name      |      Built by     |                   URL                  |
 |----------------|-------------------|----------------------------------------|
 | MISP42         | Remi Seguy        | https://splunkbase.splunk.com/app/4335 |
-| TA-misp_es     | Splunk Inc        | https://github.com/splunk/TA-misp_es   |
 | TheHive/Cortex | Alexandre Demeyer | https://splunkbase.splunk.com/app/5329 |
 
 ### Telegram & Twilio SMS
@@ -153,18 +144,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |--------------------------------------|--------------------|----------------------------------------|
 | Palo Alto Networks App for Splunk    | Palo Alto Networks | https://splunkbase.splunk.com/app/491  |
 | Palo Alto Networks Add-on for Splunk | Palo Alto Networks | https://splunkbase.splunk.com/app/2757 |
-
-### Imperva SecureSphere
-| Name                                       | Built by   | URL                                              |
-|--------------------------------------------|------------|--------------------------------------------------|
-| Imperva SecureSphere App for Splunk        | Nomios Sas | https://splunkbase.splunk.com/app/3310           |
-| Splunk Add-on for Imperva SecureSphere WAF | Splunk Inc | https://splunkbase.splunk.com/app/2874#/overview |
-
-### Juniper
-| Name                            | Built by    | URL                                    |
-|---------------------------------|-------------|----------------------------------------|
-| Juniper Networks App for Splunk | Rene Chavez | https://splunkbase.splunk.com/app/3690 |
-| Splunk Add-on for Juniper       | Splunk Inc  | https://splunkbase.splunk.com/app/2847 |
 
 ### Cisco
 |                                   Name                  |          Built by         |                   URL                  |

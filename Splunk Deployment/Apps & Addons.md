@@ -34,7 +34,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
 | Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |
 
-
 ### Security
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
@@ -108,18 +107,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |
 
-### MISP & TheHive
-|      Name      |      Built by     |                   URL                  |
-|----------------|-------------------|----------------------------------------|
-| MISP42         | Remi Seguy        | https://splunkbase.splunk.com/app/4335 |
-| TheHive/Cortex | Alexandre Demeyer | https://splunkbase.splunk.com/app/5329 |
-
-### Telegram & Twilio SMS
-|          Name         |     Built by     |                   URL                  |
-|-----------------------|------------------|----------------------------------------|
-| Telegram Alert Action | Christopher Owen | https://splunkbase.splunk.com/app/3703 |
-| Twilio SMS Alerting   | BaboonBones Ltd  | https://splunkbase.splunk.com/app/2865 |
-
 ### F5
 | Name                        | Built by        | URL                                    |
 |-----------------------------|-----------------|----------------------------------------|
@@ -139,12 +126,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cloudflare App for Splunk               | Cloudflare, Inc | https://splunkbase.splunk.com/app/4501 |
 | Cloudflare Technology Add-on for Splunk | Cloudflare, Inc | https://splunkbase.splunk.com/app/5114 |
 
-### Palo Alto
-| Name                                 | Built by           | URL                                    |
-|--------------------------------------|--------------------|----------------------------------------|
-| Palo Alto Networks App for Splunk    | Palo Alto Networks | https://splunkbase.splunk.com/app/491  |
-| Palo Alto Networks Add-on for Splunk | Palo Alto Networks | https://splunkbase.splunk.com/app/2757 |
-
 ### Cisco
 |                                   Name                  |          Built by         |                   URL                  |
 |---------------------------------------------------------|---------------------------|----------------------------------------|
@@ -152,7 +133,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Cisco ASA                             | Splunk Inc                | https://splunkbase.splunk.com/app/1620 |
 | Cisco Secure Network Analytics (Stealthwatch) App       | Cisco Systems             | https://splunkbase.splunk.com/app/6398 |
 | Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
-| Cisco Umbrella Investigate Add-on                       | OpenDNS Cisco             | https://splunkbase.splunk.com/app/3324 |
 | Splunk Add-on for Cisco Identity Services               | Splunk Inc                | https://splunkbase.splunk.com/app/1915 |
 | Splunk for Cisco Identity Services (ISE)                | Jason Conger              | https://splunkbase.splunk.com/app/1589 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
@@ -164,3 +144,28 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco WebEx Meetings App for Splunk                     | Splunk Works              | https://splunkbase.splunk.com/app/4992 |
 | Cisco WebEx Meetings Add-on for Splunk                  | Splunk Works              | https://splunkbase.splunk.com/app/4991 |
 | Splunk Add-on for Cisco Meraki                          | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
+
+
+### Nutanix
+|      Name      |      Built by     |                   URL                  |
+|----------------|-------------------|----------------------------------------|
+| Nutanix Prism Dashboard for Splunk | Nutanix Inc        | https://splunkbase.splunk.com/app/3102 |
+| TA for Nutanix Prism | Nutanix Inc | https://splunkbase.splunk.com/app/3103 |
+
+### MISP & TheHive
+|      Name      |      Built by     |                   URL                  |
+|----------------|-------------------|----------------------------------------|
+| MISP42         | Remi Seguy        | https://splunkbase.splunk.com/app/4335 |
+| TheHive/Cortex | Alexandre Demeyer | https://splunkbase.splunk.com/app/5329 |
+
+### Telegram & Twilio SMS
+|          Name         |     Built by     |                   URL                  |
+|-----------------------|------------------|----------------------------------------|
+| Telegram Alert Action | Christopher Owen | https://splunkbase.splunk.com/app/3703 |
+| Twilio SMS Alerting   | BaboonBones Ltd  | https://splunkbase.splunk.com/app/2865 |
+
+### Palo Alto
+| Name                                 | Built by           | URL                                    |
+|--------------------------------------|--------------------|----------------------------------------|
+| Palo Alto Networks App for Splunk    | Palo Alto Networks | https://splunkbase.splunk.com/app/491  |
+| Palo Alto Networks Add-on for Splunk | Palo Alto Networks | https://splunkbase.splunk.com/app/2757 |

@@ -29,3 +29,8 @@ https://isc.sans.edu/block.txt
 https://api.us-2.crowdstrike.com
 https://firehose.us-2.crowdstrike.com
 ```
+## Splunk
+```
+https://www.splunk.com/
+https://splunkbase.splunk.com/
+```

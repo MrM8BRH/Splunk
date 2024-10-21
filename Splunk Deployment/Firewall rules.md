@@ -32,5 +32,7 @@ https://firehose.us-2.crowdstrike.com
 ## Splunk
 ```
 https://www.splunk.com/
+https://login.splunk.com/
+https://download.splunk.com
 https://splunkbase.splunk.com/
 ```

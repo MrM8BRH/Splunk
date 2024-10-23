@@ -52,4 +52,4 @@ Table of Contents
 
 5. SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
-    - [Windows | AD](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/Windows%20%7C%20AD.md)
+    - [Linux & Windows](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/Linux%20%26%20Windows.md)

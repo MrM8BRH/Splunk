@@ -229,20 +229,43 @@ splunkdConnectionTimeout = 3000
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
+############################################################################
+# GLOBAL SETTINGS
+############################################################################
 [default]
 max_mem_usage_mb = 12288
-
-[search]
-base_max_searches = 6
-max_searches_per_cpu = 10
-max_rt_search_multiplier = 3
 
 [searchresults]
 maxresultrows = 200000
 
+############################################################################
+# Concurrency
+############################################################################
+# The maximum number of concurrent historical searches in the search head.
+total_search_concurrency_limit = auto
+
+# The base number of concurrent historical searches.
+base_max_searches = 8
+
+# Max real-time searches = max_rt_search_multiplier x max historical searches.
+max_rt_search_multiplier = 3
+
+# The maximum number of concurrent historical searches per CPU.
+max_searches_per_cpu = 16
+
+
+############################################################################
+# GENERAL
+############################################################################
+# This section contains the stanzas for a variety of general settings.
+
 [scheduler]
-max_searches_perc = 75
-auto_summary_perc = 100
+# The maximum number of searches the scheduler can run, as a percentage
+# of the maximum number of concurrent searches.
+max_searches_perc  = 75
+
+# Fraction of concurrent scheduler searches to use for auto summarization.
+auto_summary_perc  = 75
 ```
 These adjustments should be aligned with our system requirements and available resources.
 

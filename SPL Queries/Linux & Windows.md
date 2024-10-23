@@ -247,19 +247,9 @@ Monitor Windows account logon failures due to account restriction:
 index=wineventlog source="*:Security" EventCode=4625 Failure_Reason="Account restriction"
 ```
 
-Identify Windows security-related process token adjustments:
-```
-index=wineventlog source="*:Security" EventCode=4675
-```
-
 Monitor Windows account logon events with non-standard logon types:
 ```
 index=wineventlog source="*:Security" EventCode=4624 Logon_Type!=2 Logon_Type!=3 Logon_Type!=10
-```
-
-Identify Windows security-related events for system time changes:
-```
-index=wineventlog source="*:Security" EventCode=4616
 ```
 
 Detect Windows account logon events with failed authentication:
@@ -377,8 +367,6 @@ Identify Windows security-related events for changes in audit policy category se
 index=wineventlog source="*:Security" (EventCode=4717 OR EventCode=4906)
 ```
 
-
-
 ### Active Directory Reports
 
 Member Added/Removed
@@ -411,29 +399,9 @@ User Created:
 host="*" index="wineventlog" EventCode=4720 |eval time = strftime(_time,"%c") |table time,name,user,Logon_ID,src_user,dest |rename time as "Time" , name as "Action" , user as "Created User" , Logon_ID as "Session ID" ,src_user as "User Created By :", dest as "Destination DC"
 ```
 
-AdminActions:
-```
-host="*" index="wineventlog" EventCode!=4624 AND EventCode!=4634 user="" OR user="Administrator" |eval time = strftime(_time,"%c") | transaction name maxspan=30s |table time,name,user,src,dest |rename time as "Time" , name as "Action" , user as "Admin User" , dest as "Destination DC", src as "Device"
-```
-
 Domain Policy Changed/Reset Passowrd:
 ```
-host="*" index="wineventlog" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" |eval time = strftime(_time,"%c") |table time,name,user,src_user |rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Password Changed/Reset By"
-```
-
-HelpDesk Actions:
-```
-host="*" index="wineventlog" EventCode!=4624 AND EventCode!=4634 user="A.B" OR user="A.B" OR user="A.B"|eval time = strftime(_time,"%c") | transaction name maxspan=1m |table time,name,user,src,dest |rename time as "Time" , name as "Action" , user as "Help Desk User" , dest as " Destination DC", src as "Device"
-```
-
-Network User Login:
-```
-host="*" index="wineventlog" LogonType=3 | eval time = strftime(_time,"%c") | transaction name, user maxspan=1m |table time,name,src_ip,user |rename time as "Time" , name as "Action" , src_ip as "Destination IP Address" , user as "User Name"
-```
-
-User Deleted:
-```
-host="*" index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : " , dest as "Destination DC"
+index="wineventlog" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" |eval time = strftime(_time,"%c") |table time,name,user,src_user |rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Password Changed/Reset By"
 ```
 
 User Deleted By Admin:

@@ -349,8 +349,6 @@ Send sample data to default udp port 514 of SC4S host
 echo “Hello SC4S” > /dev/udp/<SC4S_ip>/514
 ```
 
-[Block parser to drop events issue #2162](https://github.com/splunk/splunk-connect-for-syslog/issues/2162)
-
 <details>
  <summary>SC4S Dashboard</summary>
 

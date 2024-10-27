@@ -10,7 +10,8 @@ dpkg -i splunkforwarder_package_name.deb
 tar xvzf splunkforwarder_package_name.tgz -C /opt
 
 # Check Splunk status and accept the license 
-/opt/splunkforwarder/bin/splunk status --accept-license
+/opt/splunkforwarder/bin/splunk status --accept-license # (1)
+/opt/splunkforwarder/bin/splunk status --accept-license --answer-yes --no-prompt --seed-passwd `head -c 500 /dev/urandom | sha256sum | base64 | head -c 16 ; echo` # (2)
 
 #  Set the deployment server (Splunk deployment client):
 /opt/splunkforwarder/bin/splunk set deploy-poll <deployment-ip>:8089

@@ -526,6 +526,22 @@ chown -R splunk:splunk /opt/splunk
 # Start Splunk
 /opt/splunk/bin/splunk start
 ```
+
+Mass deployment (Upgrade)
+- Windows OS
+```
+Stop-Service SplunkForwarder
+msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
+```
+- Linux OS
+```
+/opt/splunkforwarder/bin/splunk stop
+useradd splunkfwd
+rpm -Uvh splunkuniversalforwarder_x64.rpm
+/opt/splunkforwarder/bin/splunk disable boot-start
+/opt/splunkforwarder/bin/splunk enable boot-start --accept-license --no-prompt --answer-yes
+/opt/splunkforwarder/bin/splunk start
+```
 </details>
 
 <details>

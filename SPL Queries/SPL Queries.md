@@ -293,6 +293,10 @@ Missing forwarders (5 min = 900 sec)
 | search difInSec>900
 | table hostname, ip, diffInSec, time
 ```
+List all clients
+```
+| rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
+```
 
 No Data from (Agent Based and Agentless) Last 4 Days
 ```

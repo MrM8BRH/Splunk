@@ -26,6 +26,9 @@ LogLevel INFO
 ```
 ![Screenshot-2023-07-19-at-5 48 42-PM](https://github.com/user-attachments/assets/c8180d9c-d4df-40a2-8582-19f6ae822971)
 
+## Linux File Permissions
+![linux-introduction-file-permissions-4-2054323870](https://github.com/user-attachments/assets/8722f39f-da28-4b0a-b8e0-e1946aacced1)
+
 ## Enable Advanced Security Audit Policy
 ![gedit](https://github.com/user-attachments/assets/083b597c-b467-4159-a889-9d71dbf6c22c)
 

@@ -354,6 +354,11 @@ Default Index (defaultdb) Directory Structure
 | Hot          | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each hot bucket occupies its own subdirectory.                            |
 | Warm         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each warm bucket occupies its own subdirectory.                           |
 | Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
+
+[Archive indexed data](https://docs.splunk.com/Documentation/Splunk/9.3.1/Indexer/Automatearchiving)
+
+[coldtofrozenscriptexample.py](https://community.splunk.com/t5/Getting-Data-In/Does-anyone-have-a-working-example-of-coldtofrozenscript-py/m-p/213023/highlight/true#M41862)
+
 </details>
 
 <details>

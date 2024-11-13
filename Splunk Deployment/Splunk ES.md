@@ -88,6 +88,20 @@ Use Cases - Correlation Searches
  - SA-NetworkProtection
  - SA-ThreatIntelligence
 
+SPL Qeury
+```
+| rest splunk_server=local count=0 /servicesNS/-/-/saved/searches
+      | search disabled=*
+      | spath input=action.correlationsearch.metadata 
+      | spath input=action.correlationsearch.annotations 
+      | rename *{} AS * 
+      | eval appVersion = 'eai:acl.app'.":".detection_version
+      | rename action.correlationsearch.label AS title, eai:acl.app AS app, mitre_attack AS mitreTechnique, action.notable.param.security_domain AS security_domain, action.escu.eli5 AS description,action.escu.how_to_implement AS how_to_implement
+      | search title!="" AND title!="*Experimental*"
+      | where confidence >= 80 AND impact=100
+      | table title analytic_story confidence impact security_domain how_to_implement description
+```
+
 <details>
 <summary><b>Uninstall Splunk ES (Linux)</b></summary>
 

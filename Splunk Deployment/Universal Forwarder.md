@@ -1,5 +1,9 @@
 ## Install & Configure Splunk Universal Forwarder on Linux
 ```
+# Create the Splunk user and group
+useradd -m splunkfwd
+groupadd splunkfwd
+
 # Install Splunk Universal Forwarder using RPM:
 rpm -ivh splunkforwarder_package_name.rpm
 

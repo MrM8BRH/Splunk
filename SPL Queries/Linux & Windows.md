@@ -476,3 +476,5 @@ Logon Types
 | NetworkCleartext |	8 |	Password |	Yes |	IIS Basic Auth (IIS 6.0 and newer);Windows PowerShell with CredSSP |
 | NewCredentials |	9 |	Password |	Yes |	RUNAS /NETWORK |
 | RemoteInteractive |	10 |	Password, Smartcard,other |	Yes |	Remote Desktop (formerly known as "Terminal Services") |
+
+![image](https://github.com/user-attachments/assets/578ca7c8-aaf0-4e1b-bf16-b8868aa2bbb0)

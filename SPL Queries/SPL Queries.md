@@ -288,6 +288,7 @@ Convert epoch time to a human readable time
 Missing forwarders (5 min = 900 sec)
 ```
 | REST /services/deployment/server/clients
+| search earliest=-8h
 | eval difInSec=now()-lastPhoneHomeTime
 | eval time=strftime(lastPhoneHomeTime,"%Y-%m-%d %H:%M:%S")
 | search difInSec>900

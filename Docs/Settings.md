@@ -28,6 +28,7 @@ LogLevel INFO
 
 ## Linux File Permissions
 ![linux-introduction-file-permissions-4-2054323870](https://github.com/user-attachments/assets/8722f39f-da28-4b0a-b8e0-e1946aacced1)
+![image](https://github.com/user-attachments/assets/14b48a1b-e53f-4340-a764-664078966f56)
 
 ## Enable Advanced Security Audit Policy
 ![gedit](https://github.com/user-attachments/assets/083b597c-b467-4159-a889-9d71dbf6c22c)

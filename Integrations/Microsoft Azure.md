@@ -7,7 +7,7 @@ MS Office 365
 
 [Configure an integration application in Microsoft Entra ID (Azure AD) for the Splunk Add-on for Microsoft Office 365](https://splunk.github.io/splunk-add-on-for-microsoft-office-365/ConfigureAppinAzureAD/)
 
-[Configure an active directory application in Azure Active Directory for the Splunk Add-on for Microsoft Cloud Services](https://splunk.github.io/splunk-add-on-for-microsoft-cloud-services/ConfigureappinAzureAD/)
+[Configure a Tenant in the Splunk Add-on for Microsoft Office 365¶](https://splunk.github.io/splunk-add-on-for-microsoft-office-365/ConfigureTenant/)
 
 Windows Console
 

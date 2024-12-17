@@ -56,6 +56,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
 | Searchbase App for Splunk          | Splunk Works               | https://splunkbase.splunk.com/app/7188 |
+| Broken Hosts App for Splunk        | Hurricane Labs             | https://splunkbase.splunk.com/app/3247 |
 | Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |
 | URL Toolbox                        | Splunk Works               | https://splunkbase.splunk.com/app/2734 |
 | ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
@@ -106,6 +107,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Microsoft Teams Add-on for Splunk                             | Splunk Works    | https://splunkbase.splunk.com/app/4994 |
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |
+| Hurricane Labs Add-on for Windows PowerShell Transcript       | Hurricane Labs  | https://splunkbase.splunk.com/app/4984 |
 
 ### F5
 | Name                        | Built by        | URL                                    |

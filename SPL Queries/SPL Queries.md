@@ -1,41 +1,22 @@
 ## Windows Security Log Events
-[Appendix L: Events to Monitor](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor)
-
-[Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
-
-[Security Log Defined](https://system32.eventsentry.com/)
-
-[Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
-
-[Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
-
-[Windows Security Events You Should Monitor](https://medium.com/@alizourob4/windows-security-events-you-should-monitor-eebb7a034bbf)
+- [Appendix L: Events to Monitor](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor)
+- [Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
+- [Security Log Defined](https://system32.eventsentry.com/)
+- [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
+- [Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
+- [Windows Security Events You Should Monitor](https://medium.com/@alizourob4/windows-security-events-you-should-monitor-eebb7a034bbf)
 
 ## External Links
-
-[Security Content](https://research.splunk.com/tags/)
-
-[Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
-
-[GoSplunk](https://gosplunk.com/)
-
-[Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
-
-[Splunk ES Queries](https://github.com/shauntdergrigorian/splunkqueries)
-
-[Some Threat Hunting queries useful for blue teamers](https://github.com/BankSecurity/Threat_Hunting)
-
-[A list of Splunk queries that I've collected and used over time](https://github.com/shauntdergrigorian/splunkqueries)
-
-[Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
-
-[SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
-
-[Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
-
-[Regex v. Rex Commands in Splunk SPL](https://www.tekstream.com/blog/regex-v-rex-commands-in-splunk-spl/)
-
-[Splunk Cheat Sheet: Search and Query Commands](https://www.stationx.net/splunk-cheat-sheet/)
+- [Security Content](https://research.splunk.com/detections/)
+- [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
+- [GoSplunk](https://gosplunk.com/)
+- [Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
+- [Splunk ES Queries](https://github.com/shauntdergrigorian/splunkqueries)
+- [Some Threat Hunting queries useful for blue teamers](https://github.com/BankSecurity/Threat_Hunting)
+- [A list of Splunk queries that I've collected and used over time](https://github.com/shauntdergrigorian/splunkqueries)
+- [Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
+- [SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
+- [Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
 
 ## Splunk Dashboard
 Author: [MrM8BRH](https://github.com/MrM8BRH)
@@ -294,6 +275,7 @@ Missing forwarders (5 min = 900 sec)
 | search difInSec>900
 | table hostname, ip, diffInSec, time
 ```
+
 List all clients
 ```
 | rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build

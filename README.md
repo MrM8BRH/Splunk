@@ -35,21 +35,6 @@ Table of Contents
     - [Indexer cluster deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Indexer%20cluster%20deployment.md)
     - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20ES.md)
 
-- Integrations
-    - [FortiGate](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/FortiGate.md)
-    - [CrowdStrike](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/CrowdStrike.md)
-    - [Cisco](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Cisco.md)
-    - [Microsoft Azure](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Microsoft%20Azure.md)
-    - [Tenable](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Tenable.md)
-    - [Netflow](https://github.com/MrM8BRH/Splunk/blob/main/Integrations/Netflow.md)
-
-- Docs
-    - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
-    - [Crontab](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Crontab.md)
-
-- SSL
-    - [SSL](https://github.com/MrM8BRH/Splunk/blob/main/SSL/SSL.md)
-
-5. SPL Queries
+- SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
     - [Linux & Windows](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/Linux%20%26%20Windows.md)

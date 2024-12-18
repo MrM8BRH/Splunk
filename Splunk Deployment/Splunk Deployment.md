@@ -262,6 +262,16 @@ WantedBy=multi-user.target
 [Configure Linux systems running systemd (Splunk v9.4.0)](https://docs.splunk.com/Documentation/Splunk/9.4.0/Workloads/Configuresystemd)
 
 [Set limits using the /etc/systemd configuration files](https://docs.splunk.com/Documentation/Splunk/latest/Troubleshooting/ulimitErrors#Set_limits_using_the_.2Fetc.2Fsystemd_configuration_files)
+
+Add or change the values in the file. Example:
+```
+LimitNOFILE=65536
+LimitNPROC=16000
+LimitDATA=8589934592
+LimitFSIZE=infinity
+TasksMax=8192
+```
+
 ```
 systemctl daemon-reload
 ```

@@ -275,6 +275,8 @@ TasksMax=8192
 ```
 systemctl daemon-reload
 ```
+
+![image](https://github.com/user-attachments/assets/41f8d0af-bc3d-4b95-b751-76fc99db3361)
 </details>
 
 <details>

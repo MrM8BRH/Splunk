@@ -1,4 +1,4 @@
-## General / Deployment / Storage Sizing / Retention
+## Articles/Docs
 [Splunk Tutorial](https://www.tutorialspoint.com/splunk/splunk_tutorial.pdf)
 
 [Splunk on Big Data](https://splunkonbigdata.com/)
@@ -6,10 +6,6 @@
 [A collection of awesome resources for Splunk](https://github.com/sduff/awesome-splunk)
 
 [Splunk_Fundamentals](https://github.com/paulinoprojects/Splunk_Fundamentals)
-
-[Splunk Best Practices](https://www.aplura.com/splunk-best-practices/)
-
-[3 Splunk Best Practices We Learned the Hard Way](https://www.sp6.io/blog/3-splunk-best-practice-lessons-we-learned-the-hard-way/)
 
 [How Splunk Enterprise calculates disk storage](https://docs.splunk.com/Documentation/Splunk/9.1.1/Capacity/HowSplunkcalculatesdiskstorage)
 
@@ -19,13 +15,7 @@
 
 [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
 
-[Splunk on VMware vSAN](https://core.vmware.com/resource/splunk-vmware-vsan)
-
-[Setting data retention rules in Splunk Cloud Platform](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Data_Management/Setting_data_retention_rules_in_Splunk_Cloud_Platform)
-
 [Splunk Data Retention Policy](https://www.splunk.com/en_us/legal/splunk-retention-policy.html)
-
-[Virtual Machine vCPU and vNUMA Rightsizing – Guidelines](https://blogs.vmware.com/performance/2017/03/virtual-machine-vcpu-and-vnuma-rightsizing-rules-of-thumb.html)
 
 ## YouTube
 
@@ -60,13 +50,3 @@
 [Splunk Community](https://community.splunk.com/t5/Community/ct-p/en-us)
 
 [Splunk - Reddit](https://www.reddit.com/r/Splunk/)
-
-## Operating Systems
-|     Name     | Based on |                   Website                   |
-|--------------|----------|---------------------------------------------|
-| Oracle Linux | RHEL     | https://www.oracle.com/linux/               |
-| CentOS Linux | RHEL     | https://www.centos.org/                     |
-| Rocky Linux  | RHEL     | https://rockylinux.org/                     |
-| Alma Linux   | RHEL     | https://almalinux.org/                      |
-| Debian       |    | https://www.debian.org/intro/index#software |
-| Ubuntu       | Debian   | https://ubuntu.com/server                   |

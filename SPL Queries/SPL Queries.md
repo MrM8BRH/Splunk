@@ -244,6 +244,12 @@ _time,operation,user,host
 
 ---
 
+List of all reports
+```
+|rest /servicesNS/-/-/saved/searches 
+| search request.ui_dispatch_view!="" |table request.ui_dispatch_view title search
+```
+
 Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
 ```
 index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Truncating" 

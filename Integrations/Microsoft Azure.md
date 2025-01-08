@@ -9,6 +9,8 @@ MS Office 365
 
 [Configure a Tenant in the Splunk Add-on for Microsoft Office 365](https://splunk.github.io/splunk-add-on-for-microsoft-office-365/ConfigureTenant/)
 
+[Grant tenant-wide admin consent to an application](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal)
+
 Windows Console
 
 [How to Determine What Just Ran on Windows Console](https://devblogs.microsoft.com/commandline/how-to-determine-what-just-ran-on-windows-console/)

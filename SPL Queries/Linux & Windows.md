@@ -7,6 +7,23 @@ sourcetype="linux_secure" "Accepted Publickey" OR "session opened" OR "Accepted 
 | stats list(bar) as "(#) source(s)" values(bar_host) as "(#) host(s)" list(desc) as source_desc by app user
 ```
 
+Dormant Account
+```
+| ldapsearch domain=default search="(&(objectclass=user)(!(objectClass=computer)))" limit=0 attrs="sAMAccountName, displayName, distinguishedName, userAccountControl, whenCreated, accountExpires, lastLogonTimestamp"
+| makemv userAccountControl
+| search dn!="*OU=_Disabled Users*" userAccountControl!="*ACCOUNTDISABLE*"
+| eval accountDisable=if(userAccountControl == "ACCOUNTDISABLE
+ NORMAL_ACCOUNT", "Yes", "No")
+| eval dontExpirePasswd=if(userAccountControl="DONT_EXPIRE_PASSWD
+ NORMAL_ACCOUNT", "Yes", "No")
+| eval passwdNotRequired=if(userAccountControl == "PASSWD_NOTREQD
+ NORMAL_ACCOUNT", "Yes", "No")
+| eval lastLoginAge_epoch=strptime(lastLogonTimestamp, "%Y-%m-%dT%H:%M:%S")
+| eval lastLoginAge=round((lastLoginAge_epoch - now())/86400, 0)
+| where lastLoginAge < -90
+| table sAMAccountName, displayName, dn, userAccountControl, whenCreated, accountDisable, dontExpirePasswd, passwdNotRequired, lastLoginAge, lastLogonTimestamp, accountExpires
+```
+
 Passwords Never Changed - Active Accounts:
 ```
 | ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, dn, pwdLastSet

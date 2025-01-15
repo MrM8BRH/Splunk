@@ -37,4 +37,4 @@ Table of Contents
 
 - SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
-    - [Linux & Windows](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/Linux%20%26%20Windows.md)
+    - [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)

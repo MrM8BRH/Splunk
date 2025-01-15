@@ -275,6 +275,15 @@ List Splunk Servers (Clients)
 | rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
 ```
 
+Orphaned scheduled searches
+```
+| rest timeout=600 splunk_server=local /servicesNS/-/-/saved/searches add_orphan_field=yes count=0 
+| search orphan=1 disabled=0 is_scheduled=1 
+| eval status = if(disabled = 0, "enabled", "disabled") 
+| fields title eai:acl.owner eai:acl.app eai:acl.sharing orphan status is_scheduled cron_schedule next_scheduled_time next_scheduled_time actions 
+| rename title AS "search name" eai:acl.owner AS owner eai:acl.app AS app eai:acl.sharing AS sharing
+```
+
 Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
 ```
 index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Truncating" 

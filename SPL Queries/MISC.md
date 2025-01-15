@@ -217,7 +217,24 @@ SNA (Stealthwatch)
 <details>
 <summary><b>Active Directory</b></summary>
 
- Dormant Account
+Console logins
+```
+index=wineventlog EventCode=4624 Logon_Type=2 | table _time,host,user,dvc,action,command | dedup _time
+```
+Installed Applications
+```
+index=windows sourcetype="Script:InstalledApps" | table _time,host,DisplayName,Source,Publisher,InstallSource,InstallDate
+```
+AD - Local Admin Account
+```
+index=wineventlog EventCode=4732 Group_Name=Administrators
+| table _time,ComputerName,Group_Name,Account_Name,Message
+```
+Failed Logins for Disabled Accounts
+```
+index=wineventlog source="*:Security" EventCode=4625 Sub_Status="0xC0000072" | table _time,Account_Name,app,src,src_ip,dest,name
+```
+Dormant Account
 ```
 | ldapsearch domain=default search="(&(objectclass=user)(!(objectClass=computer)))" limit=0 attrs="sAMAccountName, displayName, distinguishedName, userAccountControl, whenCreated, accountExpires, lastLogonTimestamp"
 | makemv userAccountControl
@@ -293,7 +310,6 @@ User Deleted By Admin:
 ```
 index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : ", user as "Deleted User: " , dest as "Destination DC"
 ```
-
 </details>
 
 <details>
@@ -306,6 +322,19 @@ index=pam act=Session dhost!="null" suser!="asc_117" | table _time,  sname ,suse
 Device Creation
 ```
 index=pam act=Device msg="Device creation*" | table _time,sname,src,cs3,cs4 | rename cs3 as "Server Name" , src as "Source IP" ,sname as "User Name" , cs4 as "Log Details"
+```
+</details>
+
+<details>
+<summary><b>Others</b></summary>
+
+Office365 - Attachment Size Policy
+```
+index=office365 | search "Parameters{}.Value"="Change_Me!" | table _time,UserId,Parameters{}.Name,Parameters{}.Value | rename UserId as "Modified by"
+```
+Idrac
+```
+index=idrac virtual console | table _time,_raw
 ```
 </details>
 

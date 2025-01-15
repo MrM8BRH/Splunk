@@ -1,11 +1,88 @@
-Linux Authentications
+<details>
+<summary><b>Linux</b></summary>
+
+SSH Logins
 ```
-sourcetype="linux_secure" "Accepted Publickey" OR "session opened" OR "Accepted password" 
-| stats count by host ip user app
-| eval bar="("+count+") "+ip
-| eval bar_host="("+count+") "+host 
-| stats list(bar) as "(#) source(s)" values(bar_host) as "(#) host(s)" list(desc) as source_desc by app user
+index=linux "Accepted Publickey" OR "session opened" OR "Accepted password" src!="PAM_IP_ADDR" src!="" user!=""  | table _time,user,src,dest,src_port,sshd_protocol,action
 ```
+
+SSH Logins (Syslog - SC4S)
+```
+index=osnix source="program:sshd" "Accepted Publickey" OR "session opened" _raw!="*PAM_IP_ADDR*" 
+| table _time,host,sc4s_fromhostip,user 
+| dedup _time,host,user | sort -_time
+```
+
+Console logins for Linux Servers
+```
+index=osnix OR index=linux "Started Session 7 of" 
+| table _time,host,_raw
+```
+
+</details>
+
+
+<details>
+<summary><b>Appian</b></summary>
+
+Admin Console
+```
+index=appian source="*admin_console.csv" | table _time,Property,Count
+```
+Blocked Files
+```
+index=appian source="*blocked_files.csv*" | table _time,User,"Document Name",Reason,Details,Hash
+```
+Data Store Deletions
+```
+index=appian source="*data_store_deletions*" | table _time,"Data Store",Entity,Id,"Node Display Name",User
+```
+Decryption
+```
+index=appian source="*decryption.csv*" | table _time,Username,Context,Action,Success
+```
+DevOps Infrastructure
+```
+index=appian source="*devops_infrastructure.csv" | table _time,ID,Name,URL,"Last Action Username","Last Action Type","Last Action Name","Last Action IP","Last Action Date","Remote Enabled"
+```
+Devops Infrastructure Handler
+```
+index=appian source="*devops_infrastructure_handler.csv" | table ID,Name,URL,"IP Address","Status Code","Error Occurred","Direction","Before or After Request Processed"
+```
+File Attachment Downloads
+```
+index=appian source="*file_attachment_downloads.csv*" "File name"!="*.png" "File name"!="*.ico" "File name"!="*.jpg" | table _time,User,"File name","Download Successful"
+```
+Login Audit
+```
+index=appian source="*login-audit.csv" API_USER!="API-USER" | table _time,API_USER,"Web API",Succeeded | rename API_USER as "User" , Succeeded as "Action"
+```
+Object Rolemap Audit
+```
+index=appian source="*object_rolemap_audit.csv" | table _time,Username,Name,Type,"Previous Rolemap","New Rolemap"
+```
+Records Usage
+```
+index=appian source="*records_usage.csv*" | table _time,User,View,"Record Type Name",Action
+```
+Removed Processes
+```
+index=appian source="*removed*" | table _time,Action,"Process ID","Process Name","Transaction ID",Username
+```
+Sites Usage
+```
+index=appian source="*sites_usage.csv*" | table _time,User,Site,Page,Action
+```
+Users
+```
+index=appian source="*users.csv" | table _time,"Active LDAP Users","Active SAML Users","Active System Administrators","Active Tempo Users","Active Users","Total Users"
+```
+User Management
+```
+index=appian source="*user_management.csv" | search Action!="Log Initialized" | table _time,Action,"Modified By Username",Username,"Original Value","New Value"
+```
+
+</details>
 
 Dormant Account
 ```

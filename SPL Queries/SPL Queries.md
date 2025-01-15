@@ -244,10 +244,35 @@ _time,operation,user,host
 
 ---
 
-List of all reports
+List Saved Searches
 ```
-|rest /servicesNS/-/-/saved/searches 
-| search request.ui_dispatch_view!="" |table request.ui_dispatch_view title search
+| rest /servicesNS/-/-/saved/searches splunk_server=local 
+| table title search
+```
+
+List All App Alerts
+```
+| rest/servicesNS/-/-/saved/searches 
+| search alert.track=1 
+| fields title description search disabled triggered_alert_count actions action.script.filename alert.severity cron_schedule
+```
+
+List Search App Alerts
+```
+| rest/servicesNS/-/search/saved/searches
+| search alert.track=1
+| fields title description search disabled triggered_alert_count actions action.script.filename alert.severity cron_schedule
+```
+
+List All Indexes
+```
+| rest /services/data/indexes 
+| table title
+```
+
+List Splunk Servers (Clients)
+```
+| rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
 ```
 
 Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
@@ -280,11 +305,6 @@ Missing forwarders (5 min = 900 sec)
 | eval time=strftime(lastPhoneHomeTime,"%Y-%m-%d %H:%M:%S")
 | search difInSec>900
 | table hostname, ip, diffInSec, time
-```
-
-List all clients
-```
-| rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
 ```
 
 No Data from (Agent Based and Agentless) Last 4 Days

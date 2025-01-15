@@ -169,7 +169,49 @@ VM Events
 ```
 index=infraops source="vm*"  action="vim.event.VmBe*" | table _time,action,user,message
 ```
+</details>
 
+<details>
+<summary><b>Cisco</b></summary>
+
+Umbrella (DNS)
+```
+index=cisco_umbrella | table _time,user,action,ReplyCode,RecordType,category,domain,granular_identity_type,identities,identity_type,s3_filename,src,src_translated_ip
+```
+Umbrella (Audit)
+```
+index=cisco_umbrella sourcetype="cisco:umbrella:audit" action!="" _raw!="*roamingdevices*" | table _time,email,user,source_val,action,ip,body
+```
+ISE (Guest Users)
+```
+index=netauth SelectedAuthenticationIdentityStores="Guest Users" AuthenticationStatus="UnknownUser" | table _time,"Framed_IP_Address",EndPointMatchedProfile,SelectedAuthorizationProfiles
+```
+Router logins
+```
+index=netops Login | table _time,host,src,user,action
+```
+FMC - Blocked File Transfer Services
+```
+index=cisco_secure_fw file action=Block | table _time,AC_RuleAction,Application,FirewallPolicy,FirewallRule,InitiatorIP,ResponderIP,URL,URL_Category
+```
+FMC - Audit Logs
+```
+index=osnix source="program:FMC.qudsbank.ps"  policy | table _time,_raw
+```
+FMC Policy Changes
+```
+index=osnix source="program:FMC.qudsbank.ps"  "*policy deployment*" OR "*rule_configs*" OR "*Policy Committed*" OR "*Save Policy*" | table _time,_raw | sort -_time
+```
+SNA (Stealthwatch)
+```
+|securityevents domain_id=301 smc_ip=SNA_IP_ADDR earliest=-24h@h latest=now
+            subject_ip= subject_host_group_id=
+            peer_ip= peer_host_group_id= subject_orientation=EITHER
+            security_event_type_id_list=all ports_list=
+            hit_count_low_value= hit_count_high_value=
+            ci_points_low_value= ci_points_high_value=
+            filter_by=FLOW_COLLECTOR flow_collector_list="301" max_rows=2000 | sort 0 - ci_points | eval start_time=strftime(strptime(start_time."+0000","%Y-%m-%dT%H:%M:%SZ%z"),"%Y-%m-%d %H:%M:%S %Z") | eval last_time=strftime(strptime(last_time."+0000","%Y-%m-%dT%H:%M:%SZ%z"),"%Y-%m-%d %H:%M:%S %Z") | eval ci_points = tostring(ci_points, "commas"), hit_count = tostring(hit_count, "commas") | makemv delim=";" source_host_group_names | makemv delim=";" target_host_group_names | fields "fc_name", "start_time", "last_time", "event_type_name", "ci_points", "hit_count", "source_ip", "source_host_group_names", "source_hostname", "source_username", "source_mac", "target_ip", "target_host_group_names", "target_hostname", "target_username", "target_mac", "details" | rename "fc_name" as "Appliance", "start_time" as "Start Active Time", "last_time" as "Last Active Time", "event_type_name" as "Security Event", "source_ip" as "Source IP", "source_host_group_names" as "Source Host Group(s)", "source_hostname" as "Source Hostname", "target_ip" as "Target IP", "target_host_group_names" as "Target Host Group(s)", "target_hostname" as "Target Hostname", "ci_points" as "CI Points", "hit_count" as "Hit Count", "details" as "Details",  "source_username" as "Source Username",  "target_username" as "Target Username",  "source_mac" as "Source MAC",  "target_mac" as "Target MAC"
+```
 </details>
 
 <details>
@@ -252,6 +294,19 @@ User Deleted By Admin:
 index="wineventlog" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,user,dest |rename time as "Time" , name as "Action" , src_user as "Deleted By : ", user as "Deleted User: " , dest as "Destination DC"
 ```
 
+</details>
+
+<details>
+<summary><b>Senhasegura</b></summary>
+
+Sessions
+```
+index=pam act=Session dhost!="null" suser!="asc_117" | table _time,  sname ,suser ,src ,dhost ,dst ,duser ,proto  | rename sname as "Source Name", suser as "Source User", src as "Source IP", dhost as "Destitnation Host",dst as "Destination IP", proto as "Protocol", duser as "Destination User"
+```
+Device Creation
+```
+index=pam act=Device msg="Device creation*" | table _time,sname,src,cs3,cs4 | rename cs3 as "Server Name" , src as "Source IP" ,sname as "User Name" , cs4 as "Log Details"
+```
 </details>
 
 | Windows Event ID | Event Summary |

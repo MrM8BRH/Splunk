@@ -4,7 +4,6 @@
 - [Security Log Defined](https://system32.eventsentry.com/)
 - [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 - [Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
-- [Windows Security Events You Should Monitor](https://medium.com/@alizourob4/windows-security-events-you-should-monitor-eebb7a034bbf)
 
 ## External Links
 - [Security Content](https://research.splunk.com/detections/)
@@ -19,7 +18,6 @@
 - [Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
 
 ## Splunk Dashboard
-Author: [MrM8BRH](https://github.com/MrM8BRH)
 
 <details>
  

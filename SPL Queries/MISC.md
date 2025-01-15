@@ -363,7 +363,9 @@ Check for Disabled User Accounts:
 ```
 RDP Connections
 ```
-index=wineventlog EventCode=1149 | table _time,Account_Domain,Account_Name,action,app,command,user,src,src_user,dest
+index=wineventlog Logon_Type=10 ((EventCode=4624 OR EventCode=528) OR (EventCode=4625 OR EventCode=529))
+| eval action=CASE(EventCode=4624 OR EventCode=528, "Success", EventCode=4625 OR EventCode=529, "Failure")
+| table _time, user, src, dest,action
 ```
 Member Added/Removed
 ```

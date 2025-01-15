@@ -217,6 +217,19 @@ SNA (Stealthwatch)
 <details>
 <summary><b>Active Directory</b></summary>
 
+
+AD - <Group_Name> Group Alert
+```
+index=wineventlog (EventCode=4728 OR EventCode=4729)  Group_Name="Change_Me!"
+| rename src_user AS "Actioned By", src_user_first AS "First Name" src_user_last AS "Last Name" name as "Action Taken"
+| rex mode=sed field="Account_Name" "s/CN=//g"
+| rex mode=sed field="Account_Name" "s/cn=//g"
+| rex mode=sed field="Account_Name" "s/,OU.*//g" 
+| rex mode=sed field="Account_Name" "s/\\\//g" 
+| table "Actioned By"  "First Name"  "Last Name" Account_Name "Action Taken" Group_Name Account_Domain _time
+| sort - _time
+```
+
 Console logins
 ```
 index=wineventlog EventCode=4624 Logon_Type=2 | table _time,host,user,dvc,action,command | dedup _time
@@ -225,7 +238,7 @@ Installed Applications
 ```
 index=windows sourcetype="Script:InstalledApps" | table _time,host,DisplayName,Source,Publisher,InstallSource,InstallDate
 ```
-AD - Local Admin Account
+Local Admin Account
 ```
 index=wineventlog EventCode=4732 Group_Name=Administrators
 | table _time,ComputerName,Group_Name,Account_Name,Message
@@ -261,16 +274,97 @@ Passwords Last Changed - Active Accounts:
 | ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, pwdLastSet
 ```
 
+Password removed from never expired
+```
+index=wineventlog source="*:Security" EventCode=4738 name="A user account was changed" body="*'Don't Expire Password' - Disabled*" 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Created User" , Logon_ID as "Session ID" ,src_user as "User Created By :", dest as "Destination DC", host as "Hostname"
+```
+
+Password Set as Never Expired
+```
+index=wineventlog source="*:Security" EventCode=4738 name="A user account was changed" body="*'Don't Expire Password' - Enabled*" 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Modified User" , Logon_ID as "Session ID" ,src_user as "User Modified By :", dest as "Destination DC", host as "Hostname"
+```
+
+Detect Windows Account Privilege Changes
+```
+index=wineventlog source="*:Security" (EventCode=4672 OR EventCode=4673) | table _time,host,user,app,action,name,Privileges
+```
+User Modifications
+```
+index=wineventlog source="*:Security" EventCode=4722 OR EventCode=4725 OR EventCode=4720 OR EventCode=4726 user!=*$ 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,src_user 
+| rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Account Modified By", host as "Hostname"
+```
+A member was added to Domain Admin Group
+```
+index=wineventlog source="*:Security" EventCode=4728 Group_Name="Domain Admins" Message="*A member was added to a security-enabled global group*" name="A member was added to a security-enabled global group" 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,src_user,Group_Name 
+| rename time as "Time" , name as "Action" , user as "Target User" ,src_user as "User Modified By :", host as "Hostname", Group_Name as "Group_Name"
+```
+A member was Removed from Domain Admin Group
+```
+index=wineventlog source="*:Security" EventCode=4729 Group_Name="Domain Admins" Message="A member was removed from a security-enabled global group*"  name="A member was removed from a security-enabled global group" 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,src_user,Group_Name 
+| rename time as "Time" , name as "Action" , user as "Target User" ,src_user as "User Modified By :", host as "Hostname", Group_Name as "Group_Name"
+```
+A new Machine/Pc was Disabled
+```
+index=wineventlog source="*:Security" EventCode=4725 user=*$ 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Disabled Host" , Logon_ID as "Session ID" ,src_user as "PC Disabled By :", dest as "Destination DC", host as "Hostname"
+```
+A new Machine/Pc was Enabled
+```
+index=wineventlog source="*:Security" EventCode=4722 user=*$ 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Enabled Host" , Logon_ID as "Session ID" ,src_user as "User Enabled By :", dest as "Destination DC", host as "Hostname"
+```
+A user Account was Created
+```
+index=wineventlog source="*:Security" EventCode=4720 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Display_Name,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Created User", Display_Name as "Display Name" ,src_user as "User Created By :", dest as "Destination DC", host as "Hostname"
+```
+A user Account was Deleted
+```
+index=wineventlog source="*:Security" EventCode=4726 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Created User" , Logon_ID as "Session ID" ,src_user as "User Created By :", dest as "Destination DC", host as "Hostname"
+```
+A user Account was Disabled
+```
+index=wineventlog source="*:Security" EventCode=4725 user!=*$ 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Target User" , Logon_ID as "Session ID" ,src_user as "User Modified By :", dest as "Destination DC", host as "Hostname"
+```
+A user Account was Enabled
+```
+index=wineventlog source="*:Security" EventCode=4722 user!=*$ 
+| eval time = strftime(_time,"%c") 
+| table time,host,name,user,Logon_ID,src_user,dest 
+| rename time as "Time" , name as "Action" , user as "Enabled User" , Logon_ID as "Session ID" ,src_user as "User Enabled By :", dest as "Destination DC", host as "Hostname"
+```
 Check for Disabled User Accounts:
 ```
 | ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))" attrs="sAMAccountName" | table sAMAccountName,dn
 ```
-
 RDP Connections
 ```
 index=wineventlog EventCode=1149 | table _time,Account_Domain,Account_Name,action,app,command,user,src,src_user,dest
 ```
-
 Member Added/Removed
 ```
 index="wineventlog" EventCode=4761 OR EventCode=4762 OR EventCode=4728 OR EventCode=4729 |eval time = strftime(_time,"%c") |table time,name,MemberName,Group_Name,src_user |rename time as "Time" , name as "Action" , MemberName as "Member Name Added/Removed" , Group_Name as "Group Name" , src_user as "Member Added/Removed By :"

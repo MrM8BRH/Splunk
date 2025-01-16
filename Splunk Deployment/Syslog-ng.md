@@ -167,16 +167,6 @@ SC4S is pre-configured to map each sourcetype to a typical index. For new instal
    - Name: SC4S
    - Options: Default settings
 
-### Install Related Splunk Apps (Search Head & Indexer Server)
-Install the [IT Essentials Work](https://splunkbase.splunk.com/app/5403) app using the following commands:
-
-```bash
-/opt/splunk/bin/splunk stop
-tar -xvf it-essentials-work_<version>.spl -C /opt/splunk/etc/apps
-chown -R splunk:splunk /opt/splunk
-/opt/splunk/bin/splunk start
-```
-
 ### Install and Configure SC4S (Syslog Server)
 Set the host OS kernel to match the default receiver buffer of SC4S, which is set to 16MB.
 

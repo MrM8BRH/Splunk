@@ -136,9 +136,9 @@ crontab -e
 
 Splunk Connect for Syslog (SC4S)
 ----------
-[Splunk Connect for Syslog (SC4S) - Nebraska and Iowa Splunk User Group](https://www.youtube.com/watch?v=c0iKNVs91L8)
-
-[Website](https://splunk.github.io/splunk-connect-for-syslog/main/)
+- [Splunk Connect for Syslog (SC4S) - Youtube](https://www.youtube.com/watch?v=c0iKNVs91L8)
+- [Official website](https://splunk.github.io/splunk-connect-for-syslog/main/)
+- [Configure your SC4S disk buffer](https://splunk.github.io/splunk-connect-for-syslog/main/configuration/#configure-your-sc4s-disk-buffer)
 
 ### Index Configuration (Indexer Server)
 SC4S is pre-configured to map each sourcetype to a typical index. For new installations, it is best practice to create them in Splunk when using the SC4S defaults. SC4S can be easily customized to use different indexes if desired.

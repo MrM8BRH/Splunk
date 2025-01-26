@@ -399,7 +399,7 @@ nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 <details>
 <summary>Configure event cleanup best practices in props.conf</summary>
 
-Create or navigate to /opt/splunk/etc/apps/Splunk_TA_windows/local/props.conf
+Create or navigate to /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/props.conf
 ```
 [source::WinEventLog:System]
    SEDCMD-clean_info_text_from_winsystem_events_this_event = s/This [Ee]vent is generated[\S\s\r\n]+$//g

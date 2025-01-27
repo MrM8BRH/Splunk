@@ -492,12 +492,16 @@ The section explains why the logon failed.
 | 0xc000015b | 	The user has not been granted the requested logon type (aka logon right) at this machine |
 
 Logon Types
-| Logon Type |	#	| Authenticators Accepted |	Reusable Credentials in LSA Session	| Examples |
-|------------|---|-------------------------|-------------------------------------|----------|
-| Interactive (also known as, Logon locally) | 2 |	Password, Smartcard,other |	Yes | 	Console logon;RUNAS;Hardware remote control solutions (such as Network KVM or Remote Access / Lights-Out Card in server)IIS Basic Auth (before IIS 6.0) |
-| Network 	| 3 |	Password,NT Hash,Kerberos ticket |	No (except if delegation is enabled, then Kerberos tickets present) |	NET USE;RPC calls;Remote registry;IIS integrated Windows auth;SQL Windows auth; |
-| Batch |	4 |	Password (stored as LSA secret) |	Yes |	Scheduled tasks |
-| Service |	5 |	Password (stored as LSA secret) |	Yes |	Windows services |
-| NetworkCleartext |	8 |	Password |	Yes |	IIS Basic Auth (IIS 6.0 and newer);Windows PowerShell with CredSSP |
-| NewCredentials |	9 |	Password |	Yes |	RUNAS /NETWORK |
-| RemoteInteractive |	10 |	Password, Smartcard,other |	Yes |	Remote Desktop (formerly known as "Terminal Services") |
+| Type | Description |
+|------|-------------|
+| 2 | Console |
+| 3 | Network |
+| 4 | Batch (Scheduled Tasks) |
+| 5 | Windows Services |
+| 7 | Screen Lock/Unlock |
+| 8 | Network (Cleartext Logon) |
+| 9 | Alternate Credentials Specified (RunAs) |
+| 10 | Remote Interactive (RDP) |
+| 11 | Cached Credentials (e.g., Offline DC) |
+| 12 | Cached Remote Interactive (RDP, similar to Type 10) |
+| 13 | Cached Unlock (Similar to Type 7) |

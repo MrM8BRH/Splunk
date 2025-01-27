@@ -468,6 +468,9 @@ index=idrac virtual console | table _time,_raw
 | 4609 | Windows is shutting down |
 | 4800 | The workstation was locked |
 | 4801 | The workstation was unlocked |
+| 5140 | A network share object was accessed |
+| 5145 | A network share object was checked to see whether client can be granted desired access |
+| 1102 | The audit log was cleared. (Security) |
 
 Failure Information:
 

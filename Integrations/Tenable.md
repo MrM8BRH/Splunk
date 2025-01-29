@@ -1,3 +1,3 @@
-[Tenable and Splunk Integration Guide](https://docs.tenable.com/integrations/Splunk/Content/Welcome.htm)
-
-[Nessus and Splunk Integration](https://splunkonbigdata.com/nessus-and-splunk-integration/)
+- [Tenable Add-On for Splunk](https://splunkbase.splunk.com/app/4060)
+- [Tenable App for Splunk](https://splunkbase.splunk.com/app/4061)
+- [Tenable and Splunk Integration Guide](https://docs.tenable.com/integrations/Splunk/Content/Welcome.htm)

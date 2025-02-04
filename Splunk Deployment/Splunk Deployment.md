@@ -343,9 +343,12 @@ Default Index (defaultdb) Directory Structure
 | Warm         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/db/*`          | Each warm bucket occupies its own subdirectory.                           |
 | Cold         | `$SPLUNK_HOME/var/lib/splunk/defaultdb/colddb/*`      | Each cold bucket occupies its own subdirectory. When warm buckets roll to cold, they get moved to this directory. |
 
-[Archive indexed data](https://docs.splunk.com/Documentation/Splunk/9.3.1/Indexer/Automatearchiving)
+Configuring Frozen Storage
 
-[coldtofrozenscriptexample.py](https://community.splunk.com/t5/Getting-Data-In/Does-anyone-have-a-working-example-of-coldtofrozenscript-py/m-p/213023/highlight/true#M41862)
+`nano /opt/splunk/etc/system/local/indexes.conf`
+```
+coldToFrozenDir = /whatever/path/you/want 
+```
 
 </details>
 
@@ -358,12 +361,11 @@ Default Index (defaultdb) Directory Structure
 - Settings → Distributed search → Search peers (Indexers + Search heads)
 - Settings → Monitoring Console → Settings → Alerts Setup
 - Settings → Monitoring Console → Settings → Forwarder Monitoring Setup
-- Settings → Monitoring Console → Forwarders → forwarder_instance
 - Settings → Monitoring Console → Settings → General Setup [Standalone → Distributed]
    Edit Roles
               Indexer → Indexer
-              Deployment → Deployment + + KV Store + License Master
-              Search Head → Search Head + KV Store
+              Deployment → Deployment
+              Search Head → Search Head + KV Store + License Master
 - Install Windows/Linux Addons
 ```
 ```
@@ -468,10 +470,6 @@ Create:
 Reload the configuration for the Splunk Deployment Server
 ```
 /opt/splunk/bin/splunk reload deploy-server
-```
-List Deployment Clients
-```
-/opt/splunk/bin/splunk btool deploymentclient list deployment-client 
 ```
 
 </details>

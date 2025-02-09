@@ -621,6 +621,8 @@ After the restart, a new `passwd` file will be generated, and you should be able
 cd /opt/splunk/var/lib/splunk
 
 #######  Kvstore  #######
+chmod -R 400 $SPLUNK_HOME/var/lib/splunk/kvstore/mongo/splunk.key
+
 # Path
 /var/lib/splunk/kvstore/mongo
 

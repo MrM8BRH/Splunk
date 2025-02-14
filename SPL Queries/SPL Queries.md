@@ -37,7 +37,6 @@ List Search App Alerts
 | search alert.track=1
 | fields title description search disabled triggered_alert_count actions action.script.filename alert.severity cron_schedule
 ```
-
 List All Indexes
 ```
 | rest /services/data/indexes 
@@ -47,6 +46,15 @@ List All Indexes
 List Splunk Servers (Clients)
 ```
 | rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
+```
+
+List of sourcetypes in index(es)
+```
+| tstats count as totalCount min(_time) as start_date, max(_time) as end_date, max(_indextime) as recent_date dc(host) as hosts where index=* sourcetype=* by index, sourcetype
+| convert timeformat="%Y/%m/%d %H:%M:%S" ctime(start_date)
+| convert timeformat="%Y/%m/%d %H:%M:%S" ctime(end_date)
+| convert timeformat="%Y/%m/%d %H:%M:%S" ctime(recent_date)
+| table index sourcetype start_date end_date recent_date hosts totalCount
 ```
 
 Orphaned scheduled searches

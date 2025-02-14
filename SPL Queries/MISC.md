@@ -230,6 +230,21 @@ index=wineventlog (EventCode=4728 OR EventCode=4729)  Group_Name="Change_Me!"
 | sort - _time
 ```
 
+Group and Membership Changes
+```
+index="*" earliest=-30d latest=now() source=WinEventLog:Security
+(Group_Name="Administrators" OR Group_Name="Enterprise Admins" OR Group_Name="Domain Admins" OR Group_Name="Schema Admins" OR Group_Name="Account Operators" OR Group_Name="Backup Operators" OR Group_Name="Server Operators" OR Group_Name="DHCP Administrators" OR Group_Name="DnsAdmins" OR Group_Name="Network Configuration Operators" OR Group_Name="Hyper-V Administrators" OR Group_Name="Domain Controllers" OR Group_Name="Read-only Domain Controllers" OR Group_Name="Cryptographic Operators" OR Group_Name="Cert Publishers")
+(EventCode=4728 OR EventCode=4729 OR EventCode=4732 OR EventCode=4733 OR EventCode=4756 OR EventCode=4757)
+| eval Time=strftime(_time, "%m/%d/%y %H:%M:%S") | sort -_time
+| eval EventCode=case(EventCode==4728, "4728 [+] GG Sec", EventCode==4729, "4729 [-] GG Sec", EventCode==4732, "4732 [+] DL/BL Sec", EventCode==4733, "4733 [-] DL/BL Sec", EventCode==4756, "4756 [+] UG Sec", EventCode==4757, "4757 [-] UG Sec", 1=1, EventCode)
+| rex "Subject:\s+[^\n]+\s+Account Name:\s+(?<ActionBy>.*)" | rex "Subject:\s+[^\n]+\s+[^\n]+\s+Account Domain:\s+(?<ActionByDomain>.*)"
+| rex "Member:\s+\w+\s\w+:\s+(?<Member>.*)" | rex "Member:\s+Security ID:[^\n]+\s+Account Name:\s+(?<MemberDN>.*)"
+| rex "Group:\s+[^\n]+\s+Group Name:\s+(?<Group>.*)" | rex "Group:\s+[^\n]+\s+[^\n]+\s+Group Domain:\s+(?<GroupDomain>.*)"
+`comment("4756 uses 'Account', not 'Group'")` | rex "Group:\s+[^\n]+\s+Account Name:\s+(?<Group>.*)" | rex "Group:\s+[^\n]+\s+[^\n]+\s+Account Domain:\s+(?<GroupDomain>.*)"
+| rename ComputerName as "Computer", name as "EventDescription"
+| table Time, GroupDomain, Group, EventCode, Member, MemberDN, ActionBy, ActionByDomain, Computer, EventDescription
+```
+
 Console logins
 ```
 index=wineventlog EventCode=4624 Logon_Type=2 | table _time,host,user,dvc,action,command | dedup _time

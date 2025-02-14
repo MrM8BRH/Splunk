@@ -99,6 +99,18 @@ No Data from (Agent Based and Agentless) Last 4 Days
 | table host,time,host,index,sourcetype
 ```
 
+Identifying Hosts not sending data for more than 6 hours 
+```
+| tstats latest(_time) as latest where index!="*_" earliest=-9h by host index sourcetype
+| eval recent = if(latest > relative_time(now(),"-360m"),"1","0"), LastReceiptTime = strftime(latest,"%c")
+| where recent=0
+| sort LastReceiptTime
+| eval age=now()-latest
+| eval age=round((age/60/60),1)
+| eval age=age."hour"
+| fields - recent latest
+```
+
 Check latest status of all modular inputs
 ```
 | rest /services/admin/inputstatus/ModularInputs:modular%20input%20commands splunk_server=local count=0 

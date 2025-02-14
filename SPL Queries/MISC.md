@@ -245,6 +245,11 @@ index="*" earliest=-30d latest=now() source=WinEventLog:Security
 | table Time, GroupDomain, Group, EventCode, Member, MemberDN, ActionBy, ActionByDomain, Computer, EventDescription
 ```
 
+Clearing of Windows Audit Logs 
+```
+index=wineventlog source=WinEventLog:security (EventCode=1102 OR EventCode=517) | eval Date=strftime(_time, "%Y/%m/%d") | stats count by Client_User_Name, host, index, Date | sort - Date | rename Client_User_Name as "Account Name"
+```
+
 Console logins
 ```
 index=wineventlog EventCode=4624 Logon_Type=2 | table _time,host,user,dvc,action,command | dedup _time

@@ -67,6 +67,7 @@ Orphaned scheduled searches
 ```
 
 Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
+~ 1
 ```
 index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Truncating" 
 | rex "line length >= (?<line_length>\d+)" 
@@ -81,6 +82,15 @@ index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Tru
  TRUNCATE = "+recommeneded_truncate 
 | table _time host data_host sourcetype log_level max_line_length recommeneded_truncate recommended_config count common_events 
 | sort -count
+```
+~ 2
+```
+index=_internal sourcetype=splunkd component=LineBreakingProcessor  
+| extract 
+| rex "because\slimit\sof\s(?<limit>\S+).*>=\s(?<actual>\S+)" 
+| stats count avg(actual) max(actual)  dc(data_source) dc(data_host) BY data_sourcetype, limit 
+| eval avg(actual)=round('avg(actual)') 
+| sort - count
 ```
 
 Convert epoch time to a human readable time

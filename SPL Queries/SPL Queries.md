@@ -335,3 +335,10 @@ Check latest status of all modular inputs
 | stats first(started) as started, first(stopped) as stopped, first(exit_status) as exit_status by script, stanza
 | eval errmsg=case(exit_status=="0", null(), isnotnull(exit_status), "A script exited abnormally with exit status: "+exit_status, isnull(started) or isnotnull(stopped), "A script is in an unknown state"), ignore=if(`script_error_msg_ignore`, 1, 0)
 ```
+Update Lookup File with New Entries and Deduplicate by Name
+```
+| inputlookup output.csv
+| append [ <your search> ]
+| dedup name
+| outputlookup output.csv
+```

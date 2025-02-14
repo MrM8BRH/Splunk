@@ -9,7 +9,6 @@
 - [Security Content](https://research.splunk.com/detections/)
 - [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
 - [GoSplunk](https://gosplunk.com/)
-- [Splunk Search Queries](https://github.com/secnnet/Splunk-Search-Queries)
 - [Splunk ES Queries](https://github.com/shauntdergrigorian/splunkqueries)
 - [Some Threat Hunting queries useful for blue teamers](https://github.com/BankSecurity/Threat_Hunting)
 - [A list of Splunk queries that I've collected and used over time](https://github.com/shauntdergrigorian/splunkqueries)

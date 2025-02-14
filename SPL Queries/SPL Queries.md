@@ -111,6 +111,27 @@ Identifying Hosts not sending data for more than 6 hours
 | fields - recent latest
 ```
 
+Sourcetype missing in Datamodels 
+```
+| tstats count WHERE index=* NOT index IN(sum_*, *summary, cim_*, es_*,splunkd* splunk_*) by sourcetype 
+| fields - count 
+| append 
+[| datamodel 
+| rex field=_raw "\"modelName\"\s*\:\s*\"(?<modelName>[^\"]+)\""
+| fields modelName
+| table modelName
+| map maxsearches=40 search="tstats summariesonly=true count from datamodel=$modelName$ by sourcetype |eval modelName=\"$modelName$\""
+]
+| fillnull value="placeholder" modelName
+| table modelName sourcetype count 
+| fillnull value="nullfillerForNextCommand" count
+| xyseries sourcetype modelName count
+| addtotals
+| fillnull value="not_in_DModel" Total
+| table sourcetype Total *
+| fields - "placeholder"
+```
+
 Check latest status of all modular inputs
 ```
 | rest /services/admin/inputstatus/ModularInputs:modular%20input%20commands splunk_server=local count=0 

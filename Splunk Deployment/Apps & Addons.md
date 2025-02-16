@@ -68,8 +68,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
-| Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
-| Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
 | Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
 | Kaspersky Add-on for Splunk                   | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
 
@@ -127,6 +125,20 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |-----------------------------------------|-----------------|----------------------------------------|
 | Cloudflare App for Splunk               | Cloudflare, Inc | https://splunkbase.splunk.com/app/4501 |
 | Cloudflare Technology Add-on for Splunk | Cloudflare, Inc | https://splunkbase.splunk.com/app/5114 |
+| Cloudflare Audit Logs                   | Michael Bentley | https://splunkbase.splunk.com/app/6622 |
+
+### VMware
+|                      Name                     |  Built by  |                   URL                  |
+|-----------------------------------------------|------------|----------------------------------------|
+| Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
+| Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
+
+### Aruba
+| Name                                    | Built by        | URL                                    |
+|-----------------------------------------|-----------------|----------------------------------------|
+| Aruba Networks App for Splunk           | Diogo Silva     | https://splunkbase.splunk.com/app/4664 |
+| Aruba Networks Add-on for Splunk        | Diogo Silva     | https://splunkbase.splunk.com/app/4668 |
+| HPE Aruba Networking EdgeConnect SD-WAN Security App for Splunk        | Aruba Networks     | https://splunkbase.splunk.com/app/6302 |
 
 ### Cisco
 |                                   Name                  |          Built by         |                   URL                  |

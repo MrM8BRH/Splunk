@@ -27,25 +27,18 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
 
-### Splunk Stream
-|                      Name                     |  Built by  |                   URL                  |
-|------------------------------------|----------------------------|----------------------------------------|
-| Splunk App for Stream                         | Splunk Inc | https://splunkbase.splunk.com/app/1809 |
-| Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
-| Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |
-
 ### Security
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
 | Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
+| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
+| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | App for External Attack Surface Management (EASM) | Greg Ford          | https://splunkbase.splunk.com/app/7027 |
 | Splunk UBA Monitoring App          | Splunk Works               | https://splunkbase.splunk.com/app/4441 |
 | APT Falconer                       | Splunk Works               | https://splunkbase.splunk.com/app/7469 |
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
-| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
-| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
 | Splunk App for Behavioral Profiling | Splunk Works              | https://splunkbase.splunk.com/app/6980 |
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
@@ -68,6 +61,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Addons
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
+| Splunk App for Content Packs                  | Splunk LLC | https://splunkbase.splunk.com/app/5391 |
 | Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
 | Kaspersky Add-on for Splunk                   | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
 
@@ -130,8 +124,14 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### VMware
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
+| Splunk App for VMware                         | Splunk LLC | https://splunkbase.splunk.com/app/725  |
+| Splunk OVA for VMware                         | Splunk LLC | https://splunkbase.splunk.com/app/3216 |
+| Splunk Add-on for VMware                      | Splunk LLC | https://splunkbase.splunk.com/app/3215 |
+| Splunk Add-on for VMware Metrics              | Splunk LLC | https://splunkbase.splunk.com/app/5089 |
 | Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
+| Splunk Supporting Add-on for VMware           | Splunk LLC | https://splunkbase.splunk.com/app/5381 |
+| VMWare Horizon 8 Add-on                       | Scott Horton | https://splunkbase.splunk.com/app/7437 |
 
 ### Aruba
 | Name                                    | Built by        | URL                                    |
@@ -149,16 +149,11 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
 | Splunk Add-on for Cisco Identity Services               | Splunk Inc                | https://splunkbase.splunk.com/app/1915 |
 | Splunk for Cisco Identity Services (ISE)                | Jason Conger              | https://splunkbase.splunk.com/app/1589 |
+| Cisco Cloud Security Add-on for Splunk                  | Cisco Systems             | https://splunkbase.splunk.com/app/7569 |
+| Cisco Cloud Security App for Splunk                     | Cisco Systems             | https://splunkbase.splunk.com/app/5558 |
 | Cisco Networks App for Splunk Enterprise                | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1352 |
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
-| Cisco ACI App for Splunk Enterprise                     | Cisco Systems             | https://splunkbase.splunk.com/app/1896 |
-| Cisco ACI Add-on for Splunk Enterprise                  | Cisco Systems             | https://splunkbase.splunk.com/app/1897 |
-| Cisco SD-WAN App for Splunk                             | Cisco Systems             | https://splunkbase.splunk.com/app/6657 |
-| Cisco SD-WAN Add-on for Splunk                          | Cisco Systems             | https://splunkbase.splunk.com/app/6656 |
-| Cisco WebEx Meetings App for Splunk                     | Splunk Works              | https://splunkbase.splunk.com/app/4992 |
-| Cisco WebEx Meetings Add-on for Splunk                  | Splunk Works              | https://splunkbase.splunk.com/app/4991 |
 | Splunk Add-on for Cisco Meraki                          | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
-
 
 ### Nutanix
 |      Name      |      Built by     |                   URL                  |
@@ -183,3 +178,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |--------------------------------------|--------------------|----------------------------------------|
 | Palo Alto Networks App for Splunk    | Palo Alto Networks | https://splunkbase.splunk.com/app/491  |
 | Palo Alto Networks Add-on for Splunk | Palo Alto Networks | https://splunkbase.splunk.com/app/2757 |
+
+### Splunk Stream
+|                      Name                     |  Built by  |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| Splunk App for Stream                         | Splunk Inc | https://splunkbase.splunk.com/app/1809 |
+| Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
+| Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |

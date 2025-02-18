@@ -648,6 +648,7 @@ touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
 
 # Troubleshoot configurations
 /opt/splunk/bin/splunk btool check --debug
+
 # Troubleshoot license
 /opt/splunk/bin/splunk btool server list --debug license
 
@@ -658,19 +659,6 @@ touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
 
 # Troubleshoot your tailed files
 curl https://serverhost:8089/services/admin/inputstatus/TailingProcessor:FileStatus
-
-# Increase the session timeout settings
-1. nano /opt/splunk/etc/system/local/server.conf
-[general]
-sessionTimeout = 3h
-2. nano /opt/splunk/etc/system/local/web.conf
-[settings] 
-tools.sessions.timeout = 180
-
-# JAVA for DB Connect app
-PATH: /opt/splunk/etc/apps/splunk_app_db_connect/linux_x86
-URL: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
-Permission: chown -R splunk:splunk /opt/splunk
 
 # Header options
 nano /opt/splunk/etc/system/local/web.conf

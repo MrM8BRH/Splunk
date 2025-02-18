@@ -50,22 +50,8 @@ Configuration
   - Type: Event-based detection
 - Security Content → Security use case library
 
-SPL Qeury
-```
-| rest splunk_server=local count=0 /servicesNS/-/-/saved/searches
-      | search disabled=*
-      | spath input=action.correlationsearch.metadata 
-      | spath input=action.correlationsearch.annotations 
-      | rename *{} AS * 
-      | eval appVersion = 'eai:acl.app'.":".detection_version
-      | rename action.correlationsearch.label AS title, eai:acl.app AS app, mitre_attack AS mitreTechnique, action.notable.param.security_domain AS security_domain, action.escu.eli5 AS description,action.escu.how_to_implement AS how_to_implement
-      | search title!="" AND title!="*Experimental*"
-      | where confidence >= 80 AND impact=100
-      | table title analytic_story confidence impact security_domain how_to_implement description
-```
 
-<details>
-<summary><b>Uninstall Splunk ES (Linux)</b></summary>
+Uninstall Splunk ES (Linux)
 
 ```
 # Stop Splunk
@@ -75,19 +61,15 @@ SPL Qeury
 cd /opt/splunk/etc/apps
 rm -r SplunkEnterpriseSecuritySuite missioncontrol SA-* DA-ESS*
 ```
-</details>
 
-<details>
-<summary><b>Troubleshoot & Others</b></summary>
-
+Troubleshoot
 ```
-KV Store Logs file:
+# KV Store Logs file
 cat /opt/splunk/var/log/splunk/mongod.log
 
-Permissions:
+# Permission
 chmod 600 /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key
 ```
-</details>
 
 Resrouces
 ---------

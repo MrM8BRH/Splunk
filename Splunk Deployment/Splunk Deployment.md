@@ -668,31 +668,3 @@ x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
 ```
 </details>
-
-<details>
-<summary><b>Splunk Health Check & Best Practices</b></summary>
-
-- Perform Health Check Assessment using monitoring console.
-- Increase system resources if needed.
-- Assess index sizes and usage on indexer server, optimize as required.
-- Review and adjust log verbosity and frequency based on your needs.
-- Check Activity for running or queued jobs impacting performance.
-- Host Console Monitoring and License Manager on deployment server/manager node.
-- Check Splunk ES configuration.
-- Remove Apps and addons that not be used.
-- Enable Systemd for Splunk service for better management and stability.
-- [Reducing skipped searches](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Searching_and_Reporting/Reducing_skipped_searches)
-
-It's a best practice to disable KV-Store in all Splunk servers except Search Heads to use the resources for other purposes, even if, there are some Add-Ons, that must be installed on HFs or IDXs, that disabling KV-Store will give you error messages because they use KV-Store. Anyway, you can disable KV-Store adding to `server.conf` the following stanza:
-```
-[kvstore]
-disabled = true
-```
-
-Data Model Best practices
-- Every accelerated data model should have specific indexes defined. 
-- Only enable acceleration for data models that are applicable for your environment. If you don’t have data sources for a specific data model, disable acceleration. 
-- Consider disabling acceleration for data models that are not powering correlation searches, especially if you’re not planning to use this data for security use cases in the future. 
-- Regularly review the data in your Splunk environment and update the index constraints as new data sources are added. Include updating these constraints as part of your data onboarding processes. 
-
-</details>

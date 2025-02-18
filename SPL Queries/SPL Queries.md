@@ -1,22 +1,24 @@
 ## Windows Security Log Events
-- [Appendix L: Events to Monitor](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor)
-- [Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
-- [Security Log Defined](https://system32.eventsentry.com/)
 - [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 - [Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
+- [Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
+- [Security Log Defined](https://system32.eventsentry.com/)
 
-## External Links
+## Resources
 - [Security Content](https://research.splunk.com/detections/)
 - [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
 - [GoSplunk](https://gosplunk.com/)
 - [Splunk ES Queries](https://github.com/shauntdergrigorian/splunkqueries)
-- [Some Threat Hunting queries useful for blue teamers](https://github.com/BankSecurity/Threat_Hunting)
-- [A list of Splunk queries that I've collected and used over time](https://github.com/shauntdergrigorian/splunkqueries)
-- [Platform Use Case Library](https://lantern.splunk.com/Splunk_Platform/Use_Cases)
-- [SplunkDashboards](https://github.com/Truvis/SplunkDashboards)
-- [Yuenx - Splunk](https://www.yuenx.com/?s=splunk)
 
 ---
+
+Convert epoch time to a human readable time
+```
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+```
+
+<details>
+<summary><b>Lists</b></summary>
 
 List Saved Searches
 ```
@@ -43,7 +45,7 @@ List All Indexes
 | table title
 ```
 
-List Splunk Servers (Clients)
+List Splunk Clients
 ```
 | rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
 ```
@@ -56,8 +58,11 @@ List of sourcetypes in index(es)
 | convert timeformat="%Y/%m/%d %H:%M:%S" ctime(recent_date)
 | table index sourcetype start_date end_date recent_date hosts totalCount
 ```
+</details>
 
-Orphaned scheduled searches
+<details>
+<summary><b>Orphaned scheduled searches</b></summary>
+ 
 ```
 | rest timeout=600 splunk_server=local /servicesNS/-/-/saved/searches add_orphan_field=yes count=0 
 | search orphan=1 disabled=0 is_scheduled=1 
@@ -65,8 +70,11 @@ Orphaned scheduled searches
 | fields title eai:acl.owner eai:acl.app eai:acl.sharing orphan status is_scheduled cron_schedule next_scheduled_time next_scheduled_time actions 
 | rename title AS "search name" eai:acl.owner AS owner eai:acl.app AS app eai:acl.sharing AS sharing
 ```
+</details>
 
-Splunk query to find truncation issues and also recommend a TRUNCATE parameter for props.conf.
+<details>
+<summary><b>Truncation Issues</b></summary>
+ 
 ~ 1
 ```
 index="_internal" sourcetype=splunkd source="*splunkd.log" log_level="WARN" "Truncating" 
@@ -92,34 +100,23 @@ index=_internal sourcetype=splunkd component=LineBreakingProcessor
 | eval avg(actual)=round('avg(actual)') 
 | sort - count
 ```
+</details>
 
-Convert epoch time to a human readable time
-```
-| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
-```
+<details>
+<summary><b>Data & Agent</b></summary>
 
-Missing forwarders (5 min = 900 sec)
+Missing Forwarders (5 min = 900 sec)
 ```
 | REST /services/deployment/server/clients
-| search earliest=-8h
 | eval difInSec=now()-lastPhoneHomeTime
 | eval time=strftime(lastPhoneHomeTime,"%Y-%m-%d %H:%M:%S")
 | search difInSec>900
-| table hostname, ip, diffInSec, time
+| table hostname, ip, time
 ```
 
-No Data from (Agent Based and Agentless) Last 4 Days
+No Data from (Agent-Based and Agent-Less) Last 4 Days
 ```
-| tstats latest(_time) as latest where index=* earliest=-4d by host,index,sourcetype
-| eval recent = if(latest > relative_time(now(),"-24h"),1,0), realLatest = strftime(latest,"%c")
-| eval time=strftime(latest,"%Y-%m-%d %H:%M:%S")
-| where recent=0
-| table host,time,host,index,sourcetype
-```
-
-Identifying Hosts not sending data for more than 6 hours 
-```
-| tstats latest(_time) as latest where index!="*_" earliest=-9h by host index sourcetype
+| tstats latest(_time) as latest where index=* earliest=-4d by host index sourcetype
 | eval recent = if(latest > relative_time(now(),"-360m"),"1","0"), LastReceiptTime = strftime(latest,"%c")
 | where recent=0
 | sort LastReceiptTime
@@ -129,7 +126,24 @@ Identifying Hosts not sending data for more than 6 hours
 | fields - recent latest
 ```
 
-Sourcetype missing in Datamodels 
+No Data Received from Windows Servers (Security Logs) Last 7 Days
+```
+| tstats latest(_time) as latest where index!="*_" earliest=-7d by host index source sourcetype
+| search source="WinEventLog:Security"
+| eval recent = if(latest > relative_time(now(),"-360m"),"1","0"), LastReceiptTime = strftime(latest,"%c")
+| where recent=0
+| sort LastReceiptTime
+| eval age=now()-latest
+| eval age=round((age/60/60),1)
+| eval age=age."hour"
+| fields - recent latest
+```
+
+</details>
+
+<details>
+<summary><b>Sourcetype missing in Datamodels </b></summary>
+ 
 ```
 | tstats count WHERE index=* NOT index IN(sum_*, *summary, cim_*, es_*,splunkd* splunk_*) by sourcetype 
 | fields - count 
@@ -149,8 +163,11 @@ Sourcetype missing in Datamodels
 | table sourcetype Total *
 | fields - "placeholder"
 ```
+</details>
 
-Check latest status of all modular inputs
+<details>
+<summary><b>Check latest status of all modular inputs</b></summary> 
+
 ```
 | rest /services/admin/inputstatus/ModularInputs:modular%20input%20commands splunk_server=local count=0 
 | append [| rest /services/admin/inputstatus/ExecProcessor:exec%20commands splunk_server=local count=0] 
@@ -162,10 +179,15 @@ Check latest status of all modular inputs
 | stats first(started) as started, first(stopped) as stopped, first(exit_status) as exit_status by script, stanza
 | eval errmsg=case(exit_status=="0", null(), isnotnull(exit_status), "A script exited abnormally with exit status: "+exit_status, isnull(started) or isnotnull(stopped), "A script is in an unknown state"), ignore=if(`script_error_msg_ignore`, 1, 0)
 ```
-Update Lookup File with New Entries and Deduplicate by Name
+</details>
+
+<details>
+<summary><b>Update Lookup File with New Entries and Deduplicate by Name</b></summary>
+
 ```
 | inputlookup output.csv
 | append [ <your search> ]
 | dedup name
 | outputlookup output.csv
 ```
+</details>

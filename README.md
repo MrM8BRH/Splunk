@@ -38,3 +38,9 @@ Table of Contents
 - SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
     - [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)
+    - [Dashboards](https://github.com/MrM8BRH/Splunk/tree/main/SPL%20Queries/Dashboards)
+ 
+- Docs
+    - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
+    - [SSL](https://github.com/MrM8BRH/Splunk/blob/main/Docs/SSL.md)
+

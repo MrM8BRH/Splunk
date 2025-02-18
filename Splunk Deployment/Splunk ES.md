@@ -28,66 +28,27 @@ Optional
 
 Configuration
 ----------------------------
-- Configure → General → General Settings:
-  - Distributed Configuration Management (Download Splunk "helper" applications for distributed deployments)
+- Configure → General settings
+  - Distributed Configuration Management
   - Domain Analysis
   - Large Email Threshold
-  - Microsoft 365
-  - Top 1M Site Source
+  - Configure Microsoft 365 index
+  - Top 1 million site source
 
-- Configure → CIM Setup:
-  - Alerts
-  - Application State
-  - Authentication
-  - Certificates
-  - Change Analysis
-  - Change
-  - Compute Inventory
-  - Data Access
-  - Databases
-  - DLP
-  - Email
-  - Endpoint
-  - Event Signatures
-  - Interprocess Messaging
-  - Intrusion Detection
-  - JVM
-  - Malware
-  - Network Resolution
-  - Network Sessions
-  - Network Traffic
-  - Performance
-  - Ticket Management
-  - Updates
-  - Vulnerabilities
-  - Web
+- Configure → All configurations → Data → CIM Setup
 
-- Configure → Data Enrichment → Asset and Identity Management:
+- Configure → All configurations → Data → Assets and identities
   - Asset Lookups → New → LDAP Lookup
   - Identity Lookups → New → LDAP Lookup
   - Correlation Setup → Enable for all sourcetypes
 
-- Configure → Data Enrichment → Threat Intelligence Management:
-  - Sources → Enable | New --- Note: Needed to open the URLs (on firewall) for Search head to access all sources and download IoCs to keep it up to date.
-  - Global Settings → Parse domain from URL
+- Configure → Threat intelligence:
+  - Threat intelligence sources
+  - Proxy and parser settings → Parse domain from URL
 
-- Configure → Content: 
-  - Content Management (Type: Correlation Search) → Enable | Create New Content
-  - Use Case Library
-
-Use Cases - Correlation Searches
---------------------------------
- - DA-ESS-AccessProtection
- - DA-ESS-EndpointProtection
- - DA-ESS-IdentityManagement
- - DA-ESS-NetworkProtection
- - DA-ESS-ThreatIntelligence
- - SA-AccessProtection
- - SA-AuditAndDataProtection
- - SA-EndpointProtection
- - SA-IdentityManagement
- - SA-NetworkProtection
- - SA-ThreatIntelligence
+- Security Content → Content Management
+  - Type: Event-based detection
+- Security Content → Security use case library
 
 SPL Qeury
 ```
@@ -112,9 +73,7 @@ SPL Qeury
 
 # Uninstall Splunk ES
 cd /opt/splunk/etc/apps
-rm -rf SplunkEnterpriseSecurity*
-rm -rf SA-*
-rm -rf DA-ESS*
+rm -r SplunkEnterpriseSecuritySuite missioncontrol SA-* DA-ESS*
 ```
 </details>
 

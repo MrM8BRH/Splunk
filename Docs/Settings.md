@@ -1,4 +1,37 @@
-## Enable SSHD logging
+#### Enable Advanced Security Audit Policy
+gpedit.msc → Computer Configuration → Windows Settings → Security Settings → Advanced Audit Policy Configuration → System Audit Policies - Local Group Policy Object.
+
+#### Linux File Permissions
+```
+-rw-r--r-- 12 linuxize users 12.0K Apr  28 10:10 file_name
+|[-][-][-]-   [------] [---]
+| |  |  | |      |       |
+| |  |  | |      |       +-----------> 7. Group
+| |  |  | |      +-------------------> 6. Owner
+| |  |  | +--------------------------> 5. Alternate Access Method
+| |  |  +----------------------------> 4. Others Permissions
+| |  +-------------------------------> 3. Group Permissions
+| +----------------------------------> 2. Owner Permissions
++------------------------------------> 1. File Type
+```
+
+#### Firewalld
+```
+firewall-cmd --permanent --add-port=8000/tcp
+firewall-cmd --permanent --add-port=9997/tcp
+firewall-cmd --permanent --add-port=8089/tcp
+firewall-cmd --permanent --add-port=8080/tcp
+firewall-cmd --permanent --add-port=22/tcp
+firewall-cmd --permanent --add-port=53/udp
+firewall-cmd --permanent --add-port=514/tcp
+firewall-cmd --reload
+```
+```
+systemctl stop firewalld
+systemctl disable firewalld
+```
+
+#### SSH logging
 ```
 nano /etc/ssh/sshd_config
 
@@ -6,7 +39,7 @@ nano /etc/ssh/sshd_config
 SyslogFacility AUTH
 LogLevel INFO
 
-##################
+###############
 # SysLogFacility #
 #- DAEMON        #
 #- USER          #
@@ -19,66 +52,139 @@ LogLevel INFO
 #- LOCAL5        #
 #- LOCAL6        #
 #- LOCAL7        #
-##################
-# Ref:
-# → https://docs.ssh.com/manuals/server-zos-admin/54/Configuring_Logging_in_sshd2.html
-# → https://docs.ssh.com/manuals/server-zos-admin/65/Server-auditing-SysLogFacility.html
+###############
 ```
-![Screenshot-2023-07-19-at-5 48 42-PM](https://github.com/user-attachments/assets/c8180d9c-d4df-40a2-8582-19f6ae822971)
 
-## Linux File Permissions
-![linux-introduction-file-permissions-4-2054323870](https://github.com/user-attachments/assets/8722f39f-da28-4b0a-b8e0-e1946aacced1)
-![image](https://github.com/user-attachments/assets/14b48a1b-e53f-4340-a764-664078966f56)
-
-## Enable Advanced Security Audit Policy
-![gedit](https://github.com/user-attachments/assets/083b597c-b467-4159-a889-9d71dbf6c22c)
-
-
-## IOPS test command for linux
+#### Syslog
 ```
-dnf install -y fio
-fio --name=benchmark --size=1G --runtime=30 --filename=tempfile --ioengine=libaio --rw=randread --iodepth=32
+/etc/syslog.conf
+auth.info /var/log/sshd.log
 ```
-## Useful commands
+| Filename |                              Purpose                              |
+|:--------:|:-----------------------------------------------------------------:|
+| auth.log | System authentication and security events                         |
+| boot.log | A record of boot-related events                                   |
+| dmesg    | Kernel-ring buffer events related to device drivers               |
+| dpkg.log | Software package-management events                                |
+| kern.log | Linux kernel events                                               |
+| syslog   | A collection of all logs                                          |
+| wtmp     | Tracks user sessions (accessed through the who and last commands) |
+
+| 0 | Emergency     | System is unusable                |
+|---|---------------|-----------------------------------|
+| 1 | Alert         | Action must be taken immediately  |
+| 2 | Critical      | Critical conditions               |
+| 3 | Error         | Error conditions                  |
+| 4 | Warning       | Warning conditions                |
+| 5 | Notice        | Normal but significant conditions |
+| 6 | Informational | Informational messages            |
+| 7 | Debug         | Debug-level messages              |
+
+#### MISC
 ```
-# System info
-nmtui
-lscpu
+cat /etc/os-release
 uname - a
-free -m
-hostnamectl
+hostnamectl set-hostname host.domain.com
+hostnamectl status
+dnsdomainname
+timedatectl set-timezone Asia/Jerusalem
+```
+#### Memory Commands
+```
+free -m # (1)
+free -h # (2)
+
+dmidecode --type memory # (2)
+```
+#### CPU and CPU Cores Commands
+```
+nproc
+
+(Threads x Cores) x Physical CPU Number = Number of vCPUs
+
+lscpu 
+- Look for the following fields:
+    - CPU(s): Total number of logical CPUs (vCPUs).
+    - Core(s) per socket: Number of physical cores per CPU socket.
+    - Socket(s): Number of physical CPU sockets.
+    - Model name: CPU model and speed (e.g., `2.20 GHz`).
+
+cat /proc/cpuinfo | grep processor | wc -l
+
+dmidecode --type processor
+```
+#### Check disk type and performance
+```
+lsblk -d -o name,rota
+- rota=1: Rotational disk (HDD).
+- rota=0 Non-rotational disk (SSD).
+```
+#### Storage Commands
+```
+du -csh # (1)
+lsblk # (2)
+df -h /opt/splunk / # (3)
+fdisk -l # (4)
+fdisk /dev/sda # (5)
+vgdisplay # (6)
+```
+#### Network Commands
+```
+Network Commands
+vi /etc/sysconfig/network-scripts/ifcfg-<int> # (1)
+route -n # (2)
+ip a # (3)
+hostname -I # (4)
+tcpdump -i eth3 -n tcp and host 192.168.1.50 and (port 80 or port 443) # (5)
+nc -zv <IP Address> <Port> # (6)
+telnet <IP Address> <Port> # (7)
+nmtui # (8)
+
+Check the speed of the NIC:
+sudo ethtool enp2s0 | grep Speed:
+```
+#### Disable SELinux
+```
+sestatus
+nano /etc/selinux/config
+SELINUX=disabled
+```
+#### Disable Transparent Huge Pages (THP)
+```
+nano /etc/systemd/system/disable-thp.service
+[Unit]
+Description=Disable Transparent Huge Pages (THP)
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c "echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled && echo 'never' > /sys/kernel/mm/transparent_hugepage/defrag"
+
+[Install]
+WantedBy=multi-user.target
+```
+#### NTP Commands
+```
 timedatectl
-
-# Storage
-du -csh
-lsblk
-df -h /
-fdisk -l
-fdisk /dev/sda
-vgdisplay
-
-# Network
-route -n
-ip a
-
-# Process
+chronyc sources
+nano /etc/chrony.conf
+nano /etc/ntp.conf
+```
+#### Process Commands
+```
 pgrep
 pkill
 ps -elf
-
-# Permissions
+```
+#### Permission Commands
+```
 visudo
 chmod
 chown
-
-/sbin/sysctl -p  # Command load kernel settings from /etc/sysctl.conf. 
+setfacl -m u:<User>:r /path/to/folder/or/files
+setfacl -m g:<Group>:r /path/to/folder/or/files
 ```
-
-## Storage Options
-
-[Extending a logical volume in a virtual machine running Red Hat or Cent OS](https://kb.vmware.com/s/article/1006371)
-
-### Option 1: Resize Without Adding a New Disk
+#### Storage Options
+Option 1: Resize Without Adding a New Disk
 
 ```
 growpart /dev/sda 3
@@ -96,8 +202,7 @@ lsblk
 xfs_growfs /dev/sda1
 ```
 
-
-### Option 2: Resize by Adding a New Disk
+Option 2: Resize by Adding a New Disk
 
 ```
 # Create physical volume on the new disk
@@ -115,3 +220,26 @@ lvextend -r -l +100%FREE /dev/mapper/<VG Name>-opt
 # Update partition information
 partprobe
 ```
+#### Crontab
+[Crontab Guru](https://crontab.guru/)
+Crontab is a time-based job scheduling program used in Unix-like operating systems to schedule recurring tasks or jobs. The name "crontab" comes from "cron," the daemon (background process) that runs scheduled tasks, and "tab," which is short for "table" since the scheduling information is organized in tabular form.
+
+With crontab, users can schedule scripts, commands, or programs to run at specified intervals or times, such as daily, weekly, monthly, or even at specific minutes within an hour. This makes it particularly useful for automating repetitive tasks, maintenance activities, or any operation that needs to be executed on a regular basis.
+
+The crontab file follows a specific format.
+
+```
+# <Minute> <Hour> <Day of Month> <Month> <Day of Week> Command
+```
+
+Each line in the crontab file represents a scheduled task or command. Here's a breakdown of the different fields:
+- Minute: Specifies the minute(s) at which the task should run. Valid values are 0 to 59.
+- Hour: Specifies the hour(s) at which the task should run. Valid values are 0 to 23.
+- Day of Month: Specifies the day(s) of the month when the task should run. Valid values are 1 to 31.
+- Month: Specifies the month(s) when the task should run. Valid values are 1 to 12 or their corresponding names (e.g., Jan, Feb, etc.).
+- Day of Week: Specifies the day(s) of the week when the task should run. Valid values are 0 to 7 or their corresponding names (0 or 7 represents Sunday).
+- Command: The actual command or script to be executed at the specified time and date.
+
+To schedule a task, you need to add a line to your crontab file following this format. Each field is separated by spaces or tabs, and you can use asterisks (*) to represent any value.
+
+Remember to run the `crontab -e` command to edit the crontab file for the current user.

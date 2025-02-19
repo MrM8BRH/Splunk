@@ -174,16 +174,22 @@ tar xvzf splunk_package_name.tgz -C /opt
 # Enable Splunk to start on boot (Systemd) and accept the license:
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk --accept-license
 ```
+
+Change servername & hostname
+```
+/opt/splunk/bin/splunk set servername host.domain.com
+/opt/splunk/bin/splunk set default-hostname host.domain.com
+```
 </details>
 
 <details>
 <summary><b>Splunkd.service (Systemd)</b></summary>
 
-Path: `nano /etc/systemd/system/Splunkd.service`
-
 [Configure Linux systems running systemd (Splunk v9.4.0)](https://docs.splunk.com/Documentation/Splunk/9.4.0/Workloads/Configuresystemd)
 
 [Enable workload management (Splunk v9.4.0)](https://docs.splunk.com/Documentation/Splunk/9.4.0/Workloads/Enableworkloadmanagement)
+
+Path: `nano /etc/systemd/system/Splunkd.service`
 
 Add or change the values in the file. Example:
 ```
@@ -217,18 +223,12 @@ splunkdConnectionTimeout = 3000
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
-############################################################################
-# GLOBAL SETTINGS
-############################################################################
 [default]
 max_mem_usage_mb = 12288
 
 [searchresults]
 maxresultrows = 200000
 
-############################################################################
-# Concurrency
-############################################################################
 # The maximum number of concurrent historical searches in the search head.
 total_search_concurrency_limit = auto
 
@@ -241,12 +241,6 @@ max_rt_search_multiplier = 3
 # The maximum number of concurrent historical searches per CPU.
 max_searches_per_cpu = 16
 
-
-############################################################################
-# GENERAL
-############################################################################
-# This section contains the stanzas for a variety of general settings.
-
 [scheduler]
 # The maximum number of searches the scheduler can run, as a percentage
 # of the maximum number of concurrent searches.
@@ -257,17 +251,11 @@ auto_summary_perc  = 75
 ```
 These adjustments should be aligned with our system requirements and available resources.
 
-nano /opt/splunk/etc/system/local/server.conf
+`nano /opt/splunk/etc/system/local/server.conf`
 ```
 [general]
 conf_cache_memory_optimization = true
 sessionTimeout = 8h
-```
-
-Change servername
-```
-/opt/splunk/bin/splunk set servername host.domain.com
-/opt/splunk/bin/splunk set default-hostname host.domain.com
 ```
 </details>
   
@@ -295,9 +283,8 @@ server = 192.168.1.50:9997
 
 ```
 - Settings → Forwarding and reciving → Configure receiving
-- Settings → Licensing → (Change to peer [deployment server])
-- Settings → Indexes - Add indexes like: wineventlog, linux, fortigate, crowdstrike, pam, f5, oracle, mysql .. etc
-- Apps → Manage Apps → Disable (Monitoring Console)
+- Settings → Licensing
+- Settings → Indexes - Add indexes like: wineventlog, linux, windows ... etc.
 - Install Addons
 ```
 </details>
@@ -356,7 +343,7 @@ coldToFrozenDir = /whatever/path/you/want
 <summary><b>Deployment Server</b></summary>
 
 ```
-- Settings → Licensing → (Change license group)
+- Settings → Licensing
 - Settings → Server settings → Email settings
 - Settings → Distributed search → Search peers (Indexers + Search heads)
 - Settings → Monitoring Console → Settings → Alerts Setup
@@ -370,8 +357,7 @@ coldToFrozenDir = /whatever/path/you/want
 ```
 ```
 - mkdir -p /opt/splunk/etc/deployment-apps/output/local
-- cd /opt/splunk/etc/deployment-apps/output/local
-- nano outputs.conf
+- nano /opt/splunk/etc/deployment-apps/output/local/outputs.conf
 ```
 ```
 [tcpout]
@@ -459,9 +445,9 @@ nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 *    `Settings → Forwarder management → Server Classes`
 ```
 Create:
-- output → Clients (*)
-- windows
-- linux
+- Outputs → Clients (*)
+- Windows
+- Linux
 ```
 
 ```
@@ -478,12 +464,9 @@ Reload the configuration for the Splunk Deployment Server
 <summary><b>SearchHead Server</b></summary>
 
 ```
-- Settings → Licensing → (Change to peer [deployment server])
-- Install/Hide Apps & Addons (Apps → Manage Apps)
+- Settings → Licensing
+- Install/Hide Apps & Addons
 - Settings → Distributed search → Search peers (Indexers + Search heads)
-- Apps → Search & Reporting →  Data Summary
-- Apps → Manage Apps → Disable (Monitoring Console)
-- Activity → Jobs
 ```
 </details>
 

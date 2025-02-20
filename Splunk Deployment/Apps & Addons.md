@@ -16,15 +16,21 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Windows
 |                      Name                     |  Built by  |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
-| MS Windows AD Objects                         | Steve Hogan | https://splunkbase.splunk.com/app/3177 |
-| Splunk Add-on for Microsoft Windows           | Splunk Inc | https://splunkbase.splunk.com/app/742  |
-| Splunk Supporting Add-on for Active Directory | Splunk Inc | https://splunkbase.splunk.com/app/1151 |
+| MS Windows AD Objects                         | Steve Hogan     | https://splunkbase.splunk.com/app/3177 |
+| Splunk Add-on for Microsoft Windows           | Splunk Inc      | https://splunkbase.splunk.com/app/742  |
+| Splunk Supporting Add-on for Active Directory | Splunk Inc      | https://splunkbase.splunk.com/app/1151 |
 
 ### Linux
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
-| Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
 | Splunk Add-on for Unix and Linux   | Splunk Inc                 | https://splunkbase.splunk.com/app/833  |
+| Splunk Asset and Risk Intelligence Technical Add-on For Linux   | Splunk LLC    | https://splunkbase.splunk.com/app/7416 |
+
+### Infrastructure
+|                Name                |          Built by          |                   URL                  |
+|------------------------------------|----------------------------|----------------------------------------|
+| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
+| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 
 ### Security
 |                Name                |          Built by          |                   URL                  |
@@ -32,8 +38,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
 | Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
 | MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
-| IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
-| IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | App for External Attack Surface Management (EASM) | Greg Ford   | https://splunkbase.splunk.com/app/7027 |
 | APT Falconer                       | Splunk Works               | https://splunkbase.splunk.com/app/7469 |
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
@@ -90,7 +94,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Microsoft Office 365                        | Splunk Inc      | https://splunkbase.splunk.com/app/4055 |
 | Microsoft Azure App for Splunk                                | Splunk Works    | https://splunkbase.splunk.com/app/4882 |
 | Splunk Add on for Microsoft Azure                             | Splunk Works    | https://splunkbase.splunk.com/app/3757 |
-| Microsoft Teams Add-on for Splunk                             | Splunk Works    | https://splunkbase.splunk.com/app/4994 |
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |
 | Hurricane Labs Add-on for Windows PowerShell Transcript       | Hurricane Labs  | https://splunkbase.splunk.com/app/4984 |
@@ -125,13 +128,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### VMware
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
-| Splunk App for VMware                         | Splunk LLC | https://splunkbase.splunk.com/app/725  |
-| Splunk OVA for VMware                         | Splunk LLC | https://splunkbase.splunk.com/app/3216 |
-| Splunk Add-on for VMware                      | Splunk LLC | https://splunkbase.splunk.com/app/3215 |
-| Splunk Add-on for VMware Metrics              | Splunk LLC | https://splunkbase.splunk.com/app/5089 |
 | Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
-| Splunk Supporting Add-on for VMware           | Splunk LLC | https://splunkbase.splunk.com/app/5381 |
 | VMWare Horizon 8 Add-on                       | Scott Horton | https://splunkbase.splunk.com/app/7437 |
 
 ### Aruba
@@ -157,10 +155,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk Add-on for Cisco Meraki                          | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
 
 ### Nutanix
-|      Name      |      Built by     |                   URL                  |
-|----------------|-------------------|----------------------------------------|
-| Nutanix Prism Dashboard for Splunk | Nutanix Inc        | https://splunkbase.splunk.com/app/3102 |
-| TA for Nutanix Prism | Nutanix Inc | https://splunkbase.splunk.com/app/3103 |
+|                Name                |      Built by     |                   URL                  |
+|------------------------------------|-------------------|----------------------------------------|
+| Nutanix Prism Dashboard for Splunk | Nutanix Inc       | https://splunkbase.splunk.com/app/3102 |
+| TA for Nutanix Prism               | Nutanix Inc       | https://splunkbase.splunk.com/app/3103 |
 
 ### MISP & TheHive
 |      Name      |      Built by     |                   URL                  |

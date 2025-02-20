@@ -8,11 +8,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |------------------------------------|----------------------------|----------------------------------------|
 | Splunk Enterprise Security         | Splunk Inc                 | https://splunkbase.splunk.com/app/263  |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
-| ES Choreographer                   | Gabriel Vasseur            | https://splunkbase.splunk.com/app/6309 |
-| ESCU Companion App                 | Brandon Sternfield         | https://preview.splunkbase.splunk.com/app/7356 |
+| ESCU Companion App                 | Brandon Sternfield         | https://splunkbase.splunk.com/app/7356 |
 | ES Mothership App for Splunk       | Splunk Works               | https://splunkbase.splunk.com/app/4746 |
-| Update Notable Command for ES      | Doug Brown                 | https://splunkbase.splunk.com/app/5211 |
-| SA-Investigator for Enterprise Security           | Splunk Works                | https://splunkbase.splunk.com/app/3749 |
+| ES Choreographer                   | Gabriel Vasseur            | https://splunkbase.splunk.com/app/6309 |
+| SA-Investigator for Enterprise Security   | Splunk Works        | https://splunkbase.splunk.com/app/3749 |
 
 ### Windows
 |                      Name                     |  Built by  |                   URL                  |
@@ -25,7 +24,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
 | Linux Splunk App                   | Mohammed Iyad Al Khatib    | https://splunkbase.splunk.com/app/6702 |
-| Splunk Add-on for Unix and Linux              | Splunk Inc | https://splunkbase.splunk.com/app/833  |
+| Splunk Add-on for Unix and Linux   | Splunk Inc                 | https://splunkbase.splunk.com/app/833  |
 
 ### Security
 |                Name                |          Built by          |                   URL                  |
@@ -35,8 +34,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
-| App for External Attack Surface Management (EASM) | Greg Ford          | https://splunkbase.splunk.com/app/7027 |
-| Splunk UBA Monitoring App          | Splunk Works               | https://splunkbase.splunk.com/app/4441 |
+| App for External Attack Surface Management (EASM) | Greg Ford   | https://splunkbase.splunk.com/app/7027 |
 | APT Falconer                       | Splunk Works               | https://splunkbase.splunk.com/app/7469 |
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
 | Compliance Essentials for Splunk   | Splunk Works               | https://splunkbase.splunk.com/app/6696 |
@@ -48,14 +46,11 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
-| Searchbase App for Splunk          | Splunk Works               | https://splunkbase.splunk.com/app/7188 |
 | Broken Hosts App for Splunk        | Hurricane Labs             | https://splunkbase.splunk.com/app/3247 |
+| Searchbase App for Splunk          | Splunk Works               | https://splunkbase.splunk.com/app/7188 |
 | Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |
 | URL Toolbox                        | Splunk Works               | https://splunkbase.splunk.com/app/2734 |
-| ChatGPT 4 Splunk                   | Michael Bentley            | https://splunkbase.splunk.com/app/6779 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
-| Thycotic Secret Server Dashboard   | Jackie Lentz               | https://splunkbase.splunk.com/app/5327 |
-| Splunk IT Service Intelligence     | Splunk Inc                 | https://splunkbase.splunk.com/app/1841 |
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
 
 ### Addons
@@ -63,13 +58,12 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |-----------------------------------------------|------------|----------------------------------------|
 | Splunk App for Content Packs                  | Splunk LLC | https://splunkbase.splunk.com/app/5391 |
 | Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
-| Kaspersky Add-on for Splunk                   | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
+| Kaspersky Add-on for Splunk                  | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
 
 ### Database
 | Name                                            | Built by         | URL                                    |
 |-------------------------------------------------|------------------|----------------------------------------|
 | Splunk DB Connect                               | Splunk Inc       | https://splunkbase.splunk.com/app/2686 |
-| Oracle EM Integration                           | StreamWeaver inc | https://splunkbase.splunk.com/app/5300 |
 | Splunk DBX Add-on for Microsoft SQL Server JDBC | Splunk Inc       | https://splunkbase.splunk.com/app/6150 |
 | Splunk DBX Add-on for MySQL JDBC                | Splunk Inc       | https://splunkbase.splunk.com/app/6154 |
 | Splunk DBX Add-on for Oracle JDBC               | Splunk Inc       | https://splunkbase.splunk.com/app/6151 |
@@ -100,6 +94,13 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Microsoft 365 Defender Threat Vulnerability Add-on for Splunk | Thomas Hillesøy | https://splunkbase.splunk.com/app/6470 |
 | Splunk Add-on for Microsoft Security                          | Splunk Inc      | https://splunkbase.splunk.com/app/6207 |
 | Hurricane Labs Add-on for Windows PowerShell Transcript       | Hurricane Labs  | https://splunkbase.splunk.com/app/4984 |
+
+### SentinelOne
+|                              Name                             |     Built by    |                   URL                  |
+|---------------------------------------------------------------|-----------------|----------------------------------------|
+| SentinelOne App For Splunk                         | SentinelOne Singularity    | https://splunkbase.splunk.com/app/5433 |
+| Technical Add On SentinelOne App For Splunk        | SentinelOne Singularity    | https://splunkbase.splunk.com/app/5435 |
+| Input Add On for SentinelOne App For Splunk        | SentinelOne Singularity    | https://splunkbase.splunk.com/app/5436 |
 
 ### F5
 | Name                        | Built by        | URL                                    |

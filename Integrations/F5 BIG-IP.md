@@ -20,6 +20,11 @@ Save
 
 Local Traffic -> Virtual Servers -> <VS> -> Security -> Policies -> Log Profile (**Splunk - SC4S**) -> Update
 
+
+---
+
+[Prepare F5 servers to connect to the Splunk platform](https://docs.splunk.com/Documentation/AddOns/released/F5BIGIP/Setup)
+
 ---
 
 - [Task 1: Install the F5 Splunk app in Splunk¶](https://clouddocs.f5.com/training/community/analytics/html/class2/modules/task1.html)

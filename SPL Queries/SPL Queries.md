@@ -47,7 +47,16 @@ List All Indexes
 
 List Splunk Clients
 ```
-| rest /services/deployment/server/clients | table hostname,ip,dns,utsname,splunkVersion,build
+| rest /services/deployment/server/clients
+| table hostname,ip,dns,utsname,splunkVersion,build
+```
+
+Metadata information for hosts across all indexes
+```
+| metadata type=hosts index=*
+| eval firstTime=strftime(firstTime, "%Y-%m-%d %H:%M:%S"), lastTime=strftime(lastTime, "%Y-%m-%d %H:%M:%S")
+| table host,totalCount,firstTime lastTime
+| sort -totalCount
 ```
 
 List of sourcetypes in index(es)

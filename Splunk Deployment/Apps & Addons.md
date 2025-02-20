@@ -145,7 +145,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco Security Cloud                                    | Cisco Security            | https://splunkbase.splunk.com/app/7404 |
 | Splunk Add-on for Cisco ASA                             | Splunk Inc                | https://splunkbase.splunk.com/app/1620 |
 | Cisco Secure Network Analytics (Stealthwatch) App       | Cisco Systems             | https://splunkbase.splunk.com/app/6398 |
-| Cisco Cloud Security Umbrella Add-on for Splunk         | Cisco Systems             | https://splunkbase.splunk.com/app/5557 |
 | Splunk Add-on for Cisco Identity Services               | Splunk Inc                | https://splunkbase.splunk.com/app/1915 |
 | Splunk for Cisco Identity Services (ISE)                | Jason Conger              | https://splunkbase.splunk.com/app/1589 |
 | Cisco Cloud Security Add-on for Splunk                  | Cisco Systems             | https://splunkbase.splunk.com/app/7569 |

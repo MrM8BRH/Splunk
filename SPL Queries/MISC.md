@@ -6,25 +6,33 @@
 AD - Group and Membership Changes
 ```
 index=wineventlog source="WinEventLog:Security" (EventCode=4728 OR EventCode=4729)  Group_Name="*"
-| rename src_user AS "Actioned By", src_user_first AS "First Name" src_user_last AS "Last Name" name as "Action Taken"
-| rex mode=sed field="Account_Name" "s/CN=//g"
-| rex mode=sed field="Account_Name" "s/cn=//g"
-| rex mode=sed field="Account_Name" "s/,OU.*//g" 
-| rex mode=sed field="Account_Name" "s/\\\//g" 
-| table _time "Actioned By"  "First Name"  "Last Name" user Account_Name "Action Taken" Group_Name Account_Domain
-| sort - _time
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| rename time AS Time src_user AS "Actioned By" user AS User  name as "Action Taken" Group_Name AS "Group Name" Account_Domain AS "Account Domain"
+| table Time "Actioned By" User "Action Taken" "Group Name" "Account Domain"
 ```
 AD - Clearing of Windows Audit Logs 
 ```
-index=wineventlog source="WinEventLog:Security" (EventCode=1102 OR EventCode=517) | eval Date=strftime(_time, "%Y/%m/%d") | stats count by Client_User_Name, host, index, Date | sort - Date | rename Client_User_Name as "Account Name"
+index=wineventlog source="WinEventLog:Security" (EventCode=1102 OR EventCode=517) 
+| eval Date=strftime(_time, "%Y/%m/%d") 
+| stats count by Client_User_Name, host, index, Date 
+| sort - Date 
+| rename Client_User_Name as "Account Name"
 ```
 AD - Console logins
 ```
-index=wineventlog source="WinEventLog:Security" EventCode=4624 Logon_Type=2 | table _time,host,user,dvc,action,command | dedup _time
+index=wineventlog source="WinEventLog:Security" EventCode=4624 Logon_Type=2 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| rename time AS Time host AS Host user AS User dvc AS Device action AS Action
+| table Time Host User Device Action
+| dedup Time Host User Device Action
 ```
 AD - Installed Applications
 ```
-index=windows sourcetype="Script:InstalledApps" | table _time,host,DisplayName,Source,Publisher,InstallSource,InstallDate
+index=windows sourcetype="Script:InstalledApps" 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| rename time AS Time host AS Host 
+| table Time,Host,DisplayName,Publisher,InstallSource,InstallDate
+| sort Host
 ```
 AD - Local Admin Account
 ```
@@ -33,69 +41,76 @@ index=wineventlog source="WinEventLog:Security" EventCode=4732 Group_Name=Admini
 ```
 AD - Failed Logins for Disabled Accounts
 ```
-index=wineventlog source="WinEventLog:Security" EventCode=4625 Sub_Status="0xC0000072" | table _time,Account_Name,app,src,src_ip,dest,name
+index=wineventlog source="WinEventLog:Security" EventCode=4625 Sub_Status="0xC0000072"
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| rename time AS Time host AS Host app AS Application src AS User src_ip AS "Source IP" dest AS Destination name AS Description
+| table Time,Host,Application,User,"Source IP",Destination,Description
 ```
 AD - Password Never Expires
 ```
 index=wineventlog source="WinEventLog:Security" EventCode=4738 MSADChangedAttributes="*'Don't Expire Password' - Disabled*" OR MSADChangedAttributes="*'Don't Expire Password' - Enabled*"
 | eval time = strftime(_time,"%c") 
 | table time,host,name,user,src_user,dest,MSADChangedAttributes
-| rename time as "Time" , name as "Action" , user as "User" , src_user as "By", dest as "Destination", host as "Hostname"
+| rename time as "Time" , name as "Action" , user as "User" , src_user as "Actioned By", dest as "Destination", host as "Hostname"
 ```
 AD - Detect Windows Account Privilege Changes
 ```
-index=wineventlog source="WinEventLog:Security" (EventCode=4672 OR EventCode=4673) | table _time,host,user,app,action,name,Privileges
+index=wineventlog source="WinEventLog:Security" (EventCode=4672 OR EventCode=4673) user!="*$" name="Special privileges assigned to new logon" 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| rename time AS Time host AS Host user AS User app AS Application action AS Action 
+| table Time,Host,User,Application,Action,Privileges
 ```
 AD - A Member was Added/Removed from Domain Admin Group
 ```
 index=wineventlog source="WinEventLog:Security" EventCode=4728 OR EventCode=4729 Group_Name="Domain Admins" 
-| eval time = strftime(_time,"%c") 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 | table time,host,name,user,src_user,Group_Name 
-| rename time as "Time" , name as "Action" , user as "Target User" ,src_user as "By", host as "Hostname", Group_Name as "Group Name"
-```
-AD - A New Machine/PC was Enabled/Disabled
-```
-index=wineventlog source="WinEventLog:Security" EventCode=4725 OR EventCode=4722 user=*$ 
-| eval time = strftime(_time,"%c") 
-| table time,host,name,user,src_user,dest 
-| rename time as "Time" , name as "Action" , user as "Enabled/Disabled Host" ,src_user as "User", dest as "Destination", host as "Hostname"
+| rename time as "Time" , name as "Action" , user as "User" ,src_user as "Actioned By", host as "Hostname", Group_Name as "Group Name"
 ```
 AD - A user Account was Created/Deleted
 ```
 index=wineventlog source="WinEventLog:Security" EventCode=4720 OR EventCode=4726
-| eval time = strftime(_time,"%c") 
-| table time,host,name,user,Display_Name,src_user,dest 
-| rename time as "Time" , name as "Action" , user as "User", Display_Name as "Display Name" ,src_user as "By", dest as "Destination", host as "Hostname"
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time,host,name,user,src_user 
+| rename time as "Time" , name as "Action" , user as "User" ,src_user as "Actioned By",host as "Hostname"
 ```
 AD - A user Account was Enabled/Disabled
 ```
 index=wineventlog source="WinEventLog:Security" EventCode=4725 OR EventCode=4722 user!=*$ 
-| eval time = strftime(_time,"%c") 
-| table time,host,name,user,src_user,dest 
-| rename time as "Time" , name as "Action" , user as "Target User" ,src_user as "By", dest as "Destination", host as "Hostname"
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time,host,name,user,src_user 
+| rename time as "Time" , name as "Action" , user as "User" ,src_user as "Actioned By", host as "Hostname"
 ```
 AD - RDP Connections
 ```
-index=wineventlog Logon_Type=10 ((EventCode=4624 OR EventCode=528) OR (EventCode=4625 OR EventCode=529))
+index=wineventlog source="WinEventLog:Security" Logon_Type=10 ((EventCode=4624 OR EventCode=528) OR (EventCode=4625 OR EventCode=529))
 | eval action=CASE(EventCode=4624 OR EventCode=528, "Success", EventCode=4625 OR EventCode=529, "Failure")
-| table _time, user, src, dest,action
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time, user, src_user, src_ip, dest,action
+| rename time AS Time user AS User src AS Source dest AS Destination action AS Action src_user AS "Source User" src_ip AS "IP Address"
 ```
-AD - UserAccount Locked/Unlocked
+AD - User Account Locked/Unlocked
 ```
-index="wineventlog" source="WinEventLog:Security" signature="A user account was locked out" OR signature="A user account was unlocked" |eval time = strftime(_time,"%c") |table time,dest_nt_domain,Group_Name,name,src_user |rename time as "Time" , Group_Name as "User Name" , dest_nt_domain as "Hostname", name as "Action" , src_user as "Locked/Unlocked By"
+index="wineventlog" source="WinEventLog:Security" signature="A user account was locked out" OR signature="A user account was unlocked" 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time,host,user,name,src_user
+| rename time as "Time" , name as "Action" , src_user as "Actioned By", host AS Host, user AS User
 ```
-AD - User Account Changed
+AD - User Account Changed (Password_Last_Set)
 ```
-index="wineventlog" source="WinEventLog:Security" signature="A user account was changed" |eval time = strftime(_time,"%c") |table time,name,user,src_user,dest |rename time as "Time" , name as "Action" , user as " Target User" , src_user as "Changed By" , dest as "Destination"
+index="wineventlog" source="WinEventLog:Security" signature="A user account was changed" 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time,host,user,name,src_user,Password_Last_Set
+| rename time as "Time" , name as "Action" , user as "User" , src_user as "Actioned By" , host AS Host
 ```
 AD - Domain Policy Changed/Reset Passowrd
 ```
-index="wineventlog" source="WinEventLog:Security" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" |eval time = strftime(_time,"%c") |table time,name,user,src_user |rename time as "Time" , name as "Action" , user as "Target User" , src_user as "Password Changed/Reset By"
+index="wineventlog" source="WinEventLog:Security" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
+| table time,host,user,name,src_user 
+| rename time as "Time" , name as "Action" , user as "User" , src_user as "Actioned By" , host AS Host
 ```
-AD - User Deleted By Admin
-```
-index="wineventlog" source="WinEventLog:Security" EventCode=4726 |eval time = strftime(_time,"%c") |table time,name,src_user,user,dest |rename time as "Time" , name as "Action" , src_user as "By", user as "Deleted User" , dest as "Destination"
-```
+
 #### LDAP Queries
 AD - Dormant Account
 ```
@@ -105,20 +120,25 @@ AD - Dormant Account
 | eval lastLoginAge_epoch=strptime(lastLogonTimestamp, "%Y-%m-%dT%H:%M:%S")
 | eval lastLoginAge=round((lastLoginAge_epoch - now())/86400, 0)
 | where lastLoginAge < -90
-| table sAMAccountName, displayName, dn, userAccountControl, whenCreated, accountDisable, dontExpirePasswd, passwdNotRequired, lastLoginAge, lastLogonTimestamp, accountExpires
+| table sAMAccountName, displayName, dn, userAccountControl, whenCreated, lastLoginAge, lastLogonTimestamp, accountExpires
 ```
+
 AD - Passwords Never Changed
 ```
-| ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, dn, pwdLastSet
+| ldapsearch domain=default search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(userAccountControl:1.2.840.113556.1.4.803:=65536))" attrs="sAMAccountName,pwdLastSet" 
+| table sAMAccountName, dn, pwdLastSet
 ```
+
 AD - Passwords Last Changed
 ```
-| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" attrs="sAMAccountName,pwdLastSet" | table sAMAccountName, pwdLastSet
+| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" attrs="sAMAccountName,pwdLastSet"
+| table sAMAccountName, dn, pwdLastSet
 ```
 
 AD - Check for Disabled User Accounts
 ```
-| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))" attrs="sAMAccountName" | table sAMAccountName,dn
+| ldapsearch domain="default" search="(&(objectCategory=person)(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=2))" attrs="sAMAccountName"
+| table sAMAccountName, dn
 ```
 
 </details>

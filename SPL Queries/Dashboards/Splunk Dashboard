@@ -11,6 +11,735 @@
   </fieldset>
   <row>
     <panel>
+      <title>Number of Roles</title>
+      <single>
+        <title>Click to Expand</title>
+        <search>
+          <query>| rest splunk_server=local /services/authorization/roles
+| stats dc(title) as "Number of Roles"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x1182f3","0x1182f3"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <set token="listRoles">listRoles</set>
+          <unset token="listUsers">listUsers</unset>
+          <unset token="canDel">canDel</unset>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Number of Users</title>
+      <single>
+        <title>Click to Expand</title>
+        <search>
+          <query>| rest splunk_server=local /services/authentication/users
+| stats dc(title) as "Number of Users"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x555","0x555"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <set token="listUsers">listUsers</set>
+          <unset token="listRoles">listRoles</unset>
+          <unset token="canDel">canDel</unset>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Users with Can Delete "can_delete" capabilities</title>
+      <single>
+        <title>Click to Expand</title>
+        <search>
+          <query>| rest splunk_server=local /services/authentication/users 
+| search roles="can_delete"
+| stats dc(title) as "Users with can_delete"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0xd94e17","0xd94e17"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <set token="canDel">canDel</set>
+          <unset token="listRoles">listRoles</unset>
+          <unset token="listUsers">listUsers</unset>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$canDel$">
+      <table>
+        <title>Users with can_delete</title>
+        <search>
+          <query>| rest splunk_server=local /services/authentication/users 
+| search roles="can_delete"
+| table realname title roles</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$listUsers$">
+      <title>User Permissions and Capabilities Breakdown</title>
+      <table>
+        <search>
+          <query>| rest splunk_server=local /services/authentication/users 
+| rename title as username 
+| mvexpand roles 
+| table realname, username, roles, email 
+| join type=outer roles 
+[ rest splunk_server=local /services/authorization/roles 
+| rename title as roles 
+| eval ir=imported_roles 
+| search srchIndexesAllowed=* 
+| fields roles imported_roles ir srchIndexesAllowed srchIndexesDefault 
+| mvexpand ir] 
+| foreach srchIndexesAllowed 
+[ eval srchIndexesAllowed=replace(&lt;&lt;FIELD&gt;&gt;,"^_\*$$","[all internal indexes];") 
+| eval srchIndexesAllowed=replace(&lt;&lt;FIELD&gt;&gt;,"\*\s_\*","[all internal and non-internal indexes];") 
+| eval srchIndexesAllowed=replace(&lt;&lt;FIELD&gt;&gt;,"\*\s","[all non-internal indexes];") 
+| eval srchIndexesAllowed=replace(&lt;&lt;FIELD&gt;&gt;,"\*$$","[all non-internal indexes];") 
+] 
+| foreach srchIndexesDefault 
+[ eval srchIndexesDefault=replace(&lt;&lt;FIELD&gt;&gt;,"_\*","[all internal indexes];") 
+| eval srchIndexesDefault=replace(&lt;&lt;FIELD&gt;&gt;,"\*\s_\*","[all internal and non-internal indexes];") 
+| eval srchIndexesDefault=replace(&lt;&lt;FIELD&gt;&gt;,"\*\s","[all non-internal indexes];") 
+| eval srchIndexesDefault=replace(&lt;&lt;FIELD&gt;&gt;,"\*$$","[all non-internal indexes];")
+] 
+| join type=outer ir 
+[| rest splunk_server=local /services/authorization/roles 
+| fields - imported_roles 
+| rename title as ir 
+| mvexpand srchIndexesAllowed 
+| eval inheritedAllowed=if(idxtype=="Invalid","",srchIndexesAllowed." (by ".ir.");") 
+| stats values(inheritedAllowed) as inheritedAllowed by ir ] 
+| fields - ir, splunk_server 
+| makemv allowempty=t inheritedAllowed delim=";" 
+| makemv allowempty=t srchIndexesAllowed delim=";" 
+| makemv allowempty=t srchIndexesDefault delim=";"
+| stats values(roles) as roles values(email) as email values(imported_roles) as imported_roles values(inheritedAllowed) as inheritedAllowed values(srchIndexesAllowed) as srchIndexesAllowed values(srchIndexesDefault) as srchIndexesDefault by username
+| rename srchIndexesDefault TO "Searched by default", srchIndexesAllowed TO "AllowedIndexes by Role", inheritedAllowed TO "AllowedIndexes by Inheritance", imported_roles TO "Inherited Roles"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format type="color" field="role">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="username">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+    <panel depends="$listRoles$">
+      <title>All Roles and Capabilities</title>
+      <table>
+        <search>
+          <query>| rest splunk_server=local /services/authorization/roles 
+| fields title capabilities imported_roles srchIndexesAllowed srchIndexesDefault 
+| rename title as role</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <format type="color" field="role">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+
+<search id="basesearch_audit24h">
+<query>index="_audit" host=* action=search info=completed search_id=* search_id!="*rsa_*" </query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+</search>
+<search id="basesearch_audit30d">
+<query>index="_audit" host=* action=search info=completed search_id=* search_id!="*rsa_*" </query>
+<earliest>-30d@d</earliest>
+<latest>now</latest>
+</search>
+<row>
+<panel>
+<title>Searches 24 hours</title>
+<single>
+<search base="basesearch_audit24h">
+<query>
+| stats count as daily_search_count</query>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Searches 30 Days</title>
+<single>
+<search base="basesearch_audit30d">
+<query> 
+| stats count as daily_search_count</query>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="refresh.display">progressbar</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Data Ingested 24 Hours</title>
+<single>
+<search>
+<query>index="_internal" source="*/metrics.log" group=per_index_thruput | eval
+gb=kb/1024/1024 | stats sum(gb)</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0.00</option>
+<option name="rangeColors">["0x555","0x555"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="unit">GB</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Data Ingest 30 Days</title>
+<single>
+<search>
+<query>index="_internal" source="*/metrics.log" group=per_index_thruput 
+| eval
+gb=kb/1024/1024 
+| stats sum(gb)</query>
+<earliest>-30d@d</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0.00</option>
+<option name="rangeColors">["0x555","0x555"]</option>
+<option name="rangeValues">[0]</option>
+<option name="refresh.display">progressbar</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="unit">GB</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Search Concurrency - 24 Hours</title>
+<single>
+<search>
+<query>index="_audit" host=* action=search info=completed search_id=* search_id!="*rsa_*" 
+| stats dc(search_id) count as search_count avg(total_run_time) as avg_runtime 
+| eval total_time = search_count * avg_runtime 
+| eval concurrency = round(total_time / 86400, 2)
+| chart avg(concurrency) as "Average Search Concurrency"</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="refresh.display">progressbar</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel">Average Search Concurrency</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Search Concurrency - 30 Days</title>
+<single>
+<search>
+<query>index="_audit" host=* action=search info=completed search_id=* search_id!="*rsa_*" 
+| stats dc(search_id) count as search_count avg(total_run_time) as avg_runtime 
+| eval total_time = search_count * avg_runtime 
+| eval concurrency = round(total_time / 86400, 2)
+| chart avg(concurrency) as "Average Search Concurrency"</query>
+<earliest>-30d@d</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="refresh.display">progressbar</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel">Average Search Concurrency</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+</row>
+<row>
+<panel>
+<title>CPU &amp; Memory</title>
+<table>
+<search>
+<query>| rest splunk_server=* /services/server/info | fields serverName,
+numberOfCores, numberOfVirtualCores, physicalMemoryMB
+| rename numberOfCores as numberOfPhyscialCores
+| eval physicalMemoryGB = round(physicalMemoryMB/1024)
+| table serverName, numberOfPhyscialCores, numberOfVirtualCores,
+physicalMemoryGB</query>
+<earliest>0</earliest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="count">20</option>
+<option name="dataOverlayMode">none</option>
+<option name="drilldown">none</option>
+<option name="percentagesRow">false</option>
+<option name="rowNumbers">false</option>
+<option name="totalsRow">false</option>
+<option name="wrap">true</option>
+</table>
+</panel>
+</row>
+<row>
+<panel>
+<title>THP</title>
+<table>
+<search>
+<query>| rest splunk_server=* /services/server/info 
+| join type=outer splunk_server [rest splunk_server=* /services/server/sysinfo | fields splunk_server transparent_hugepages.*] 
+| eval transparent_hugepages.effective_state = if(isnotnull('transparent_hugepages.effective_state'), 'transparent_hugepages.effective_state', "unknown") 
+| eval transparent_hugepages.enabled = case(len('transparent_hugepages.enabled') &gt; 0, 'transparent_hugepages.enabled', 'transparent_hugepages.effective_state' == "ok" AND (isnull('transparent_hugepages.enabled') OR len('transparent_hugepages.enabled') = 0), "feature not available", 'transparent_hugepages.effective_state' == "unknown" AND isnull('transparent_hugepages.enabled'), "unknown", True(), "unknown") 
+| eval transparent_hugepages.defrag = case(len('transparent_hugepages.defrag') &gt; 0, 'transparent_hugepages.defrag', 'transparent_hugepages.effective_state' == "ok" AND (isnull('transparent_hugepages.defrag') OR len('transparent_hugepages.defrag') = 0), "feature not available", 'transparent_hugepages.effective_state' == "unknown" AND isnull('transparent_hugepages.defrag'), "unknown", True(), "unknown") 
+| eval severity_level = case('transparent_hugepages.effective_state' == "unavailable", -1, 'transparent_hugepages.effective_state' == "ok", 0, 'transparent_hugepages.effective_state' == "unknown", 1, 'transparent_hugepages.effective_state' == "bad", 2) 
+| fields splunk_server transparent_hugepages.enabled transparent_hugepages.defrag transparent_hugepages.effective_state severity_level 
+| rename splunk_server AS instance 
+| fields - _timediff</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="count">20</option>
+<option name="dataOverlayMode">none</option>
+<option name="drilldown">none</option>
+<option name="percentagesRow">false</option>
+<option name="rowNumbers">false</option>
+<option name="totalsRow">false</option>
+<option name="wrap">true</option>
+</table>
+</panel>
+<panel>
+<title>Ulimits</title>
+<table>
+<search>
+<query>| rest splunk_server=* /services/server/info 
+| join type=outer splunk_server [rest splunk_server=* /services/server/sysinfo | fields splunk_server ulimits.data_segment_size ulimits.open_files ulimits.user_processes] 
+| eval ulimits.data_segment_size = if(isnotnull('ulimits.data_segment_size'), 'ulimits.data_segment_size', "unavailable") 
+| eval ulimits.open_files = if(isnotnull('ulimits.open_files'), 'ulimits.open_files', "unavailable") 
+| eval ulimits.user_processes = if(isnotnull('ulimits.user_processes'), 'ulimits.user_processes', "unavailable") 
+| eval sev_segment_size = case('ulimits.data_segment_size' == -1 OR 'ulimits.data_segment_size' &gt;= 1073741824, 0, 'ulimits.data_segment_size' == "unavailable", -1, True(), 2) 
+| eval sev_open_files = case('ulimits.open_files' == -1 OR 'ulimits.open_files' &gt;= 64000, 0, 'ulimits.open_files' == "unavailable", -1, True(), 2) 
+| eval sev_user_processes = case('ulimits.user_processes' == -1 OR 'ulimits.user_processes' &gt;= 16000, 0, 'ulimits.user_processes' == "unavailable", -1, True(), 2) 
+| eval severity_level = max(sev_segment_size, sev_open_files, sev_user_processes) 
+| fields splunk_server ulimits.data_segment_size ulimits.open_files ulimits.user_processes severity_level 
+| rename splunk_server AS instance ulimits.data_segment_size AS "ulimits.data_segment_size (current / recommended)" ulimits.open_files AS "ulimits.open_files (current / recommended)" ulimits.user_processes AS "ulimits.user_processes (current / recommended)" 
+| fieldformat ulimits.data_segment_size (current / recommended) = (if('ulimits.data_segment_size (current / recommended)' &gt;= 0, 'ulimits.data_segment_size (current / recommended)', 'ulimits.data_segment_size (current / recommended)'))." / 1073741824" 
+| fieldformat ulimits.open_files (current / recommended) = (if('ulimits.open_files (current / recommended)' &gt;= 0, 'ulimits.open_files (current / recommended)', 'ulimits.open_files (current / recommended)'))." / 64000" 
+| fieldformat ulimits.user_processes (current / recommended) = (if('ulimits.user_processes (current / recommended)' &gt;= 0, 'ulimits.user_processes (current / recommended)', 'ulimits.user_processes (current / recommended)'))." / 16000" 
+| fields - _timediff</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="count">20</option>
+<option name="dataOverlayMode">none</option>
+<option name="drilldown">none</option>
+<option name="percentagesRow">false</option>
+<option name="rowNumbers">false</option>
+<option name="totalsRow">false</option>
+<option name="wrap">true</option>
+</table>
+</panel>
+</row>
+<row>
+<panel>
+<title>IOPS estimate &amp; Storage Information</title>
+<table>
+<search>
+<query>| rest splunk_server=* /services/server/status/partitions-space | join
+type=outer splunk_server, mount_point [ | rest splunk_server=*
+/services/server/status/resource-usage/iostats | eval iops = round(reads_ps
++ writes_ps) | fields splunk_server, mount_point, iops, cpu_pct] | eval
+free = if(isnotnull(available), available, free)
+| eval usage = round((capacity - free) / 1024, 2)
+| eval capacity = round(capacity / 1024, 2)
+| eval compare_usage = usage." / ".capacity
+| eval pct_usage = round(usage / capacity * 100, 2)
+| stats first(fs_type) as fs_type first(compare_usage) as compare_usage
+first(pct_usage) as pct_usage, first(iops) as iops, first(cpu_pct) as
+cpu_pct by mount_point
+| rename mount_point as "Mount Point", fs_type as "File System Type",
+compare_usage as "Disk Usage (GB)", capacity as "Capacity (GB)", pct_usage
+as "Disk Usage (%)", iops as "I/O operations per second", cpu_pct as "I/O
+Bandwidth Utilization(%)"</query>
+<earliest>0</earliest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="count">20</option>
+<option name="dataOverlayMode">none</option>
+<option name="drilldown">none</option>
+<option name="percentagesRow">false</option>
+<option name="rowNumbers">false</option>
+<option name="totalsRow">false</option>
+<option name="wrap">true</option>
+</table>
+</panel>
+</row>
+<row>
+<panel>
+<title>Scheduled Searches 24 Hours</title>
+<single>
+<search base="basesearch_audit24h">
+<query> 
+| search search_id = "SummaryDirector_" OR search_id = *_scheduler_* OR
+search_id = *_alert_* 
+| stats count as scheduled_search_count</query>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Scheduled Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Scheduled Searches 30 Days</title>
+<single>
+<search base="basesearch_audit30d">
+<query>
+| search search_id = "SummaryDirector_" OR search_id = *_scheduler_* OR
+search_id = *_alert_* 
+| stats count as scheduled_search_count</query>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Scheduled Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Ad Hoc Searches 24 Hours</title>
+<single>
+<search>
+<query>index=_audit host=* action=search info=completed search_id!="*rsa_*" 
+| search search_id != "SummaryDirector_" search_id != *_scheduler_* search_id
+!= *_alert_* 
+| eval search_lt = if(search_lt = "N/A", 864000, search_lt) 
+| eval search_et = if(search_et = "N/A", 0, search_et) 
+| eval tr = search_lt
+- search_et 
+| search tr&lt;=86400 
+| stats count as ad_hoc_searches_count</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0.00</option>
+<option name="rangeColors">["0x555","0x555"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Ad hoc Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Ad Hoc Searches 30 Days</title>
+<single>
+<search>
+<query>index=_audit host=* action=search info=completed search_id!="*rsa_*" 
+| search search_id != "SummaryDirector_" search_id != *_scheduler_* search_id
+!= *_alert_* 
+| eval search_lt = if(search_lt = "N/A", 864000, search_lt) 
+| eval search_et = if(search_et = "N/A", 0, search_et) 
+| eval tr = search_lt
+- search_et 
+| search tr&lt;=86400 
+| stats count as ad_hoc_searches_count</query>
+<earliest>-30d@d</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0.00</option>
+<option name="rangeColors">["0x555","0x555"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Ad hoc Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Historical Searches 24 Hours</title>
+<single>
+<search>
+<query>index=_audit host=* action=search info=completed search_id=*
+search_id!="*rsa_*" 
+| search search_id != "SummaryDirector_" search_id !=
+*_scheduler_* search_id != *_alert_* 
+| eval search_lt = if(search_lt =
+"N/A", 864000, search_lt) 
+| eval search_et = if(search_et = "N/A", 0,
+search_et) 
+| eval tr = search_lt - search_et 
+| search tr&gt;86400 
+| stats
+count as historical_searches_count</query>
+<earliest>-24h@h</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Historical Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+<panel>
+<title>Historical Searches 30 Days</title>
+<single>
+<search>
+<query>index=_audit host=* action=search info=completed search_id=*
+search_id!="*rsa_*" 
+| search search_id != "SummaryDirector_" search_id !=
+*_scheduler_* search_id != *_alert_* 
+| eval search_lt = if(search_lt =
+"N/A", 864000, search_lt) 
+| eval search_et = if(search_et = "N/A", 0,
+search_et) 
+| eval tr = search_lt - search_et 
+| search tr&gt;86400 
+| stats
+count as historical_searches_count</query>
+<earliest>-30d@d</earliest>
+<latest>now</latest>
+<sampleRatio>1</sampleRatio>
+</search>
+<option name="colorBy">value</option>
+<option name="colorMode">block</option>
+<option name="drilldown">none</option>
+<option name="numberPrecision">0</option>
+<option name="rangeColors">["0x006d9c","0x006d9c"]</option>
+<option name="rangeValues">[0]</option>
+<option name="showSparkline">1</option>
+<option name="showTrendIndicator">1</option>
+<option name="trellis.enabled">0</option>
+<option name="trellis.scales.shared">1</option>
+<option name="trellis.size">medium</option>
+<option name="trendColorInterpretation">standard</option>
+<option name="trendDisplayMode">absolute</option>
+<option name="underLabel"># Historical Searches</option>
+<option name="unitPosition">after</option>
+<option name="useColors">1</option>
+<option name="useThousandSeparators">1</option>
+</single>
+</panel>
+</row>
+  
+  <row>
+    <panel>
       <title>Metadata information for hosts across all indexes.</title>
       <table>
         <search>
@@ -49,7 +778,6 @@
           <latest>$field1.latest$</latest>
         </search>
         <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
       </table>
     </panel>
     <panel>
@@ -123,10 +851,17 @@ _time,operation,user,host
       </table>
     </panel>
     <panel>
-      <title>Splunk errors in last 24 hours.</title>
+      <title>Who is using Splunk by user, app and view.</title>
       <table>
         <search>
-          <query>index=_internal " error " NOT debug source=*splunkd.log* | top limit=10 _raw</query>
+          <query>index=_internal sourcetype="splunk_web_access" method="GET" status="200" user!=-
+| stats count latest(_time) as ViewTime by user app view
+| sort -count
+| eventstats sum(count) as countByApp list(view) as view list(count) as count list(ViewTime) as ViewTime by user app
+| convert timeformat="%a %m/%d/%Y %I:%M:%S %p" ctime(ViewTime)
+| dedup app
+| appendpipe [stats sum(count) as count by user | eval view = "Total Views"]
+| sort + user -countByApp</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
@@ -155,6 +890,8 @@ _time,operation,user,host
         <option name="refresh.display">progressbar</option>
       </table>
     </panel>
+  </row>
+  <row>
     <panel>
       <title>Show Searches with Details (Who | When | What).</title>
       <table>
@@ -165,27 +902,6 @@ _time,operation,user,host
 | rex field=search "index\s*=\s*\"*(?&lt;IndexUsed&gt;[^\s\"]+)"
 | stats latest(_time) as Latest by user search SourcetypeUsed IndexUsed
 | convert ctime(Latest)</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Who is using Splunk by user, app and view.</title>
-      <table>
-        <search>
-          <query>index=_internal sourcetype="splunk_web_access" method="GET" status="200" user!=-
-| stats count latest(_time) as ViewTime by user app view
-| sort -count
-| eventstats sum(count) as countByApp list(view) as view list(count) as count list(ViewTime) as ViewTime by user app
-| convert timeformat="%a %m/%d/%Y %I:%M:%S %p" ctime(ViewTime)
-| dedup app
-| appendpipe [stats sum(count) as count by user | eval view = "Total Views"]
-| sort + user -countByApp</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>

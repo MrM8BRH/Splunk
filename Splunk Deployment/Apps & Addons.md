@@ -153,6 +153,18 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Cisco Networks Add-on for Splunk Enterprise             | Mikael Bjerkeland         | https://splunkbase.splunk.com/app/1467 |
 | Splunk Add-on for Cisco Meraki                          | Splunk Inc                | https://splunkbase.splunk.com/app/5580 |
 
+### Symantec
+|                                   Name                  |          Built by         |                   URL                  |
+|---------------------------------------------------------|---------------------------|----------------------------------------|
+| Splunk Add-on for Symantec DLP                          | Splunk LLC                | https://splunkbase.splunk.com/app/3029 |
+| Splunk Add-on for Symantec Endpoint Protection          | Splunk LLC                | https://splunkbase.splunk.com/app/2772 |
+| Symantec Email Security.cloud Add-on for Splunk         | Broadcom Inc              | https://splunkbase.splunk.com/app/3831 |
+| Symantec Email Security.cloud App for Splunk            | Broadcom Inc              | https://splunkbase.splunk.com/app/3830 |
+| Symantec ProxySG Add-on for Splunk                      | Broadcom Inc              | https://splunkbase.splunk.com/app/2816 |
+| Symantec ProxySG App for Splunk                         | Broadcom Inc              | https://splunkbase.splunk.com/app/2815 |
+| Symantec EDR Add-on for Splunk                          | Broadcom Inc              | https://splunkbase.splunk.com/app/3454 |
+| Symantec EDR App for Splunk                             | Broadcom Inc              | https://splunkbase.splunk.com/app/3453 |
+
 ### Nutanix
 |                Name                |      Built by     |                   URL                  |
 |------------------------------------|-------------------|----------------------------------------|

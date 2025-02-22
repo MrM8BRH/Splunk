@@ -111,6 +111,108 @@ index="wineventlog" source="WinEventLog:Security" signature="An attempt was made
 | rename time as "Time" , name as "Action" , user as "User" , src_user as "Actioned By" , host AS Host
 ```
 
+AD - Windows Security Daily Domain Activities
+```
+index=wineventlog source=WinEventLog:Security src_nt_domain!="NT AUTHORITY" EventCode=4720 OR EventCode=4726 OR EventCode=4738 OR EventCode=4767 OR EventCode=4781 OR EventCode=4727 OR EventCode=4730 OR EventCode=4731 OR EventCode=4734 OR EventCode=4735 OR EventCode=4737 OR EventCode=4744 OR EventCode=4745 OR EventCode=4748 OR EventCode=4749 OR EventCode=4750 OR EventCode=4753 OR EventCode=4754 OR EventCode=4755 OR EventCode=4758 OR EventCode=4759 OR EventCode=4760 OR EventCode=4763 OR EventCode=4764 OR EventCode=4728 OR EventCode=4729 OR EventCode=4732 OR EventCode=4733 OR EventCode=4746 OR EventCode=4747 OR EventCode=4751 OR EventCode=4752 OR EventCode=4756 OR EventCode=4757 OR EventCode=4761 OR EventCode=4762
+| rex field=member_id "^\w+\W(?<ITS_Admin>\w*\s\w*\s\w*|\w+_\w+|\w*\s\w*|\w*)(\s\w+\W|\s)(?<Target_Account>.*\S)"
+| eval Target_Account=if(Target_Account="NONE_MAPPED", trim(member_dn, ITS_Admin), Target_Account)
+| table _time, EventCode, src_nt_domain, ITS_Admin, Target_Account,src_nt_domain,msad_action,Group_Name,MSADChangedAttributes
+| sort MSADChangedAttributes,ITS_Admin, Target_Account
+| rename ITS_Admin as "ITS Admin", src_nt_domain as "Source Domain"
+```
+
+AD - Potential Suspicious Activity
+```
+index=wineventlog source="WinEventLog:Security" Account_Name!="SplunkForwarder" EventCode=4688 NOT (Account_Name=*$) (arp.exe OR at.exe OR bcdedit.exe OR bcp.exe OR chcp.exe OR cmd.exe OR cscript.exe OR csvde OR dsquery.exe OR ipconfig.exe OR mimikatz.exe OR nbtstat.exe OR nc.exe OR netcat.exe OR netstat.exe OR nmap OR nslookup.exe OR netsh OR OSQL.exe OR ping.exe OR powershell.exe OR powercat.ps1 OR psexec.exe OR psexecsvc.exe OR psLoggedOn.exe OR procdump.exe OR qprocess.exe OR query.exe OR rar.exe OR reg.exe OR route.exe OR runas.exe OR rundll32 OR schtasks.exe OR sethc.exe OR sqlcmd.exe OR sc.exe OR ssh.exe OR sysprep.exe OR systeminfo.exe OR system32\\net.exe OR reg.exe OR tasklist.exe OR tracert.exe OR vssadmin.exe OR whoami.exe OR winrar.exe OR wscript.exe OR "winrm.*" OR "winrs.*" OR wmic.exe OR wsmprovhost.exe OR wusa.exe) 
+| eval Message=split(Message,".") 
+| eval Short_Message=mvindex(Message,0) 
+| table _time, host, Account_Name, New_Process_Name, New_Process_ID, Creator_Process_ID, Short_Message
+```
+
+AD - List All Successful Logins by Account Name
+```
+index=wineventlog source="WinEventLog:security" (Logon_Type=2 OR Logon_Type=7 OR Logon_Type=10) (EventCode=528 OR EventCode=540 OR EventCode=4624) | rex "New\sLogon:\s+.*\s+Account\sName:\s+(?<UserName>\S+)" | eval Account=coalesce(User_Name,UserName) | stats count by Account | sort - count
+```
+
+AD - Accounts Deleted within 24 Hours of Creation 
+```
+index=wineventlog source=WinEventLog:Security (EventCode=4726 OR EventCode=4720) 
+| eval Date=strftime(_time, "%Y/%m/%d") 
+| rex "Subject:\s+\w+\s\S+\s+\S+\s+\w+\s\w+:\s+(?<SourceAccount>\S+)" 
+| rex "Target\s\w+:\s+\w+\s\w+:\s+\S+\s+\w+\s\w+:\s+(?<DeletedAccount>\S+)" 
+| rex "New\s\w+:\s+\w+\s\w+:\s+\S+\s+\w+\s\w+:\s+(?<NewAccount>\S+)" 
+| eval SuspectAccount=coalesce(DeletedAccount,NewAccount) 
+| transaction SuspectAccount startswith="EventCode=4720" endswith="EventCode=4726" 
+|eval duration=round(((duration/60)/60)/24, 2) 
+| eval Age=case(duration<=1, "Critical", duration>1 AND duration<=7, "Warning", duration>7, "Normal")
+| table Date, index, host, SourceAccount, SuspectAccount, duration, Age 
+| rename duration as "Days Account was Active" 
+| sort + "Days Account was Active"
+```
+
+AD - Password Non Compliance
+```
+index=wineventlog source="WinEventLog:Security" EventCode=4723  Keywords="Audit Failure" 
+| eval Date=strftime(_time, "%Y/%m/%d") 
+| rex "Target\sAccount:\s+Security\sID:.*\\\(?<account>\S+)" 
+| stats count by Date, account, host 
+| sort - Date
+```
+
+AD - Modification to File Permissions
+```
+index=wineventlog source="WinEventLog:Security" EventCode=4670 (Security_ID!="NT AUTHORITY*") (Security_ID!="S-*")
+| eval Date=strftime(_time, "%Y/%m/%d")
+| stats count by Date, Account_Name, Process_Name, Keywords, host
+| sort - Date
+```
+
+AD -  Failed Authentication to Non-existing Accounts 
+```
+index=wineventlog source="WinEventLog:Security" EventCode=4625 Sub_Status=0xC0000064 
+| eval Date=strftime(_time, "%Y/%m/%d") 
+| rex "Which\sLogon\sFailed:\s+Security\sID:\s+\S.*\s+\w+\s\w+\S\s.(?<uacct>\S.*)" 
+| stats count by Date, uacct, host 
+| rename count as "Attempts" 
+| sort - Attempts
+```
+
+AD - System Time Modifications
+```
+index=wineventlog source="WinEventLog:Security" EventCode=4616 (NOT Account_Name="*$") (NOT Account_Name="LOCAL SERVICE")
+| eval Date=strftime(_time, "%Y/%m/%d %H:%M:%S")
+| eval oldtime = strptime(replace(Previous_Time, "\D", ""), "%Y%m%d%H%M%S%9N") 
+| eval t=_time 
+| rename t as "eventtime" 
+| eval diff=round(((eventtime-oldtime)/60)/60,2) 
+| where diff!=0
+| stats count by host, Account_Name, diff, Date 
+| sort - Date
+| rename diff as "Hours Between New Time and Actual Time" 
+|rename Account_Name as "Source Account" 
+| rename host as "Target Machine"
+|rename Date as "Date and Time"
+| fields - count
+```
+
+AD - User Logon / Session Duration 
+```
+index=wineventlog source=WinEventLog:Security (EventCode=4624 OR EventCode=4634) (Logon_Type=2 OR Logon_Type=10) 
+| eval Date=strftime(_time, "%Y/%m/%d")
+| eval LogonType=case(Logon_Type="2", "Local Console Access", Logon_Type="10", "Remote Desktop via Terminal Services")
+| transaction host user startswith=EventCode=4624 endswith=EventCode=4634 | where duration > 5 | eval duration = duration/60 
+| eval duration=round(duration,2)
+| table host, user, LogonType duration, Date 
+| rename duration as "Session Duration in Minutes" 
+| sort - date
+```
+
+AD - Password Changes by User Account
+```
+index=wineventlog source="WinEventLog:Security" (EventCode=628 OR EventCode=627 OR EventCode=4723 OR EventCode=4724) 
+| chart count by user
+```
+
 #### LDAP Queries
 AD - Dormant Account
 ```
@@ -146,24 +248,49 @@ AD - Check for Disabled User Accounts
 <details>
 <summary><b>Linux</b></summary>
 
-SSH Logins
+Linux - SSH Logins
 ```
 index=linux "Accepted Publickey" OR "session opened" OR "Accepted password" src!="PAM_IP_ADDR" src!="" user!=""  | table _time,user,src,dest,src_port,sshd_protocol,action
 ```
 
-SSH Logins (Syslog - SC4S)
+Linux - SSH Logins (Syslog - SC4S)
 ```
 index=osnix source="program:sshd" "Accepted Publickey" OR "session opened" _raw!="*PAM_IP_ADDR*" 
 | table _time,host,sc4s_fromhostip,user 
 | dedup _time,host,user | sort -_time
 ```
 
-Console logins for Linux Servers
+Linux - Console logins
 ```
 index=osnix OR index=linux "Started Session 7 of" 
 | table _time,host,_raw
 ```
 
+Linux - Repeated Unsuccessful Logon Attempts
+```
+index=linux sourcetype=linux_secure | eval Date=strftime(_time, "%Y/%m/%d") | rex ".*:\d{2}\s(?<hostname>\S+)" | rex "gdm\S+\sauthentication\s(?<status>\w+)" | rex "\suser[^'](?<User>\S+\w+)" | search status=failure| stats count as fails by Date, User, hostname | eval "Alert Level"=case(fails>=50, "Critical", fails<50 AND fails>=20, "Warning", fails<20, "Normal") | sort - fails| rename fails as "Failed Logon Attempts" | rename User as "Account in Question"
+```
+
+Linux - Top 10 Most Active Hosts
+```
+index=linux sourcetype=linux_secure 
+| rex ".*:\d{2}\s(?<hostname>\S+)"
+| top limit=10 hostname
+```
+
+Linux - Top 10 Most Active Users
+```
+index=linux sourcetype=linux_secure 
+| rex "\suser[^'](?<User>\S+\w+)" 
+| top limit=10 User
+```
+
+Linux - List of Users
+```
+index=linux sourcetype=linux_secure 
+| rex "\suser[^'](?<User>\S+\w+)" 
+| stats count by User
+```
 </details>
 
 
@@ -373,6 +500,15 @@ index=pam act=Device msg="Device creation*" | table _time,sname,src,cs3,cs4 | re
 </details>
 
 <details>
+<summary><b>DBConnect</b></summary>
+
+User Activity in DBConnect 
+```
+index=_audit sourcetype=audittrail action="db_connect*" |eval Date=strftime(_time, "%Y/%d/%m") |rex "user=(?<user>\S+)," | stats count by Date, user, info, action
+```
+</details>
+
+<details>
 <summary><b>Others</b></summary>
 
 Office365 - Attachment Size Policy
@@ -382,6 +518,41 @@ index=office365 | search "Parameters{}.Value"="Change_Me!" | table _time,UserId,
 Idrac
 ```
 index=idrac virtual console | table _time,_raw
+```
+Detect Credit Card Numbers using Luhn Algorithm 
+```
+index=* ((source IN("*.log","*.bak","*.txt", "*.csv","/tmp*","/temp*","c:\tmp*")) OR (tag=web dest_content=*))
+| eval comment="Match against the simple CC regex to narrow down the events in the lookup" 
+| rex max_match=1 "[\"\s\'\,]{0,1}(?<CCMatch>[\d.\-\s]{11,24})[\"\s\'\,]{0,1}"
+| where isnotnull(CCMatch) 
+| eval comment="Apply the LUHN algorithm to see if the CC number extracted is valid" 
+| eval cc=tonumber(replace(CCMatch,"[ -\.]",""))
+| eval comment="Lower min to 11 to find additional CCs which may pick up POSIX timestamps as well."
+| where len(cc)>=14 AND len(cc)<=16
+| eval cc=printf("%024d", cc)
+| eval ccd=split(cc,"") 
+| foreach 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 [
+| eval ccd_reverse=mvappend(ccd_reverse,mvindex(ccd,<<FIELD>>))
+]
+| rename ccd_reverse AS ccd
+| eval cce=mvappend(mvindex(ccd,0),mvindex(ccd,2),mvindex(ccd,4),mvindex(ccd,6),mvindex(ccd,8),mvindex(ccd,10),mvindex(ccd,12),mvindex(ccd,14),mvindex(ccd,16),mvindex(ccd,18),mvindex(ccd,20),mvindex(ccd,22),mvindex(ccd,24)) 
+| eval cco=mvappend(mvindex(ccd,1),mvindex(ccd,3),mvindex(ccd,5),mvindex(ccd,7),mvindex(ccd,9),mvindex(ccd,11),mvindex(ccd,13),mvindex(ccd,15),mvindex(ccd,17),mvindex(ccd,19),mvindex(ccd,21),mvindex(ccd,23)) 
+| eval cco2=mvmap(cco,cco*2) 
+| eval cco2HT10=mvfilter(cco2>9) 
+| eval cco2LT10=mvfilter(cco2<=9) 
+| eval cco2LH10dt=mvmap(cco2HT10,cco2HT10-9) 
+| fillnull value=0 cco2LT10 cco2LH10dt 
+| eventstats sum(cce) as t1 sum(cco2LT10) as t2 sum(cco2LH10dt) as t3 BY cc 
+| eval totalChecker=t1+t2+t3 
+| eval CCIsValid=if((totalChecker%10)=0,"true","false")
+| fields - cc ccd cce cco cco2 cco2HT10 cco2LT10 cco2LH10dt t1 t2 t3 totalChecker raw time
+| where CCIsValid="true"
+| eval comment="Find the field where we found the CC number" 
+| foreach _raw * 
+[
+| eval CCStringField=if("<<FIELD>>"!="CCMatch" AND like('<<FIELD>>',"%".CCMatch."%"),"<<FIELD>>",CCStringField)
+ ] 
+| table _time CCMatch CCStringField source sourcetype host src dest http_user_agent
 ```
 </details>
 

@@ -50,6 +50,63 @@ Configuration
   - Type: Event-based detection
 - Security Content → Security use case library
 
+List all ES Correlation Searches 
+```
+| rest splunk_server=local count=0 /services/saved/searches 
+| where match('action.correlationsearch.enabled', "1|[Tt]|[Tt][Rr][Uu][Ee]") 
+| rex field=action.customsearchbuilder.spec "datamodel\\\":\s+\\\"(?<Data_Model>\w+)" 
+| rex field=action.customsearchbuilder.spec "object\\\":\s+\\\"(?<Dataset>\w+)" 
+| rename
+    action.correlationsearch.label as Search_Name
+    title as Rule_Name
+    eai:acl.app as Application_Context
+    description as Description
+    Data_Model as Guided_Mode:Data_Model
+    Dataset as Guided_Mode:Dataset
+    action.customsearchbuilder.enabled as Guided_Mode
+    search as Search
+    dispatch.earliest_time as Earliest_Time
+    dispatch.latest_time as Latest_Time
+    cron_schedule as Cron_Schedule
+    schedule_window as Schedule_Window
+    schedule_priority as Schedule_Priority
+    alert_type as Trigger_Conditions:Trigger_Alert_When
+    alert_comparator as Trigger_Conditions:Alert_Comparator
+    alert_threshold as Trigger_Conditions:Alert_Threshold
+    alert.suppress.period as Throttling:Window_Duration
+    alert.suppress.fields as Throttling:Fields_To_Group_By
+    action.notable.param.rule_title as Notable:Title
+    action.notable.param.rule_description as Notable:Description
+    action.notable.param.security_domain as Notable:Security_Domain
+    action.notable.param.severity as Notable:Severity
+| eval Guided_Mode:Enabled = if(Guided_Mode == 1, "Yes", "No") 
+| eval Real-time_Scheduling_Enabled = if(realtime_schedule == 1, "Yes", "No") 
+| table
+    disabled 
+    Search_Name,
+    Rule_Name,
+    Application_Context,
+    Description,
+    Guided_Mode:Enabled,
+    Guided_Mode:Data_Model,
+    Guided_Mode:Dataset,
+    Search,
+    Earliest_Time,
+    Latest_Time,
+    Cron_Schedule,
+    Real-time_Scheduling_Enabled,
+    Schedule_Window,
+    Schedule_Priority,
+    Trigger_Conditions:Trigger_Alert_When,
+    Trigger_Conditions:Alert_Comparator,
+    Trigger_Conditions:Alert_Threshold,
+    Throttling:Window_Duration,
+    Throttling:Fields_To_Group_By,
+    Notable:Title,
+    Notable:Description,
+    Notable:Security_Domain,
+    Notable:Severity,
+```
 
 Uninstall Splunk ES (Linux)
 

@@ -1,3 +1,4 @@
+## Security Logs
 ### Step 1
 
 Security > Event Logs > Logging Profile > (Splunk - SC4S)
@@ -17,16 +18,13 @@ Advanced: **All Traffic**
 Save
 
 ### Step 2
+- Local Traffic -> Virtual Servers -> <VS> -> Security -> Policies -> Log Profile (**Splunk - SC4S**) -> Update
 
-Local Traffic -> Virtual Servers -> <VS> -> Security -> Policies -> Log Profile (**Splunk - SC4S**) -> Update
 
+## Audit Logs
+- System -> Logs -> Configuration -> Remote Logging
+- System -> Logs -> Configuration -> Options
 
 ---
 
 [Prepare F5 servers to connect to the Splunk platform](https://docs.splunk.com/Documentation/AddOns/released/F5BIGIP/Setup)
-
----
-
-- [Task 1: Install the F5 Splunk app in Splunk¶](https://clouddocs.f5.com/training/community/analytics/html/class2/modules/task1.html)
-- [Task 2: Import and configure the F5 Analytics iApp template on the BIG-IP¶](https://clouddocs.f5.com/training/community/analytics/html/class2/modules/task2.html)
-- [Task 3: Visualize the analytics data in Splunk¶](https://clouddocs.f5.com/training/community/analytics/html/class2/modules/module4.html#task-3-visualize-the-analytics-data-in-splunk)

@@ -250,7 +250,8 @@ AD - Check for Disabled User Accounts
 
 Linux - SSH Logins
 ```
-index=linux "Accepted Publickey" OR "session opened" OR "Accepted password" src!="PAM_IP_ADDR" src!="" user!=""  | table _time,user,src,dest,src_port,sshd_protocol,action
+index=linux "Accepted Publickey" OR "session opened" OR "Accepted password" src!="PAM_IP_ADDR" src!="" user!=""
+| table _time,user,src,dest,src_port,sshd_protocol,action
 ```
 
 Linux - SSH Logins (Syslog - SC4S)
@@ -268,7 +269,15 @@ index=osnix OR index=linux "Started Session 7 of"
 
 Linux - Repeated Unsuccessful Logon Attempts
 ```
-index=linux sourcetype=linux_secure | eval Date=strftime(_time, "%Y/%m/%d") | rex ".*:\d{2}\s(?<hostname>\S+)" | rex "gdm\S+\sauthentication\s(?<status>\w+)" | rex "\suser[^'](?<User>\S+\w+)" | search status=failure| stats count as fails by Date, User, hostname | eval "Alert Level"=case(fails>=50, "Critical", fails<50 AND fails>=20, "Warning", fails<20, "Normal") | sort - fails| rename fails as "Failed Logon Attempts" | rename User as "Account in Question"
+index=linux sourcetype=linux_secure
+| eval Date=strftime(_time, "%Y/%m/%d")
+| rex ".*:\d{2}\s(?<hostname>\S+)"
+| rex "gdm\S+\sauthentication\s(?<status>\w+)"
+| rex "\suser[^'](?<User>\S+\w+)"
+| search status=failure| stats count as fails by Date, User, hostname
+| eval "Alert Level"=case(fails>=50, "Critical", fails<50 AND fails>=20, "Warning", fails<20, "Normal")
+| sort - fails| rename fails as "Failed Logon Attempts"
+| rename User as "Account in Question"
 ```
 
 Linux - Top 10 Most Active Hosts
@@ -297,61 +306,77 @@ index=linux sourcetype=linux_secure
 <details>
 <summary><b>Appian</b></summary>
 
-Admin Console
+Appian - Admin Console
 ```
-index=appian source="*admin_console.csv" | table _time,Property,Count
+index=appian source="*admin_console.csv"
+| table _time,Property,Count
 ```
-Blocked Files
+Appian - Blocked Files
 ```
-index=appian source="*blocked_files.csv*" | table _time,User,"Document Name",Reason,Details,Hash
+index=appian source="*blocked_files.csv*"
+| table _time,User,"Document Name",Reason,Details,Hash
 ```
-Data Store Deletions
+Appian - Data Store Deletions
 ```
-index=appian source="*data_store_deletions*" | table _time,"Data Store",Entity,Id,"Node Display Name",User
+index=appian source="*data_store_deletions*"
+| table _time,"Data Store",Entity,Id,"Node Display Name",User
 ```
-Decryption
+Appian - Decryption
 ```
-index=appian source="*decryption.csv*" | table _time,Username,Context,Action,Success
+index=appian source="*decryption.csv*"
+| table _time,Username,Context,Action,Success
 ```
-DevOps Infrastructure
+Appian - DevOps Infrastructure
 ```
-index=appian source="*devops_infrastructure.csv" | table _time,ID,Name,URL,"Last Action Username","Last Action Type","Last Action Name","Last Action IP","Last Action Date","Remote Enabled"
+index=appian source="*devops_infrastructure.csv"
+| table _time,ID,Name,URL,"Last Action Username","Last Action Type","Last Action Name","Last Action IP","Last Action Date","Remote Enabled"
 ```
-Devops Infrastructure Handler
+Appian - Devops Infrastructure Handler
 ```
-index=appian source="*devops_infrastructure_handler.csv" | table ID,Name,URL,"IP Address","Status Code","Error Occurred","Direction","Before or After Request Processed"
+index=appian source="*devops_infrastructure_handler.csv"
+| table ID,Name,URL,"IP Address","Status Code","Error Occurred","Direction","Before or After Request Processed"
 ```
-File Attachment Downloads
+Appian - File Attachment Downloads
 ```
-index=appian source="*file_attachment_downloads.csv*" "File name"!="*.png" "File name"!="*.ico" "File name"!="*.jpg" | table _time,User,"File name","Download Successful"
+index=appian source="*file_attachment_downloads.csv*" "File name"!="*.png" "File name"!="*.ico" "File name"!="*.jpg"
+| table _time,User,"File name","Download Successful"
 ```
-Login Audit
+Appian - Login Audit
 ```
-index=appian source="*login-audit.csv" API_USER!="API-USER" | table _time,API_USER,"Web API",Succeeded | rename API_USER as "User" , Succeeded as "Action"
+index=appian source="*login-audit.csv" API_USER!="API-USER"
+| table _time,API_USER,"Web API",Succeeded
+| rename API_USER as "User" , Succeeded as "Action"
 ```
-Object Rolemap Audit
+Appian - Object Rolemap Audit
 ```
-index=appian source="*object_rolemap_audit.csv" | table _time,Username,Name,Type,"Previous Rolemap","New Rolemap"
+index=appian source="*object_rolemap_audit.csv"
+| table _time,Username,Name,Type,"Previous Rolemap","New Rolemap"
 ```
-Records Usage
+Appian - Records Usage
 ```
-index=appian source="*records_usage.csv*" | table _time,User,View,"Record Type Name",Action
+index=appian source="*records_usage.csv*"
+| table _time,User,View,"Record Type Name",Action
 ```
-Removed Processes
+Appian - Removed Processes
 ```
-index=appian source="*removed*" | table _time,Action,"Process ID","Process Name","Transaction ID",Username
+index=appian source="*removed*"
+| table _time,Action,"Process ID","Process Name","Transaction ID",Username
 ```
-Sites Usage
+Appian - Sites Usage
 ```
-index=appian source="*sites_usage.csv*" | table _time,User,Site,Page,Action
+index=appian source="*sites_usage.csv*"
+| table _time,User,Site,Page,Action
 ```
-Users
+Appian - Users
 ```
-index=appian source="*users.csv" | table _time,"Active LDAP Users","Active SAML Users","Active System Administrators","Active Tempo Users","Active Users","Total Users"
+index=appian source="*users.csv"
+| table _time,"Active LDAP Users","Active SAML Users","Active System Administrators","Active Tempo Users","Active Users","Total Users"
 ```
-User Management
+Appian - User Management
 ```
-index=appian source="*user_management.csv" | search Action!="Log Initialized" | table _time,Action,"Modified By Username",Username,"Original Value","New Value"
+index=appian source="*user_management.csv"
+| search Action!="Log Initialized"
+| table _time,Action,"Modified By Username",Username,"Original Value","New Value"
 ```
 
 </details>
@@ -359,37 +384,38 @@ index=appian source="*user_management.csv" | search Action!="Log Initialized" | 
 <details>
 <summary><b>CrowdStrike</b></summary>
 
-Logins
+CrowdStrike - Logins
 ```
-index=crowdstrike user!="" action!="" | table _time,user,event.ServiceName,action
+index=crowdstrike user!="" action!=""
+| table _time,user,event.ServiceName,action
 ```
 CrowdStrike FW - RDP Sessions
 ```
 index=crowdstrike rdp event.LocalAddress!="PAM_IP_ADDR" 
 | table _time,event.HostName,event.LocalAddress,event.RemoteAddress,event.PolicyName,event.RuleGroupName,event.RuleAction
 ```
-Malware Detections
+CrowdStrike - Malware Detections
 ```
 index="crowdstrike" "metadata.eventType"=DetectionSummaryEvent metadata.customerIDString=* event.DetectId!="" 
 | table _time,action,description,event.ComputerName,event.DetectName,event.FileName,event.FilePath,event.IOCType,event.IOCValue,event.LocalIP,event.MACAddress,event.Objective,event.SeverityName,event.Tactic,event.Technique,event.UserName,event.CommandLine,event.AssociatedFile
 ```
-Policies
+CrowdStrike - Policies
 ```
 index=crowdstrike "metadata.eventType"=UserActivityAuditEvent
 | search "event.OperationName"=*policy 
 | table _time,*OperationName,*ServiceName,*UserId,*UserIp,*policy_name,*policy_enabled
 ```
-FileVantage
+CrowdStrike - FileVantage
 ```
 index="crowdstrike" source=crowdstrike_filevantage_json
 | table _time,entity_type,severity,action_type,action_timestamp,command_line,entity_path,grandparent_process_image_file_name,parent_process_image_file_name,host.name,host.local_ip,host.os_version,policy.name,policy.rule_group.name
 ```
-Identities
+CrowdStrike - Identities
 ```
 index=crowdstrike sourcetype="crowdstrike:identities" riskScoreSeverity="HIGH" 
 | table _time,primaryDisplayName,isHuman,isProgrammatic,emailAddresses{},accounts{}.userAccountControl,accounts{}.title,accounts{}.samAccountName,accounts{}.ou,accounts{}.enabled,accounts{}.dn,accounts{}.dataSource,accounts{}.department,accounts{}.description,type,roles{}.type,riskScoreSeverity,riskFactors{}.type,riskFactors{}.severity
 ```
-Event Streams
+CrowdStrike - Event Streams
 ```
 index=crowdstrike sourcetype="CrowdStrike:Event:Streams:JSON" 
 | table _time,ta_*,metadata.eventType,event.UserIp,event.Source,event.SourceIp,event.OperationName,event.Attributes.scopes,event.Attributes.produces,action
@@ -397,18 +423,14 @@ index=crowdstrike sourcetype="CrowdStrike:Event:Streams:JSON"
 </details>
 
 <details>
-<summary><b>F5</b></summary>
+<summary><b>F5 BIG-IP</b></summary>
 
-Alert
+F5 - Audit Objects
 ```
-index=netwaf severity="Critical" OR severity="High" AND  request_status="blocked" 
-| table _time,attack_type,severity,sig_cves,sub_violations,"blocking_exception_reason",captcha_result,device_id,f5_bigip_service,geo_location,http_class_name,ip_client,method,request_status,response,request,uri,x_forwarded_for_header_value, violations
+index=netops host="*waf*" sourcetype="f5:bigip:syslog" AUDIT object
+| table _time,_raw
 ```
-Audit
-```
-index=netops host="*waf*" sourcetype="f5:bigip:syslog" AUDIT object  | table _time,_raw
-```
-Report
+F5 - Blocked Multi-Severity Attack Incidents
 ```
 index=netwaf severity="Critical" OR severity="High" OR severity="Medium" AND  request_status="blocked" 
 | table _time,attack_type,severity,sig_cves,sub_violations,"blocking_exception_reason",captcha_result,device_id,f5_bigip_service,geo_location,http_class_name,ip_client,method,request_status,response,request,uri,x_forwarded_for_header_value, violations
@@ -419,13 +441,15 @@ index=netwaf severity="Critical" OR severity="High" OR severity="Medium" AND  re
 <details>
 <summary><b>Symantec</b></summary>
 
-Email - AntiMalware
+Symantec Email - AntiMalware
 ```
-index=symantec_email sourcetype="symantec:email:cloud:antimalware" | table _time,malwareName,sender,orig_recipient
+index=symantec_email sourcetype="symantec:email:cloud:antimalware"
+| table _time,malwareName,sender,orig_recipient
 ```
-Email - AntiSpam
+Symantec Email - AntiSpam
 ```
-index=symantec_email sourcetype="symantec:email:cloud:antispam" | table _time,sender,senderIp,recipient,subject,action,detectionMethod,emailSize
+index=symantec_email sourcetype="symantec:email:cloud:antispam"
+| table _time,sender,senderIp,recipient,subject,action,detectionMethod,emailSize
 ```
 
 </details>
@@ -433,48 +457,68 @@ index=symantec_email sourcetype="symantec:email:cloud:antispam" | table _time,se
 <details>
 <summary><b>vCenter</b></summary>
 
-Logins
+vCenter - Logins
 ```
-index=infraops source="vm*" "vim.event.UserLog*" | table time,action,user,datastore,message
+index=infraops source="vm*" "vim.event.UserLog*"
+| table time,action,user,datastore,message
 ```
-VM Events
+vCenter - VM Events
 ```
-index=infraops source="vm*"  action="vim.event.VmBe*" | table _time,action,user,message
+index=infraops source="vm*"  action="vim.event.VmBe*"
+| table _time,action,user,message
+```
+</details>
+
+<details>
+<summary><b>FortiGate</b></summary>
+
+FortiGate - Admin Login Failure Audit
+```
+index=netops result="Admin login failed"
+| table date, time, host, src, srcip, status, src_user_name,reason
 ```
 </details>
 
 <details>
 <summary><b>Cisco</b></summary>
 
-Umbrella (DNS)
+Cisco Umbrella (DNS)
 ```
-index=cisco_umbrella | table _time,user,action,ReplyCode,RecordType,category,domain,granular_identity_type,identities,identity_type,s3_filename,src,src_translated_ip
+index=cisco_umbrella
+| table _time,user,action,ReplyCode,RecordType,category,domain,granular_identity_type,identities,identity_type,s3_filename,src,src_translated_ip
 ```
-Umbrella (Audit)
+Cisco Umbrella (Audit)
 ```
-index=cisco_umbrella sourcetype="cisco:umbrella:audit" action!="" _raw!="*roamingdevices*" | table _time,email,user,source_val,action,ip,body
+index=cisco_umbrella sourcetype="cisco:umbrella:audit" action!="" _raw!="*roamingdevices*"
+| table _time,email,user,source_val,action,ip,body
 ```
-ISE (Guest Users)
+Cisco ISE (Guest Users)
 ```
-index=netauth SelectedAuthenticationIdentityStores="Guest Users" AuthenticationStatus="UnknownUser" | table _time,"Framed_IP_Address",EndPointMatchedProfile,SelectedAuthorizationProfiles
+index=netauth SelectedAuthenticationIdentityStores="Guest Users" AuthenticationStatus="UnknownUser"
+| table _time,"Framed_IP_Address",EndPointMatchedProfile,SelectedAuthorizationProfiles
 ```
-Router logins
+Cisco Router logins
 ```
-index=netops Login | table _time,host,src,user,action
+index=netops Login
+| table _time,host,src,user,action
 ```
-FMC - Blocked File Transfer Services
+Cisco FMC - Blocked File Transfer Services
 ```
-index=cisco_secure_fw file action=Block | table _time,AC_RuleAction,Application,FirewallPolicy,FirewallRule,InitiatorIP,ResponderIP,URL,URL_Category
+index=cisco_secure_fw file action=Block
+| table _time,AC_RuleAction,Application,FirewallPolicy,FirewallRule,InitiatorIP,ResponderIP,URL,URL_Category
 ```
-FMC - Audit Logs
+Cisco FMC - Audit Logs
 ```
-index=osnix source="program:FMC.qudsbank.ps"  policy | table _time,_raw
+index=osnix source="program:FMC.qudsbank.ps"  policy
+| table _time,_raw
 ```
-FMC Policy Changes
+Cisco FMC Policy Changes
 ```
-index=osnix source="program:FMC.qudsbank.ps"  "*policy deployment*" OR "*rule_configs*" OR "*Policy Committed*" OR "*Save Policy*" | table _time,_raw | sort -_time
+index=osnix source="program:FMC.qudsbank.ps"  "*policy deployment*" OR "*rule_configs*" OR "*Policy Committed*" OR "*Save Policy*"
+| table _time,_raw
+| sort -_time
 ```
-SNA (Stealthwatch)
+Cisco SNA (Stealthwatch)
 ```
 |securityevents domain_id=301 smc_ip=SNA_IP_ADDR earliest=-24h@h latest=now
             subject_ip= subject_host_group_id=
@@ -489,22 +533,29 @@ SNA (Stealthwatch)
 <details>
 <summary><b>Senhasegura</b></summary>
 
-Sessions
+Senhasegura - Sessions
 ```
-index=pam act=Session dhost!="null" suser!="asc_117" | table _time,  sname ,suser ,src ,dhost ,dst ,duser ,proto  | rename sname as "Source Name", suser as "Source User", src as "Source IP", dhost as "Destitnation Host",dst as "Destination IP", proto as "Protocol", duser as "Destination User"
+index=pam OR index=osnix act=Session dhost!="null" suser!="asc_117"
+| table _time,  sname ,suser ,src ,dhost ,dst ,duser ,proto
+| rename sname as "Source Name", suser as "Source User", src as "Source IP", dhost as "Destitnation Host",dst as "Destination IP", proto as "Protocol", duser as "Destination User"
 ```
-Device Creation
+Senhasegura - Device Creation
 ```
-index=pam act=Device msg="Device creation*" | table _time,sname,src,cs3,cs4 | rename cs3 as "Server Name" , src as "Source IP" ,sname as "User Name" , cs4 as "Log Details"
+index=pam OR index=osnix act=Device msg="Device creation*"
+| table _time,sname,src,cs3,cs4
+| rename cs3 as "Server Name" , src as "Source IP" ,sname as "User Name" , cs4 as "Log Details"
 ```
 </details>
 
 <details>
 <summary><b>DBConnect</b></summary>
 
-User Activity in DBConnect 
+DBConnect - User Activity in DBConnect 
 ```
-index=_audit sourcetype=audittrail action="db_connect*" |eval Date=strftime(_time, "%Y/%d/%m") |rex "user=(?<user>\S+)," | stats count by Date, user, info, action
+index=_audit sourcetype=audittrail action="db_connect*"
+| eval Date=strftime(_time, "%Y/%d/%m")
+| rex "user=(?<user>\S+),"
+| stats count by Date, user, info, action
 ```
 </details>
 
@@ -513,11 +564,15 @@ index=_audit sourcetype=audittrail action="db_connect*" |eval Date=strftime(_tim
 
 Office365 - Attachment Size Policy
 ```
-index=office365 | search "Parameters{}.Value"="Change_Me!" | table _time,UserId,Parameters{}.Name,Parameters{}.Value | rename UserId as "Modified by"
+index=office365
+| search "Parameters{}.Value"="Change_Me!"
+| table _time,UserId,Parameters{}.Name,Parameters{}.Value
+| rename UserId as "Modified by"
 ```
 Idrac
 ```
-index=idrac virtual console | table _time,_raw
+index=idrac virtual console
+| table _time,_raw
 ```
 Detect Credit Card Numbers using Luhn Algorithm 
 ```

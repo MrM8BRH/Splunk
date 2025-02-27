@@ -444,6 +444,20 @@ index=netwaf
 | search x_forwarded_for_header_value!="N/A"
 | table _time,attack_type,dest_port,method,policy_name,request_status,geo_location,severity,sig_cves,uri,x_forwarded_for_header_value,response
 ```
+
+F5 - Web Logins
+```
+index=netwaf sourcetype="f5:bigip:asm:syslog" username!="N/A" 
+| eval Time = strftime(_time,"%c") 
+| table Time,host,username
+```
+
+F5 - Pool Status
+```
+index=netops  *Pool* status!="" 
+| eval Time = strftime(_time,"%c") 
+| table Time,pool,status
+```
 </details>
 
 <details>

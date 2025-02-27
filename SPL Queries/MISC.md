@@ -425,9 +425,9 @@ index=crowdstrike sourcetype="CrowdStrike:Event:Streams:JSON"
 <details>
 <summary><b>F5 BIG-IP</b></summary>
 
-F5 - Audit Objects
+F5 - Admin Actions
 ```
-index=netops host="*waf*" sourcetype="f5:bigip:syslog" AUDIT object
+index=netops sourcetype="f5:bigip:syslog" AUDIT AND object AND admin
 | table _time,_raw
 ```
 F5 - Blocked Multi-Severity Attack Incidents

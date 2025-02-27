@@ -433,9 +433,17 @@ index=netops sourcetype="f5:bigip:syslog" AUDIT AND object AND admin
 F5 - Blocked Multi-Severity Attack Incidents
 ```
 index=netwaf severity="Critical" OR severity="High" OR severity="Medium" AND  request_status="blocked" 
-| table _time,attack_type,severity,sig_cves,sub_violations,"blocking_exception_reason",captcha_result,device_id,f5_bigip_service,geo_location,http_class_name,ip_client,method,request_status,response,request,uri,x_forwarded_for_header_value, violations
+| table table _time,attack_type,dest_port,method,policy_name,request_status,geo_location,severity,sig_cves,uri,x_forwarded_for_header_value,response
 ```
 
+F5 - Multi-Severity Attack Incidents
+```
+index=netwaf 
+| search attack_type="*SQL*" OR attack_type="*XSS*" OR attack_type="*CSRF*" OR attack_type="*SSRF*" OR attack_type="*IDOR*" OR attack_type="*Path Traversal*" OR attack_type="*Session Hijacking*" OR attack_type="*Remote File Include*" OR attack_type="*Code Injection*" OR attack_type="*Command Execution*" OR attack_type="*Buffer Overflow*" OR attack_type="*Information Leakage*"
+| search severity="Critical" OR severity="High" OR severity="Medium"
+| search x_forwarded_for_header_value!="N/A"
+| table _time,attack_type,dest_port,method,policy_name,request_status,geo_location,severity,sig_cves,uri,x_forwarded_for_header_value,response
+```
 </details>
 
 <details>

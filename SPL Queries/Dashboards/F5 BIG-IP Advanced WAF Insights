@@ -113,4 +113,85 @@
       </table>
     </panel>
   </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Logs by Status</title>
+        <search>
+          <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by request_status</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Logs by Severity</title>
+        <search>
+          <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by severity</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Logs by Device Type</title>
+        <search>
+          <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by DeviceType</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Top 10 Attack Type</title>
+        <search>
+          <query>index=netwaf attack_type!="N/A" | eval Time=strftime(_time,"%c") |top limit=10 attack_type</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Top 10 IP Clients</title>
+        <search>
+          <query>index=netwaf | eval Time=strftime(_time,"%c") | top limit=10 ip_client</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Policies</title>
+        <search>
+          <query>index=netwaf policy_name=/Common/* | eval Time=strftime(_time,"%c") | table Time, policy_name, attack_type, severity, violations, username, Cmd, DeviceType, f5_bigip_service, geo_location, ip_client, src_port, method, query_string, request_status</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
 </form>

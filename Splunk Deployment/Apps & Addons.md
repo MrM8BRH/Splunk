@@ -16,7 +16,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Windows
 |                      Name                     |  Built by  |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
-| MS Windows AD Objects                         | Steve Hogan     | https://splunkbase.splunk.com/app/3177 |
 | Splunk Add-on for Microsoft Windows           | Splunk Inc      | https://splunkbase.splunk.com/app/742  |
 | Splunk Supporting Add-on for Active Directory | Splunk Inc      | https://splunkbase.splunk.com/app/1151 |
 
@@ -56,13 +55,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | URL Toolbox                        | Splunk Works               | https://splunkbase.splunk.com/app/2734 |
 | Splunk App for Lookup File Editing | Splunk Inc                 | https://splunkbase.splunk.com/app/1724 |
 | SA-cim_vladiator                   | Splunk Works               | https://splunkbase.splunk.com/app/2968 |
-
-### Addons
-|                      Name                     |  Built by  |                   URL                  |
-|-----------------------------------------------|------------|----------------------------------------|
-| Splunk App for Content Packs                  | Splunk LLC | https://splunkbase.splunk.com/app/5391 |
-| Splunk Add-on for JBoss                       | Splunk Inc | https://splunkbase.splunk.com/app/2954 |
-| Kaspersky Add-on for Splunk                  | Diogo Silva | https://splunkbase.splunk.com/app/4656 |
 
 ### Database
 | Name                                            | Built by         | URL                                    |
@@ -110,6 +102,34 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |-----------------------------|-----------------|----------------------------------------|
 | Splunk Add-on for F5 BIG-IP | Splunk Inc      | https://splunkbase.splunk.com/app/2680 |
 | F5 WAF Security             | Nexinto Nexinto | https://splunkbase.splunk.com/app/2873 |
+
+### FortiNet
+| Name                        | Built by        | URL                                    |
+|-----------------------------|-----------------|----------------------------------------|
+| Fortinet FortiGate App for Splunk | Fortinet Inc      | https://splunkbase.splunk.com/app/2800 |
+| Fortinet FortiGate Add-On for Splunk | Fortinet Inc   | https://splunkbase.splunk.com/app/2846 |
+| Fortinet FortiAppSec App for Splunk | FortiWebCloud Fortinet | https://splunkbase.splunk.com/app/7749 |
+| Fortinet FortiAppSec Cloud Add-on for Splunk | FortiWebCloud Fortinet | https://splunkbase.splunk.com/app/7748 |
+
+### Forcepoint
+| Name                                 | Built by         | URL                                    |
+|--------------------------------------|------------------|----------------------------------------|
+| Forcepoint ONE App for Splunk        | Yogesh Rao       | https://splunkbase.splunk.com/app/7284 |
+| Splunk Add-on for Forcepoint Web Security | Splunk LLC  | https://splunkbase.splunk.com/app/2966 |
+
+### Trend Micro
+| Name                                 | Built by         | URL                                    |
+|--------------------------------------|------------------|----------------------------------------|
+| Trend Vision One for Splunk (XDR)    | Trend Micro      | https://splunkbase.splunk.com/app/5364 |
+| Trend Micro Cloud App Security Add-On | Trend Micro     | https://splunkbase.splunk.com/app/5553 |
+| Trend Micro Cyber Risk Exposure Management for Splunk | Trend Micro | https://splunkbase.splunk.com/app/5350 |
+
+### ManageEngine
+| Name                                 | Built by         | URL                                    |
+|--------------------------------------|------------------|----------------------------------------|
+| ManageEngine Endpoint Central add-on | ManageEngine     | https://splunkbase.splunk.com/app/7458 |
+| ManageEngine Vulnerability Manager Plus add-on | ManageEngine     | https://splunkbase.splunk.com/app/7459 |
+| ManageEngine OpUtils Add-on for Splunk | Julian Kaufmann | https://splunkbase.splunk.com/app/7735 |
 
 ### Tenable
 | Name                                 | Built by         | URL                                    |
@@ -175,6 +195,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |      Name      |      Built by     |                   URL                  |
 |----------------|-------------------|----------------------------------------|
 | MISP42         | Remi Seguy        | https://splunkbase.splunk.com/app/4335 |
+| Benni0 App for MISP | Benjamin Hollentin | https://splunkbase.splunk.com/app/7536 |
 | TheHive/Cortex | Alexandre Demeyer | https://splunkbase.splunk.com/app/5329 |
 
 ### Telegram & Twilio SMS
@@ -195,3 +216,28 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk App for Stream                         | Splunk Inc | https://splunkbase.splunk.com/app/1809 |
 | Splunk Add-on for Stream Wire Data            | Splunk Inc | https://splunkbase.splunk.com/app/5234  |
 | Splunk Add-on for Stream Forwarders           | Splunk Inc | https://splunkbase.splunk.com/app/5238 |
+
+### Others
+|                      Name                     |   Built by   |                   URL                  |
+|-----------------------------------------------|--------------|----------------------------------------|
+| SWIFT AGI Add-on for Splunk                   | Diogo Silva  | https://splunkbase.splunk.com/app/7657 |
+| Splunk App for Content Packs                  | Splunk LLC   | https://splunkbase.splunk.com/app/5391 |
+| Splunk Add-on for JBoss                       | Splunk Inc   | https://splunkbase.splunk.com/app/2954 |
+| Kaspersky Add-on for Splunk                   | Diogo Silva  | https://splunkbase.splunk.com/app/4656 |
+
+### CCX Add-ons
+|                      Name                     |      Built by      |                   URL                  |
+|-----------------------------------------------|--------------------|----------------------------------------|
+| CCX Add-on for ManageEngine Products          | Henrique Linsmeyer | https://splunkbase.splunk.com/app/7004 |
+| CCX Unified Add-on for Cisco Firepower        | Henrique Linsmeyer | https://splunkbase.splunk.com/app/5543 |
+| CCX CrowdStrike Products Extensions           | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6380 |
+| CCX Microsoft Windows Extensions              | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6313 |
+| CCX Unified Add-On for Forcepoint             | Henrique Linsmeyer | https://splunkbase.splunk.com/app/5417 |
+| CCX Add-on for Cisco Identity Services (ISE)  | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6460 |
+| CCX Unified Add-On for Sophos UTM             | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6131 |
+| CCX Add-on for Cisco Secure Endpoint (AMP)    | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6481 |
+| CCX Unified Splunk Add-on for Barracuda       | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6183 |
+| CCX Add-on for Cloudflare Products            | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6892 |
+| CCX Extensions for Palo Alto Firewall         | Henrique Linsmeyer | https://splunkbase.splunk.com/app/7054 |
+| CCX Tenable Products Extensions               | Henrique Linsmeyer | https://splunkbase.splunk.com/app/7122 |
+| CCX Add-on for Symantec BlueCoat ProxySG Extensions   | Henrique Linsmeyer | https://splunkbase.splunk.com/app/7346 |

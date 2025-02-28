@@ -649,3 +649,30 @@ x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
 ```
 </details>
+
+<details>
+<summary><b>Migrate a Splunk Enterprise instance</b></summary>
+
+**How to migrate**
+
+When you migrate on *nix systems, you can extract the tar file you downloaded directly over the copied files on the new system, or use your package manager to upgrade using the downloaded package. On Windows systems, the installer updates the Splunk files automatically.
+1. Stop Splunk Enterprise services on the host from which you want to migrate.
+2. Copy the entire contents of the $SPLUNK_HOME directory from the old host to the new host. Copying this directory also copies the mongo subdirectory.
+3. Install Splunk Enterprise on the new host.
+4. Verify that the index configuration (indexes.conf) file's volume, sizing, and path settings are still valid on the new host.
+5. Start Splunk Enterprise on the new instance.
+6. Log into Splunk Enterprise with your existing credentials.
+7. After you log in, confirm that your data is intact by searching it.
+
+**How to move index buckets from one host to another**
+
+If you want to retire a Splunk Enterprise instance and immediately move the data to another instance, you can move individual buckets of an index between hosts, as long as:
+
+When you copy individual bucket files, you must make sure that no bucket IDs conflict on the new system. Otherwise, Splunk Enterprise does not start. You might need to rename individual bucket directories after you move them from the source system to the target system.
+1. Roll any hot buckets on the source host from hot to warm.
+2. Review indexes.conf on the old host to get a list of the indexes on that host.
+3. On the target host, create indexes that are identical to the ones on the source system.
+4. Copy the index buckets from the source host to the target host.
+5. Restart Splunk Enterprise.
+
+</details>

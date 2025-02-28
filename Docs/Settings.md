@@ -2,7 +2,7 @@
 gpedit.msc → Computer Configuration → Windows Settings → Security Settings → Advanced Audit Policy Configuration → System Audit Policies - Local Group Policy Object.
 
 #### Linux File Permissions
-```
+```bash
 -rw-r--r-- 12 linuxize users 12.0K Apr  28 10:10 file_name
 |[-][-][-]-   [------] [---]
 | |  |  | |      |       |
@@ -14,9 +14,20 @@ gpedit.msc → Computer Configuration → Windows Settings → Security Settings
 | +----------------------------------> 2. Owner Permissions
 +------------------------------------> 1. File Type
 ```
+#### Rsync & SCP
+```bash
+# Rsync - Copy a local file to another directory
+rsync -a /opt/filename.zip /tmp/
+# Rsync - Sync a local directory to a remote machine
+rsync -a /opt/media/ remote_user@remote_host_or_ip:/opt/media/
 
-#### Firewalld
+# SCP - Copy a local file to a remote system
+scp file.txt remote_username@remote_host_or_ip:/remote/directory
+# SCP - Copy a local directory recursively to a remote system
+scp -r /local/directory remote_username@remote_host_or_ip:/remote/directory
 ```
+#### Firewalld
+```bash
 firewall-cmd --permanent --add-port=8000/tcp
 firewall-cmd --permanent --add-port=9997/tcp
 firewall-cmd --permanent --add-port=8089/tcp
@@ -26,13 +37,12 @@ firewall-cmd --permanent --add-port=53/udp
 firewall-cmd --permanent --add-port=514/tcp
 firewall-cmd --reload
 ```
-```
+```bash
 systemctl stop firewalld
 systemctl disable firewalld
 ```
-
 #### SSH logging
-```
+```bash
 nano /etc/ssh/sshd_config
 
 # Logging
@@ -54,34 +64,33 @@ LogLevel INFO
 #- LOCAL7        #
 ###############
 ```
-
 #### Syslog
-```
-/etc/syslog.conf
+```bash
+nano /etc/syslog.conf
 auth.info /var/log/sshd.log
 ```
-| Filename |                              Purpose                              |
-|:--------:|:-----------------------------------------------------------------:|
-| auth.log | System authentication and security events                         |
-| boot.log | A record of boot-related events                                   |
-| dmesg    | Kernel-ring buffer events related to device drivers               |
-| dpkg.log | Software package-management events                                |
-| kern.log | Linux kernel events                                               |
-| syslog   | A collection of all logs                                          |
-| wtmp     | Tracks user sessions (accessed through the who and last commands) |
 
-| 0 | Emergency     | System is unusable                |
-|---|---------------|-----------------------------------|
-| 1 | Alert         | Action must be taken immediately  |
-| 2 | Critical      | Critical conditions               |
-| 3 | Error         | Error conditions                  |
-| 4 | Warning       | Warning conditions                |
-| 5 | Notice        | Normal but significant conditions |
-| 6 | Informational | Informational messages            |
-| 7 | Debug         | Debug-level messages              |
+| Filename | Purpose                                                          |
+| -------- | ---------------------------------------------------------------- |
+| auth.log | System authentication and security events                        |
+| boot.log | A record of boot-related events                                  |
+| dmesg    | Kernel-ring buffer events related to device drivers              |
+| dpkg.log | Software package-management events                               |
+| kern.log | Linux kernel events                                              |
+| syslog   | A collection of all logs                                         |
+| wtmp     | Tracks user sessions (accessed through the who and last commands |
 
+| 0   | Emergency     | System is unusable                |
+| --- | ------------- | --------------------------------- |
+| 1   | Alert         | Action must be taken immediately  |
+| 2   | Critical      | Critical conditions               |
+| 3   | Error         | Error conditions                  |
+| 4   | Warning       | Warning conditions                |
+| 5   | Notice        | Normal but significant conditions |
+| 6   | Informational | Informational messages            |
+| 7   | Debug         | Debug-level messages              |
 #### MISC
-```
+```bash
 cat /etc/os-release
 uname - a
 hostnamectl set-hostname host.domain.com
@@ -90,37 +99,37 @@ dnsdomainname
 timedatectl set-timezone Asia/Jerusalem
 ```
 #### Memory Commands
-```
+```bash
 free -m # (1)
 free -h # (2)
 
 dmidecode --type memory # (2)
 ```
 #### CPU and CPU Cores Commands
-```
+```bash
 nproc
 
 (Threads x Cores) x Physical CPU Number = Number of vCPUs
 
 lscpu 
-- Look for the following fields:
-    - CPU(s): Total number of logical CPUs (vCPUs).
-    - Core(s) per socket: Number of physical cores per CPU socket.
-    - Socket(s): Number of physical CPU sockets.
-    - Model name: CPU model and speed (e.g., `2.20 GHz`).
+# - Look for the following fields:
+#     - CPU(s): Total number of logical CPUs (vCPUs).
+#     - Core(s) per socket: Number of physical cores per CPU socket.
+#     - Socket(s): Number of physical CPU sockets.
+#     - Model name: CPU model and speed (e.g., `2.20 GHz`).
 
 cat /proc/cpuinfo | grep processor | wc -l
 
 dmidecode --type processor
 ```
 #### Check disk type and performance
-```
+```bash
 lsblk -d -o name,rota
-- rota=1: Rotational disk (HDD).
-- rota=0 Non-rotational disk (SSD).
+# - rota=1: Rotational disk (HDD).
+# - rota=0 Non-rotational disk (SSD).
 ```
 #### Storage Commands
-```
+```bash
 du -csh # (1)
 lsblk # (2)
 df -h /opt/splunk / # (3)
@@ -129,8 +138,7 @@ fdisk /dev/sda # (5)
 vgdisplay # (6)
 ```
 #### Network Commands
-```
-Network Commands
+```bash
 vi /etc/sysconfig/network-scripts/ifcfg-<int> # (1)
 route -n # (2)
 ip a # (3)
@@ -140,17 +148,17 @@ nc -zv <IP Address> <Port> # (6)
 telnet <IP Address> <Port> # (7)
 nmtui # (8)
 
-Check the speed of the NIC:
+# Check the speed of the NIC:
 sudo ethtool enp2s0 | grep Speed:
 ```
 #### Disable SELinux
-```
+```bash
 sestatus
 nano /etc/selinux/config
 SELINUX=disabled
 ```
 #### Disable Transparent Huge Pages (THP)
-```
+```bash
 nano /etc/systemd/system/disable-thp.service
 [Unit]
 Description=Disable Transparent Huge Pages (THP)
@@ -163,20 +171,20 @@ ExecStart=/bin/sh -c "echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled
 WantedBy=multi-user.target
 ```
 #### NTP Commands
-```
+```bash
 timedatectl
 chronyc sources
 nano /etc/chrony.conf
 nano /etc/ntp.conf
 ```
 #### Process Commands
-```
+```bash
 pgrep
 pkill
 ps -elf
 ```
 #### Permission Commands
-```
+```bash
 visudo
 chmod
 chown
@@ -186,17 +194,17 @@ setfacl -m g:<Group>:r /path/to/folder/or/files
 #### Storage Options
 Option 1: Resize Without Adding a New Disk
 
-```
+```bash
 growpart /dev/sda 3
 lvextend -r -l +100%FREE /dev/mapper/centos-opt
 partprobe
 ```
 OR
-```
+```bash
 fdisk /dev/sda
-1. "d" to delete the only partition /dev/sda has.
-2. "n" to create a new one. Running "n" will make fdisk interactively ask you some parameters for partition creation, you can just hit enter so it uses the default values.
-3. Running the previous command does not write the changes to disk, to do this, you need to run the "w" command.
+# 1. "d" to delete the only partition /dev/sda has.
+# 2. "n" to create a new one. Running "n" will make fdisk interactively ask you some parameters for partition creation, you can just hit enter so it uses the default values.
+# 3. Running the previous command does not write the changes to disk, to do this, you need to run the "w" command.
 partprobe
 lsblk
 xfs_growfs /dev/sda1
@@ -204,7 +212,7 @@ xfs_growfs /dev/sda1
 
 Option 2: Resize by Adding a New Disk
 
-```
+```bash
 # Create physical volume on the new disk
 pvcreate /dev/sda
 
@@ -228,7 +236,7 @@ With crontab, users can schedule scripts, commands, or programs to run at specif
 
 The crontab file follows a specific format.
 
-```
+```bash
 # <Minute> <Hour> <Day of Month> <Month> <Day of Week> Command
 ```
 

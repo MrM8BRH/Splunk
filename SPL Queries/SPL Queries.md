@@ -148,6 +148,15 @@ No Data Received from Windows Servers (Security Logs) Last 7 Days
 | fields - recent latest
 ```
 
+Hosts who haven't sent logs for more than 24 hours
+```
+| tstats latest(_time) as lastLogTime by host
+| where lastLogTime < relative_time(now(), "-24h@h")
+| eval time=strftime(lastLogTime,"%Y-%m-%d %H:%M:%S")
+| table host time
+| sort - time
+```
+
 </details>
 
 <details>

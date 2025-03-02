@@ -148,6 +148,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### VMware
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
+| Splunk Add-on for VMware                      | Splunk LLC | https://splunkbase.splunk.com/app/3215 |
 | Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
 | VMWare Horizon 8 Add-on                       | Scott Horton | https://splunkbase.splunk.com/app/7437 |

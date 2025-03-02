@@ -45,6 +45,21 @@ List All Indexes
 | table title
 ```
 
+List All Indexes with SourceTypes
+```
+| rest /services/data/indexes 
+| rename title AS index 
+| join type=left index [
+    | tstats count WHERE index=* BY index, sourcetype 
+    | stats values(sourcetype) AS sourcetypes BY index 
+  ] 
+| fillnull value="No sourcetypes" sourcetypes 
+| where sourcetypes != "No sourcetypes"
+| eval sourcetypes=mvjoin(sourcetypes, ", ") 
+| sort index 
+| table index sourcetypes
+```
+
 List Splunk Clients
 ```
 | rest /services/deployment/server/clients

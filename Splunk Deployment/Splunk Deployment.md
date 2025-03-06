@@ -287,6 +287,20 @@ server = 192.168.1.50:9997
 - Settings → Indexes - Add indexes like: wineventlog, linux, windows ... etc.
 - Install Addons
 ```
+Disable Splunk Web (optional)
+```
+sudo nano /opt/splunk/etc/system/local/web.conf
+```
+* Add the following lines.
+```
+[settings]
+startwebserver = 0
+```
+* Save the changes and exit the text editor.
+* Restart the Splunk service for the changes to take effect. 
+```
+sudo systemctl restart splunk
+```
 </details>
 
 <details>
@@ -535,24 +549,6 @@ groupdel splunk
 </details>
  
 <details>
-<summary><b>Disable Splunk Web</b></summary>
-  
-```
-sudo nano /opt/splunk/etc/system/local/web.conf
-```
-* Add the following lines.
-```
-[settings]
-startwebserver = 0
-```
-* Save the changes and exit the text editor.
-* Restart the Splunk service for the changes to take effect. 
-```
-sudo systemctl restart splunk
-```
-</details>
-
-<details>
 <summary><b>Uninstall an app or add-on</b></summary>
 
 - Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
@@ -603,26 +599,6 @@ After the restart, a new `passwd` file will be generated, and you should be able
 #######  A storage location for logs  #######
 cd /opt/splunk/var/lib/splunk
 
-#######  Kvstore  #######
-# Path
-/var/lib/splunk/kvstore/mongo
-
-# Status
-/opt/splunk/bin/splunk show kvstore-status --verbose
-
-# Clean
-/opt/splunk/bin/splunk clean kvstore -local
-
-# Migrate
-/opt/splunk/bin/splunk stop
-sudo rm /opt/splunk/var/run/splunk/kvstore_upgrade/*
-touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
-/opt/splunk/bin/splunk migrate kvstore-storage-engine --target-engine wiredTiger --enable-compression
-/opt/splunk/bin/splunk migrate migrate-kvstore # (1) - versionFile40
-/opt/splunk/bin/splunk migrate migrate-kvstore # (2) - versionFile42
-/opt/splunk/bin/splunk start
-/opt/splunk/bin/splunk show kvstore-status --verbose
-
 #######  Troubleshoot  #######
 # Check Splunk Version
 /opt/splunk/bin/splunk -version
@@ -653,6 +629,36 @@ nano /opt/splunk/etc/system/local/web.conf
 [settings]
 x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
+```
+</details>
+
+<details>
+<summary><b>Kvstore</b></summary>
+
+```
+# Path
+/var/lib/splunk/kvstore/mongo
+
+# Status
+/opt/splunk/bin/splunk show kvstore-status --verbose
+
+# Clean
+/opt/splunk/bin/splunk clean kvstore -local
+
+# Migrate
+/opt/splunk/bin/splunk stop
+sudo rm /opt/splunk/var/run/splunk/kvstore_upgrade/*
+touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
+/opt/splunk/bin/splunk migrate kvstore-storage-engine --target-engine wiredTiger --enable-compression
+/opt/splunk/bin/splunk migrate migrate-kvstore # (1) - versionFile40
+/opt/splunk/bin/splunk migrate migrate-kvstore # (2) - versionFile42
+/opt/splunk/bin/splunk start
+/opt/splunk/bin/splunk show kvstore-status --verbose
+
+# KV Store Process Terminated
+/opt/splunk/bin/splunk stop
+sudo rm -rf /data1/kvstore/mongo/mongod.lock
+/opt/splunk/bin/splunk start
 ```
 </details>
 

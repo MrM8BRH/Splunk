@@ -608,7 +608,7 @@ cd /opt/splunk/var/lib/splunk
 /var/lib/splunk/kvstore/mongo
 
 # Status
-/opt/splunk/bin/splunk show kvstore-status
+/opt/splunk/bin/splunk show kvstore-status --verbose
 
 # Clean
 /opt/splunk/bin/splunk clean kvstore -local
@@ -629,6 +629,12 @@ touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
 
 # Troubleshoot configurations
 /opt/splunk/bin/splunk btool check --debug
+
+# Verify Splunk's integrity
+/opt/splunk/bin/splunk validate files
+
+# PostgreSQL binaries are located in
+/opt/splunk/bin/
 
 # Troubleshoot license
 /opt/splunk/bin/splunk btool server list --debug license

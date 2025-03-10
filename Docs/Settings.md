@@ -1,6 +1,25 @@
 #### Enable Advanced Security Audit Policy
 gpedit.msc → Computer Configuration → Windows Settings → Security Settings → Advanced Audit Policy Configuration → System Audit Policies - Local Group Policy Object.
 
+#### Power
+```
+# View the available CPU speed governors for the first CPU core
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors 
+# Output example: performance powersave
+
+# Check the current CPU governor in use for the first CPU core
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+# Output example: powersave
+
+# Change the CPU governor to 'performance' mode for all CPU cores
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+# This command sets the scaling governor to 'performance' for all CPU cores
+```
+#### BIOS & Firmware Version
+```
+# Display BIOS information from the system's DMI (Desktop Management Interface) data
+sudo dmidecode -t bios
+```
 #### Linux File Permissions
 ```bash
 -rw-r--r-- 12 linuxize users 12.0K Apr  28 10:10 file_name
@@ -35,8 +54,10 @@ firewall-cmd --permanent --add-port=8080/tcp
 firewall-cmd --permanent --add-port=22/tcp
 firewall-cmd --permanent --add-port=53/udp
 firewall-cmd --permanent --add-port=514/tcp
+firewall-cmd --permanent --remove-port=8000/tcp
 firewall-cmd --reload
 ```
+
 ```bash
 systemctl stop firewalld
 systemctl disable firewalld
@@ -91,64 +112,136 @@ auth.info /var/log/sshd.log
 | 7   | Debug         | Debug-level messages              |
 #### MISC
 ```bash
+# Display the contents of the /etc/os-release file to show OS information
 cat /etc/os-release
-uname - a
+
+# Display system information including the kernel version and architecture
+uname -a
+
+# Set the system's hostname to 'host.domain.com'
 hostnamectl set-hostname host.domain.com
+
+# Show the current status of the hostname and related settings
 hostnamectl status
+
+# Display the DNS domain name of the system
 dnsdomainname
+
+# Set the system's timezone to Asia/Jerusalem
 timedatectl set-timezone Asia/Jerusalem
 ```
 #### Memory Commands
 ```bash
-free -m # (1)
-free -h # (2)
+# Display memory usage in megabytes
+free -m
 
-dmidecode --type memory # (2)
+# Display memory usage in a human-readable format (e.g., KB, MB, GB)
+free -h
+
+# Display detailed information about the system's memory (RAM) using DMI data
+dmidecode --type memory
 ```
-#### CPU and CPU Cores Commands
+#### CPU & Processes Commands
 ```bash
+# Display a dynamic real-time view of system processes and resource usage
+top
+
+# Display an enhanced version of top with a more user-friendly interface
+htop
+
+# Display system and process information, including resource usage over time
+atop
+
+# Search for processes by name and return their process IDs
+pgrep
+
+# Kill processes by name using their process IDs
+pkill
+
+# Display detailed information about all running processes
+ps -elf
+
+# Identify processes that are accessing a specific file (e.g., ~/testfile.txt)
+fuser ~/testfile.txt
+
+# Display the number of processing units available to the current process
 nproc
 
-(Threads x Cores) x Physical CPU Number = Number of vCPUs
+# Display the total number of processing units available, including all cores and threads
+nproc --all
 
+# Calculate the number of virtual CPUs (vCPUs) based on the formula provided
+# (Threads x Cores) x Physical CPU Number = Number of vCPUs
+
+# Display detailed information about the CPU architecture and configuration
 lscpu 
-# - Look for the following fields:
+# Look for the following fields:
 #     - CPU(s): Total number of logical CPUs (vCPUs).
 #     - Core(s) per socket: Number of physical cores per CPU socket.
 #     - Socket(s): Number of physical CPU sockets.
 #     - Model name: CPU model and speed (e.g., `2.20 GHz`).
 
+# Count the number of logical processors (vCPUs) available on the system
 cat /proc/cpuinfo | grep processor | wc -l
 
+# Display detailed information about the system's processors using DMI data
 dmidecode --type processor
-```
-#### Check disk type and performance
-```bash
-lsblk -d -o name,rota
-# - rota=1: Rotational disk (HDD).
-# - rota=0 Non-rotational disk (SSD).
 ```
 #### Storage Commands
 ```bash
-du -csh # (1)
-lsblk # (2)
-df -h /opt/splunk / # (3)
-fdisk -l # (4)
-fdisk /dev/sda # (5)
-vgdisplay # (6)
+# Display the total disk usage of the current directory and its subdirectories in a human-readable format
+du -csh
+
+# List all block devices, including partitions and their mount points
+lsblk
+
+# Display disk space usage for the specified directories (/opt/splunk and /) in a human-readable format
+df -h /opt/splunk /
+
+# List all disk partitions and their details
+fdisk -l
+
+# Open the fdisk utility to manage partitions on the specified disk (/dev/sda)
+fdisk /dev/sda
+
+# Display information about volume groups in the Logical Volume Manager (LVM)
+vgdisplay
+
+# Display real-time I/O usage by processes
+iotop #
+
+# Check the type of disk (rotational or non-rotational) and its performance
+lsblk -d -o name,rota
+### - rota=1: Rotational disk (HDD).
+### - rota=0: Non-rotational disk (SSD).
 ```
 #### Network Commands
 ```bash
-vi /etc/sysconfig/network-scripts/ifcfg-<int> # (1)
-route -n # (2)
-ip a # (3)
-hostname -I # (4)
-tcpdump -i eth3 -n tcp and host 192.168.1.50 and (port 80 or port 443) # (5)
-nc -zv <IP Address> <Port> # (6)
-telnet <IP Address> <Port> # (7)
-nmtui # (8)
+# Open the network interface configuration file for the specified interface in the vi editor
+vi /etc/sysconfig/network-scripts/ifcfg-<int>
 
-# Check the speed of the NIC:
+# Display the kernel routing table in a numeric format
+route -n
+
+# Show all network interfaces and their current IP addresses
+ip a
+
+# Display the IP addresses assigned to the host
+hostname -I #
+
+# Capture and display TCP packets on interface eth3 for the specified host and ports (80 and 443)
+tcpdump -i eth3 -n tcp and host 192.168.1.50 and (port 80 or port 443)
+
+# Check if a specific port is open on a given IP address using netcat
+nc -zv <IP Address> <Port>
+
+# Connect to a specific IP address and port using telnet
+telnet <IP Address> <Port>
+
+# Open the NetworkManager TUI (Text User Interface) for managing network connections
+nmtui
+
+# Check the speed of the network interface card (NIC) for the specified interface
 sudo ethtool enp2s0 | grep Speed:
 ```
 #### Disable SELinux
@@ -170,84 +263,109 @@ ExecStart=/bin/sh -c "echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled
 [Install]
 WantedBy=multi-user.target
 ```
+
+```
+systemctl daemon-reload
+systemctl start disable-thp
+systemctl enable disable-thp
+```
 #### NTP Commands
 ```bash
+# Display the current system time, timezone, and NTP synchronization status
 timedatectl
+
+# Display the sources that chrony is using for time synchronization
 chronyc sources
+
+# Open the chrony configuration file in the nano text editor for editing
 nano /etc/chrony.conf
+
+# Open the NTP configuration file in the nano text editor for editing
 nano /etc/ntp.conf
-```
-#### Process Commands
-```bash
-pgrep
-pkill
-ps -elf
 ```
 #### Permission Commands
 ```bash
+# Open the sudoers file for editing with the visudo command
 visudo
+
+# Change the permissions of a file or directory (usage example: chmod 755 filename)
 chmod
+
+# Change the ownership of a file or directory (usage example: chown user:group filename)
 chown
+
+# Modify the Access Control List (ACL) to give a specific user read permission on a folder or file
 setfacl -m u:<User>:r /path/to/folder/or/files
+
+# Modify the Access Control List (ACL) to give a specific group read permission on a folder or file
 setfacl -m g:<Group>:r /path/to/folder/or/files
 ```
 #### Storage Options
 Option 1: Resize Without Adding a New Disk
-
 ```bash
+# Resize the specified partition (3rd partition on /dev/sda) to fill the available space
 growpart /dev/sda 3
+
+# Extend the logical volume 'opt' to use all available free space in the volume group, and resize the filesystem
 lvextend -r -l +100%FREE /dev/mapper/centos-opt
+
+# Inform the operating system of partition table changes (useful after modifying partitions)
 partprobe
 ```
 OR
 ```bash
+# Open the fdisk utility to manage partitions on the specified disk (/dev/sda)
 fdisk /dev/sda
-# 1. "d" to delete the only partition /dev/sda has.
-# 2. "n" to create a new one. Running "n" will make fdisk interactively ask you some parameters for partition creation, you can just hit enter so it uses the default values.
-# 3. Running the previous command does not write the changes to disk, to do this, you need to run the "w" command.
+
+# Inside fdisk:
+# 1. Press "d" to delete the only partition on /dev/sda.
+# 2. Press "n" to create a new partition. Follow the prompts and hit enter to accept the default values.
+# 3. After making changes, press "w" to write the changes to disk and exit fdisk.
+
+# Inform the operating system of partition table changes (useful after modifying partitions)
 partprobe
+
+# List all block devices and their mount points to verify the changes
 lsblk
+
+# Resize the XFS filesystem on the specified partition (/dev/sda1) to use the newly allocated space
 xfs_growfs /dev/sda1
 ```
-
 Option 2: Resize by Adding a New Disk
-
 ```bash
-# Create physical volume on the new disk
+# Create a physical volume on the new disk (/dev/sda) for use with LVM
 pvcreate /dev/sda
 
-# Display volume group information
+# Display information about the volume groups, including size and available space
 vgdisplay
 
-# Extend volume group with the new disk
+# Extend the specified volume group (<VG Name>) to include the new physical volume (/dev/sda)
 vgextend <VG Name> /dev/sda
 
-# Resize logical volume
+# Resize the logical volume 'opt' within the specified volume group to use all available free space, and resize the filesystem
 lvextend -r -l +100%FREE /dev/mapper/<VG Name>-opt
 
-# Update partition information
+# Inform the operating system of partition table changes (useful after modifying partitions)
 partprobe
 ```
 #### Crontab
-[Crontab Guru](https://crontab.guru/)
-Crontab is a time-based job scheduling program used in Unix-like operating systems to schedule recurring tasks or jobs. The name "crontab" comes from "cron," the daemon (background process) that runs scheduled tasks, and "tab," which is short for "table" since the scheduling information is organized in tabular form.
+**Overview:** Crontab is a time-based job scheduling program in Unix-like operating systems, allowing users to automate recurring tasks. The term "crontab" combines "cron" (the daemon that executes scheduled tasks) and "tab" (short for table, as the scheduling information is organized in a tabular format).
 
-With crontab, users can schedule scripts, commands, or programs to run at specified intervals or times, such as daily, weekly, monthly, or even at specific minutes within an hour. This makes it particularly useful for automating repetitive tasks, maintenance activities, or any operation that needs to be executed on a regular basis.
+**Usage:** Crontab is ideal for scheduling scripts, commands, or programs to run at specified intervals (e.g., daily, weekly, monthly, or specific minutes within an hour). It is particularly useful for automating repetitive tasks and maintenance activities.
 
-The crontab file follows a specific format.
-
+**Crontab File Format:** The crontab file follows this structure:
 ```bash
 # <Minute> <Hour> <Day of Month> <Month> <Day of Week> Command
 ```
 
-Each line in the crontab file represents a scheduled task or command. Here's a breakdown of the different fields:
-- Minute: Specifies the minute(s) at which the task should run. Valid values are 0 to 59.
-- Hour: Specifies the hour(s) at which the task should run. Valid values are 0 to 23.
-- Day of Month: Specifies the day(s) of the month when the task should run. Valid values are 1 to 31.
-- Month: Specifies the month(s) when the task should run. Valid values are 1 to 12 or their corresponding names (e.g., Jan, Feb, etc.).
-- Day of Week: Specifies the day(s) of the week when the task should run. Valid values are 0 to 7 or their corresponding names (0 or 7 represents Sunday).
-- Command: The actual command or script to be executed at the specified time and date.
+**Field Breakdown:**
+- **Minute:** 0-59 (when the task runs)
+- **Hour:** 0-23 (when the task runs)
+- **Day of Month:** 1-31 (when the task runs)
+- **Month:** 1-12 or names (e.g., Jan, Feb)
+- **Day of Week:** 0-7 or names (0/7 = Sunday)
+- **Command:** The command or script to execute
 
-To schedule a task, you need to add a line to your crontab file following this format. Each field is separated by spaces or tabs, and you can use asterisks (*) to represent any value.
+**Scheduling a Task:** To schedule a task, add a line to your crontab file using the specified format. Fields are separated by spaces or tabs, and asterisks (*) can be used to represent any value.
 
-Remember to run the `crontab -e` command to edit the crontab file for the current user.
+**Editing Crontab:** Use the command `crontab -e` to edit the crontab file for the current user.

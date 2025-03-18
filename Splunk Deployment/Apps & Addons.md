@@ -45,6 +45,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk App for Fraud Analytics     | Splunk Inc                 | https://splunkbase.splunk.com/app/6250 |
 | Splunk App for Splunk Attack Analyzer | Splunk Inc              | https://splunkbase.splunk.com/app/7000 |
 | Splunk Add-On for Splunk Attack Analyzer | Splunk Inc           | https://splunkbase.splunk.com/app/6999 |
+| NVD-CVE-Fetcher-App                | Metron Consulting LLC      | https://splunkbase.splunk.com/app/7121 |
 
 ### Apps
 |                Name                |          Built by          |                   URL                  |

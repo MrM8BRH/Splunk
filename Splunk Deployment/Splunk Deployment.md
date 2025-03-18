@@ -288,6 +288,11 @@ server = 192.168.1.50:9997
 - Install Addons
 ```
 Disable Splunk Web (optional)
+# 1
+```
+/opt/splunk/bin/splunk disable webserver
+```
+# 2
 ```
 sudo nano /opt/splunk/etc/system/local/web.conf
 ```
@@ -317,7 +322,7 @@ Storage per day * 3.14
 Storage = Retention + DMA
 ```
 
-`nano /opt/splunk/etc/system/local/indexes.conf`
+`nano /opt/splunk/etc/system/local/indexes.conf`, `nano /opt/splunk/etc/apps/<?>/<local/default>/indexes.conf`
 ```
 [default]
 # maxHotSpanSecs sets the maximum age of data in the "hot" bucket to 90 days.
@@ -346,11 +351,23 @@ Default Index (defaultdb) Directory Structure
 
 Configuring Frozen Storage
 
-`nano /opt/splunk/etc/system/local/indexes.conf`
+`nano /opt/splunk/etc/system/local/indexes.conf`, `nano /opt/splunk/etc/apps/<?>/<local/default>/indexes.conf`
 ```
 coldToFrozenDir = /whatever/path/you/want 
 ```
 
+Volumes Configuraiton 
+```
+[volume:hot_storage]
+path = /mnt/fast_disk
+#Optional limits the volume size to 60 GB
+maxVolumeDataSizeMB = 61440
+
+[volume:cold_storage]
+path = /mnt/slow_disk
+#Optional limits the volume size to 50 GB
+maxVolumeDataSizeMB = 51200
+```
 </details>
 
 <details>
@@ -370,8 +387,8 @@ coldToFrozenDir = /whatever/path/you/want
 - Install Windows/Linux Addons
 ```
 ```
-- mkdir -p /opt/splunk/etc/deployment-apps/output/local
-- nano /opt/splunk/etc/deployment-apps/output/local/outputs.conf
+mkdir -p /opt/splunk/etc/deployment-apps/output/local
+nano /opt/splunk/etc/deployment-apps/output/local/outputs.conf
 ```
 ```
 [tcpout]
@@ -472,6 +489,12 @@ Reload the configuration for the Splunk Deployment Server
 /opt/splunk/bin/splunk reload deploy-server
 ```
 
+Reloads after installation and restarts client if necessary
+```
+[serverClass:<Class Name>]
+issueReload=true
+restartIfNeeded=true
+```
 </details>
 
 <details>
@@ -600,6 +623,15 @@ After the restart, a new `passwd` file will be generated, and you should be able
 cd /opt/splunk/var/lib/splunk
 
 #######  Troubleshoot  #######
+# Btool command:
+/opt/splunk/bin/splunk btool <conf_file_prefix> [list|layer|add|delete] --debug --app=<app_name> --user=<user_name>
+
+# Btool check command to find typos in conf file stanzas:
+/opt/splunk/bin/splunk btool check
+
+# To reset fishbucket for all sources, must execute with caution:
+/opt/splunk/bin/splunk clean eventdata index _thefishbucket
+
 # Check Splunk Version
 /opt/splunk/bin/splunk -version
 
@@ -659,6 +691,23 @@ touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
 /opt/splunk/bin/splunk stop
 sudo rm -rf /data1/kvstore/mongo/mongod.lock
 /opt/splunk/bin/splunk start
+```
+</details>
+
+<details>
+<summary><b>HEC_API_cURL_examples</b></summary>
+
+Sending data as a JSON formatted payload – collector/event request. Make sure to replace with active HEC token and splunk host
+```
+curl –k -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/event -d '{"sourcetype": "signaling_data", "event": "stable signal!"}'
+```
+Sending data as a raw event – Collector/raw request:
+```
+curl –k -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/raw -d 'stable signal!'
+```
+Finding the event indexing status – /ack endpoint request
+```
+curl -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/ack -d '{"acks":[0,1]}'
 ```
 </details>
 

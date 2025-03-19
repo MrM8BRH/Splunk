@@ -28,6 +28,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Infrastructure
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
+| Splunk IT Service Intelligence     | Splunk LLC                 | https://splunkbase.splunk.com/app/1841 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 
@@ -46,6 +47,16 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk App for Splunk Attack Analyzer | Splunk Inc              | https://splunkbase.splunk.com/app/7000 |
 | Splunk Add-On for Splunk Attack Analyzer | Splunk Inc           | https://splunkbase.splunk.com/app/6999 |
 | NVD-CVE-Fetcher-App                | Metron Consulting LLC      | https://splunkbase.splunk.com/app/7121 |
+
+### Splunk UBA
+| Name                                            | Built by         | URL                                    |
+|-------------------------------------------------|------------------|----------------------------------------|
+| Splunk User Behavior Analytics (Splunk UBA)     | Splunk LLC       | https://splunkbase.splunk.com/app/2941 |
+| Splunk UBA Software Installation Package        | Splunk LLC       | https://splunkbase.splunk.com/app/3463 |
+| Splunk UBA Software Upgrade Package             | Splunk LLC       | https://splunkbase.splunk.com/app/3462 |
+| Splunk UBA Monitoring App                       | Splunk Works     | https://splunkbase.splunk.com/app/4441 |
+| Splunk UBA Content Updates                      | Splunk LLC       | https://splunkbase.splunk.com/app/3595 |
+| Splunk UBA Kafka Ingestion App                  | Splunk LLC       | https://splunkbase.splunk.com/app/4147 |
 
 ### Apps
 |                Name                |          Built by          |                   URL                  |
@@ -149,10 +160,15 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### VMware
 |                      Name                     |  Built by  |                   URL                  |
 |-----------------------------------------------|------------|----------------------------------------|
-| Splunk Add-on for VMware                      | Splunk LLC | https://splunkbase.splunk.com/app/3215 |
+| Splunk Add-on for VMware Metrics              | Splunk LLC | https://splunkbase.splunk.com/app/5089 |
 | Splunk Add-on for vCenter Logs                | Splunk Inc | https://splunkbase.splunk.com/app/5601 |
 | Splunk Add-on for VMware ESXi Logs            | Splunk Inc | https://splunkbase.splunk.com/app/5603 |
-| VMWare Horizon 8 Add-on                       | Scott Horton | https://splunkbase.splunk.com/app/7437 |
+| Atlas ITSI Content Pack for VMware Vcenter  | Kinney Group | https://splunkbase.splunk.com/app/7400 |
+| Splunk Add-on for VMware                      | Splunk LLC | https://splunkbase.splunk.com/app/3215 |
+| Splunk Add-on for VMware Indexes              | Splunk LLC | https://splunkbase.splunk.com/app/5640 |
+| VMWare Horizon 8 Add-on                     | Scott Horton | https://splunkbase.splunk.com/app/7437 |
+| Splunk OVA for VMware                         | Splunk LLC | https://splunkbase.splunk.com/app/3216 |
+| Splunk VMware OVA for ITSI                    | Splunk LLC | https://splunkbase.splunk.com/app/4760 |
 
 ### Aruba
 | Name                                    | Built by        | URL                                    |
@@ -230,6 +246,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### CCX Add-ons
 |                      Name                     |      Built by      |                   URL                  |
 |-----------------------------------------------|--------------------|----------------------------------------|
+| CCX CrowdStrike Products Extensions           | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6380 |
 | CCX Add-on for ManageEngine Products          | Henrique Linsmeyer | https://splunkbase.splunk.com/app/7004 |
 | CCX Unified Add-on for Cisco Firepower        | Henrique Linsmeyer | https://splunkbase.splunk.com/app/5543 |
 | CCX CrowdStrike Products Extensions           | Henrique Linsmeyer | https://splunkbase.splunk.com/app/6380 |

@@ -31,6 +31,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk IT Service Intelligence     | Splunk LLC                 | https://splunkbase.splunk.com/app/1841 |
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
+| Splunk App for Content Packs       | Splunk LLC                 | https://splunkbase.splunk.com/app/5391 |
 
 ### Security
 |                Name                |          Built by          |                   URL                  |
@@ -239,7 +240,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |                      Name                     |   Built by   |                   URL                  |
 |-----------------------------------------------|--------------|----------------------------------------|
 | SWIFT AGI Add-on for Splunk                   | Diogo Silva  | https://splunkbase.splunk.com/app/7657 |
-| Splunk App for Content Packs                  | Splunk LLC   | https://splunkbase.splunk.com/app/5391 |
 | Splunk Add-on for JBoss                       | Splunk Inc   | https://splunkbase.splunk.com/app/2954 |
 | Kaspersky Add-on for Splunk                   | Diogo Silva  | https://splunkbase.splunk.com/app/4656 |
 

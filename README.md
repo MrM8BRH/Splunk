@@ -24,23 +24,18 @@ Gartner Magic Quadrant for Security Information and Event Management (2024)
 
 </div>
 
-Table of Contents
+Quick access
 -----------------
 - Splunk Deployment
     - [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
-    - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
     - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
+    - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
     - [Firewall rules](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Firewall%20rules.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
-    - [Indexer cluster deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Indexer%20cluster%20deployment.md)
     - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20ES.md)
 
 - SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
     - [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)
     - [Dashboards](https://github.com/MrM8BRH/Splunk/tree/main/SPL%20Queries/Dashboards)
- 
-- Docs
-    - [Settings](https://github.com/MrM8BRH/Splunk/blob/main/Docs/Settings.md)
-    - [SSL](https://github.com/MrM8BRH/Splunk/blob/main/Docs/SSL.md)
 

@@ -3,6 +3,17 @@ This is a diagram of Splunk components and network ports that are commonly used 
 
 ![Ports](https://github.com/MrM8BRH/Splunk/assets/34133187/73a05f58-7be5-4b71-ada3-46487459bbc1)
 
+Open required ports (adjust based on your deployment):
+```bash
+sudo firewall-cmd --permanent --add-port=8000/tcp  # Splunk Web
+sudo firewall-cmd --permanent --add-port=8089/tcp  # Management port
+sudo firewall-cmd --permanent --add-port=9997/tcp  # Forwarder data ingestion
+sudo firewall-cmd --reload
+```
+Verify open ports:
+```bash
+sudo firewall-cmd --list-ports
+```
 ## CrowdStrike
 ```
 https://api.us-2.crowdstrike.com

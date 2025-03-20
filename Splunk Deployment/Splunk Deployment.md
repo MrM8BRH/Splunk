@@ -106,6 +106,7 @@ ntpq -p
 <details>
 <summary><b>Disable SELinux</b></summary>
 
+SELinux can interfere with Splunk operations. Set it to `permissive` or `disabled`:
 ```
 # Check the current status and mode of SELinux.
 sestatus
@@ -116,6 +117,31 @@ nano /etc/selinux/config
 # A configuration option that can be set in the SELinux configuration file to disable SELinux on the system,
 # preventing it from enforcing security policies.
 SELINUX=disabled
+```
+Apply immediately:
+```
+sudo setenforce 0
+```
+</details>
+
+<details>
+<summary><b>Set Ulimits</b></summary>
+
+Increase file descriptors and process limits for the splunk user:
+```
+sudo vi /etc/security/limits.conf
+```
+Add:
+```
+splunk   soft   nofile   65535
+splunk   hard   nofile   65535
+splunk   soft   nproc    20480
+splunk   hard   nproc    20480
+```
+Verify after reboot:
+```
+ulimit -n  # Should return 65535
+ulimit -u  # Should return 20480
 ```
 </details>
 
@@ -132,6 +158,9 @@ systemctl disable firewalld
 <details>
 <summary><b>Disable Transparent Huge Pages (THP)</b></summary>
 
+Splunk recommends disabling THP for performance optimization
+
+Option1
 *   `nano /etc/systemd/system/disable-thp.service`
 ```
 [Unit]
@@ -150,6 +179,14 @@ systemctl daemon-reload
 systemctl start disable-thp
 systemctl enable disable-thp
 ```
+Option2
+```bash
+echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+```
+Persist this change across reboots by editing `/etc/rc.local`.
+
+
 </details>
 
 ```diff

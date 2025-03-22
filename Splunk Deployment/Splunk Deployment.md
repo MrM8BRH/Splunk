@@ -774,3 +774,19 @@ When you copy individual bucket files, you must make sure that no bucket IDs con
 5. Restart Splunk Enterprise.
 
 </details>
+
+<details>
+<summary><b>Anonymize data</b></summary>
+
+Prerequisites to [anonymize data](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/Anonymizedata)
+Before you can anonymize data, you must select a set of events to anonymize.
+
+- First, you select the events to anonymize
+- Then, you either:
+    - Use the props.conf configuration file to anonymize the events with a sed script
+    - Use the props.conf and transforms.conf configuration files to anonymize the events with a regular expression transform
+ 
+```
+SEDCMD-maskCC = s/-\d{4}-\d{4}-\d{4}/-XXXX-XXXX-XXXX/g
+```
+</details>

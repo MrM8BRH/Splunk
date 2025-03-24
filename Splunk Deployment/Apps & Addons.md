@@ -62,6 +62,7 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Apps
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
+| Index Estimator                    | TekStream Solutions        | https://splunkbase.splunk.com/app/4549 |
 | Broken Hosts App for Splunk        | Hurricane Labs             | https://splunkbase.splunk.com/app/3247 |
 | Searchbase App for Splunk          | Splunk Works               | https://splunkbase.splunk.com/app/7188 |
 | Network Toolkit                    | Luke Murphey               | https://splunkbase.splunk.com/app/3491 |

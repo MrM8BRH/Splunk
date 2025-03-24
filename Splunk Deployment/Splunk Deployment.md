@@ -238,8 +238,19 @@ TasksMax=8192
 ```
 systemctl daemon-reload
 ```
+Cgroup Version
+```
+# Checking cgroup Version via `/proc/filesystems`
+grep cgroup /proc/filesystems
 
-![image](https://github.com/user-attachments/assets/41f8d0af-bc3d-4b95-b751-76fc99db3361)
+# Output Interpretation
+# Systems Supporting cgroupv2
+nodev   cgroup
+nodev   cgroup2
+
+# Systems with cgroupv1 Only
+nodev   cgroup
+```
 </details>
 
 <details>

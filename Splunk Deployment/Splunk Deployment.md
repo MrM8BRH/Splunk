@@ -776,9 +776,11 @@ When you copy individual bucket files, you must make sure that no bucket IDs con
 </details>
 
 <details>
-<summary><b>Anonymize data</b></summary>
+<summary><b>Custom Configuration</b></summary>
 
-Prerequisites to [anonymize data](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/Anonymizedata)
+**Anonymize data**
+
+Prerequisites to [anonymize data](https://docs.splunk.com/Documentation/Splunk/latest/Data/Anonymizedata)
 Before you can anonymize data, you must select a set of events to anonymize.
 
 - First, you select the events to anonymize
@@ -789,4 +791,6 @@ Before you can anonymize data, you must select a set of events to anonymize.
 ```
 SEDCMD-maskCC = s/-\d{4}-\d{4}-\d{4}/-XXXX-XXXX-XXXX/g
 ```
+
+[**Monitor changes to your file system**](https://docs.splunk.com/Documentation/Splunk/latest/Data/Monitorchangestoyourfilesystem)
 </details>

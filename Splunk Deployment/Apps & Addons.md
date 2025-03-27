@@ -32,6 +32,8 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | IT Essentials Work                 | Splunk Inc                 | https://splunkbase.splunk.com/app/5403 |
 | IT Essentials Learn                | Splunk Inc                 | https://splunkbase.splunk.com/app/5390 |
 | Splunk App for Content Packs       | Splunk LLC                 | https://splunkbase.splunk.com/app/5391 |
+| Cyences App for Splunk             | Crossrealms International  | https://splunkbase.splunk.com/app/5351 |
+| Cyences Add-on for Splunk          | Crossrealms International  | https://splunkbase.splunk.com/app/5659 |
 
 ### Security
 |                Name                |          Built by          |                   URL                  |

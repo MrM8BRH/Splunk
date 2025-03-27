@@ -141,6 +141,7 @@ Examples:
 ```
 Resources
 ---------
+- [Leveraging Windows Event Log Filtering and Design Techniques in Splunk](https://hurricanelabs.com/splunk-tutorials/leveraging-windows-event-log-filtering-and-design-techniques-in-splunk/)
 - [Install a Windows universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller)
 - [Install a *nix universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/Installanixuniversalforwarder)
 - [Configure the Splunk Add-on for Windows](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration)

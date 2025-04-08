@@ -736,12 +736,18 @@ touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
 /opt/splunk/bin/splunk show kvstore-status --verbose
 
 # KV Store Process Terminated
+### 1
 /opt/splunk/bin/splunk stop
 sudo rm /opt/splunk/var/lib/splunk/kvstore/mongo/mongod.lock
 /opt/splunk/bin/splunk start
-
-
+### 2
+/opt/splunk/bin/splunk stop
+mv /opt/splunk/var/lib/splunk/kvstore/mongo /opt/splunk/var/lib/splunk/kvstore/mongo.old
+/opt/splunk/bin/splunk start
+### 3 
+/opt/splunk/bin/splunk stop
 chmod 700 /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key
+/opt/splunk/bin/splunk start
 ```
 </details>
 

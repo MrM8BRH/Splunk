@@ -140,6 +140,11 @@ Splunk Connect for Syslog (SC4S)
 - [Official website](https://splunk.github.io/splunk-connect-for-syslog/main/)
 - [Configure your SC4S disk buffer](https://splunk.github.io/splunk-connect-for-syslog/main/configuration/#configure-your-sc4s-disk-buffer)
 
+Blog
+- [Splunk Connect for Syslog: Turnkey and Scalable Syslog GDI - Part 1](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-connect-for-syslog-turnkey-and-scalable-syslog-gdi.html)
+- [Splunk Connect for Syslog: Turnkey and Scalable Syslog GDI - Part 2](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-connect-for-syslog-turnkey-and-scalable-syslog-gdi-part-2.html)
+- [Splunk Connect for Syslog: Turnkey and Scalable Syslog GDI - Part 3](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-connect-for-syslog-turnkey-and-scalable-syslog-gdi-part-3.html)
+- [Splunk Connect for Syslog: Turnkey and Scalable Syslog GDI - Part 4](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-connect-for-syslog-turnkey-and-scalable-syslog-gdi-part-4.html)
 ### Index Configuration (Indexer Server)
 SC4S is pre-configured to map each sourcetype to a typical index. For new installations, it is best practice to create them in Splunk when using the SC4S defaults. SC4S can be easily customized to use different indexes if desired.
 - email

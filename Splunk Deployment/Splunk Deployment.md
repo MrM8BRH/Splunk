@@ -709,6 +709,12 @@ nano /opt/splunk/etc/system/local/web.conf
 [settings]
 x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
+
+#######  RPM  #######
+sudo rm -rf /var/lib/rpm/__db*
+rpm --rebuilddb
+sudo rpm -i --nosignature <package>
+mv /etc/init.d /etc/init.d.bak
 ```
 </details>
 

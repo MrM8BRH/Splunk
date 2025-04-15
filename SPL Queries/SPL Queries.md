@@ -129,6 +129,19 @@ index=_internal sourcetype=splunkd component=LineBreakingProcessor
 <details>
 <summary><b>Data & Agent</b></summary>
 
+Find the retention period of an index
+```
+| rest splunk_server=splunk-idx01 /services/data/indexes
+   | join type=outer title [
+     | rest splunk_server=splunk-idx01 /services/data/indexes-extended
+   ]
+|  eval retentionInDays=frozenTimePeriodInSecs/86400
+| table title retentionInDays
+```
+Find license usage by indexes
+```
+index=_internal source="*license_usage.log" type=usage idx="*" | eval MB = round(b/1048576,2) | eval st_idx = st.": ".idx | timechart span=1d sum(MB) by st_idx | addtotals
+```
 Missing Forwarders (5 min = 900 sec)
 ```
 | REST /services/deployment/server/clients

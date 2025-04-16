@@ -131,7 +131,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Name                                 | Built by         | URL                                    |
 |--------------------------------------|------------------|----------------------------------------|
 | Forcepoint ONE App for Splunk        | Yogesh Rao       | https://splunkbase.splunk.com/app/7284 |
+| bd-fp-splunk-app                     | Forcepoint       | https://github.com/Forcepoint/fp-bd-splunk-app |
+| bd-dep-splunk-universal-forwarder    | Forcepoint       | https://github.com/Forcepoint/fp-bd-splunk-universal-forwarder |
 | Splunk Add-on for Forcepoint Web Security | Splunk LLC  | https://splunkbase.splunk.com/app/2966 |
+
 
 ### Trend Micro
 | Name                                 | Built by         | URL                                    |

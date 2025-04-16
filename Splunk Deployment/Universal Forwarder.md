@@ -53,6 +53,22 @@ mkssys -G splunk -s splunkd -p <path to splunkd> -u <splunk user> -a _internal_e
 - /usr/bin/startsrc -s splunkd to start the forwarder.
 - /usr/bin/stopsrc -s splunkd to stop the forwarder.
 ```
+## Upgrade Splunk Universal Forwarder on linux
+- Windows OS
+```
+Stop-Service SplunkForwarder
+msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
+```
+- Linux OS
+```
+/opt/splunkforwarder/bin/splunk stop
+useradd splunkfwd
+rpm -Uvh splunkuniversalforwarder_x64.rpm # Using RPM
+tar -xzvf splunkuniversalforwarder_x64.tgz -C /opt/ # Using TAR
+/opt/splunkforwarder/bin/splunk disable boot-start
+/opt/splunkforwarder/bin/splunk enable boot-start --accept-license --no-prompt --answer-yes
+/opt/splunkforwarder/bin/splunk start
+```
 ## Uninstall Splunk Universal Forwarder on Linux
 ```
 # Stop Splunk Universal Forwarder

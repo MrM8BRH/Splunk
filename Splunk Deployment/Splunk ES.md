@@ -50,6 +50,13 @@ Configuration
   - Type: Event-based detection
 - Security Content → Security use case library
 
+- Search Macros
+  - o365-index-value
+  - aws-index-value
+  - linux_auditd
+  - linux_hosts
+  - sysmon
+
 List all ES Correlation Searches 
 ```
 | rest splunk_server=local count=0 /services/saved/searches 

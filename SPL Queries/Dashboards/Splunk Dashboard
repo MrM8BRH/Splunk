@@ -471,13 +471,13 @@ physicalMemoryGB</query>
 | eval ulimits.data_segment_size = if(isnotnull('ulimits.data_segment_size'), 'ulimits.data_segment_size', "unavailable") 
 | eval ulimits.open_files = if(isnotnull('ulimits.open_files'), 'ulimits.open_files', "unavailable") 
 | eval ulimits.user_processes = if(isnotnull('ulimits.user_processes'), 'ulimits.user_processes', "unavailable") 
-| eval sev_segment_size = case('ulimits.data_segment_size' == -1 OR 'ulimits.data_segment_size' &gt;= 1073741824, 0, 'ulimits.data_segment_size' == "unavailable", -1, True(), 2) 
+| eval sev_segment_size = case('ulimits.data_segment_size' == -1 OR 'ulimits.data_segment_size' &gt;= 20000000000, 0, 'ulimits.data_segment_size' == "unavailable", -1, True(), 2) 
 | eval sev_open_files = case('ulimits.open_files' == -1 OR 'ulimits.open_files' &gt;= 64000, 0, 'ulimits.open_files' == "unavailable", -1, True(), 2) 
 | eval sev_user_processes = case('ulimits.user_processes' == -1 OR 'ulimits.user_processes' &gt;= 16000, 0, 'ulimits.user_processes' == "unavailable", -1, True(), 2) 
 | eval severity_level = max(sev_segment_size, sev_open_files, sev_user_processes) 
 | fields splunk_server ulimits.data_segment_size ulimits.open_files ulimits.user_processes severity_level 
 | rename splunk_server AS instance ulimits.data_segment_size AS "ulimits.data_segment_size (current / recommended)" ulimits.open_files AS "ulimits.open_files (current / recommended)" ulimits.user_processes AS "ulimits.user_processes (current / recommended)" 
-| fieldformat ulimits.data_segment_size (current / recommended) = (if('ulimits.data_segment_size (current / recommended)' &gt;= 0, 'ulimits.data_segment_size (current / recommended)', 'ulimits.data_segment_size (current / recommended)'))." / 1073741824" 
+| fieldformat ulimits.data_segment_size (current / recommended) = (if('ulimits.data_segment_size (current / recommended)' &gt;= 0, 'ulimits.data_segment_size (current / recommended)', 'ulimits.data_segment_size (current / recommended)'))." / 20000000000" 
 | fieldformat ulimits.open_files (current / recommended) = (if('ulimits.open_files (current / recommended)' &gt;= 0, 'ulimits.open_files (current / recommended)', 'ulimits.open_files (current / recommended)'))." / 64000" 
 | fieldformat ulimits.user_processes (current / recommended) = (if('ulimits.user_processes (current / recommended)' &gt;= 0, 'ulimits.user_processes (current / recommended)', 'ulimits.user_processes (current / recommended)'))." / 16000" 
 | fields - _timediff</query>

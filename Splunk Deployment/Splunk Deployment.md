@@ -521,6 +521,8 @@ cp /opt/splunk/etc/deployment-apps/Splunk_TA_nix/default/inputs.conf /opt/splunk
 # Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 ```
+[Enable data and scripted inputs for the Splunk Add-on for Unix and Linux](https://splunk.github.io/splunk-add-on-for-unix-and-linux/Enabledataandscriptedinputs/)
+
 *    `Settings → Forwarder management → Server Classes`
 ```
 Create:
@@ -581,22 +583,6 @@ chown -R splunk:splunk /opt/splunk
 
 # Start Splunk
 /opt/splunk/bin/splunk start
-```
-
-Mass deployment (Upgrade)
-- Windows OS
-```
-Stop-Service SplunkForwarder
-msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
-```
-- Linux OS
-```
-/opt/splunkforwarder/bin/splunk stop
-useradd splunkfwd
-rpm -Uvh splunkuniversalforwarder_x64.rpm
-/opt/splunkforwarder/bin/splunk disable boot-start
-/opt/splunkforwarder/bin/splunk enable boot-start --accept-license --no-prompt --answer-yes
-/opt/splunkforwarder/bin/splunk start
 ```
 </details>
 

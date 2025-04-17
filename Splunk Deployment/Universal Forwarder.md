@@ -63,6 +63,7 @@ msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
 ```
 /opt/splunkforwarder/bin/splunk stop
 useradd splunkfwd
+chown -R splunkfwd:splunkfwd /opt/splunkforwarder/
 rpm -Uvh splunkuniversalforwarder_x64.rpm # Using RPM
 tar -xzvf splunkuniversalforwarder_x64.tgz -C /opt/ # Using TAR
 /opt/splunkforwarder/bin/splunk disable boot-start

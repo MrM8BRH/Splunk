@@ -805,4 +805,16 @@ SEDCMD-maskCC = s/-\d{4}-\d{4}-\d{4}/-XXXX-XXXX-XXXX/g
 ```
 
 [**Monitor changes to your file system**](https://docs.splunk.com/Documentation/Splunk/latest/Data/Monitorchangestoyourfilesystem)
+```
+[fschange:/opt/test]
+index = fschange
+recurse = true
+pollPeriod = 10
+signedaudit = false
+fullEvent = true
+sendEventMaxSize = 1048576
+crcSalt = <SOURCE>
+sourcetype = fs_notification
+```
+
 </details>

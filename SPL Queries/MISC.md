@@ -1,3 +1,16 @@
+## Windows Security Log Events
+- [Eventlog Compendium](https://eventlog-compendium.streamlit.app/)
+- [Windows Security Log Events](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
+- [Windows security encyclopedia](https://www.windows-security.org/windows-event-ids)
+- [Windows Event Log Analysis](https://cybersecuritynews.com/windows-event-log-analysis/)
+- [Security Log Defined](https://system32.eventsentry.com/)
+
+## Resources
+- [Security Content](https://research.splunk.com/detections/)
+- [Splunk Use Cases](https://0xcybery.github.io/blog/Splunk+Use+Cases)
+- [GoSplunk](https://gosplunk.com/)
+- [Splunk ES Queries](https://github.com/shauntdergrigorian/splunkqueries)
+
 [ITOps](https://lantern.splunk.com/Observability/UCE/Foundational_Visibility/IT_Ops)
 
 <details>

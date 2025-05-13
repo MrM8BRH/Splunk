@@ -57,6 +57,14 @@ Configuration
   - linux_hosts
   - sysmon
 
+Queries
+```
+`notable` | search NOT `suppression` 
+```
+```
+| inputlookup append=t es_notable_events
+```
+
 List all ES Correlation Searches 
 ```
 | rest splunk_server=local count=0 /services/saved/searches 

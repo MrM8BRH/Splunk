@@ -12,6 +12,6 @@ Body Format:
 ```
 {
   "chat_id": "-########",
-  "text": "Alert from Splunk: $result.*$"
+  "text": "Alert from Splunk:\n$result.*$"
 }
 ```

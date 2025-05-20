@@ -16,3 +16,12 @@
  
 [Fortinet-Splunk-Deployment-Guide](https://www.fortinet.com/content/dam/fortinet/assets/alliances/Fortinet-Splunk-Deployment-Guide.pdf)
 [Technical Tip: How to configure syslog on FortiGate ](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Change-Source-IP-for-SYSLOG/ta-p/230218)
+
+FortiGate Firewall Side
+```
+config log syslogd2 setting
+    set status enable
+    set server "Syslog IP"
+    set source-ip "Forti Mgmt IP"
+end
+```

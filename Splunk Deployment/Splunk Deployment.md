@@ -127,21 +127,26 @@ sudo setenforce 0
 <details>
 <summary><b>Set Ulimits</b></summary>
 
-Increase file descriptors and process limits for the splunk user:
+Increase file descriptors and process limits for the splunk user
+
+Create or edit a file in `/etc/security/limits.d/` to set limits for the Splunk user (default: `splunk`):
 ```
-sudo vi /etc/security/limits.conf
+sudo nano /etc/security/limits.d/99-splunk.conf
 ```
-Add:
+Add the following lines (replace `splunk` with your Splunk user if different):
 ```
-splunk   soft   nofile   65535
-splunk   hard   nofile   65535
-splunk   soft   nproc    20480
-splunk   hard   nproc    20480
+splunk soft data 19531250
+splunk hard data 19531250
+splunk soft nofile 64000
+splunk hard nofile 64000
+splunk soft nproc 16000
+splunk hard nproc 16000
 ```
 Verify after reboot:
 ```
 ulimit -n  # Should return 65535
 ulimit -u  # Should return 20480
+ulimit -d  # Should return 19531250
 ```
 </details>
 

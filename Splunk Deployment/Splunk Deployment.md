@@ -1,19 +1,4 @@
 <details>
-<summary><b>Distributed Deployment</b></summary>
-  
-[Types of distributed deployments](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics)
-- Departmental. A single instance that combines indexing and search management functions.
-- [Small enterprise.](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Searchheadwithindexers) One search head with two or three indexers.
-- Medium enterprise. A small search head cluster, with several indexers.
-- Large enterprise. A large search head cluster, with large numbers of indexers.
-
-[Which instance should host the console?](https://docs.splunk.com/Documentation/Splunk/latest/DMC/WheretohostDMC)
-
-[Implement a deployment server cluster](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
-
-</details>
-
-<details>
 <summary><b>Preparing a System Before Splunk Installation</b></summary>
   
 <details>
@@ -190,8 +175,21 @@ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
 echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
 ```
 Persist this change across reboots by editing `/etc/rc.local`.
+</details>
 
+<details>
+<summary><b>Increase Kernel Buffer Sizes</b></summary>
 
+Default Linux kernel settings are not sufficient for high-volume packet capture. Using these settings can cause missing packets and data loss. To avoid this issue, add the following kernel settings to your `/etc/sysctl.conf` file:
+```
+net.core.rmem_default = 33554432
+net.core.rmem_max = 33554432
+net.core.netdev_max_backlog = 10000
+```
+Then run the following to reload the settings: 
+```
+/sbin/sysctl -p
+```
 </details>
 
 ```diff
@@ -205,7 +203,7 @@ reboot
 
 ```
 # Install Splunk using RPM:
-rpm -ivh splunk_package_name.rpm
+rpm -ivh --force splunk_package_name.rpm
 
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt

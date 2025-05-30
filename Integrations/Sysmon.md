@@ -12,4 +12,5 @@ Resources
 - [Splunking with Sysmon Part 3: Detecting PsExec in your Environment](https://hurricanelabs.com/splunk-tutorials/splunking-with-sysmon-part-3-detecting-psexec-in-your-environment/)
 - [Splunking with Sysmon Part 4: Detecting Trickbot](https://hurricanelabs.com/splunk-tutorials/splunking-with-sysmon-part-4-detecting-trickbot/)
 - [Sysmon Installation on Windows Server 2022](https://github.com/techgneek/SOC-Automation-ELK-Stack-EDR/blob/main/Sysmon%20Installation%20on%20Windows%20Server%202022)
+- [Sysmon - DFIR](https://github.com/MHaggis/sysmon-dfir)
 - [Complete Installation, Configuration, and Log Management of Sysinternals Tools and Sysmon for Your Cybersecurity Home Lab](https://iritt.medium.com/complete-installation-configuration-and-log-management-of-sysinternals-tools-and-sysmon-for-your-85505afa9d68)

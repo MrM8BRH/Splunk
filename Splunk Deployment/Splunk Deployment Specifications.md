@@ -1,6 +1,13 @@
+[Types of distributed deployments](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics)
+- Departmental. A single instance that combines indexing and search management functions.
+- [Small enterprise.](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Searchheadwithindexers) One search head with two or three indexers.
+- Medium enterprise. A small search head cluster, with several indexers.
+- Large enterprise. A large search head cluster, with large numbers of indexers.
 - [Reference hardware](https://docs.splunk.com/Documentation/Splunk/latest/Capacity/Referencehardware)
 - [System requirements for use of Splunk Enterprise on-premises](https://docs.splunk.com/Documentation/Splunk/latest/Installation/Systemrequirements#Supported_Operating_Systems)
 - [Minimum specifications for a production deployment (Splunk ES v8)](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.0/planning/minimum-specifications-for-a-production-deployment)
+- [Which instance should host the console?](https://docs.splunk.com/Documentation/Splunk/latest/DMC/WheretohostDMC)
+- [Implement a deployment server cluster](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
 
 ### Distributed Deployment
 

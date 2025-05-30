@@ -203,7 +203,7 @@ reboot
 
 ```
 # Install Splunk using RPM:
-rpm -ivh --force splunk_package_name.rpm
+rpm -ivh --force --nosignature splunk_package_name.rpm
 
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt
@@ -271,6 +271,13 @@ splunkdConnectionTimeout = 3000
 <details>
 <summary><b>Optimization Recommendations</b></summary>
   
+
+- `nano /opt/splunk/etc/system/local/server.conf`
+```
+[general]
+conf_cache_memory_optimization = true
+sessionTimeout = 8h
+```
 In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
@@ -301,13 +308,6 @@ max_searches_perc  = 75
 auto_summary_perc  = 75
 ```
 These adjustments should be aligned with our system requirements and available resources.
-
-`nano /opt/splunk/etc/system/local/server.conf`
-```
-[general]
-conf_cache_memory_optimization = true
-sessionTimeout = 8h
-```
 </details>
   
 <details>
@@ -563,11 +563,10 @@ restartIfNeeded=true
 <details>
 <summary><b>Upgrade Splunk Enterprise (Linux)</b></summary>
   
-[How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
+- [How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
+- [Splunk products version compatibility matrix](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/CompatMatrix)
+- [Compatibility between forwarders and Splunk Enterprise indexers](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/Compatibilitybetweenforwardersandindexers)
 
-[Splunk products version compatibility matrix](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/CompatMatrix)
-
-[Compatibility between forwarders and Splunk Enterprise indexers](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/Compatibilitybetweenforwardersandindexers)
 ```
 # Stop Splunk
 /opt/splunk/bin/splunk stop
@@ -776,18 +775,6 @@ When you migrate on *nix systems, you can extract the tar file you downloaded di
 5. Start Splunk Enterprise on the new instance.
 6. Log into Splunk Enterprise with your existing credentials.
 7. After you log in, confirm that your data is intact by searching it.
-
-**How to move index buckets from one host to another**
-
-If you want to retire a Splunk Enterprise instance and immediately move the data to another instance, you can move individual buckets of an index between hosts, as long as:
-
-When you copy individual bucket files, you must make sure that no bucket IDs conflict on the new system. Otherwise, Splunk Enterprise does not start. You might need to rename individual bucket directories after you move them from the source system to the target system.
-1. Roll any hot buckets on the source host from hot to warm.
-2. Review indexes.conf on the old host to get a list of the indexes on that host.
-3. On the target host, create indexes that are identical to the ones on the source system.
-4. Copy the index buckets from the source host to the target host.
-5. Restart Splunk Enterprise.
-
 </details>
 
 <details>
@@ -819,5 +806,37 @@ sendEventMaxSize = 1048576
 crcSalt = <SOURCE>
 sourcetype = fs_notification
 ```
+</details>
 
+<details>
+<summary><b>Splunk Checklist</b></summary>
+
+-   Splunk Side
+    -   Upgrade/Update Version of:
+        -   Splunk Enterprise & Universal Forwarder
+        -   Splunk Enterprise Security & Splunk ES Content Update
+        -   Splunk Apps & Add-ons
+    -   License Usage
+    -   Specs of Splunk Servers
+    -   Health Check Assessment
+    -   Configure Retention Period
+    -   Best Practices
+        -   Splunk Deployment
+        -   Splunk Configuration
+        -   Apps & Add-ons Deployment
+    -   Configure Email Settings (Server Settings)
+    -   Configure Alerts Setup (MC)
+    -   Start on Boot
+    -   Enable SSL (HTTPS)
+    -   Forwarding Splunk's internal logs to the indexers
+    -   Preferences (Global & SPL Editor)
+-   Server Side
+    -   Hostname
+    -   NTP
+    -   Timezone
+    -   DNS
+    -   Ulimits
+    -   Disable SELinux
+    -   Disable Host-Based Firewall (Firewalld)
+    -   Disable Transparent Huge Pages (THP)
 </details>

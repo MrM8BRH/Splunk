@@ -339,14 +339,12 @@ server = 192.168.1.50:9997
 - Install Addons
 ```
 Disable Splunk Web (optional)
-# 1
-```
-/opt/splunk/bin/splunk disable webserver
-```
-# 2
-```
-sudo nano /opt/splunk/etc/system/local/web.conf
-```
+
+`/opt/splunk/bin/splunk disable webserver`
+
+---
+
+`sudo nano /opt/splunk/etc/system/local/web.conf`
 * Add the following lines.
 ```
 [settings]

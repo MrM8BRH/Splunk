@@ -5,6 +5,8 @@ Addons
 - [Splunk Add-on for Sysmon for Linux](https://splunkbase.splunk.com/app/6652)
 
 Resources
+- [Download Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- [Sysmon configuration file template](https://github.com/SwiftOnSecurity/sysmon-config)
 - [Configure your Microsoft Sysmon deployment to collect data](https://docs.splunk.com/Documentation/AddOns/released/MSSysmon/ConfigureSysmon)
 - [Sysmon for Linux](https://github.com/microsoft/SysmonForLinux)
 - [Splunking with Sysmon Series Part 1: The Setup](https://hurricanelabs.com/splunk-tutorials/splunking-with-sysmon-series-part-1-the-setup/)

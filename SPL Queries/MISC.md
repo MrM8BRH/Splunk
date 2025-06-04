@@ -269,6 +269,28 @@ index=linux "Accepted Publickey" OR "session opened" OR "Accepted password" src!
 | table _time,user,src,dest,src_port,sshd_protocol,action
 ```
 
+Linux - SSH Logins (map the `dest` field to an IP address using the deployment server client data)
+```
+index=linux sourcetype="linux_secure" OR source="/var/log/sshd.log" 
+  ("Accepted Publickey" OR "session opened" OR "Accepted password") 
+  app!="" user_name!="grid" src!="PAM_IP_ADDR" 
+| table _time, host, user_name, app, action, src, src_port, dest
+| eval dest_short = replace(dest, "\..*$", "")
+| join type=left dest_short [
+    | rest /services/deployment/server/clients 
+    | eval host_short = replace(hostname, "\..*$", "")
+    | eval dns_short = case(
+          match(dns, "^[0-9\.]+$"), null(),
+          dns!="", replace(dns, "\..*$", "")
+      )
+    | eval lookup_key = coalesce(host_short, dns_short)
+    | stats values(ip) as ip by lookup_key
+    | rename lookup_key as dest_short
+  ]
+| eval dest_ip = coalesce(ip, dest)
+| table _time, host, user_name, app, action, src, src_port, dest_ip
+```
+
 Linux - SSH Logins (Syslog - SC4S)
 ```
 index=osnix source="program:sshd" "Accepted Publickey" OR "session opened" _raw!="*PAM_IP_ADDR*" 

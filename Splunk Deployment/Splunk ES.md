@@ -64,6 +64,35 @@ Queries
 ```
 | inputlookup append=t es_notable_events
 ```
+```
+index=notable
+ 
+| append [
+  | rest /servicesNS/-/-/saved/searches splunk_server=local
+  | search action.correlationsearch.enabled=1 disabled=0
+  | fields title
+  | rename title AS search_name
+  | eval _time=946688461 ]
+
+| eval search_name=replace(search_name, "\S+ - (.+) - \S+$", "\1")
+
+| stats sparkline, count, max(_time) AS last_seen, min(_time) AS first_seen by search_name
+
+| eval _comment="Only active ones will meet following criteria"
+| where first_seen=946688461
+
+| eval days_missing=round((now()-last_seen)/84600)
+| eval last_seen=strftime(last_seen, "%F")
+| sort 0 +num(last_seen), -num(days_missing)
+
+| eval count=if(last_seen="2000-01-01", 0, count)
+| eval days_missing=case(last_seen="2000-01-01", "Never seen!", days_missing=0, "Today :)", 1=1, days_missing)
+| eval last_seen=if(last_seen="2000-01-01", "Never seen!", last_seen)
+
+| streamstats count AS ID
+
+| table ID search_name sparkline days_missing last_seen
+```
 
 List all ES Correlation Searches 
 ```

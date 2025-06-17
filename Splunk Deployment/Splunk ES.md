@@ -56,6 +56,7 @@ Configuration
   - linux_auditd
   - linux_hosts
   - sysmon
+  - admon
 
 Queries
 ```

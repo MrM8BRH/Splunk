@@ -646,6 +646,9 @@ After the restart, a new `passwd` file will be generated, and you should be able
 <summary><b>Troubleshoot & Others</b></summary>
 
 ```
+#######  Searches Skipped in the last 24 hours  #######
+Settings -> Monitoring Console -> Search -> Scheduler Activity: Instance, and inputing the timeframe when this occurred.
+
 #######  License  #######
 # Lists the current licenses installed and activated on your Splunk instance.
 /opt/splunk/bin/splunk list license

@@ -60,6 +60,22 @@ Configuration
   - wineventlog_security
   - wineventlog_system
   - wineventlog_application
+  - cisco_secure_firewall
+  - linux_auditd_normalized_execve_process
+  - linux_auditd_normalized_proctitle_process
+  - normalized_service_binary_field
+  - cisco_networks
+  - o365_suspect_search_terms_regex
+  - system_network_configuration_discovery_tools
+  - appLocker
+  - capi2_operational
+  - certificateservices_lifecycle
+  - powershell
+  - printservice
+  - remoteconnectionmanager
+  - o365_suspect_search_terms_regex
+  - crowdstrike_identities
+  - crowdstrike_stream
 
 Queries
 ```

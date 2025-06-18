@@ -57,6 +57,7 @@ Configuration
   - linux_hosts
   - sysmon
   - admon
+  - wineventlog_security
 
 Queries
 ```

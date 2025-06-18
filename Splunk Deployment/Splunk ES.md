@@ -58,6 +58,8 @@ Configuration
   - sysmon
   - admon
   - wineventlog_security
+  - wineventlog_system
+  - wineventlog_application
 
 Queries
 ```

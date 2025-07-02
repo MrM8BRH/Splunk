@@ -11,6 +11,8 @@ MS Office 365
 
 [Grant tenant-wide admin consent to an application](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal)
 
+[Register a Microsoft Entra app and create a service principal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal)
+
 Windows Console
 
 [How to Determine What Just Ran on Windows Console](https://devblogs.microsoft.com/commandline/how-to-determine-what-just-ran-on-windows-console/)

@@ -457,6 +457,29 @@ CrowdStrike - Event Streams
 index=crowdstrike sourcetype="CrowdStrike:Event:Streams:JSON" 
 | table _time,ta_*,metadata.eventType,event.UserIp,event.Source,event.SourceIp,event.OperationName,event.Attributes.scopes,event.Attributes.produces,action
 ```
+CrowdStrike - Devices
+```
+index="crowdstrike" sourcetype="crowdstrike:device:json"| spath input=_raw path=falcon_device.device_id output=device_id
+| spath input=_raw path=falcon_device.agent_version output=agent_version
+| spath input=_raw path=falcon_device.bios_manufacturer output=bios_manufacturer
+| spath input=_raw path=falcon_device.bios_version output=bios_version
+| spath input=_raw path=falcon_device.hostname output=hostname
+| spath input=_raw path=falcon_device.platform_name output=platform_name
+| spath input=_raw path=falcon_device.os_version output=os_version
+| spath input=_raw path=falcon_device.kernel_version output=kernel_version
+| spath input=_raw path=falcon_device.mac_address output=mac_address
+| spath input=_raw path=falcon_device.local_ip output=local_ip
+| spath input=_raw path=falcon_device.default_gateway_ip output=default_gateway_ip
+| spath input=_raw path=falcon_device.external_ip output=external_ip
+| spath input=_raw path=falcon_device.connection_ip output=connection_ip
+| spath input=_raw path=falcon_device.connection_mac_address output=connection_mac_address
+| spath input=_raw path=falcon_device.first_seen output=first_seen
+| spath input=_raw path=falcon_device.last_seen output=last_seen
+| rename device_id as DeviceID, agent_version as AgentVersion, bios_manufacturer as BiosManufacturer, bios_version as BiosVersion, hostname as Hostname, platform_name as Platform, os_version as OSVersion, kernel_version as KernelVersion, mac_address as MACAddress, local_ip as LocalIP, default_gateway_ip as DefaultGatewayIP, external_ip as ExternalIP, connection_ip as ConnectionIP, connection_mac_address as ConnectionMACAddress, first_seen as FirstSeen, last_seen as LastSeen
+| table DeviceID, AgentVersion, BiosManufacturer, BiosVersion, Hostname, Platform, OSVersion, KernelVersion, FirstSeen, LastSeen, MACAddress, LocalIP, DefaultGatewayIP, ExternalIP, ConnectionIP, ConnectionMACAddress
+| dedup DeviceID
+```
+
 </details>
 
 <details>

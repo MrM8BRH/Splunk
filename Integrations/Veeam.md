@@ -1,0 +1,2 @@
+- [Syslog Integration](https://helpcenter.veeam.com/docs/one/monitor/syslog_settings.html?ver=120)
+- [Configuring Syslog Alarms](https://helpcenter.veeam.com/docs/one/monitor/configuring_syslog_alarms.html?ver=120)

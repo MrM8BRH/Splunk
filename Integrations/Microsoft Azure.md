@@ -13,6 +13,17 @@ MS Office 365
 
 [Register a Microsoft Entra app and create a service principal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal)
 
+```
+Step 1
+- Go to admin.microsoft.com.
+- On the left blade click on show all
+- Navigate to Security, then click on search, under search click on Audit log search, Turn on auditing 
+
+Step 2
+- Kindly go to Azure portal, navigate to app registration, go to API permission, click add permission.
+- Scroll down and look for Office 365 Management APIs, click on application permission, select all of the permissions and grant the admin consent.
+```
+
 Windows Console
 
 [How to Determine What Just Ran on Windows Console](https://devblogs.microsoft.com/commandline/how-to-determine-what-just-ran-on-windows-console/)

@@ -3,6 +3,9 @@
 
 On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content packs that enhance the capabilities of Splunk across different use cases and industries. These extensions offer ready-to-use configurations, dashboards, visualizations, search queries, and integrations with external systems, enabling users to quickly implement specific functionality without starting from scratch.
 
+<img width="800" height="1000" alt="image" src="https://github.com/user-attachments/assets/b9a09c1b-fb6d-476e-98be-7650c6ed84a8" />
+
+
 ### Enterprise Security
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|

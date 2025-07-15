@@ -119,6 +119,34 @@ For Linux:
 ```
 /opt/splunkforwarder/bin/splunk restart
 ```
+## Linux Logs
+25 Linux Logs to Collect and Monitor
+- `/var/log/auth.log`: documentation for failed and successful logins and authentication on Debian/Ubuntu
+- `/var/log/secure`: documentation for failed and successful logins and authentication on RedHat/CentOS
+- `/var/log/boot.log`: information about startup, shutdown, and boot, including initialization script
+- `/var/log/maillog`: activities related to mail servers
+- `/var/log/kern`: kernel logs and warning data for troubleshooting custom kernels
+- `/var/log/syslog`: consolidated system-wide activity across different components
+- `/var/log/messages`: general system information, like boot errors, application service errors, or hardware issues
+- `/var/log/daemon.log`: information about background daemons running on the system
+- `/var.log/cups`: printer and printing information
+- `var/log/mysqld.log`: debugging, failure, and success of MySQL daemon
+- `/var/log/cron`: record of all Crond-related messages (cron jobs) like when jobs are initiated or terminated
+- `/var/log/faillog`: failed login attempts against the system, useful for security incident and credential attack investigations
+- `/var/log/btmp`: failed login attempts by individual user, useful for security incident and credential attack investigations (more detailed log with IP, User
+- `/var/log/auth.log`: system authorization information, like user login and authentication method
+- `/var/log/utmp`: user current login state
+- `/var/log/wtmp`: user login and logout records
+- `/var/log/httpd/`: error and access log files for Apache httpd daemon, like memory issues or requests from HTTP
+- `/var/log/pureftp.log`: FTP connections using pureftp process, like login successes and failures
+- `var/log/yum.log`: record on package installations using Red Hat Enterprise yum command
+- `/var/log/dpkg.log`: record on package installation or removal using the dpkg command
+- `/var/log/lastlog`: every user’s most recent login
+- `/var/log/xferlog`: FTP file transfer session information, like file names and user-initiated transfers
+- `​​/var/log/Xorg.x.log`: XWindows system messages
+- `/var/log/audit/audit.log`: records user activity related to the Linux Audit daemon (auditd)
+- `/var/log/samba/`: record of activity by the samba daemon that connects Windows/Linux filesystems
+
 ## Blacklist/Whitelist EventCode
 ```
 [WinEventLog://Security]

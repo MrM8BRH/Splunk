@@ -27,11 +27,9 @@ Gartner Magic Quadrant for Security Information and Event Management (2024)
 Quick access
 -----------------
 - Splunk Deployment
-    - [Splunk Deployment Specifications](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment%20Specifications.md)
     - [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
     - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
     - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
-    - [Firewall rules](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Firewall%20rules.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
     - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20ES/Splunk%20ES.md)
 

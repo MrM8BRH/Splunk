@@ -33,7 +33,7 @@ Quick access
     - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
     - [Firewall rules](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Firewall%20rules.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
-    - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20ES.md)
+    - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20ES/Splunk%20ES.md)
 
 - SPL Queries
     - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)

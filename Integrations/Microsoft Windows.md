@@ -41,3 +41,7 @@ sourcetype = XmlWinEventLog
 disabled = 0
 index=wineventlog
 ```
+
+### Microsoft Defender XDR
+[Splunk](https://learn.microsoft.com/en-us/defender-xdr/configure-siem-defender#splunk)
+

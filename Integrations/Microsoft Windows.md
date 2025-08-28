@@ -45,4 +45,9 @@ index=wineventlog
 
 ### Microsoft Defender XDR
 [Splunk](https://learn.microsoft.com/en-us/defender-xdr/configure-siem-defender#splunk)
-
+```
+[WinEventLog://Microsoft-Windows-Windows Defender/Operational]
+disabled = 0
+index = windefender
+evt_resolve_ad_obj = 1
+```

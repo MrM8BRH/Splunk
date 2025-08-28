@@ -1,3 +1,4 @@
+[Monitor Windows data with the Splunk platform](https://help.splunk.com/en/data-management/get-data-in/get-data-into-splunk-enterprise/9.3/get-windows-data/monitor-windows-data-with-the-splunk-platform)
 ### How to get Windows data into your Splunk deployment
 |                       Windows data you can collect                        |                Link to supporting documentation                |
 |:-------------------------------------------------------------------------:|:--------------------------------------------------------------:|

@@ -401,6 +401,7 @@ Add or change the values in the file. Example:
 LimitDATA=20000000000
 LimitFSIZE=infinity
 TasksMax=8192
+MemoryMax=infinity
 ```
 
 ```
@@ -1006,3 +1007,4 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+

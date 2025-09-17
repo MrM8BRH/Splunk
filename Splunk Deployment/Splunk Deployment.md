@@ -403,7 +403,11 @@ LimitFSIZE=infinity
 TasksMax=8192
 MemoryMax=infinity
 ```
-
+Validate the unit file syntax
+```
+systemd-analyze verify /etc/systemd/system/Splunkd.service
+```
+Reload systemd and restart Splunk
 ```
 systemctl daemon-reload
 ```
@@ -1007,4 +1011,5 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 

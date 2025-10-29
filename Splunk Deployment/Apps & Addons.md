@@ -11,10 +11,10 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 |------------------------------------|----------------------------|----------------------------------------|
 | Splunk Enterprise Security         | Splunk Inc                 | https://splunkbase.splunk.com/app/263  |
 | Splunk ES Content Update           | Splunk Inc                 | https://splunkbase.splunk.com/app/3449 |
-| ESCU Companion App                 | Brandon Sternfield         | https://splunkbase.splunk.com/app/7356 |
-| ES Mothership App for Splunk       | Splunk Works               | https://splunkbase.splunk.com/app/4746 |
-| ES Choreographer                   | Gabriel Vasseur            | https://splunkbase.splunk.com/app/6309 |
-| SA-Investigator for Enterprise Security   | Splunk Works        | https://splunkbase.splunk.com/app/3749 |
+| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
+| MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
+| InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
+| Force Directed App For Splunk      | Splunk LLC                 | https://splunkbase.splunk.com/app/3767 |
 
 ### Windows
 |                      Name                     |  Built by  |                   URL                  |
@@ -41,9 +41,6 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 ### Security
 |                Name                |          Built by          |                   URL                  |
 |------------------------------------|----------------------------|----------------------------------------|
-| InfoSec App for Splunk             | Splunk Inc                 | https://splunkbase.splunk.com/app/4240 |
-| Splunk Security Essentials         | Splunk Inc                 | https://splunkbase.splunk.com/app/3435 |
-| MITRE ATTACK App for Splunk        | Seynur Bilgi Teknolojileri | https://splunkbase.splunk.com/app/4617 |
 | App for External Attack Surface Management (EASM) | Greg Ford   | https://splunkbase.splunk.com/app/7027 |
 | APT Falconer                       | Splunk Works               | https://splunkbase.splunk.com/app/7469 |
 | Splunk Essentials for the Financial Services Industry | Splunk Works  | https://splunkbase.splunk.com/app/4145 |
@@ -53,6 +50,13 @@ On SplunkBase, you can find a wide range of pre-built apps, add-ons, and content
 | Splunk App for Splunk Attack Analyzer | Splunk Inc              | https://splunkbase.splunk.com/app/7000 |
 | Splunk Add-On for Splunk Attack Analyzer | Splunk Inc           | https://splunkbase.splunk.com/app/6999 |
 | NVD-CVE-Fetcher-App                | Metron Consulting LLC      | https://splunkbase.splunk.com/app/7121 |
+
+### Splunk
+| Name                                            | Built by         | URL                                    |
+|-------------------------------------------------|------------------|----------------------------------------|
+| Splunk MCP Server                               | Splunk LLC       | https://splunkbase.splunk.com/app/7931 |
+| Splunk AI Assistant for SPL                     | Splunk LLC       | https://splunkbase.splunk.com/app/7245 |
+| Splunk App for Chargeback                       | Splunk LLC       | https://splunkbase.splunk.com/app/5688 |
 
 ### Splunk UBA
 | Name                                            | Built by         | URL                                    |

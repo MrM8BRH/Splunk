@@ -19,9 +19,7 @@ Required Apps/Addons
 - [Splunk Security Essentials](https://splunkbase.splunk.com/app/3435)
 - [Splunk Enterprise Security](https://splunkbase.splunk.com/app/263)
 - [Splunk ES Content Update](https://splunkbase.splunk.com/app/3449)
-- [SA-Investigator for Enterprise Security](https://splunkbase.splunk.com/app/3749)
 - [MITRE ATTACK App for Splunk](https://splunkbase.splunk.com/app/4617)
-- [ES Choreographer](https://splunkbase.splunk.com/app/6309) & [Documentation](https://www.gabrielvasseur.com/post/es-choreographer) & [SEC1441A](https://conf.splunk.com/files/2021/recordings/SEC1441A.mp4)
 
 Optional
 - [InfoSec App for Splunk](https://splunkbase.splunk.com/app/4240)

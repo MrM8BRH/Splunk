@@ -170,6 +170,15 @@ List all ES Correlation Searches
     Notable:Severity,
 ```
 
+Install/Update Splunk ES (Linux)
+```
+mv /root/splunk-enterprise-security_<version>.spl /opt/splunk/
+chown splunk:splunk /opt/splunk/splunk-enterprise-security_<version>.spl
+chmod 644 /opt/splunk/splunk-enterprise-security_<version>.spl
+cd /opt/splunk
+/opt/splunk/bin/splunk install app splunk-enterprise-security_<version>.spl -update 1
+```
+
 Uninstall Splunk ES (Linux)
 
 ```

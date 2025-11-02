@@ -776,7 +776,7 @@ groupdel splunk
 </details>
 
 <details>
-<summary><b>Install an app or add-on</b></summary>
+<summary><b>Install/Update an app or add-on</b></summary>
 
 ```
 /opt/splunk/bin/splunk install app <app.spl/tgz>
@@ -1022,6 +1022,7 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 
 
 

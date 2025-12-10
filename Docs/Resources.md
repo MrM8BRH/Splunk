@@ -1,7 +1,11 @@
 ## Manuals
-- [How Splunk Enterprise calculates disk storage](https://docs.splunk.com/Documentation/Splunk/9.1.1/Capacity/HowSplunkcalculatesdiskstorage)
-- [System requirements for use of Splunk Enterprise on-premises](https://docs.splunk.com/Documentation/Splunk/9.1.1/Installation/Systemrequirements)
-- [Reference hardware](https://docs.splunk.com/Documentation/Splunk/9.1.1/Capacity/Referencehardware)
+- [Deployment considerations for Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.3/planning/deployment-considerations-for-splunk-enterprise-security)
+- [Design principles and best practices for deployment tiers](https://help.splunk.com/en/splunk-enterprise/get-started/splunk-validated-architectures/splunk-platform-indexing-and-search/design-principles-and-best-practices-for-deployment-tiers)
+- [How Splunk Enterprise calculates disk storage](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/10.0/hardware-capacity-planning/how-splunk-enterprise-calculates-disk-storage)
+- [System requirements for use of Splunk Enterprise on-premises](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.0/plan-your-splunk-enterprise-installation/system-requirements-for-use-of-splunk-enterprise-on-premises)
+- [Reference hardware](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/10.0/performance-reference/reference-hardware)
+- [Use indexer clusters to scale indexing](https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.0/deploy-the-indexer-cluster/use-indexer-clusters-to-scale-indexing)
+- [Welcome to the Docker-Splunk documentation!](https://splunk.github.io/docker-splunk/)
 - [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
 - [Splunk Data Retention Policy](https://www.splunk.com/en_us/legal/splunk-retention-policy.html)
 

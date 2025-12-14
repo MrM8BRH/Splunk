@@ -141,13 +141,13 @@ RHEL family
 ```
 yum update -y
 yum install -y dnf
-dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump fio bzip2 sysstat elfutils polkit.x86_64 telnet cloud-utils-growpart
+dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump fio bzip2 sysstat elfutils polkit.x86_64 cloud-utils-growpart coreutils findutils procps shadow-utils
 ```
 Debian family
 ```
 apt update -y
 apt full-upgrade -y
-apt install -y net-tools nano wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils telnet cloud-guest-utils
+apt install -y net-tools nano wget net-tools tcpdump screen iotop htop ioping fio bzip2 sysstat elfutils cloud-guest-utils coreutils findutils procps passwd
 ```
 </details>
 
@@ -1022,6 +1022,7 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 
 
 

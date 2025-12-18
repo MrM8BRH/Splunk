@@ -1,2 +1,6 @@
+A search such as this will give you an sourcetype breakdown of the events in a datamodel (Authentication for example)
+```
+| datamodel Authentication Authentication search
+```
 - [Optimizing data model acceleration for better performance](https://lantern.splunk.com/Platform_Data_Management/Optimize_Data/Optimizing_data_model_acceleration_for_better_performance)
 - [How to Improve Your Data Model Acceleration in Splunk](https://hurricanelabs.com/splunk-tutorials/how-to-improve-your-data-model-acceleration-in-splunk/)

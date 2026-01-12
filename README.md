@@ -21,6 +21,10 @@ Gartner Magic Quadrant for Security Information and Event Management (2024)
 <br>
 <br>
 <img width=400px; src="https://github.com/MrM8BRH/Splunk/assets/34133187/d8f3a444-dff1-4804-9da5-459707f13f91">
+<br>
+<br>
+<img width=400px; src="https://github.com/user-attachments/assets/5fd3ae82-ca2b-40b9-90aa-6aee0b5b51c1">
+
 
 </div>
 

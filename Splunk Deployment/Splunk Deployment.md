@@ -416,7 +416,10 @@ Wants=network-online.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd
+#ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd
+ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd \
+--nodaemon \
+--env SPLUNK_IGNORE_SYSTEMD_OPENSSL=1
 KillMode=mixed
 KillSignal=SIGINT
 TimeoutStopSec=360
@@ -443,8 +446,9 @@ Validate the systemd unit file syntax
 ```
 systemd-analyze verify /etc/systemd/system/Splunkd.service
 ```
-Reload systemd configuration to apply changes
+Clean systemd environment
 ```
+systemctl daemon-reexec
 systemctl daemon-reload
 ```
 Enable Splunkd to start at boot and start the service immediately
@@ -479,7 +483,7 @@ chmod -R u+rwX /opt/splunk/var
 [settings]
 max_upload_size = 2048
 enableSplunkWebSSL = true
-splunkdConnectionTimeout = 3000
+splunkdConnectionTimeout = 600
 ```
 </details>
 
@@ -497,22 +501,22 @@ In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/L
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
 [default]
-max_mem_usage_mb = 12288
+max_mem_usage_mb = 24576
 
 [searchresults]
-maxresultrows = 200000
+maxresultrows = 100000
 
 # The maximum number of concurrent historical searches in the search head.
 total_search_concurrency_limit = auto
 
 # The base number of concurrent historical searches.
-base_max_searches = 8
+base_max_searches = 24
 
 # Max real-time searches = max_rt_search_multiplier x max historical searches.
-max_rt_search_multiplier = 3
+max_rt_search_multiplier = 1
 
 # The maximum number of concurrent historical searches per CPU.
-max_searches_per_cpu = 16
+max_searches_per_cpu = 2
 
 [scheduler]
 # The maximum number of searches the scheduler can run, as a percentage
@@ -520,7 +524,7 @@ max_searches_per_cpu = 16
 max_searches_perc  = 75
 
 # Fraction of concurrent scheduler searches to use for auto summarization.
-auto_summary_perc  = 75
+auto_summary_perc  = 50
 ```
 These adjustments should be aligned with our system requirements and available resources.
 </details>
@@ -1067,6 +1071,7 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 
 
 

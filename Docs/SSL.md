@@ -39,17 +39,3 @@ chown -R splunk:splunk /opt/splunk
 openssl x509 -in server.pem -text
 ```
 [Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
-
-### OpenCTI
-```
-cp ca.pem /opt/splunk/etc/auth/opencti_ca.pem
-chmod 644 /opt/splunk/etc/auth/opencti_ca.pem
-
-nano /opt/splunk/etc/system/local/server.conf
-[sslConfig]
-sslRootCAPath = /opt/splunk/etc/auth/opencti_ca.pem
-
-/opt/splunk/bin/splunk restart
-/opt/splunk/bin/splunk show kvstore-status
-chown -R splunk:splunk /root/.splunk/
-```

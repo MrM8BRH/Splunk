@@ -2,7 +2,9 @@ Convert epoch time to a human readable time
 ```
 | eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 ```
-
+```
+| convert timeformat="%d-%m-%Y %H:%M:%S" ctime("....")
+```
 <details>
 <summary><b>Lists</b></summary>
 

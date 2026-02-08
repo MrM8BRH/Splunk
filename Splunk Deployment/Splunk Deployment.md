@@ -127,7 +127,7 @@
 
 ## General Notes
 
-- **OS:** Use RHEL/CentOS (latest version) for all servers
+- **OS:** Use RHEL/RockyOS (latest version) for all servers
 - **CPU Speed:** Minimum 2 GHz/core for physical/virtual CPUs
 </details>
 
@@ -379,6 +379,9 @@ tar xvzf splunk_package_name.tgz -C /opt
 # Change servername & hostname
 /opt/splunk/bin/splunk set servername host.domain.com
 /opt/splunk/bin/splunk set default-hostname host.domain.com
+
+# Enable boot-start
+/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
 ```
 [Configure Linux systems running systemd](https://help.splunk.com/en/splunk-enterprise/administer/manage-workloads/10.2/set-up-linux-for-workload-management/configure-linux-systems-running-systemd)
 
@@ -1071,6 +1074,7 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 
 
 

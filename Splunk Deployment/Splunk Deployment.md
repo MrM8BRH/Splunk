@@ -381,7 +381,9 @@ tar xvzf splunk_package_name.tgz -C /opt
 /opt/splunk/bin/splunk set default-hostname host.domain.com
 
 # Enable boot-start
-/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
+/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk # 1
+/opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -create-polkit-rules 1 -user splunk -group splunk # 2
+
 ```
 [Configure Linux systems running systemd](https://help.splunk.com/en/splunk-enterprise/administer/manage-workloads/10.2/set-up-linux-for-workload-management/configure-linux-systems-running-systemd)
 
@@ -1074,6 +1076,7 @@ sourcetype = fs_notification
     -   Disable Host-Based Firewall (Firewalld)
     -   Disable Transparent Huge Pages (THP)
 </details>
+
 
 
 

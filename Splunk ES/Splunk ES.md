@@ -1,20 +1,26 @@
-Splunk Enterprise Security
---------------------------
+<details>
+<summary><b>Splunk Enterprise Security</b></summary>
+
 Splunk Enterprise Security provides the security practitioner with visibility into security-relevant threats found in today's enterprise infrastructure. Splunk Enterprise Security is built on the Splunk operational intelligence platform and uses the search and correlation capabilities, allowing users to capture, monitor, and report on data from security devices, systems, and applications. As issues are identified, security analysts can quickly investigate and resolve the security threats across the access, endpoint, and network protection domains. 
-
 - [About the ES solution architecture](https://dev.splunk.com/enterprise/docs/devtools/enterprisesecurity/abouttheessolution/)
-- [Installing and upgrading to Splunk Enterprise Security 8x](https://lantern.splunk.com/Security/Product_Tips/Enterprise_Security/Installing_and_upgrading_to_Splunk_Enterprise_Security_8x)
+</details>
 
-Prerequisites
--------------
+<details>
+<summary><b>Prerequisites</b></summary>
+
+- [Minimum specifications for a production deployment](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.3/planning/minimum-specifications-for-a-production-deployment)
+- [Deployment considerations for Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.3/planning/deployment-considerations-for-splunk-enterprise-security)
+- [Installing and upgrading to Splunk Enterprise Security 8x](https://lantern.splunk.com/Security/Product_Tips/Enterprise_Security/Installing_and_upgrading_to_Splunk_Enterprise_Security_8x)
 Before initiating the installation process, it's important to verify if your data is CIM-compliant (normalization process) for all sources using multiple methods, including:
 1. [The "SA-cim_vladiator" app](https://splunkbase.splunk.com/app/2968)
 2. [Add-ons documentation](https://docs.splunk.com/Documentation/AddOns)
 3. [Lantern (Data Descriptors)](https://lantern.splunk.com/Data_Descriptors)
 4. [Splunk Connect for Syslog (Sources)](https://splunk.github.io/splunk-connect-for-syslog/releases/sources/)
+</details>
 
-Installation
-------------
+<details>
+<summary><b>Installation</b></summary>
+
 Required Apps/Addons
 - [Splunk Security Essentials](https://splunkbase.splunk.com/app/3435)
 - [Splunk Enterprise Security](https://splunkbase.splunk.com/app/263)
@@ -23,9 +29,11 @@ Required Apps/Addons
 
 Optional
 - [InfoSec App for Splunk](https://splunkbase.splunk.com/app/4240)
+</details>
 
-Configuration
-----------------------------
+<details>
+<summary><b>Configuration</b></summary>
+
 - Configure → General settings
   - Distributed Configuration Management
   - Domain Analysis
@@ -48,7 +56,8 @@ Configuration
   - Type: Event-based detection
 - Security Content → Security use case library
 
-- Search Macros
+<details>
+<summary><b>Search Macros</b></summary>
   - o365-index-value
   - aws-index-value
   - linux_auditd
@@ -74,8 +83,12 @@ Configuration
   - o365_suspect_search_terms_regex
   - crowdstrike_identities
   - crowdstrike_stream
+</details>
+</details>
 
-Queries
+<details>
+<summary><b>SPL Queries</b></summary>
+
 ```
 `notable` | search NOT `suppression` 
 ```
@@ -112,7 +125,9 @@ index=notable
 | table ID search_name sparkline days_missing last_seen
 ```
 
-List all ES Correlation Searches 
+<details>
+<summary><b>List all ES Correlation Searches</b></summary>
+  
 ```
 | rest splunk_server=local count=0 /services/saved/searches 
 | where match('action.correlationsearch.enabled', "1|[Tt]|[Tt][Rr][Uu][Ee]") 
@@ -169,8 +184,12 @@ List all ES Correlation Searches
     Notable:Security_Domain,
     Notable:Severity,
 ```
+</details>
+</details>
 
-Install/Update Splunk ES (Linux)
+<details>
+<summary><b>Install/Update Splunk ES (Linux)</b></summary>
+  
 ```
 mv /root/splunk-enterprise-security_<version>.spl /opt/splunk/
 chown splunk:splunk /opt/splunk/splunk-enterprise-security_<version>.spl
@@ -178,8 +197,10 @@ chmod 644 /opt/splunk/splunk-enterprise-security_<version>.spl
 cd /opt/splunk
 /opt/splunk/bin/splunk install app splunk-enterprise-security_<version>.spl -update 1
 ```
+</details>
 
-Uninstall Splunk ES (Linux)
+<details>
+<summary><b>Uninstall Splunk ES (Linux)</b></summary>
 
 ```
 # Stop Splunk
@@ -189,20 +210,12 @@ Uninstall Splunk ES (Linux)
 cd /opt/splunk/etc/apps
 rm -r SplunkEnterpriseSecuritySuite missioncontrol SA-* DA-ESS*
 ```
+</details>
 
-Troubleshoot
-```
-# KV Store Logs file
-cat /opt/splunk/var/log/splunk/mongod.log
+<details>
+<summary><b>Resrouces</b></summary>
 
-# Permission
-chmod 600 /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key
-```
-
-Resrouces
----------
-### Enterprise Security
-Docs
+Enterprise Security
 - [Administer Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/overview/administering-splunk-enterprise-security)
 - [Manage internal lookups in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/managing-content/manage-internal-lookups-in-splunk-enterprise-security)
 - [Manage assets and identities in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/asset-and-identity-management/manage-assets-and-identities-in-splunk-enterprise-security)
@@ -220,7 +233,9 @@ Lantern
 - [Proactive Response](https://lantern.splunk.com/Security/UCE/Proactive_Response)
 - [Optimized Experiences](https://lantern.splunk.com/Security/UCE/Optimized_Experiences)
 
-### Normalization
+Normalization
 - [How to use the CIM data model reference tables](https://docs.splunk.com/Documentation/CIM/latest/User/Howtousethesereferencetables)
 - [Use the CIM to normalize data at search time](https://docs.splunk.com/Documentation/CIM/latest/User/UsetheCIMtonormalizedataatsearchtime)
 - [Normalizing values to a common field name with the Common Information Model (CIM)](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Data_Management/Normalizing_values_to_a_common_field_name_with_the_Common_Information_Model_(CIM))
+
+</details>

@@ -21,8 +21,7 @@ tar xvzf splunkforwarder_package_name.tgz -C /opt
 /opt/splunkforwarder/bin/splunk set deploy-poll <deployment-ip>:8089
 
 # Enable the Splunk Universal Forwarder to start on boot:
-/opt/splunkforwarder/bin/splunk enable boot-start                                                           # (1)
-/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd       # (2)
+/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd
 
 # Start Splunk Universal Forwarder
 /opt/splunkforwarder/bin/splunk start
@@ -36,22 +35,11 @@ tar xvzf splunkforwarder_package_name.tgz -C /opt
 # Edit the deploymentclient.conf file:
 nano /opt/splunkforwarder/etc/system/local/deploymentclient.conf
 
-# Library variable
-export $LD_LIBRARY_PATH=/usr/lib:/opt/splunkforwarder/lib
-
 # Extract tgz file
 gunzip <archive.tgz>
 
 # Extract tar file
 tar -xvf <archive.tar>
-
-# AIX
-## This command invokes the following system commands to register the forwarder in the System Resource Controller (SRC):
-mkssys -G splunk -s splunkd -p <path to splunkd> -u <splunk user> -a _internal_exec_splunkd -S -n 2 -f 9
-
-## When you enable automatic boot start, the SRC handles the run state of the forwarder. This means that you must use a different command to start and stop the forwarder manually:
-- /usr/bin/startsrc -s splunkd to start the forwarder.
-- /usr/bin/stopsrc -s splunkd to stop the forwarder.
 ```
 ## Upgrade Splunk Universal Forwarder on linux
 - Windows OS
@@ -64,10 +52,12 @@ msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
 /opt/splunkforwarder/bin/splunk stop
 useradd splunkfwd
 chown -R splunkfwd:splunkfwd /opt/splunkforwarder/
-rpm -Uvh splunkuniversalforwarder_x64.rpm # Using RPM
-tar -xzvf splunkuniversalforwarder_x64.tgz -C /opt/ # Using TAR
+# Using RPM
+   rpm -Uvh splunkuniversalforwarder_x64.rpm 
+# Using TAR
+   tar -xzvf splunkuniversalforwarder_x64.tgz -C /opt/ 
 /opt/splunkforwarder/bin/splunk disable boot-start
-/opt/splunkforwarder/bin/splunk enable boot-start --accept-license --no-prompt --answer-yes
+/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd --accept-license --no-prompt --answer-yes
 /opt/splunkforwarder/bin/splunk start
 ```
 ## Uninstall Splunk Universal Forwarder on Linux

@@ -131,9 +131,6 @@ crontab -e
 ```
 </details>
 
-
-
-
 Splunk Connect for Syslog (SC4S)
 ----------
 - [Splunk Connect for Syslog (SC4S) - Youtube](https://www.youtube.com/watch?v=c0iKNVs91L8)
@@ -147,27 +144,8 @@ Blog
 - [Splunk Connect for Syslog: Turnkey and Scalable Syslog GDI - Part 4](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-connect-for-syslog-turnkey-and-scalable-syslog-gdi-part-4.html)
 ### Index Configuration (Indexer Server)
 SC4S is pre-configured to map each sourcetype to a typical index. For new installations, it is best practice to create them in Splunk when using the SC4S defaults. SC4S can be easily customized to use different indexes if desired.
-- email
-- epav
-- epintel
-- fireeye
-- gitops
-- infraops
-- netauth
-- netdlp
-- netdns
-- netfw
-- netids
-- netlb
-- netops
-- netwaf
-- netproxy
-- netipam
-- oswin
-- oswinsec
-- osnix
-- print
-- _metrics (Optional opt-in for SC4S operational metrics; ensure this is created as a **metrics** index)
+
+[Create indexes within Splunk](https://splunk.github.io/splunk-connect-for-syslog/main/gettingstarted/getting-started-splunk-setup/#step-1-create-indexes-within-splunk)
 
 ### Configure Splunk HTTP Event Collector (Indexer Server)
 - **Create a New Token:**
@@ -177,15 +155,8 @@ SC4S is pre-configured to map each sourcetype to a typical index. For new instal
 ### Install and Configure SC4S (Syslog Server)
 Set the host OS kernel to match the default receiver buffer of SC4S, which is set to 16MB.
 
-a. Add the following to `/etc/sysctl.conf`:
 ```
-net.core.rmem_default = 17039360
-net.core.rmem_max = 17039360
-net.ipv4.ip_forward=1
-```
-b. Apply to the kernel:
-```
-sysctl -p
+echo -e "net.core.rmem_default=17039360\nnet.core.rmem_max=17039360\nnet.ipv4.ip_forward=1" >> /etc/sysctl.conf && sysctl -p
 ```
 
 Ensure the kernel is not dropping packets:
@@ -196,6 +167,9 @@ Create the systemd unit file
 ```
 nano /lib/systemd/system/sc4s.service
 ```
+<details>
+<summary><b>Add the following content</b></summary>
+
 ```
 [Unit]
 Description=SC4S Container
@@ -245,16 +219,19 @@ ExecStart=/usr/bin/podman run \
 
 Restart=on-failure
 ```
+</details>
 
 SC4S Setup
 ```
-touch SC4S-Splunk-Connect-for-Syslog.sh
-chmod +x SC4S-Splunk-Connect-for-Syslog.sh
-nano SC4S-Splunk-Connect-for-Syslog.sh
+nano SC4S-Splunk-Connect-for-Syslog.sh && chmod +x SC4S-Splunk-Connect-for-Syslog.sh
 ```
 Modify the following values prior to running the script:
 - HEC_URL
 - HEC_TOKEN
+
+<details>
+<summary><b>Script</b></summary>
+	
 ```
 #!/bin/bash
 
@@ -319,6 +296,7 @@ netstat -tulpn | grep LISTEN
 #### Use command below for full tls test if required (adjust as needed)
 #podman run -ti drwetter/testssl.sh --severity MEDIUM --ip 127.0.0.1 sc4sbuilder:6514
 ```
+</details>
 
 ```
 ./SC4S-Splunk-Connect-for-Syslog.sh

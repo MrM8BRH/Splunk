@@ -203,13 +203,14 @@ Resrouces
 ---------
 ### Enterprise Security
 Docs
-- [Administer Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Introduction)
-- [Manage internal lookups in Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Manageinternallookups)
-- [Manage assets and identities in Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Manageassetsandidentities)
-- [Manage UI issues impacting threat intelligence after upgrading Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Managethreatintelligenceuponupgrade)
-- [Add  intelligence to Splunk Enterprise Security](https://docs.splunk.com/Documentation/ES/latest/Admin/Addgenericintel)
+- [Administer Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/overview/administering-splunk-enterprise-security)
+- [Manage internal lookups in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/managing-content/manage-internal-lookups-in-splunk-enterprise-security)
+- [Manage assets and identities in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/asset-and-identity-management/manage-assets-and-identities-in-splunk-enterprise-security)
+- [Manage UI issues impacting threat intelligence after upgrading Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/threat-intelligence/manage-ui-issues-impacting-threat-intelligence-after-upgrading-splunk-enterprise-security)
+- [Add intelligence to Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/generic-intelligence/add-intelligence-to-splunk-enterprise-security)
 
 Lantern
+- [Optimizing Splunk Enterprise Security for your SOC](https://lantern.splunk.com/Security_Use_Cases/Automation_and_Orchestration/Optimizing_Splunk_Enterprise_Security_for_your_SOC)
 - [Getting Started With Splunk Enterprise Security](https://lantern.splunk.com/Security/Getting_Started)
 - [Using threat intelligence in Splunk Enterprise Security](https://lantern.splunk.com/Security/UCE/Prioritized_Actions/Threat_intelligence/Using_threat_intelligence_in_Splunk_Enterprise_Security)
 - [Configuring and optimizing Enterprise Security](https://lantern.splunk.com/Security/Getting_Started/Configuring_and_optimizing_Enterprise_Security)

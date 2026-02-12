@@ -1,5 +1,4 @@
 ## Manuals
-- [Deployment considerations for Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.3/planning/deployment-considerations-for-splunk-enterprise-security)
 - [Design principles and best practices for deployment tiers](https://help.splunk.com/en/splunk-enterprise/get-started/splunk-validated-architectures/splunk-platform-indexing-and-search/design-principles-and-best-practices-for-deployment-tiers)
 - [How Splunk Enterprise calculates disk storage](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/10.0/hardware-capacity-planning/how-splunk-enterprise-calculates-disk-storage)
 - [System requirements for use of Splunk Enterprise on-premises](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.0/plan-your-splunk-enterprise-installation/system-requirements-for-use-of-splunk-enterprise-on-premises)

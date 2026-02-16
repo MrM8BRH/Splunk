@@ -1,3 +1,5 @@
+[OpenCTI for Splunk Enterprise](https://splunkbase.splunk.com/app/8431)
+
 [OpenCTI Add-on for Splunk](https://splunkbase.splunk.com/app/7485)
 
 Append your **`CA certificate`** text to the end of that file:

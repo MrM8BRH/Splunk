@@ -22,6 +22,8 @@ FortiGate Firewall Side
 config log syslogd2 setting
     set status enable
     set server "Syslog IP"
+    set port "5514"
+    set mode "udp"
     set source-ip "Forti Mgmt IP"
 end
 ```

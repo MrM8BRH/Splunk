@@ -2,7 +2,7 @@
 
 <details>
 
-<summary><b>Syslog-ng (Old)</b></summary>
+<summary>Syslog-ng (Old)</summary>
 
 ### Installation
 #### CentOS
@@ -168,7 +168,7 @@ Create the systemd unit file
 nano /lib/systemd/system/sc4s.service
 ```
 <details>
-<summary><b>Add the following content</b></summary>
+<summary>Add the following content</summary>
 
 ```
 [Unit]
@@ -230,14 +230,14 @@ Modify the following values prior to running the script:
 - HEC_TOKEN
 
 <details>
-<summary><b>Script</b></summary>
+<summary>Script</summary>
 	
 ```
 #!/bin/bash
 
 # Set URL and Tokens here
-HEC_URL="https://IDX_IP_ADDRESS:8088"
-HEC_TOKEN="Token"
+HEC_URL=https://IDX_IP_ADDRESS:8088
+HEC_TOKEN=<hec-token-that-is-created-in-the-Splunk>
 
 red=`tput setaf 1`
 green=`tput setaf 2`
@@ -246,7 +246,7 @@ reset=`tput sgr0`
 
 dnf install -y conntrack podman crun
 podman volume create splunk-sc4s-var
-mkdir -p /opt/sc4s/local /opt/sc4s/local/config/ /opt/sc4s/local/context/ /opt/sc4s/archive /opt/sc4s/tls
+mkdir -p /opt/sc4s/local /opt/sc4s/local/config /opt/sc4s/local/context /opt/sc4s/archive /opt/sc4s/tls
 
 echo "
 SC4S_DEST_SPLUNK_HEC_DEFAULT_URL=$HEC_URL
@@ -254,21 +254,44 @@ SC4S_DEST_SPLUNK_HEC_DEFAULT_TOKEN=$HEC_TOKEN
 SC4S_DEFAULT_TIMEZONE=Asia/Jerusalem
 #Uncomment the following line if using untrusted SSL certificates
 SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
+
 # TLS Config, for McAfee etc
-SC4S_SOURCE_TLS_ENABLE=yes
-SC4S_LISTEN_DEFAULT_TLS_PORT=6514
-SC4S_SOURCE_TLS_OPTIONS=no-tlsv12
-SC4S_SOURCE_TLS_CIPHER_SUITE=ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
-#SC4S_DISABLE_DROP_INVALID_CEF=yes
-#SC4S_DISABLE_DROP_INVALID_VMWARE_CB_PROTECT=yes
-#SC4S_DISABLE_DROP_INVALID_CISCO=yes
-#SC4S_DISABLE_DROP_INVALID_VMWARE_VSPHERE=yes
+#SC4S_SOURCE_TLS_ENABLE=yes
+#SC4S_LISTEN_DEFAULT_TLS_PORT=6514
+#SC4S_SOURCE_TLS_OPTIONS=no-tlsv12
+#SC4S_SOURCE_TLS_CIPHER_SUITE=ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+
+# You are missing RAW BSD logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_RAW_BSD=yes
+
+# You are missing VMWARE VSPHERE logs that are not RFC compliant
+#SC4S_DISABLE_DROP_INVALID_VMWARE_VSPHERE=yes
+
+# You are missing RAW XML logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_XML=yes
+
+# You are missing HPE JETDIRECT logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_HPE=yes
-# disk-based buffering
+
+# You are missing CISCO IOS logs that are not RFC compliant
+#SC4S_DISABLE_DROP_INVALID_CISCO=yes
+
+# You are missing VMWARE CB-PROTECT logs that are not RFC compliant
+#SC4S_DISABLE_DROP_INVALID_VMWARE_CB_PROTECT=yes
+
+# You are missing CEF logs that are not RFC compliant
+#SC4S_DISABLE_DROP_INVALID_CEF=yes
+
+# You are missing RAW BSD logs that are not RFC compliant
+#SC4S_DISABLE_DROP_INVALID_RAW_BSD=yes
+
+# Terminal is overwhelmed by metrics and internal processing messages in a custom environment configuration
+#SC4S_SEND_METRICS_TERMINAL=no
+
+# Disk-Based Buffering
 #SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_ENABLE=yes # Default
-#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DISKBUFSIZE=53687091200 # 50 GB # Default
+#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DISKBUFSIZE=53687091200 # Default = 50 GB
+
 " > /opt/sc4s/env_file
 
 echo "${yellow}Generating Cert for TLS${reset}"
@@ -290,10 +313,10 @@ podman ps
 sleep 20
 netstat -tulpn | grep LISTEN
 
-#### Use command below and then type to test
+# Use command below and then type to test
 #openssl s_client -connect localhost:6514
 
-#### Use command below for full tls test if required (adjust as needed)
+# Use command below for full tls test if required (adjust as needed)
 #podman run -ti drwetter/testssl.sh --severity MEDIUM --ip 127.0.0.1 sc4sbuilder:6514
 ```
 </details>
@@ -302,30 +325,16 @@ netstat -tulpn | grep LISTEN
 ./SC4S-Splunk-Connect-for-Syslog.sh
 ```
 
-### Configure Additional PKI Trust Anchors (Syslog Server)
-Additional trusted (private) Certificate Authorities can be added by following these steps:
-- **Location:**
-   Append each PEM formatted certificate to the file `/opt/sc4s/tls/trusted.pem`.
+Post-installation
 
-Example:
 ```
-cat /path/to/your/certificate.pem >> /opt/sc4s/tls/trusted.pem
-```
-
-<hr>
-
-Check podman/docker logs for errors
-```
+# Check podman/docker logs for errors
 sudo podman|docker logs SC4S
-```
 
-Search on Splunk for successful installation of SC4S
-```
+# Search on Splunk for successful installation of SC4S
 index=* sourcetype=sc4s:events "starting up"
-```
 
-Send sample data to default udp port 514 of SC4S host
-```
+# Send sample data to default udp port 514 of SC4S host
 echo “Hello SC4S” > /dev/udp/<SC4S_ip>/514
 ```
 
@@ -833,6 +842,21 @@ application vmware_vsphere_sps-postfilter[sc4s-postfilter] {
     };
     parser { vmware_vsphere_sps-postfilter(); };
 };
+```
+
+</details>
+
+
+<details>
+<summary>Configure Additional PKI Trust Anchors (Syslog Server)</summary>
+
+Additional trusted (private) Certificate Authorities can be added by following these steps:
+- **Location:**
+   Append each PEM formatted certificate to the file `/opt/sc4s/tls/trusted.pem`.
+
+Example:
+```
+cat /path/to/your/certificate.pem >> /opt/sc4s/tls/trusted.pem
 ```
 
 </details>

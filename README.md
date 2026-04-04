@@ -34,7 +34,7 @@ Quick access
 - Splunk Deployment
     - [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
     - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
-    - [Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Syslog-ng.md)
+    - [SC4S & Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/SC4S%20&%20Syslog-ng.md)
     - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
     - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20ES/Splunk%20ES.md)
 

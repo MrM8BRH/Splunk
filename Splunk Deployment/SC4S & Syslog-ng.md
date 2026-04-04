@@ -237,7 +237,7 @@ Modify the following values prior to running the script:
 
 # Set URL and Tokens here
 HEC_URL=https://IDX_IP_ADDRESS:8088
-HEC_TOKEN=<hec-token-that-is-created-in-the-Splunk>
+HEC_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 red=`tput setaf 1`
 green=`tput setaf 2`
@@ -261,28 +261,28 @@ SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
 #SC4S_SOURCE_TLS_OPTIONS=no-tlsv12
 #SC4S_SOURCE_TLS_CIPHER_SUITE=ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
 
-# You are missing RAW BSD logs that are not RFC compliant
+# Issue: You are missing RAW BSD logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_RAW_BSD=yes
 
-# You are missing VMWARE VSPHERE logs that are not RFC compliant
+# Issue: You are missing VMWARE VSPHERE logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_VMWARE_VSPHERE=yes
 
-# You are missing RAW XML logs that are not RFC compliant
+# Issue: You are missing RAW XML logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_XML=yes
 
-# You are missing HPE JETDIRECT logs that are not RFC compliant
+# Issue: You are missing HPE JETDIRECT logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_HPE=yes
 
-# You are missing CISCO IOS logs that are not RFC compliant
+# Issue: You are missing CISCO IOS logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_CISCO=yes
 
-# You are missing VMWARE CB-PROTECT logs that are not RFC compliant
+# Issue: You are missing VMWARE CB-PROTECT logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_VMWARE_CB_PROTECT=yes
 
-# You are missing CEF logs that are not RFC compliant
+# Issue: You are missing CEF logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_CEF=yes
 
-# You are missing RAW BSD logs that are not RFC compliant
+# Issue: You are missing RAW BSD logs that are not RFC compliant
 #SC4S_DISABLE_DROP_INVALID_RAW_BSD=yes
 
 # Terminal is overwhelmed by metrics and internal processing messages in a custom environment configuration
@@ -291,6 +291,11 @@ SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
 # Disk-Based Buffering
 #SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_ENABLE=yes # Default
 #SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DISKBUFSIZE=53687091200 # Default = 50 GB
+# Location to store the disk buffer files.
+#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DIR=/path
+
+# The number of destination workers (threads)
+#SC4S_DEST_SPLUNK_HEC_DEFAULT_WORKERS=10 # Default
 
 " > /opt/sc4s/env_file
 
@@ -326,10 +331,20 @@ netstat -tulpn | grep LISTEN
 ```
 
 Post-installation
-
 ```
-# Check podman/docker logs for errors
-sudo podman|docker logs SC4S
+# Configure SC4S for systemd and start SC4S
+systemctl daemon-reload
+systemctl enable sc4s
+systemctl start sc4s
+
+If you have made changes to the configuration unit file, you must first stop SC4S and re-run the systemd configuration commands:
+sudo systemctl stop sc4s
+sudo systemctl daemon-reload 
+sudo systemctl enable sc4s
+sudo systemctl start sc4s
+
+# Check podman logs for errors
+sudo podman logs SC4S
 
 # Search on Splunk for successful installation of SC4S
 index=* sourcetype=sc4s:events "starting up"

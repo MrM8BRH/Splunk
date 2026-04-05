@@ -815,7 +815,8 @@ echo “Hello SC4S” > /dev/udp/<SC4S_ip>/514
 <details>
  <summary>Block parser to drop events</summary>
 
-nano /opt/sc4s/local/config/app_parsers/vmware_vsphere_block_sourcetype-postfilter.conf [Link](https://github.com/splunk/splunk-connect-for-syslog/issues/2553#issuecomment-2298332073)
+VMware vSphere #1
+`nano /opt/sc4s/local/config/app_parsers/vmware_vsphere_block_sourcetype-postfilter.conf` [Link](https://github.com/splunk/splunk-connect-for-syslog/issues/2553#issuecomment-2298332073)
 ```
 block parser vmware_vsphere_block_sourcetype-postfilter() {
     channel {
@@ -839,7 +840,8 @@ application vmware_vsphere_block_sourcetype-postfilter[sc4s-postfilter] {
     parser { vmware_vsphere_block_sourcetype-postfilter(); };
 };
 ```
-nano /opt/sc4s/local/config/app_parsers/vmware_vsphere_sps-postfilter.conf [Link](https://github.com/splunk/splunk-connect-for-syslog/issues/1644#issuecomment-1096762979)
+VMware vSphere #2
+`nano /opt/sc4s/local/config/app_parsers/vmware_vsphere_sps-postfilter.conf` [Link](https://github.com/splunk/splunk-connect-for-syslog/issues/1644#issuecomment-1096762979)
 ```
 block parser vmware_vsphere_sps-postfilter() {
     channel {
@@ -856,6 +858,31 @@ application vmware_vsphere_sps-postfilter[sc4s-postfilter] {
         program("sps")
     };
     parser { vmware_vsphere_sps-postfilter(); };
+};
+```
+Fortinet FortiGate
+`nano /opt/sc4s/local/config/app_parsers/fortinet_traffic_drop-postfilter.conf`
+```
+block parser p_fortigate_traffic_nulling() {
+    channel {
+        # Standard SC4S null queue rewrite
+        rewrite(r_set_dest_splunk_null_queue);
+    };
+};
+
+application app-fortigate-traffic-nulling[sc4s-postfilter] {
+    filter {
+        # 1. Ensure we are only looking at Fortinet logs
+        "${fields.sc4s_vendor}" eq "fortinet"
+        and "${fields.sc4s_product}" eq "fortios"
+
+        # 2. Match the specific traffic log identifiers
+        and (
+            match("fortigate_traffic" value(".splunk.sourcetype") type(string))
+            or match('type="?traffic"?' value("MESSAGE"))
+        )
+    };
+    parser { p_fortigate_traffic_nulling(); };
 };
 ```
 

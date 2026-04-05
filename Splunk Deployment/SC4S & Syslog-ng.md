@@ -901,4 +901,7 @@ Example:
 cat /path/to/your/certificate.pem >> /opt/sc4s/tls/trusted.pem
 ```
 
+<img width="805" height="507" alt="image" src="https://github.com/user-attachments/assets/330ceae1-bd0e-4019-8176-69ef798f01ed" />
+
+
 </details>

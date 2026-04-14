@@ -11,10 +11,49 @@
   </fieldset>
   <row>
     <panel>
+      <title>Attacks by Country</title>
+      <map>
+        <search>
+          <query>index=netwaf attack_type=* request_status="blocked" | rename ip_client as clientip | iplocation clientip | stats count by Country | sort Country | geom geo_countries allFeatures=True featureIdField=Country</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.choroplethLayer.colorBins">5</option>
+        <option name="mapping.choroplethLayer.colorMode">categorical</option>
+        <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
+        <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
+        <option name="mapping.choroplethLayer.neutralPoint">0</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.showBorder">1</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.legend.placement">bottomright</option>
+        <option name="mapping.map.center">(44.21,-22.76)</option>
+        <option name="mapping.map.panning">1</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">choropleth</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Attack Summary</title>
       <chart>
         <search>
-          <query>index=netwaf attack_type=* request_status="blocked" | rename request_status as Status, hostname as Host, attack_type as Attack_Type | chart count(Status) by Attack_Type Host | sort Status</query>
+          <query>index=netwaf attack_type!="N/A" | rename request_status as Status, attack_type as Attack_Type | chart count(Status) by Attack_Type | sort Status</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -55,68 +94,23 @@
       </chart>
     </panel>
     <panel>
-      <title>Attacks by Country</title>
-      <map>
-        <search>
-          <query>index=netwaf attack_type=* request_status="blocked" | rename request_status as Status, hostname as Host, attack_type as Attack_Type, ip_client as clientip | iplocation clientip | stats count by Country | sort Country | geom geo_countries allFeatures=True featureIdField=Country</query>
-          <earliest>$time_token.earliest$</earliest>
-          <latest>$time_token.latest$</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="mapping.choroplethLayer.colorBins">5</option>
-        <option name="mapping.choroplethLayer.colorMode">categorical</option>
-        <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
-        <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
-        <option name="mapping.choroplethLayer.neutralPoint">0</option>
-        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
-        <option name="mapping.choroplethLayer.showBorder">1</option>
-        <option name="mapping.data.maxClusters">100</option>
-        <option name="mapping.legend.placement">bottomright</option>
-        <option name="mapping.map.center">(44.21,-22.76)</option>
-        <option name="mapping.map.panning">1</option>
-        <option name="mapping.map.scrollZoom">0</option>
-        <option name="mapping.map.zoom">2</option>
-        <option name="mapping.markerLayer.markerMaxSize">50</option>
-        <option name="mapping.markerLayer.markerMinSize">10</option>
-        <option name="mapping.markerLayer.markerOpacity">0.8</option>
-        <option name="mapping.showTiles">1</option>
-        <option name="mapping.tileLayer.maxZoom">7</option>
-        <option name="mapping.tileLayer.minZoom">0</option>
-        <option name="mapping.tileLayer.tileOpacity">1</option>
-        <option name="mapping.type">choropleth</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </map>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Recent Violations</title>
-      <table>
-        <search>
-          <query>index=netwaf attack_type=* request_status="blocked" | rename ip_client as Client_IP, req_status as Request_Status, hostname as Host, attack_type as Attack_Type, violations as Violation, support_id as Support_ID | table Host, Support_ID, Request_Status, Attack_Type, Violation, Client_IP| head 100</query>
-          <earliest>$time_token.earliest$</earliest>
-          <latest>$time_token.latest$</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">20</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="percentagesRow">false</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
+      <title>IP Address Intelligence</title>
       <chart>
-        <title>Logs by Status</title>
+        <search>
+          <query>index=netwaf ip_address_intelligence!="N/A" | stats count(_raw) by ip_address_intelligence</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Logs by Status</title>
+      <chart>
         <search>
           <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by request_status</query>
           <earliest>$time_token.earliest$</earliest>
@@ -128,10 +122,10 @@
       </chart>
     </panel>
     <panel>
+      <title>Logs by Severity</title>
       <chart>
-        <title>Logs by Severity</title>
         <search>
-          <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by severity</query>
+          <query>index=netwaf | stats count(_raw) by severity</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
         </search>
@@ -141,10 +135,10 @@
       </chart>
     </panel>
     <panel>
+      <title>Signature CVEs</title>
       <chart>
-        <title>Logs by Device Type</title>
         <search>
-          <query>index=netwaf | eval Time=strftime(_time,"%c") | stats count(_raw) by DeviceType</query>
+          <query>index=netwaf sig_cves!="N/A" | stats count(_raw) by sig_cves</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
         </search>
@@ -156,10 +150,10 @@
   </row>
   <row>
     <panel>
+      <title>Top 10 Attack Type</title>
       <table>
-        <title>Top 10 Attack Type</title>
         <search>
-          <query>index=netwaf attack_type!="N/A" | eval Time=strftime(_time,"%c") |top limit=10 attack_type</query>
+          <query>index=netwaf attack_type!="N/A" | top limit=10 attack_type</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
         </search>
@@ -168,10 +162,10 @@
       </table>
     </panel>
     <panel>
+      <title>Top 10 IP Clients</title>
       <table>
-        <title>Top 10 IP Clients</title>
         <search>
-          <query>index=netwaf | eval Time=strftime(_time,"%c") | top limit=10 ip_client</query>
+          <query>index=netwaf | top limit=10 ip_client</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
         </search>
@@ -182,10 +176,36 @@
   </row>
   <row>
     <panel>
+      <title>Recent Violations</title>
       <table>
-        <title>Policies</title>
         <search>
-          <query>index=netwaf policy_name=/Common/* | eval Time=strftime(_time,"%c") | table Time, policy_name, attack_type, severity, violations, username, Cmd, DeviceType, f5_bigip_service, geo_location, ip_client, src_port, method, query_string, request_status</query>
+          <query>index=netwaf policy_name=* | eval Time=strftime(_time,"%c") | table Time, policy_name, policy_apply_date, attack_type, severity, violations, username, geo_location, ip_client, src_port, method, request_status, query_string</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Signature Names</title>
+      <table>
+        <search>
+          <query>index=netwaf sig_names!="N/A" | stats count(_raw) by sig_names</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Web Application Name</title>
+      <table>
+        <search>
+          <query>index=netwaf | stats count(_raw) by web_application_name</query>
           <earliest>$time_token.earliest$</earliest>
           <latest>$time_token.latest$</latest>
         </search>

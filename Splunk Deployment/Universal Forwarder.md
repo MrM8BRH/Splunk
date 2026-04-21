@@ -41,76 +41,22 @@ gunzip <archive.tgz>
 # Extract tar file
 tar -xvf <archive.tar>
 ```
-## Upgrade Splunk Universal Forwarder on linux
-- Windows OS
-```
-Stop-Service SplunkForwarder
-msiexec.exe /i splunkuniversalforwarder_x64.msi AGREETOLICENSE=Yes /quiet
-```
-- Linux OS
-```
-/opt/splunkforwarder/bin/splunk stop
-useradd splunkfwd
-chown -R splunkfwd:splunkfwd /opt/splunkforwarder/
-# Using RPM
-   rpm -Uvh splunkuniversalforwarder_x64.rpm 
-# Using TAR
-   tar -xzvf splunkuniversalforwarder_x64.tgz -C /opt/ 
-/opt/splunkforwarder/bin/splunk disable boot-start
-/opt/splunkforwarder/bin/splunk enable boot-start -systemd-managed 1 -user splunkfwd -group splunkfwd --accept-license --no-prompt --answer-yes
-/opt/splunkforwarder/bin/splunk start
-```
-## Uninstall Splunk Universal Forwarder on Linux
-```
-# Stop Splunk Universal Forwarder
-/opt/splunkforwarder/bin/splunk stop
+## Resources
+- [Leveraging Windows Event Log Filtering and Design Techniques in Splunk](https://hurricanelabs.com/splunk-tutorials/leveraging-windows-event-log-filtering-and-design-techniques-in-splunk/)
+- [Splunk Add-on for Microsoft Windows](https://splunk.github.io/splunk-add-on-for-microsoft-windows/)
+- [Splunk Add-on for Unix and Linux](https://splunk.github.io/splunk-add-on-for-unix-and-linux/)
 
-# RedHat Linux
-rpm -e `rpm -qa | grep -i splunkforwarder`
+***Universal Forwarder 10.2***
+- [Monitor files and directories with inputs.conf](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/get-data-from-files-and-directories/monitor-files-and-directories-with-inputs.conf)
+- [Install a *nix universal forwarder](https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/universal-forwarder-manual/10.2/install-the-universal-forwarder/install-a-nix-universal-forwarder)
+- [Install a Windows universal forwarder](https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/universal-forwarder-manual/10.2/install-the-universal-forwarder/install-a-windows-universal-forwarder)
+- [Upgrade the universal forwarder](https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/universal-forwarder-manual/10.2/upgrade-or-uninstall-the-universal-forwarder/upgrade-the-universal-forwarder)
+- [Uninstall the universal forwarder](https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/universal-forwarder-manual/10.2/upgrade-or-uninstall-the-universal-forwarder/uninstall-the-universal-forwarder)
+- [Route and filter data](https://help.splunk.com/en/splunk-enterprise/forward-and-process-data/forwarding-and-receiving-data/10.2/perform-advanced-configuration/route-and-filter-data#Route_and_filter_data)
+- [Create advanced filters with the 'whitelist' and 'blacklist' settings](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/get-windows-data/monitor-windows-event-log-data-with-splunk-enterprise#create-advanced-filters-with-the-whitelist-and-blacklist-settings-0)
+- [Set up client filters](https://help.splunk.com/en/splunk-enterprise/administer/update-your-deployment/10.2/configure-the-agent-management-system/set-up-agent-filters)
 
-# Debian Linux
-dpkg -P splunkforwarder
-
-# Remove the Splunk Universal Forwarder installation directory:
-sudo rm -r /opt/splunkforwarder
-
-# Delete the splunkfwd user and group, if they exist.
-userdel splunkfwd
-groupdel splunkfwd
-```
-
-##  Here's an example of how you can monitor a stanza in Splunk on both Windows and Linux.
-For Windows:
-```
-[monitor://C:\path\to\logs]
-disabled = false
-index = myindex
-sourcetype = source_type
-# host = hostname
-# host_segment = 5
-```
- For Linux:
- ```
-[monitor:///path/to/logs]
-disabled = false
-index = myindex
-sourcetype = source_type
-# host = hostname
-# host_segment = 5
-```
-```diff
-- Restart the service after modifying the monitor stanza.
-```
-For Windows:
-```
-Restart-Service -Name "SplunkForwarder" 
-```
-For Linux:
-```
-/opt/splunkforwarder/bin/splunk restart
-```
-## Linux Logs
-25 Linux Logs to Collect and Monitor
+## 25 Linux Logs to Collect and Monitor
 - `/var/log/auth.log`: documentation for failed and successful logins and authentication on Debian/Ubuntu
 - `/var/log/secure`: documentation for failed and successful logins and authentication on RedHat/CentOS
 - `/var/log/boot.log`: information about startup, shutdown, and boot, including initialization script
@@ -175,12 +121,3 @@ Examples:
 \bsshd\b
 \bn\/?a(?:[aeiouAEIOU]*|)\b|\bN\/?A(?:[aeiouAEIOU]*|)\b
 ```
-Resources
----------
-- [Leveraging Windows Event Log Filtering and Design Techniques in Splunk](https://hurricanelabs.com/splunk-tutorials/leveraging-windows-event-log-filtering-and-design-techniques-in-splunk/)
-- [Install a Windows universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller)
-- [Install a *nix universal forwarder](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/Installanixuniversalforwarder)
-- [Configure the Splunk Add-on for Windows](https://docs.splunk.com/Documentation/AddOns/released/Windows/Configuration)
-- [Route and filter data](https://docs.splunk.com/Documentation/Splunk/latest/Forwarding/Routeandfilterdatad#Route_and_filter_data)
-- [Create advanced filters with the 'whitelist' and 'blacklist' settings](https://docs.splunk.com/Documentation/Splunk/latest/Data/MonitorWindowseventlogdata#Create_advanced_filters_with_the_.27whitelist.27_and_.27blacklist.27_settings)
-- [Set up client filters](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Filterclients)

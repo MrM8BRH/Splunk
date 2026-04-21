@@ -1,54 +1,21 @@
 <details>
 <summary><b>Splunk Deployment Specifications</b></summary>
 
-## Types of Distributed Deployments
-
-- [Departmental](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Deploymentcharacteristics) - A single instance that combines indexing and search management functions.
-- [Small enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Searchheadwithindexers) - One search head with two or three indexers.
-- Medium enterprise - A small search head cluster, with several indexers.
-- Large enterprise - A large search head cluster, with large numbers of indexers.
-- [Reference hardware](https://docs.splunk.com/Documentation/Splunk/latest/Capacity/Referencehardware)
-- [System requirements for use of Splunk Enterprise on-premises](https://docs.splunk.com/Documentation/Splunk/latest/Installation/Systemrequirements#Supported_Operating_Systems)
-- [Minimum specifications for a production deployment (Splunk ES v8)](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.0/planning/minimum-specifications-for-a-production-deployment)
-- [Which instance should host the console?](https://docs.splunk.com/Documentation/Splunk/latest/DMC/WheretohostDMC)
-- [Implement a deployment server cluster](https://docs.splunk.com/Documentation/Splunk/latest/Updating/Implementascalabledeploymentserversolution)
-
 ## Distributed Deployment
-
 ### Server Requirements
-
 1. **Search Heads** (2 instances)
-   - **Physical CPU Cores:** 16 || vCPU Cores: 32
-   - **RAM:** 32 GB
-   - **Storage:** 350 GB
    - **Purpose:** SIEM (Enterprise Security Application) and application monitoring (F5, FortiGate, CrowdStrike, etc.)
-
 2. **Deployment Server** (1 instance)
-   - **Physical CPU Cores:** 12 || vCPU Cores: 24
-   - **RAM:** 16 GB
-   - **Storage:** 250 GB
    - **Purpose:** Manage Splunk agents (Windows, Linux, etc.) and deploy add-ons
-
 3. **Indexer Server** (1 instance)
-   - **Physical CPU Cores:** 16 || vCPU Cores: 32
-   - **RAM:** 32 GB
-   - **Storage:** 2 TB
    - **Purpose:** Store and process large data volumes
-
 4. **Syslog/SC4S Server** (Choose one)
    - **Option 1:** Syslog Server
-     - **Physical CPU Cores:** 4 || vCPU Cores: 8
-     - **RAM:** 8 GB
-     - **Storage:** 400 GB
    - **Option 2:** SC4S Server
-     - **Physical CPU Cores:** 4 || vCPU Cores: 8
-     - **RAM:** 8 GB
-     - **Storage:** 200 GB
    - **Recommendation:** SC4S for improved scalability and performance
 
 ### Partitioning Guidelines
-
-- **Operating System:** RHEL/CentOS with Ext4 LVM partitioning
+- **Operating System:** RHEL/RockyOS with Ext4 LVM partitioning
 - **Splunk Servers:**
   - **Root (`/`):** 15 GB
   - **Swap:** 8 GB
@@ -152,15 +119,6 @@ apt install -y net-tools nano wget net-tools tcpdump screen iotop htop ioping fi
 </details>
 
 <details>
-<summary><b>Change Timezone</b></summary>
-
-```
-timedatectl
-timedatectl set-timezone Asia/Jerusalem
-```
-</details>
-
-<details>
 <summary><b>Change Hostname</b></summary>
 
 ```
@@ -172,53 +130,42 @@ hostnamectl set-hostname host.domain.com
 <details>
 <summary><b>Change IP Address, DNS Server, Gateway</b></summary>
 
-*   `ip a`
-*   `vi /etc/sysconfig/network-scripts/ifcfg-<int>`
-  
 ```
-ONBOOT=yes
-IPADDR=<IP>                                       *****
-PREFIX=                                           *****
-GATEWAY=<GW>                                      *****
-DNS1=<DNS1>                                       *****
-DNS2=<DNS2>                                       *****
+nmtui
 ```
-*   `systemctl restart network.service`
 </details>
 
 <details>
-<summary><b>Change NTP Server</b></summary>
-
-#### chronyd
-```
-# Verfiy
-timedatectl
-chronyc sources
-
-# Configuration
-nano /etc/chrony.conf
-
-# Service
-systemctl status chronyd
-systemctl start chronyd
-systemctl enable chronyd
-```
+<summary><b>Change NTP Server & Timezone</b></summary>
 
 #### NTP
 ```
-dnf install ntp
-systemctl start ntp
-systemctl enable ntp
+- Install (Chrony)
+  dnf install chrony -y
+
+- Verify
+  timedatectl
+  chronyc sources
+
+- Configuration (Chrony)
+  nano /etc/chrony.conf
+  # Example:
+  # server 0.pool.ntp.org iburst
+  # server <IP_Address> iburst
+
+- Service (Chrony)
+  systemctl status chronyd
+  systemctl start chronyd
+  systemctl enable chronyd
 ```
 
-*   `nano /etc/ntp.conf`
+#### Timezone
 
-*   server "IP Address"
-  
 ```
-systemctl restart ntpd
-ntpq -p
+timedatectl
+timedatectl set-timezone Asia/Jerusalem
 ```
+
 </details>
 
 <details>
@@ -313,7 +260,7 @@ Persist this change across reboots by editing `/etc/rc.local`.
 <details>
 <summary><b>Increase Kernel Buffer Sizes</b></summary>
 
-Default Linux kernel settings are not sufficient for high-volume packet capture. Using these settings can cause missing packets and data loss. To avoid this issue, add the following kernel settings to your `/etc/sysctl.conf` file:
+- `nano /etc/sysctl.conf`
 ```
 net.core.rmem_default = 33554432
 net.core.rmem_max = 33554432
@@ -368,7 +315,7 @@ reboot
 
 ```
 # Install Splunk using RPM:
-rpm -ivh --force --nosignature splunk_package_name.rpm
+rpm -i splunk_package_name.rpm
 
 # Install Splunk using Tar:
 tar xvzf splunk_package_name.tgz -C /opt
@@ -384,6 +331,9 @@ tar xvzf splunk_package_name.tgz -C /opt
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk # 1
 /opt/splunk/bin/splunk enable boot-start -systemd-managed 1 -create-polkit-rules 1 -user splunk -group splunk # 2
 
+# Permissions
+chown -R splunk:splunk /opt/splunk
+chmod -R 755 /opt/splunk
 ```
 [Configure Linux systems running systemd](https://help.splunk.com/en/splunk-enterprise/administer/manage-workloads/10.2/set-up-linux-for-workload-management/configure-linux-systems-running-systemd)
 
@@ -409,43 +359,13 @@ nano /etc/systemd/system/Splunkd.service
 ```
 Add or update the following values as required (For **cgroups v2**):
 ```
-#This unit file replaces the traditional start-up script for systemd
-#configurations, and is used when enabling boot-start for Splunk on
-#systemd-based Linux distributions.
-
-[Unit]
-Description=Systemd service file for Splunk, generated by 'splunk enable boot-start'
-After=network-online.target
-Wants=network-online.target
-
 [Service]
-Type=simple
-Restart=always
-#ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd
-ExecStart=/opt/splunk/bin/splunk _internal_launch_under_systemd \
---nodaemon \
---env SPLUNK_IGNORE_SYSTEMD_OPENSSL=1
-KillMode=mixed
-KillSignal=SIGINT
-TimeoutStopSec=360
 LimitNOFILE=65536
-LimitRTPRIO=99
-SuccessExitStatus=51 52
-RestartPreventExitStatus=51
-RestartForceExitStatus=52
-User=splunk
-Group=splunk
-Delegate=true
 CPUWeight=100
 LimitDATA=20000000000
 LimitFSIZE=infinity
 TasksMax=8192
 MemoryMax=infinity
-PermissionsStartOnly=true
-ExecStartPost=-/bin/bash -c "chown -R splunk:splunk /sys/fs/cgroup/system.slice/%n"
-
-[Install]
-WantedBy=multi-user.target
 ```
 Validate the systemd unit file syntax
 ```
@@ -783,102 +703,53 @@ restartIfNeeded=true
 </details>
 
 <details>
-<summary><b>Upgrade Splunk Enterprise (Linux)</b></summary>
-  
-- [How to upgrade Splunk Enterprise](https://docs.splunk.com/Documentation/Splunk/latest/Installation/HowtoupgradeSplunk)
-- [Splunk products version compatibility matrix](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/CompatMatrix)
-- [Compatibility between forwarders and Splunk Enterprise indexers](https://docs.splunk.com/Documentation/VersionCompatibility/latest/Matrix/Compatibilitybetweenforwardersandindexers)
-
-```
-# Stop Splunk
-/opt/splunk/bin/splunk stop
-
-# Upgrade Splunk using RPM
-rpm -Uvh <Package>
-
-# Check the status of Splunk
-/opt/splunk/bin/splunk status
-
-# Accept the license
-<q> <y> <y>
-
-# Change the ownership of the splunk directory.
-chown -R splunk:splunk /opt/splunk
-
-# Start Splunk
-/opt/splunk/bin/splunk start
-```
-</details>
-
-<details>
-<summary><b>Uninstall Splunk Enterprise (Linux)</b></summary>
-
-```
-# Stop Splunk
-/opt/splunk/bin/splunk stop
-
-# Uninstall Splunk using RPM:
-rpm -e `rpm -qa | grep -i splunk`
-
-# Remove the Splunk installation directory:
-sudo rm -r /opt/splunk
-
-# Delete the splunk user and group, if they exist.
-userdel splunk
-groupdel splunk
-```
-</details>
-
-<details>
 <summary><b>Install/Update an app or add-on</b></summary>
 
 ```
 /opt/splunk/bin/splunk install app <app.spl/tgz>
 /opt/splunk/bin/splunk install app <app.spl/tgz> -update 1
 ```
-
 </details>
 
- 
-<details>
-<summary><b>Uninstall an app or add-on</b></summary>
-
-- Delete the app and its directory. The app and its directory are typically located in `$SPLUNK_HOME/etc/apps/<appname>`.
-- You may need to remove user-specific directories created for your app or add-on by deleting any files found here: `$SPLUNK_HOME/etc/users/*/<appname>`.
-</details>
 
 <details>
-<summary><b>Splunk Admin Password Reset</b></summary>
+<summary><b>Reset Splunk Admin Password</b></summary>
   
 ```
-# Stop Splunk Service
-/opt/splunk/bin/splunk stop
+- Stop Splunk:
+  $SPLUNK_HOME/bin/splunk stop
 
-# Move Existing Passwd File to Backup Location
-mv /opt/splunk/etc/passwd /opt/splunk/etc/passwd.bkp
+- Backup passwd file:
+  mv $SPLUNK_HOME/etc/passwd $SPLUNK_HOME/etc/passwd.bk
 
-# Generate Password Hash
-/opt/splunk/bin/splunk hash-passwd 'your-new-password'
+- Create user-seed.conf:
+  Path: $SPLUNK_HOME/etc/system/local/user-seed.conf
 
-# Create User-Seed.Conf File
-nano /opt/splunk/etc/system/local/user-seed.conf
+- Add content:
+  [user_info]
+  PASSWORD = NEW_PASSWORD
+
+- Start Splunk:
+  $SPLUNK_HOME/bin/splunk start
+
+- Login:
+  Username: admin
+  Password: NEW_PASSWORD
+
+- (Optional) Restore users:
+  Copy from $SPLUNK_HOME/etc/passwd.bk to $SPLUNK_HOME/etc/passwd
+  Then restart:
+  $SPLUNK_HOME/bin/splunk restart
+
+- Notes:
+  user-seed.conf works only if passwd is missing
+  chown splunk:splunk $SPLUNK_HOME/etc/system/local/user-seed.conf
+  Remove user-seed.conf after login
 ```
-Containing the username and password (or password hash) you want to use:
-```
-[user_info]
-USERNAME = admin
-HASHED_PASSWORD = myPassword
-```
-Restart Splunk
-```
-/opt/splunk/bin/splunk restart
-```
-##### Log In with New Password
-After the restart, a new `passwd` file will be generated, and you should be able to log in successfully with your new password. 
 </details>
 
 <details>
-<summary><b>Troubleshoot & Others</b></summary>
+<summary><b>Troubleshoot</b></summary>
 
 ```
 #######  Searches Skipped in the last 24 hours  #######
@@ -890,6 +761,9 @@ Settings -> Monitoring Console -> Search -> Scheduler Activity: Instance, and in
 
 # Remove a specific license from the Splunk instance, identified by the license hash.
 /opt/splunk/bin/splunk remove license <hash>
+
+# Troubleshoot license
+/opt/splunk/bin/splunk btool server list --debug license
 
 #######  A storage location for logs  #######
 cd /opt/splunk/var/lib/splunk
@@ -904,25 +778,11 @@ cd /opt/splunk/var/lib/splunk
 # To reset fishbucket for all sources, must execute with caution:
 /opt/splunk/bin/splunk clean eventdata index _thefishbucket
 
-# Check Splunk Version
-/opt/splunk/bin/splunk -version
-
 # Troubleshoot configurations
 /opt/splunk/bin/splunk btool check --debug
 
 # Verify Splunk's integrity
 /opt/splunk/bin/splunk validate files
-
-# PostgreSQL binaries are located in
-/opt/splunk/bin/
-
-# Troubleshoot license
-/opt/splunk/bin/splunk btool server list --debug license
-
-# Files
-/opt/splunk/var/log/splunk/splunkd.log
-/opt/splunk/var/log/splunk/splunkd_access.log
-/opt/splunk/var/log/splunk/splunkd_ui_access.log
 
 # Troubleshoot your tailed files
 curl https://serverhost:8089/services/admin/inputstatus/TailingProcessor:FileStatus
@@ -943,145 +803,29 @@ mv /etc/init.d /etc/init.d.bak
 </details>
 
 <details>
-<summary><b>Kvstore</b></summary>
+<summary><b>Resources</b></summary>
 
-```
-# Path
-/var/lib/splunk/kvstore/mongo
+***Splunk Enterprise 10.2***
 
-# Status
-/opt/splunk/bin/splunk show kvstore-status --verbose
+- [Administer the app key value store](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/administer-the-app-key-value-store/about-the-app-key-value-store)
+- [Manage apps and add-ons on standalone instances](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/meet-splunk-apps/manage-app-and-add-on-objects#ariaid-title4)
+- [How to upgrade Splunk Enterprise](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/upgrade-or-migrate-splunk-enterprise/how-to-upgrade-splunk-enterprise)
+- [Uninstall Splunk Enterprise](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/uninstall-splunk-enterprise/uninstall-splunk-enterprise)
+- [Types of Distributed Deployments](https://help.splunk.com/en/splunk-enterprise/administer/distributed-deployment-manual/10.2/implement-a-distributed-deployment/types-of-distributed-deployments)
+- [Reference hardware](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/10.2/performance-reference/reference-hardware)
+- [Supported Operating Systems](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/plan-your-splunk-enterprise-installation/system-requirements-for-use-of-splunk-enterprise-on-premises#ariaid-title2)
+- [Which instance should host the console?](https://help.splunk.com/en/splunk-enterprise/administer/monitor/10.2/configure-the-monitoring-console/which-instance-should-host-the-console)
+- [Splunk products version compatibility matrix](https://help.splunk.com/en/splunk-enterprise/release-notes-and-updates/compatibility-matrix/splunk-products-version-compatibility/splunk-products-version-compatibility-matrix)
+- [Compatibility between forwarders and Splunk Enterprise indexers](https://help.splunk.com/en/splunk-enterprise/release-notes-and-updates/compatibility-matrix/splunk-products-version-compatibility/compatibility-between-forwarders-and-splunk-enterprise-indexers)
+- [Migrate a Splunk Enterprise instance from one physical machine to another](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/upgrade-or-migrate-splunk-enterprise/migrate-a-splunk-enterprise-instance-from-one-physical-machine-to-another)
+- [Anonymize data](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/configure-event-processing/anonymize-data)
+- [Monitor changes to your file system](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/get-other-kinds-of-data-in/monitor-changes-to-your-file-system)
+- [HTTP Event Collector examples](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/get-data-with-http-event-collector/http-event-collector-examples)
 
-# Clean
-/opt/splunk/bin/splunk clean kvstore -local
+***Splunk ES v8.5***
+- [Minimum specifications for a production deployment](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.5/planning/minimum-specifications-for-a-production-deployment)
 
-# Migrate
-/opt/splunk/bin/splunk stop
-sudo rm /opt/splunk/var/run/splunk/kvstore_upgrade/*
-touch /opt/splunk/var/run/splunk/kvstore_upgrade/versionFile36
-/opt/splunk/bin/splunk migrate kvstore-storage-engine --target-engine wiredTiger --enable-compression
-/opt/splunk/bin/splunk migrate migrate-kvstore # (1) - versionFile40
-/opt/splunk/bin/splunk migrate migrate-kvstore # (2) - versionFile42
-/opt/splunk/bin/splunk start
-/opt/splunk/bin/splunk show kvstore-status --verbose
-
-# KV Store Process Terminated
-### 1
-/opt/splunk/bin/splunk stop
-sudo rm /opt/splunk/var/lib/splunk/kvstore/mongo/mongod.lock
-/opt/splunk/bin/splunk start
-### 2
-/opt/splunk/bin/splunk stop
-mv /opt/splunk/var/lib/splunk/kvstore/mongo /opt/splunk/var/lib/splunk/kvstore/mongo.old
-/opt/splunk/bin/splunk start
-### 3 
-/opt/splunk/bin/splunk stop
-chmod 700 /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key
-/opt/splunk/bin/splunk start
-```
 </details>
-
-<details>
-<summary><b>HEC_API_cURL_examples</b></summary>
-
-Sending data as a JSON formatted payload – collector/event request. Make sure to replace with active HEC token and splunk host
-```
-curl –k -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/event -d '{"sourcetype": "signaling_data", "event": "stable signal!"}'
-```
-Sending data as a raw event – Collector/raw request:
-```
-curl –k -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/raw -d 'stable signal!'
-```
-Finding the event indexing status – /ack endpoint request
-```
-curl -H "Authorization: Splunk 09776ade-cf23-42c0-9138-89ad8388516a" -H "X-Splunk-Request-Channel: FE0ECFAD-13D5-401B-847D-77833BD77131" https://mysplunk.example.com:8088/services/collector/ack -d '{"acks":[0,1]}'
-```
-</details>
-
-<details>
-<summary><b>Migrate a Splunk Enterprise instance</b></summary>
-
-**How to migrate**
-
-When you migrate on *nix systems, you can extract the tar file you downloaded directly over the copied files on the new system, or use your package manager to upgrade using the downloaded package. On Windows systems, the installer updates the Splunk files automatically.
-1. Stop Splunk Enterprise services on the host from which you want to migrate.
-2. Copy the entire contents of the $SPLUNK_HOME directory from the old host to the new host. Copying this directory also copies the mongo subdirectory.
-3. Install Splunk Enterprise on the new host.
-4. Verify that the index configuration (indexes.conf) file's volume, sizing, and path settings are still valid on the new host.
-5. Start Splunk Enterprise on the new instance.
-6. Log into Splunk Enterprise with your existing credentials.
-7. After you log in, confirm that your data is intact by searching it.
-</details>
-
-<details>
-<summary><b>Custom Configuration</b></summary>
-
-**Anonymize data**
-
-Prerequisites to [anonymize data](https://docs.splunk.com/Documentation/Splunk/latest/Data/Anonymizedata)
-Before you can anonymize data, you must select a set of events to anonymize.
-
-- First, you select the events to anonymize
-- Then, you either:
-    - Use the props.conf configuration file to anonymize the events with a sed script
-    - Use the props.conf and transforms.conf configuration files to anonymize the events with a regular expression transform
- 
-```
-SEDCMD-maskCC = s/-\d{4}-\d{4}-\d{4}/-XXXX-XXXX-XXXX/g
-```
-
-[**Monitor changes to your file system**](https://docs.splunk.com/Documentation/Splunk/latest/Data/Monitorchangestoyourfilesystem)
-```
-[fschange:/opt/test]
-index = fschange
-recurse = true
-pollPeriod = 10
-signedaudit = false
-fullEvent = true
-sendEventMaxSize = 1048576
-crcSalt = <SOURCE>
-sourcetype = fs_notification
-```
-</details>
-
-<details>
-<summary><b>Splunk Checklist</b></summary>
-
--   Splunk Side
-    -   Upgrade/Update Version of:
-        -   Splunk Enterprise & Universal Forwarder
-        -   Splunk Enterprise Security & Splunk ES Content Update
-        -   Splunk Apps & Add-ons
-    -   License Usage
-    -   Specs of Splunk Servers
-    -   Health Check Assessment
-    -   Configure Retention Period
-    -   Best Practices
-        -   Splunk Deployment
-        -   Splunk Configuration
-        -   Apps & Add-ons Deployment
-    -   Configure Email Settings (Server Settings)
-    -   Configure Alerts Setup (MC)
-    -   Start on Boot
-    -   Enable SSL (HTTPS)
-    -   Forwarding Splunk's internal logs to the indexers
-    -   Preferences (Global & SPL Editor)
--   Server Side
-    -   Hostname
-    -   NTP
-    -   Timezone
-    -   DNS
-    -   Ulimits
-    -   Disable SELinux
-    -   Disable Host-Based Firewall (Firewalld)
-    -   Disable Transparent Huge Pages (THP)
-</details>
-
-
-
-
-
-
 
 
 

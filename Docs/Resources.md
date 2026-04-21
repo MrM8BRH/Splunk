@@ -15,7 +15,6 @@
 ### Playlists
 - [Splunk/SIEM in Seconds](https://www.youtube.com/playlist?list=PLxkFdMSHYh3THHKq1pFp_FkQsNqjqTIAW)
 - [Splunk/Splunk Threat Research](https://www.youtube.com/playlist?list=PLxkFdMSHYh3T2VJ3mh4eUCdGLUwsEGnxc)
-- [Splunk/Splunk Dashboard Studio Demo](https://www.youtube.com/playlist?list=PLxkFdMSHYh3QfhADQP941q7bYwq5ksfJr)
 - [Splunkable/Splunk Training Courses](https://www.youtube.com/playlist?list=PL4_WMjvnNwYp1c8Aq6GhLxZgVFJPcaW_q)
 
 ## Splunk

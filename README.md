@@ -18,28 +18,24 @@
 
 <br>
 <br>
-Gartner Magic Quadrant for Security Information and Event Management (2024)
-<br>
-<br>
-<img width=400px; src="https://github.com/MrM8BRH/Splunk/assets/34133187/d8f3a444-dff1-4804-9da5-459707f13f91">
-<br>
-<br>
-<img width=400px; src="https://github.com/user-attachments/assets/5fd3ae82-ca2b-40b9-90aa-6aee0b5b51c1">
+<img width=650px; src="https://github.com/user-attachments/assets/5fd3ae82-ca2b-40b9-90aa-6aee0b5b51c1">
 
 
 </div>
 
 Quick access
 -----------------
-- Splunk Deployment
-    - [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
-    - [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
-    - [SC4S & Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/SC4S%20&%20Syslog-ng.md)
-    - [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
-    - [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20ES/Splunk%20ES.md)
 
-- SPL Queries
-    - [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
-    - [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)
-    - [Dashboards](https://github.com/MrM8BRH/Splunk/tree/main/SPL%20Queries/Dashboards)
+- 📁 Splunk Deployment
+    - 🗒️ [Splunk Deployment](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Splunk%20Deployment.md)
+    - 🗒️ [Universal Forwarder](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Universal%20Forwarder.md)
+    - 🗒️ [SC4S & Syslog-ng](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/SC4S%20&%20Syslog-ng.md)
+    - 🗒️ [Data Models](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Data%20Models.md)
+    - 🗒️ [Apps & Addons](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20Deployment/Apps%20%26%20Addons.md)
+    - 🗒️ [Splunk ES](https://github.com/MrM8BRH/Splunk/blob/main/Splunk%20ES/Splunk%20ES.md)
+
+- 📁 SPL Queries
+    - 🗒️ [SPL Queries](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/SPL%20Queries.md)
+    - 🗒️ [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)
+    - 🗒️ [Dashboards](https://github.com/MrM8BRH/Splunk/tree/main/SPL%20Queries/Dashboards)
 

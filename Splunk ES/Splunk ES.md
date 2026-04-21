@@ -222,6 +222,7 @@ rm -r SplunkEnterpriseSecuritySuite missioncontrol SA-* DA-ESS*
 <summary><b>Resrouces</b></summary>
 
 Enterprise Security
+- [Performance reference for Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.1/planning/performance-reference-for-splunk-enterprise-security)
 - [Administer Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/overview/administering-splunk-enterprise-security)
 - [Manage internal lookups in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/managing-content/manage-internal-lookups-in-splunk-enterprise-security)
 - [Manage assets and identities in Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-7/administer/7.3/asset-and-identity-management/manage-assets-and-identities-in-splunk-enterprise-security)
@@ -231,17 +232,8 @@ Enterprise Security
 Lantern
 - [Optimizing Splunk Enterprise Security for your SOC](https://lantern.splunk.com/Security_Use_Cases/Automation_and_Orchestration/Optimizing_Splunk_Enterprise_Security_for_your_SOC)
 - [Getting Started With Splunk Enterprise Security](https://lantern.splunk.com/Security/Getting_Started)
-- [Using threat intelligence in Splunk Enterprise Security](https://lantern.splunk.com/Security/UCE/Prioritized_Actions/Threat_intelligence/Using_threat_intelligence_in_Splunk_Enterprise_Security)
 - [Configuring and optimizing Enterprise Security](https://lantern.splunk.com/Security/Getting_Started/Configuring_and_optimizing_Enterprise_Security)
 - [Using Enterprise Security for security investigation and monitoring](https://lantern.splunk.com/Security/Getting_Started/Using_Enterprise_Security_for_security_investigation_and_monitoring)
-- [Foundational Visibility](https://lantern.splunk.com/Security/UCE/Foundational_Visibility)
-- [Cyber frameworks](https://lantern.splunk.com/Security/UCE/Prioritized_Actions/Cyber_frameworks)
-- [Proactive Response](https://lantern.splunk.com/Security/UCE/Proactive_Response)
-- [Optimized Experiences](https://lantern.splunk.com/Security/UCE/Optimized_Experiences)
-
-Normalization
-- [How to use the CIM data model reference tables](https://docs.splunk.com/Documentation/CIM/latest/User/Howtousethesereferencetables)
-- [Use the CIM to normalize data at search time](https://docs.splunk.com/Documentation/CIM/latest/User/UsetheCIMtonormalizedataatsearchtime)
 - [Normalizing values to a common field name with the Common Information Model (CIM)](https://lantern.splunk.com/Splunk_Platform/Product_Tips/Data_Management/Normalizing_values_to_a_common_field_name_with_the_Common_Information_Model_(CIM))
 
 </details>

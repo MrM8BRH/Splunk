@@ -1,3 +1,9 @@
+<div id="header" align="center">
+<img width="1245" height="626" alt="image" src="https://github.com/user-attachments/assets/223401d0-727f-468f-ac66-95d1059bc1e3" />
+</div>
+<br>
+<br>
+
 <details>
 <summary><b>Splunk Enterprise Security</b></summary>
 

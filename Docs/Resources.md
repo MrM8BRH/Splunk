@@ -5,8 +5,6 @@
 - [Reference hardware](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/10.0/performance-reference/reference-hardware)
 - [Use indexer clusters to scale indexing](https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.0/deploy-the-indexer-cluster/use-indexer-clusters-to-scale-indexing)
 - [Welcome to the Docker-Splunk documentation!](https://splunk.github.io/docker-splunk/)
-- [Splunk Storage Sizing](https://splunk-sizing.appspot.com/)
-- [Splunk Data Retention Policy](https://www.splunk.com/en_us/legal/splunk-retention-policy.html)
 
 ## YouTube
 - [Splunk How-To](https://www.youtube.com/@SplunkHowTo)
@@ -32,4 +30,6 @@
 
 ## Others
 - [Hurricane Labs](https://hurricanelabs.com/splunk-tutorials/)
-- [Splunk Storage Sizing](https://splunk-sizing.soclib.net/)
+- [Splunk Storage Sizing - soclib](https://splunk-sizing.soclib.net/)
+- [Splunk Storage Sizing - appspot](https://splunk-sizing.appspot.com/)
+- [Splunk Data Retention Policy](https://www.splunk.com/en_us/legal/splunk-retention-policy.html)

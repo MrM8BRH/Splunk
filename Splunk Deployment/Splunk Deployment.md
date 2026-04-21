@@ -743,6 +743,7 @@ chmod -R u+rwX /opt/splunk/var
 
 ***Splunk Enterprise 10.2***
 
+- [Some best practices for your servers and operating system](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.2/best-practices-for-splunk-platform-security/some-best-practices-for-your-servers-and-operating-system)
 - [Administer the app key value store](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/administer-the-app-key-value-store/about-the-app-key-value-store)
 - [Manage apps and add-ons on standalone instances](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/meet-splunk-apps/manage-app-and-add-on-objects#ariaid-title4)
 - [How to upgrade Splunk Enterprise](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/upgrade-or-migrate-splunk-enterprise/how-to-upgrade-splunk-enterprise)

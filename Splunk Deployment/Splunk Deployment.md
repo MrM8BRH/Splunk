@@ -1,5 +1,5 @@
 <details>
-<summary><b>Splunk Deployment Specifications</b></summary>
+<summary><b>🟢 Splunk Deployment Specifications</b></summary>
 
 ## Distributed Deployment
 ### Server Requirements
@@ -99,16 +99,17 @@
 </details>
 
 <details>
-<summary><b>Preparing a System Before Splunk Installation</b></summary>
+<summary><b>🟢 Preparing a System Before Splunk Installation</b></summary>
   
 <details>
-<summary><b>Update the system & Install additional tools</b></summary>
+<summary><b>🔵 Update the system & Install additional tools</b></summary>
 
 RHEL family
 ```
-yum update -y
-yum install -y dnf
+dnf update -y
+yum install -y epel-release
 dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump fio bzip2 sysstat elfutils polkit.x86_64 cloud-utils-growpart coreutils findutils procps shadow-utils
+dnf install -y postgresql-libs openldap openldap-compat net-snmp-libs libxml2 libxslt xmlsec1 jemalloc mongo-c-driver
 ```
 Debian family
 ```
@@ -119,7 +120,7 @@ apt install -y net-tools nano wget net-tools tcpdump screen iotop htop ioping fi
 </details>
 
 <details>
-<summary><b>Change Hostname</b></summary>
+<summary><b>🔵 Change Hostname</b></summary>
 
 ```
 hostnamectl
@@ -128,7 +129,7 @@ hostnamectl set-hostname host.domain.com
 </details>
 
 <details>
-<summary><b>Change IP Address, DNS Server, Gateway</b></summary>
+<summary><b>🔵 Change IP Address, DNS Server, Gateway</b></summary>
 
 ```
 nmtui
@@ -136,7 +137,7 @@ nmtui
 </details>
 
 <details>
-<summary><b>Change NTP Server & Timezone</b></summary>
+<summary><b>🔵 Change NTP Server & Timezone</b></summary>
 
 #### NTP
 ```
@@ -169,7 +170,7 @@ timedatectl set-timezone Asia/Jerusalem
 </details>
 
 <details>
-<summary><b>Disable SELinux</b></summary>
+<summary><b>🔵 Disable SELinux</b></summary>
 
 SELinux can interfere with Splunk operations. Set it to `permissive` or `disabled`:
 ```
@@ -190,7 +191,7 @@ sudo setenforce 0
 </details>
 
 <details>
-<summary><b>Set Ulimits</b></summary>
+<summary><b>🔵 Set Ulimits</b></summary>
 
 Increase file descriptors and process limits for the splunk user
 
@@ -216,7 +217,7 @@ ulimit -d  # Should return 19531250
 </details>
 
 <details>
-<summary><b>Disable Firewall</b></summary>
+<summary><b>🔵 Disable Firewall</b></summary>
 
 ```
 systemctl stop firewalld
@@ -226,7 +227,7 @@ systemctl disable firewalld
 
 
 <details>
-<summary><b>Disable Transparent Huge Pages (THP)</b></summary>
+<summary><b>🔵 Disable Transparent Huge Pages (THP)</b></summary>
 
 Splunk recommends disabling THP for performance optimization
 
@@ -258,7 +259,7 @@ Persist this change across reboots by editing `/etc/rc.local`.
 </details>
 
 <details>
-<summary><b>Increase Kernel Buffer Sizes</b></summary>
+<summary><b>🔵 Increase Kernel Buffer Sizes</b></summary>
 
 - `nano /etc/sysctl.conf`
 ```
@@ -273,7 +274,7 @@ Then run the following to reload the settings:
 </details>
 
 <details>
-<summary><b>Firewall Rules (Host & Network)</b></summary>
+<summary><b>🔵 Firewall Rules (Host & Network)</b></summary>
 
 This is a diagram of Splunk components and network ports that are commonly used in a Splunk Enterprise environment. Firewall rules often need to be updated to allow communication on ports 8000, 8089, 9997, 8080 and 514.
 
@@ -311,7 +312,7 @@ reboot
 </details>
 
 <details>
-<summary><b>Splunk Enterprise (Linux)</b></summary>
+<summary><b>🟢 Splunk Enterprise (Linux)</b></summary>
 
 ```
 # Install Splunk using RPM:
@@ -380,28 +381,13 @@ Enable Splunkd to start at boot and start the service immediately
 ```
 systemctl enable --now Splunkd.service
 ```
-Troubleshooting
-```
-# Step 1: Check Splunkd service status if startup fails
-systemctl status Splunkd
-
-# Step 2: Stop Splunkd service and reset systemd failure state
-systemctl stop Splunkd
-systemctl reset-failed Splunkd
-
-# Step 3: Fix ownership and ensure required Splunk runtime directories exist
-chown -R splunk:splunk /opt/splunk
-
-mkdir -p /opt/splunk/var/run/splunk/config/validate/tmp
-mkdir -p /opt/splunk/var/log/splunk
-
-chown -R splunk:splunk /opt/splunk/var
-chmod -R u+rwX /opt/splunk/var
-```
 </details>
 
 <details>
-<summary><b>Enable SSL</b></summary>
+<summary><b>🟢 Splunk Configurations</b></summary>
+
+<details>
+<summary><b>🟠 Enable SSL</b></summary>
   
 *   `nano /opt/splunk/etc/system/local/web.conf`
 ```text-plain
@@ -413,7 +399,7 @@ splunkdConnectionTimeout = 600
 </details>
 
 <details>
-<summary><b>Optimization Recommendations</b></summary>
+<summary><b>🟠 Optimization Recommendations</b></summary>
   
 
 - `nano /opt/splunk/etc/system/local/server.conf`
@@ -455,7 +441,7 @@ These adjustments should be aligned with our system requirements and available r
 </details>
   
 <details>
-<summary><b>Forwarding Splunk's internal logs to the indexers</b></summary>
+<summary><b>🟠 Forwarding Splunk's internal logs to the indexers</b></summary>
 
 *    `nano /opt/splunk/etc/system/local/outputs.conf`
 ```
@@ -474,35 +460,7 @@ server = 192.168.1.50:9997
 </details>
 
 <details>
-<summary><b>Indexer Server</b></summary>
-
-```
-- Settings → Forwarding and reciving → Configure receiving
-- Settings → Licensing
-- Settings → Indexes - Add indexes like: wineventlog, linux, windows ... etc.
-- Install Addons
-```
-Disable Splunk Web (optional)
-
-`/opt/splunk/bin/splunk disable webserver`
-
----
-
-`sudo nano /opt/splunk/etc/system/local/web.conf`
-* Add the following lines.
-```
-[settings]
-startwebserver = 0
-```
-* Save the changes and exit the text editor.
-* Restart the Splunk service for the changes to take effect. 
-```
-sudo systemctl restart splunk
-```
-</details>
-
-<details>
-<summary><b>Log Retention</b></summary>
+<summary><b>🟠 Log Retention</b></summary>
 
 Storage Calculation
 ```
@@ -564,7 +522,45 @@ maxVolumeDataSizeMB = 51200
 </details>
 
 <details>
-<summary><b>Deployment Server</b></summary>
+<summary><b>🟠 Reset Splunk Admin Password</b></summary>
+  
+```
+- Stop Splunk:
+  $SPLUNK_HOME/bin/splunk stop
+
+- Backup passwd file:
+  mv $SPLUNK_HOME/etc/passwd $SPLUNK_HOME/etc/passwd.bk
+
+- Create user-seed.conf:
+  Path: $SPLUNK_HOME/etc/system/local/user-seed.conf
+
+- Add content:
+  [user_info]
+  PASSWORD = NEW_PASSWORD
+
+- Start Splunk:
+  $SPLUNK_HOME/bin/splunk start
+
+- Login:
+  Username: admin
+  Password: NEW_PASSWORD
+
+- (Optional) Restore users:
+  Copy from $SPLUNK_HOME/etc/passwd.bk to $SPLUNK_HOME/etc/passwd
+  Then restart:
+  $SPLUNK_HOME/bin/splunk restart
+
+- Notes:
+  user-seed.conf works only if passwd is missing
+  chown splunk:splunk $SPLUNK_HOME/etc/system/local/user-seed.conf
+  Remove user-seed.conf after login
+```
+</details>
+
+</details>
+
+<details>
+<summary><b>🟢 Deployment Server</b></summary>
 
 ```
 - Settings → Licensing
@@ -608,48 +604,8 @@ cp /opt/splunk/etc/deployment-apps/Splunk_TA_windows/default/inputs.conf /opt/sp
 # Edit the 'inputs.conf' file using the nano editor.
 nano /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/inputs.conf
 ```
-<details>
-<summary>Configure event cleanup best practices in props.conf</summary>
 
-Create or navigate to /opt/splunk/etc/deployment-apps/Splunk_TA_windows/local/props.conf
-```
-[source::WinEventLog:System]
-   SEDCMD-clean_info_text_from_winsystem_events_this_event = s/This [Ee]vent is generated[\S\s\r\n]+$//g
-   
-[source::WinEventLog:Security]
-   SEDCMD-windows_security_event_formater = s/(?m)(^\s+[^:]+\:)\s+-?$/\1/g
-   SEDCMD-windows_security_event_formater_null_sid_id = s/(?m)(:)(\s+NULL SID)$/\1/g s/(?m)(ID:)(\s+0x0)$/\1/g
-   SEDCMD-cleansrcip = s/(Source Network Address:    (\:\:1|127\.0\.0\.1))/Source Network Address:/
-   SEDCMD-cleansrcport = s/(Source Port:\s*0)/Source Port:/
-   SEDCMD-remove_ffff = s/::ffff://g
-   SEDCMD-clean_info_text_from_winsecurity_events_certificate_information = s/Certificate information is only[\S\s\r\n]+$//g
-   SEDCMD-clean_info_text_from_winsecurity_events_token_elevation_type = s/Token Elevation Type indicates[\S\s\r\n]+$//g
-   SEDCMD-clean_info_text_from_winsecurity_events_this_event = s/This event is generated[\S\s\r\n]+$//g
-
-#For XmlWinEventLog:Security
-   SEDCMD-cleanxmlsrcport = s/<Data Name='IpPort'>0<\/Data>/<Data Name='IpPort'><\/Data>/
-   SEDCMD-cleanxmlsrcip = s/<Data Name='IpAddress'>(\:\:1|127\.0\.0\.1)<\/Data>/<Data Name='IpAddress'><\/Data>/
-
-[source::WinEventLog:ForwardedEvents]
-   SEDCMD-remove_ffff = s/::ffff://g
-   SEDCMD-cleansrcipxml = s/<Data Name='IpAddress'>(\:\:1|127\.0\.0\.1)<\/Data>/<Data Name='IpAddress'><\/Data>/
-   SEDCMD-cleansrcportxml=s/<Data Name='IpPort'>0<\/Data>/<Data Name='IpPort'><\/Data>/
-   SEDCMD-clean_rendering_info_block = s/<RenderingInfo Culture='.*'>(?s)(.*)<\/RenderingInfo>//
-   
-[WMI:WinEventLog:System]
-   SEDCMD-clean_info_text_from_winsystem_events_this_event = s/This event is generated[\S\s\r\n]+$//g
-   
-[WMI:WinEventLog:Security]
-   SEDCMD-windows_security_event_formater = s/(?m)(^\s+[^:]+\:)\s+-?$/\1/g
-   SEDCMD-windows_security_event_formater_null_sid_id = s/(?m)(:)(\s+NULL SID)$/\1/g s/(?m)(ID:)(\s+0x0)$/\1/g
-   SEDCMD-cleansrcip = s/(Source Network Address:    (\:\:1|127\.0\.0\.1))/Source Network Address:/
-   SEDCMD-cleansrcport = s/(Source Port:\s*0)/Source Port:/
-   SEDCMD-remove_ffff = s/::ffff://g
-   SEDCMD-clean_info_text_from_winsecurity_events_certificate_information = s/Certificate information is only[\S\s\r\n]+$//g
-   SEDCMD-clean_info_text_from_winsecurity_events_token_elevation_type = s/Token Elevation Type indicates[\S\s\r\n]+$//g
-   SEDCMD-clean_info_text_from_winsecurity_events_this_event = s/This event is generated[\S\s\r\n]+$//g</li>
-```
-</details>
+[Configure event cleanup best practices in props.conf](https://splunk.github.io/splunk-add-on-for-microsoft-windows/Configuration/#configure-event-cleanup-best-practices-in-propsconf)
 
 ##### Linux addon
 *   Install Splunk Add-on for Unix and Linux
@@ -672,8 +628,8 @@ nano /opt/splunk/etc/deployment-apps/Splunk_TA_nix/local/inputs.conf
 ```
 Create:
 - Outputs → Clients (*)
-- Windows
-- Linux
+- Windows → Clients (Windows Machines)
+- Linux → Clients (Linux/Unix Machines)
 ```
 
 ```
@@ -684,7 +640,7 @@ Reload the configuration for the Splunk Deployment Server
 /opt/splunk/bin/splunk reload deploy-server
 ```
 
-Reloads after installation and restarts client if necessary
+Reloads after installation and restarts client if necessary (serverclass.conf)
 ```
 [serverClass:<Class Name>]
 issueReload=true
@@ -693,17 +649,7 @@ restartIfNeeded=true
 </details>
 
 <details>
-<summary><b>SearchHead Server</b></summary>
-
-```
-- Settings → Licensing
-- Install/Hide Apps & Addons
-- Settings → Distributed search → Search peers (Indexers + Search heads)
-```
-</details>
-
-<details>
-<summary><b>Install/Update an app or add-on</b></summary>
+<summary><b>🟢 Install/Update an app or add-on</b></summary>
 
 ```
 /opt/splunk/bin/splunk install app <app.spl/tgz>
@@ -713,43 +659,7 @@ restartIfNeeded=true
 
 
 <details>
-<summary><b>Reset Splunk Admin Password</b></summary>
-  
-```
-- Stop Splunk:
-  $SPLUNK_HOME/bin/splunk stop
-
-- Backup passwd file:
-  mv $SPLUNK_HOME/etc/passwd $SPLUNK_HOME/etc/passwd.bk
-
-- Create user-seed.conf:
-  Path: $SPLUNK_HOME/etc/system/local/user-seed.conf
-
-- Add content:
-  [user_info]
-  PASSWORD = NEW_PASSWORD
-
-- Start Splunk:
-  $SPLUNK_HOME/bin/splunk start
-
-- Login:
-  Username: admin
-  Password: NEW_PASSWORD
-
-- (Optional) Restore users:
-  Copy from $SPLUNK_HOME/etc/passwd.bk to $SPLUNK_HOME/etc/passwd
-  Then restart:
-  $SPLUNK_HOME/bin/splunk restart
-
-- Notes:
-  user-seed.conf works only if passwd is missing
-  chown splunk:splunk $SPLUNK_HOME/etc/system/local/user-seed.conf
-  Remove user-seed.conf after login
-```
-</details>
-
-<details>
-<summary><b>Troubleshoot</b></summary>
+<summary><b>🟢 Troubleshoot</b></summary>
 
 ```
 #######  Searches Skipped in the last 24 hours  #######
@@ -794,16 +704,42 @@ nano /opt/splunk/etc/system/local/web.conf
 x_frame_options_sameorigin = true
 replyHeader.X-Frame-Options = SAMEORIGIN
 
-#######  RPM  #######
+#######  OS  #######
+ldd /opt/splunk/bin/splunkd
+ldd /opt/splunk/bin/openssl
+ldd /opt/splunk/opt/openssl1/bin/openssl
+# Clean rule to follow: If splunkd is clean → ignore all other ldd noise
+
+LD_LIBRARY_PATH="/opt/splunk/lib"
+LD_LIBRARY_PATH="/opt/splunkforwarder/lib"
+
 sudo rm -rf /var/lib/rpm/__db*
 rpm --rebuilddb
 sudo rpm -i --nosignature <package>
 mv /etc/init.d /etc/init.d.bak
+
+#######  Systemd Splunk Service  #######
+# Step 1: Check Splunkd service status if startup fails
+systemctl status Splunkd
+
+# Step 2: Stop Splunkd service and reset systemd failure state
+systemctl stop Splunkd
+systemctl reset-failed Splunkd
+
+# Step 3: Fix ownership and ensure required Splunk runtime directories exist
+chown -R splunk:splunk /opt/splunk
+
+mkdir -p /opt/splunk/var/run/splunk/config/validate/tmp
+mkdir -p /opt/splunk/var/log/splunk
+
+chown -R splunk:splunk /opt/splunk/var
+chmod -R u+rwX /opt/splunk/var
+
 ```
 </details>
 
 <details>
-<summary><b>Resources</b></summary>
+<summary><b>🟢 Resources</b></summary>
 
 ***Splunk Enterprise 10.2***
 

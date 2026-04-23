@@ -408,31 +408,31 @@ splunkdConnectionTimeout = 600
 conf_cache_memory_optimization = true
 sessionTimeout = 8h
 ```
-In the [limits.conf](https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
+In the [limits.conf](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/configuration-file-reference/10.2.0-configuration-file-reference/limits.conf) file, consider reviewing and adjusting the following settings to optimize Splunk performance:
 *   `nano /opt/splunk/etc/system/local/limits.conf`
 ```
 [default]
-max_mem_usage_mb = 24576
+max_mem_usage_mb = 200
 
 [searchresults]
-maxresultrows = 100000
+maxresultrows = 50000
 
 # The maximum number of concurrent historical searches in the search head.
 total_search_concurrency_limit = auto
 
 # The base number of concurrent historical searches.
-base_max_searches = 24
+base_max_searches = 6
 
 # Max real-time searches = max_rt_search_multiplier x max historical searches.
 max_rt_search_multiplier = 1
 
 # The maximum number of concurrent historical searches per CPU.
-max_searches_per_cpu = 2
+max_searches_per_cpu = 1
 
 [scheduler]
 # The maximum number of searches the scheduler can run, as a percentage
 # of the maximum number of concurrent searches.
-max_searches_perc  = 75
+max_searches_perc  = 50
 
 # Fraction of concurrent scheduler searches to use for auto summarization.
 auto_summary_perc  = 50

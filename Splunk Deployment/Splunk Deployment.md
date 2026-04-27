@@ -207,8 +207,8 @@ splunk hard nofile 65535
 splunk soft nproc 65535
 splunk hard nproc 65535
 
-splunk soft data 32000000
-splunk hard data 32000000
+splunk soft data 20000000
+splunk hard data 20000000
 
 splunk soft fsize -1
 splunk hard fsize -1
@@ -369,8 +369,7 @@ Add or update the following values as required (For **cgroups v2**):
 ```
 [Service]
 LimitNOFILE=65536
-CPUWeight=100
-LimitDATA=8000000000 # Approx RAM Limit: 8 GB (~7.45 GiB)
+# LimitDATA=8000000000 # Approx RAM Limit: 8 GB (~7.45 GiB)
 LimitDATA=20000000000 # Approx RAM Limit: 20 GB (~18.63 GiB)
 LimitFSIZE=infinity
 LimitNPROC=65536

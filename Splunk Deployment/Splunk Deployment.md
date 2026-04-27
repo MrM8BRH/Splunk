@@ -107,7 +107,7 @@
 RHEL family
 ```
 dnf update -y
-yum install -y epel-release
+dnf install -y epel-release
 dnf install -y net-tools nano bind-utils chkconfig wget net-tools tcpdump fio bzip2 sysstat elfutils polkit.x86_64 cloud-utils-growpart coreutils findutils procps shadow-utils
 dnf install -y postgresql-libs openldap openldap-compat net-snmp-libs libxml2 libxslt xmlsec1 jemalloc mongo-c-driver
 ```
@@ -193,7 +193,7 @@ sudo setenforce 0
 <details>
 <summary><b>🔵 Set Ulimits</b></summary>
 
-Increase file descriptors and process limits for the splunk user
+[Considerations regarding system-wide resource limits on *nix systems](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/plan-your-splunk-enterprise-installation/system-requirements-for-use-of-splunk-enterprise-on-premises#considerations-regarding-system-wide-resource-limits-on-nix-systems-0)
 
 Create or edit a file in `/etc/security/limits.d/` to set limits for the Splunk user (default: `splunk`):
 ```
@@ -201,18 +201,25 @@ sudo nano /etc/security/limits.d/99-splunk.conf
 ```
 Add the following lines (replace `splunk` with your Splunk user if different):
 ```
-splunk soft data 19531250
-splunk hard data 19531250
-splunk soft nofile 64000
-splunk hard nofile 64000
-splunk soft nproc 16000
-splunk hard nproc 16000
+splunk soft nofile 65535
+splunk hard nofile 65535
+
+splunk soft nproc 65535
+splunk hard nproc 65535
+
+splunk soft data 32000000
+splunk hard data 32000000
+
+splunk soft fsize -1
+splunk hard fsize -1
 ```
 Verify after reboot:
 ```
+ulimit -a
 ulimit -n  # Should return 65535
-ulimit -u  # Should return 20480
-ulimit -d  # Should return 19531250
+ulimit -u  # Should return 65535
+ulimit -d  # Should return 32000000
+ulimit -f  # Should return unlimited
 ```
 </details>
 
@@ -259,17 +266,32 @@ Persist this change across reboots by editing `/etc/rc.local`.
 </details>
 
 <details>
-<summary><b>🔵 Increase Kernel Buffer Sizes</b></summary>
+<summary><b>🔵 Linux Kernel Network and Memory Optimization</b></summary>
+
 
 - `nano /etc/sysctl.conf`
 ```
-net.core.rmem_default = 33554432
-net.core.rmem_max = 33554432
-net.core.netdev_max_backlog = 10000
+# Network
+net.core.rmem_default = 67108864     # 64 MB
+net.core.rmem_max     = 134217728    # 128 MB
+net.core.netdev_max_backlog = 250000
+
+# Memory
+vm.overcommit_memory = 0
+vm.overcommit_ratio = 50
 ```
+
 Then run the following to reload the settings: 
 ```
 /sbin/sysctl -p
+```
+Verify
+```
+sysctl net.core.rmem_default
+sysctl net.core.rmem_max
+sysctl net.core.netdev_max_backlog
+sysctl vm.overcommit_memory
+sysctl vm.overcommit_ratio
 ```
 </details>
 
@@ -318,9 +340,6 @@ reboot
 # Install Splunk using RPM:
 rpm -i splunk_package_name.rpm
 
-# Install Splunk using Tar:
-tar xvzf splunk_package_name.tgz -C /opt
-
 # Accept the Splunk license and verify the installed version
 /opt/splunk/bin/splunk version --accept-license
 
@@ -341,19 +360,7 @@ chmod -R 755 /opt/splunk
 [Enable workload management)](https://help.splunk.com/en/splunk-enterprise/administer/manage-workloads/10.2/configure-workload-management/enable-workload-management)
 
 ### Splunkd.service
-Cgroup version
-```
-# Checking cgroup Version via `/proc/filesystems`
-grep cgroup /proc/filesystems
-
-# Output Interpretation
-## Systems Supporting cgroupv2
-nodev   cgroup
-nodev   cgroup2
-
-## Systems with cgroupv1 Only
-nodev   cgroup
-```
+[How do I check cgroup v2 is installed on my machine?](https://unix.stackexchange.com/questions/471476/how-do-i-check-cgroup-v2-is-installed-on-my-machine)
 Edit the Splunk systemd unit file to adjust resource limits
 ```
 nano /etc/systemd/system/Splunkd.service
@@ -363,9 +370,11 @@ Add or update the following values as required (For **cgroups v2**):
 [Service]
 LimitNOFILE=65536
 CPUWeight=100
-LimitDATA=20000000000
+LimitDATA=8000000000 # Approx RAM Limit: 8 GB (~7.45 GiB)
+LimitDATA=20000000000 # Approx RAM Limit: 20 GB (~18.63 GiB)
 LimitFSIZE=infinity
-TasksMax=8192
+LimitNPROC=65536
+TasksMax=65536
 MemoryMax=infinity
 ```
 Validate the systemd unit file syntax
@@ -380,6 +389,21 @@ systemctl daemon-reload
 Enable Splunkd to start at boot and start the service immediately
 ```
 systemctl enable --now Splunkd.service
+```
+Verify limits applied to Splunk process
+```
+# Option 1
+cat /proc/$(pgrep -o splunkd)/limits
+
+# Option 2
+cat /proc/$(pidof -s splunkd)/limits
+
+# Option 3
+for pid in $(pgrep splunkd); do
+  echo "PID: $pid"
+  cat /proc/$pid/limits
+  echo "----------------------"
+done
 ```
 </details>
 
@@ -745,6 +769,8 @@ chmod -R u+rwX /opt/splunk/var
 
 - [Some best practices for your servers and operating system](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.2/best-practices-for-splunk-platform-security/some-best-practices-for-your-servers-and-operating-system)
 - [Administer the app key value store](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/administer-the-app-key-value-store/about-the-app-key-value-store)
+- [Splunk Enterprise and anti-virus products](https://help.splunk.com/en/splunk-enterprise/release-notes-and-updates/release-notes/10.2/known-issues-for-this-release/splunk-enterprise-and-anti-virus-products)
+- [Increased skipped search rate after upgrade to 9.0](https://help.splunk.com/en/splunk-enterprise/release-notes-and-updates/release-notes/10.2/known-issues-for-this-release/increased-skipped-search-rate-after-upgrade-to-9.0)
 - [Manage apps and add-ons on standalone instances](https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.2/meet-splunk-apps/manage-app-and-add-on-objects#ariaid-title4)
 - [How to upgrade Splunk Enterprise](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/upgrade-or-migrate-splunk-enterprise/how-to-upgrade-splunk-enterprise)
 - [Uninstall Splunk Enterprise](https://help.splunk.com/en/splunk-enterprise/get-started/install-and-upgrade/10.2/uninstall-splunk-enterprise/uninstall-splunk-enterprise)

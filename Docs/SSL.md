@@ -1,26 +1,23 @@
-## DOCS
-[How to prepare TLS certificates for use with the Splunk platform](https://docs.splunk.com/Documentation/Splunk/latest/Security/HowtoprepareyoursignedcertificatesforSplunk)
-
-[Configure Splunk indexing and forwarding to use TLS certificates](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/ConfigureSplunkforwardingtousesignedcertificates)
-
-[Configure TLS certificates for inter-Splunk communication](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/ConfigTLSCertsS2S)
-
-[Configure Splunk Web to use TLS certificates](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/SecureSplunkWebusingasignedcertificate)
-
-[Test and troubleshoot TLS connections](https://docs.splunk.com/Documentation/Splunk/9.1.0/Security/Validateyourconfiguration)
-
-## Default certificate renewal
-### WEB
+## Splunk Default Certificate Renewal
+### Web Certificate (Splunk Web SSL)
 ```
-# export LD_LIBRARY_PATH=/opt/splunk/lib/:$LD_LIBRARY_PATH
+# Prepare certificate directory
 mkdir /opt/splunk/etc/auth/mycerts
 cd /opt/splunk/etc/auth/mycerts
 
+# Generate private key
 /opt/splunk/bin/openssl genrsa -aes256 -out myServerPrivateKey.key 2048
+
+# Generate CSR (Certificate Signing Request)
 /opt/splunk/bin/openssl req -new -key myServerPrivateKey.key -out myServerCertificate.csr
+
+# Generate self-signed certificate
 /opt/splunk/bin/openssl x509 -req -in myServerCertificate.csr -sha512 -signkey myServerPrivateKey.key -CAcreateserial -out myServerCertificate.pem -days 3650
+
+# Fix ownership
 chown -R splunk:splunk /opt/splunk
 ```
+**Configure Splunk Web SSL**
 
 nano /opt/splunk/etc/system/local/web.conf
 ```
@@ -31,11 +28,23 @@ serverCert = /opt/splunk/etc/auth/mycerts/myServerCertificate.pem
 sslPassword = password
 ```
 
-### SERVER
+### Splunk Server Certificate (server.pem)
 ```
+# Backup existing certificate
 mv /opt/splunk/etc/auth/server.pem /opt/splunk/etc/auth/server.pem.bkp
+
+# Ensure permissions
 chown -R splunk:splunk /opt/splunk
+
+# Restart Splunk
 /opt/splunk/bin/splunk restart
+
+# Verify certificate
 openssl x509 -in server.pem -text
 ```
-[Link](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
+[How can we renew this certificate with a third-party signed certificate?](https://community.splunk.com/t5/Security/How-can-we-renew-this-certificate-with-a-third-party-signed/td-p/327920)
+
+
+## Resources
+- [Introduction to securing the Splunk platform with TLS](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.2/secure-splunk-platform-communications-with-transport-layer-security-certificates/introduction-to-securing-the-splunk-platform-with-tls)
+- [Test and troubleshoot TLS connections](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.2/secure-splunk-platform-communications-with-transport-layer-security-certificates/test-and-troubleshoot-tls-connections)

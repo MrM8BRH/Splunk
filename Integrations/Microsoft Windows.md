@@ -46,3 +46,6 @@ source = Microsoft-Windows-Windows Defender/Operational
 sourcetype = WinEventLog
 evt_resolve_ad_obj = 1
 ```
+
+### DNS
+[Best method for pulling Microsoft DNS logs with Splunk?](https://community.splunk.com/t5/Getting-Data-In/Best-method-for-pulling-Microsoft-DNS-logs-with-Splunk/m-p/24927/highlight/true#M4024)

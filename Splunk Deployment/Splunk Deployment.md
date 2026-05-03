@@ -440,6 +440,7 @@ max_mem_usage_mb = 200
 [searchresults]
 maxresultrows = 50000
 
+[search]
 # The maximum number of concurrent historical searches in the search head.
 total_search_concurrency_limit = auto
 

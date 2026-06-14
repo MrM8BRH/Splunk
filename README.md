@@ -15,13 +15,6 @@
 <a href="https://techforpalestine.org/">
 <img src="https://badge.techforpalestine.org/default">
 </a>
-
-<br>
-<br>
-<img width="800" height="533" alt="image" src="https://github.com/user-attachments/assets/b5fc0cce-5533-44b0-8dbb-4b614ebe6d47" />
-
-
-
 </div>
 
 Quick access
@@ -40,3 +33,8 @@ Quick access
     - 🗒️ [MISC](https://github.com/MrM8BRH/Splunk/blob/main/SPL%20Queries/MISC.md)
     - 🗒️ [Dashboards](https://github.com/MrM8BRH/Splunk/tree/main/SPL%20Queries/Dashboards)
 
+<div align="center">
+
+<img width="800" height="533" alt="image" src="https://github.com/user-attachments/assets/b5fc0cce-5533-44b0-8dbb-4b614ebe6d47" />
+<img width="1036" height="638" alt="image" src="https://github.com/user-attachments/assets/45a1454b-b67a-4664-a41a-0b90a03bb6cd" />
+</div>

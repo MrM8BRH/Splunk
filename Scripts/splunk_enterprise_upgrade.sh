@@ -1286,21 +1286,12 @@ validate_package_metadata() {
 
 ###############################################################################
 # STEP 5 — RPM SIGNATURE VERIFICATION
-#
-# GPG key location per Splunk documentation:
-#   https://docs.splunk.com/images/6/6b/SplunkPGPKey.pub
-#   Reference: https://help.splunk.com/en/splunk-enterprise/administer/install-and-upgrade/9.1/reference/pgp-public-key
-#
-# Verification flow:
-#   rpm -K <package>
-#   If valid               → continue
-#   If NOKEY               → offer to download and import key with admin approval
-#   If BAD or other failure → abort, never bypass
 ###############################################################################
 
 step_verify_rpm_signature() {
     log_section "STEP 5  ·  RPM Signature Verification"
 
+    # Run rpm -K and capture both stdout and stderr
     local rpm_k_out rpm_k_code
     set +e
     rpm_k_out=$(rpm -K "${PACKAGE_PATH}" 2>&1)
@@ -1308,9 +1299,8 @@ step_verify_rpm_signature() {
     set -e
 
     _log_raw "[GPG]  rpm -K exit=${rpm_k_code}  output=${rpm_k_out}"
-    log_step "rpm -K: ${rpm_k_out}"
 
-    # Signature valid — covers "digests signatures OK" and older "pgp md5 OK" format
+    # Case 1: Signature is valid (digests signatures OK)
     if [ "${rpm_k_code}" -eq 0 ] && \
        ! echo "${rpm_k_out}" | grep -qi "NOKEY" && \
        ! echo "${rpm_k_out}" | grep -qi "BAD"; then
@@ -1319,36 +1309,25 @@ step_verify_rpm_signature() {
         track_step "gpg" "PASS" "signature valid"; return
     fi
 
-    # NOKEY — signing key not imported on this host
+    # Case 2: NOKEY – signing key not imported
     if echo "${rpm_k_out}" | grep -qi "NOKEY"; then
-        echo ""
-        log_warn "The Splunk RPM signing key is not installed on this system."
-        echo ""
-        box_top
-        box_title "GPG Signing Key Not Found"
-        box_mid
-        box_empty
-        box_line "The package signature cannot be verified without the Splunk GPG key." 2
-        box_empty
-        box_line "Key URL: ${SPLUNK_GPG_KEY_URL}" 2
-        box_line "Reference:" 2
-        box_line "  https://help.splunk.com/en/splunk-enterprise/administer/" 2
-        box_line "  install-and-upgrade/9.1/reference/pgp-public-key" 2
-        box_empty
-        box_bot
-        echo ""
         _log_raw "[GPG]  result=NOKEY"
 
         if [ "${ARG_NON_INTERACTIVE}" = true ]; then
-            log_error "Non-interactive mode: signing key missing. Import it manually and re-run."
+            log_error "GPG key missing and non‑interactive mode is enabled."
+            log_error "Please import the key manually and re‑run:"
+            log_error "  rpm --import ${SPLUNK_GPG_KEY_URL}"
             track_step "gpg" "FAILED" "NOKEY non-interactive"; exit 1
         fi
 
+        # Interactive mode – offer to import
+        echo ""
+        log_warn "The Splunk RPM signing key is not installed on this system."
+        echo ""
         local answer
         read -rp "${LYELLOW}  [?] Download and import the official Splunk signing key? (yes/no): ${Color_Off}" answer
-        if [ "${answer}" != "yes" ] && [ "${answer}" != "YES" ] && \
-           [ "${answer}" != "y" ]   && [ "${answer}" != "Y" ]; then
-            log_error "GPG key import declined — cannot verify package. Aborting."
+        if [[ ! "${answer}" =~ ^[Yy](es)?$ ]]; then
+            log_error "GPG key import declined – aborting."
             track_step "gpg" "FAILED" "NOKEY declined"; exit 1
         fi
 
@@ -1356,7 +1335,7 @@ step_verify_rpm_signature() {
         log_step "Downloading key from ${SPLUNK_GPG_KEY_URL} ..."
 
         set +e
-        wget -q --timeout=30 -O "${key_file}" "${SPLUNK_GPG_KEY_URL}" 2>&1
+        curl -s -o "${key_file}" "${SPLUNK_GPG_KEY_URL}"
         local dl_code=$?
         set -e
 
@@ -1364,52 +1343,43 @@ step_verify_rpm_signature() {
             log_error "Failed to download GPG key from ${SPLUNK_GPG_KEY_URL}"
             track_step "gpg" "FAILED" "key download failed"; exit 1
         fi
-        chmod 640 "${key_file}"
 
-        # Display fingerprint before asking for import confirmation
-        if command -v gpg &>/dev/null; then
-            echo ""
-            log_step "Key fingerprint:"
-            gpg --quiet --with-fingerprint --show-keys "${key_file}" 2>/dev/null || true
-            echo ""
+        log_step "Importing key..."
+        set +e
+        rpm --import "${key_file}" 2>&1
+        local import_code=$?
+        set -e
+
+        if [ "${import_code}" -ne 0 ]; then
+            log_error "Key import failed (exit ${import_code})."
+            track_step "gpg" "FAILED" "import failed"; exit 1
         fi
 
-        local confirm_import
-        read -rp "${LYELLOW}  [?] Confirm import of this key? (yes/no): ${Color_Off}" confirm_import
-        if [ "${confirm_import}" != "yes" ] && [ "${confirm_import}" != "YES" ] && \
-           [ "${confirm_import}" != "y" ]   && [ "${confirm_import}" != "Y" ]; then
-            log_error "GPG key import not confirmed. Aborting."
-            track_step "gpg" "FAILED" "import not confirmed"; exit 1
-        fi
-
-        rpm --import "${key_file}"
-        _log_raw "[GPG]  key imported with administrator approval  src=${SPLUNK_GPG_KEY_URL}"
         log_info "Splunk signing key imported."
 
-        # Re-verify after import
+        # Re‑verify
         set +e
         rpm_k_out=$(rpm -K "${PACKAGE_PATH}" 2>&1)
         rpm_k_code=$?
         set -e
-
         _log_raw "[GPG]  post-import rpm -K exit=${rpm_k_code}  output=${rpm_k_out}"
 
-        if [ "${rpm_k_code}" -ne 0 ] || echo "${rpm_k_out}" | grep -qi "BAD"; then
-            log_error "Package verification still failed after key import."
-            log_error "rpm -K: ${rpm_k_out}"
+        if [ "${rpm_k_code}" -eq 0 ] && ! echo "${rpm_k_out}" | grep -qi "BAD"; then
+            log_info "RPM signature: VALID (after import)  ✔"
+            _log_raw "[GPG]  result=VALID_AFTER_IMPORT"
+            track_step "gpg" "PASS" "valid after key import"; return
+        else
+            log_error "Signature verification still failed after key import."
+            log_error "rpm -K output: ${rpm_k_out}"
             track_step "gpg" "FAILED" "verify failed post-import"; exit 1
         fi
-
-        log_info "RPM signature: VALID  (after key import)  ✔"
-        _log_raw "[GPG]  result=VALID_AFTER_IMPORT"
-        track_step "gpg" "PASS" "valid after key import"; return
     fi
 
-    # BAD signature or any other failure — hard abort, no bypass permitted
+    # Case 3: BAD signature or any other error – hard abort
     log_error "RPM signature verification FAILED."
     log_error "rpm -K output: ${rpm_k_out}"
-    log_error "Do not install this package — it may be corrupt or tampered with."
-    _log_raw "[GPG]  result=BAD  output=${rpm_k_out}"
+    log_error "Do not install this package – it may be corrupt or tampered with."
+    _log_raw "[GPG]  result=BAD_OR_ERROR  output=${rpm_k_out}"
     track_step "gpg" "FAILED" "BAD"; exit 1
 }
 

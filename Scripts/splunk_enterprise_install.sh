@@ -1272,7 +1272,7 @@ step_configure_web() {
     cat > "${web_conf}" << 'EOF'
 [settings]
 max_upload_size = 2048
-enableSplunkWebSSL = false
+enableSplunkWebSSL = true
 splunkdConnectionTimeout = 600
 EOF
 

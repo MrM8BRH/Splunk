@@ -252,8 +252,11 @@ echo "
 SC4S_DEST_SPLUNK_HEC_DEFAULT_URL=$HEC_URL
 SC4S_DEST_SPLUNK_HEC_DEFAULT_TOKEN=$HEC_TOKEN
 SC4S_DEFAULT_TIMEZONE=Asia/Jerusalem
-#Uncomment the following line if using untrusted SSL certificates
+
+#Uncomment the following lines if using untrusted SSL certificates
+SC4S_DEST_SPLUNK_HEC_DEFAULT_TLS_VERIFY=no
 SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
+SC4S_ENV_CHECK_HEC_TLS_VERIFY=no
 
 # TLS Config, for McAfee etc
 #SC4S_SOURCE_TLS_ENABLE=yes
@@ -288,9 +291,9 @@ SC4S_DEST_SPLUNK_HEC_TLS_VERIFY=no
 # Terminal is overwhelmed by metrics and internal processing messages in a custom environment configuration
 #SC4S_SEND_METRICS_TERMINAL=no
 
-# Disk-Based Buffering
-#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_ENABLE=yes # Default
-#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DISKBUFSIZE=53687091200 # Default = 50 GB
+# Disk-Based Buffering (Default = Enable) - Currnet = 10 GB - Default = 50 GB
+#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_ENABLE=yes
+#SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DISKBUFSIZE=10737418240
 # Location to store the disk buffer files.
 #SC4S_DEST_SPLUNK_HEC_DEFAULT_DISKBUFF_DIR=/path
 
@@ -345,6 +348,7 @@ sudo systemctl start sc4s
 
 # Check podman logs for errors
 sudo podman logs SC4S
+sudo podman logs --tail 30 SC4S
 
 # Search on Splunk for successful installation of SC4S
 index=* sourcetype=sc4s:events "starting up"

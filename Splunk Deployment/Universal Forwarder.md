@@ -56,6 +56,16 @@ tar -xvf <archive.tar>
 - [Create advanced filters with the 'whitelist' and 'blacklist' settings](https://help.splunk.com/en/splunk-enterprise/get-started/get-data-in/10.2/get-windows-data/monitor-windows-event-log-data-with-splunk-enterprise#create-advanced-filters-with-the-whitelist-and-blacklist-settings-0)
 - [Set up client filters](https://help.splunk.com/en/splunk-enterprise/administer/update-your-deployment/10.2/configure-the-agent-management-system/set-up-agent-filters)
 
+## DNS Logs - Monitor Stanza
+```
+###### Monitor Inputs for DNS ######
+[monitor://C:\Windows\System32\dns\dns.log]
+disabled = 0
+index = wineventlog
+sourcetype = MSAD:NT6:DNS
+crcSalt = <SOURCE>
+```
+
 ## 25 Linux Logs to Collect and Monitor
 - `/var/log/auth.log`: documentation for failed and successful logins and authentication on Debian/Ubuntu
 - `/var/log/secure`: documentation for failed and successful logins and authentication on RedHat/CentOS

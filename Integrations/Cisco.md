@@ -1,15 +1,21 @@
-[Configure FMC to Send Audit Logs to a Syslog Server](https://www.cisco.com/c/en/us/support/docs/security/secure-firewall-management-center/221019-configure-fmc-to-send-audit-logs-to-a-sy.html)
-
-[Configure Logging on FTD via FMC](https://www.cisco.com/c/en/us/support/docs/security/firepower-ngfw/200479-Configure-Logging-on-FTD-via-FMC.html)
-
-[Ingesting Netflow into Stream App without using HTTP Forwarders](https://www.reddit.com/r/Splunk/comments/b4supu/ingesting_netflow_into_stream_app_without_using/)
+- [Cisco Security Cloud](https://splunkbase.splunk.com/app/7404)
+- [Cisco Security Cloud App for Splunk User Guide](https://www.cisco.com/c/en/us/td/docs/security/cisco-secure-cloud-app/user-guide/cisco-security-cloud-user-guide/m_cisco_security_cloud_overview.html)
+- [Cisco Secure Firewall Management Center](https://www.cisco.com/c/en/us/td/docs/security/cisco-secure-cloud-app/user-guide/cisco-security-cloud-user-guide/m_configure_cisco_products_in_cisco_security_cloud.html#secure-firewall)
 
 ---
-### Splunking NetFlow with Splunk Stream
-[Splunking NetFlow with Splunk Stream - Part 1: Getting NetFlow data into Splunk](https://www.splunk.com/en_us/blog/tips-and-tricks/splunking-netflow-with-splunk-stream-part-1-getting-netflow-data-into-splunk.html?locale=en_us)
 
-[Splunking Netflow with Splunk Stream - Part 2: Basic Netflow Analytics](https://www.splunk.com/en_us/blog/tips-and-tricks/splunking-netflow-with-splunk-stream-part-2-basic-netflow-analytics.html)
+[Cisco Security Cloud Estreamer Issues](https://community.splunk.com/t5/Getting-Data-In/Cisco-Security-Cloud-Estreamer-Issues/m-p/758434)
 
----
-Youtube:
-[Configuring FTD devices to send Syslog to Splunk](https://www.youtube.com/watch?v=GjKavkRbUVg)
+Filter
+props.conf
+```
+[cisco:estreamer:data]
+TRANSFORMS-routing = drop_denied_connections
+```
+transforms.conf
+```
+[drop_denied_connections]
+REGEX = AccessControlRuleAction:\s*Block
+DEST_KEY = queue
+FORMAT = nullQueue
+```

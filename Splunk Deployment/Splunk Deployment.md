@@ -531,7 +531,7 @@ Configuring Frozen Storage
 coldToFrozenDir = /whatever/path/you/want 
 ```
 
-Volumes Configuraiton 
+Volumes Configuration 
 ```
 [volume:hot_storage]
 path = /mnt/fast_disk

@@ -118,7 +118,7 @@ index="wineventlog" source="WinEventLog:Security" signature="A user account was 
 | table time,host,user,name,src_user,Password_Last_Set
 | rename time as "Time" , name as "Action" , user as "User" , src_user as "Actioned By" , host AS Host
 ```
-AD - Domain Policy Changed/Reset Passowrd
+AD - Domain Policy Changed/Reset Password
 ```
 index="wineventlog" source="WinEventLog:Security" signature="An attempt was made to change an account's password" OR signature="An attempt was made to reset an accounts password" 
 | eval time=strftime(_time,"%Y-%m-%d %H:%M:%S")
@@ -619,7 +619,7 @@ Senhasegura - Sessions
 ```
 index=pam OR index=osnix act=Session dhost!="null" suser!="asc_117"
 | table _time,  sname ,suser ,src ,dhost ,dst ,duser ,proto
-| rename sname as "Source Name", suser as "Source User", src as "Source IP", dhost as "Destitnation Host",dst as "Destination IP", proto as "Protocol", duser as "Destination User"
+| rename sname as "Source Name", suser as "Source User", src as "Source IP", dhost as "Destination Host",dst as "Destination IP", proto as "Protocol", duser as "Destination User"
 ```
 Senhasegura - Device Creation
 ```

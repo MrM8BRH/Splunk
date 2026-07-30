@@ -92,7 +92,7 @@ ARG_KEEP_PACKAGE=false
 declare -A STEP_STATUS=()
 
 # Colors — disabled for non-TTY
-Color_Off="" LRED="" LGREEN="" LYELLOW="" LGRAY="" CYAN="" BLUE="" DIM=""
+Color_Off="" LRED="" LGREEN="" LYELLOW="" LGRAY="" CYAN="" DIM=""
 
 ###############################################################################
 # ROOT CHECK
@@ -116,7 +116,6 @@ init_colors() {
         LYELLOW=$(printf '\033[01;33m')
         LGRAY=$(printf '\033[1;37m')
         CYAN=$(printf '\033[01;36m')
-        BLUE=$(printf '\033[00;34m')
         DIM=$(printf '\033[2m')
     else
         IS_INTERACTIVE=false
@@ -668,7 +667,8 @@ discover_splunk_config() {
         # Fallback: read from server.conf
         local server_conf="${SPLUNK_HOME}/etc/system/local/server.conf"
         if [ -f "${server_conf}" ]; then
-            local port_from_conf=$(grep -oP '^mgmtHostPort\s*=\s*\K[0-9]+' "${server_conf}" 2>/dev/null || true)
+            local port_from_conf
+            port_from_conf=$(grep -oP '^mgmtHostPort\s*=\s*\K[0-9]+' "${server_conf}" 2>/dev/null || true)
             if [[ "${port_from_conf}" =~ ^[0-9]+$ ]] && [ "${port_from_conf}" -ge 1024 ] && [ "${port_from_conf}" -le 65535 ]; then
                 MGMT_PORT="${port_from_conf}"
                 log_info "Management port (server.conf) : ${MGMT_PORT}"
@@ -708,7 +708,6 @@ detect_service_manager() {
     fi
 
     local candidates=("Splunkd.service" "splunkd.service")
-    local unit
 
     _find_unit() {
         for u in "${candidates[@]}"; do
@@ -826,8 +825,8 @@ _splunk_start_with_license() {
     if [ "${USE_SYSTEMD}" = true ]; then
         set +e
         su - "${SPLUNK_USER}" \
-            -c "${SPLUNK_BIN} --accept-license --answer-yes --no-prompt" 2>&1 \
-            >> "${LOG_FILE}" || true
+            -c "${SPLUNK_BIN} --accept-license --answer-yes --no-prompt" \
+            >> "${LOG_FILE}" 2>&1 || true
         set -e
         systemctl start "${SYSTEMD_SERVICE}"
     else
@@ -1452,6 +1451,13 @@ validate_disk_space() {
         ok=false
     else
         log_info "Space OK  (staging: ${free_stage}MB free)"
+    fi
+
+    if [ "${util_stage:-0}" -gt "${MAX_FS_UTIL_PCT}" ]; then
+        log_error "Filesystem utilisation for ${WORK_DIR}: ${util_stage}% > ${MAX_FS_UTIL_PCT}% threshold."
+        ok=false
+    else
+        log_info "Utilisation OK  (staging: ${util_stage}%)"
     fi
 
     # SPLUNK_DB filesystem — check only when on a different mount

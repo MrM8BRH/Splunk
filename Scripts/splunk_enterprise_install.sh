@@ -58,14 +58,12 @@ IS_INTERACTIVE=true
 
 # Collected inputs
 INPUT_HOSTNAME=""
-INPUT_ADMIN_PASS=""
-ENABLE_KERNEL_NET_TUNING=false
 
 # Per-step status tracking
 declare -A STEP_STATUS=()
 
 # Colors — disabled for non-TTY
-Color_Off="" LRED="" LGREEN="" LYELLOW="" LGRAY="" CYAN="" BLUE="" DIM=""
+Color_Off="" LRED="" LGREEN="" LYELLOW="" LGRAY="" CYAN="" DIM=""
 
 ###############################################################################
 # ROOT CHECK
@@ -89,7 +87,6 @@ init_colors() {
         LYELLOW=$(printf '\033[01;33m')
         LGRAY=$(printf '\033[1;37m')
         CYAN=$(printf '\033[01;36m')
-        BLUE=$(printf '\033[00;34m')
         DIM=$(printf '\033[2m')
     else
         IS_INTERACTIVE=false
@@ -502,10 +499,10 @@ check_ntp_local() {
     # Check chrony first (preferred)
     if [ -f /etc/chrony.conf ]; then
         ntp_config="/etc/chrony.conf"
-        ntp_server_list=( $(grep -E '^server\s+' /etc/chrony.conf | awk '{print $2}' || true) )
+        mapfile -t ntp_server_list < <(grep -E '^server\s+' /etc/chrony.conf | awk '{print $2}' || true)
     elif [ -f /etc/ntp.conf ]; then
         ntp_config="/etc/ntp.conf"
-        ntp_server_list=( $(grep -E '^server\s+' /etc/ntp.conf | awk '{print $2}' || true) )
+        mapfile -t ntp_server_list < <(grep -E '^server\s+' /etc/ntp.conf | awk '{print $2}' || true)
     else
         log_warn "No NTP configuration file found (chrony.conf or ntp.conf)."
         log_info "ℹ️  INFO: NTP not configured. Consider setting up a local NTP server."
@@ -909,8 +906,6 @@ step_kernel_tuning() {
         track_step "kernel_tuning" "SKIPPED" "user opted out"
         return
     fi
-
-    ENABLE_KERNEL_NET_TUNING=true
 
     local sysctl_conf="/etc/sysctl.d/99-splunk-network.conf"
     log_step "Writing ${sysctl_conf} ..."
@@ -1326,7 +1321,8 @@ EOF
     # Ensure port 8000 is free
     if ss -tulpn | grep -q ":8000 "; then
         log_warn "Port 8000 is still in use. Killing the process..."
-        local pid=$(ss -tulpn | grep ":8000 " | awk '{print $7}' | cut -d'=' -f2 | cut -d',' -f1)
+        local pid
+        pid=$(ss -tulpn | grep ":8000 " | awk '{print $7}' | cut -d'=' -f2 | cut -d',' -f1)
         [ -n "${pid}" ] && kill -9 ${pid} 2>/dev/null || true
         sleep 1
     fi
@@ -1354,7 +1350,7 @@ EOF
 
     # --- Wait for Splunk management port ---
     log_step "Waiting for Splunk management port (8089) to be ready..."
-    local max_wait=180
+    local max_wait="${READY_TIMEOUT}"
     local waited=0
     local ready=false
 

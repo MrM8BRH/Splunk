@@ -213,7 +213,7 @@ rm -r SplunkEnterpriseSecuritySuite missioncontrol SA-* DA-ESS*
 </details>
 
 <details>
-<summary><b>Resrouces</b></summary>
+<summary><b>Resources</b></summary>
 
 Enterprise Security
 - [Performance reference for Splunk Enterprise Security](https://help.splunk.com/en/splunk-enterprise-security-8/install/8.1/planning/performance-reference-for-splunk-enterprise-security)

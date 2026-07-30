@@ -233,7 +233,7 @@ Here is a diagram of a basic, `single-site indexer cluster`, containing three pe
    - Using the CLI:
       ```
       /opt/splunk/bin/splunk list excess-buckets [index-name]
-      /opt/splunk/bin/splunk remoev excess-buckets [index-name]
+      /opt/splunk/bin/splunk remove excess-buckets [index-name]
       ```
    List of commands and parameters related to clustering
    ```

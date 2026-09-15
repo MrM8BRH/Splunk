@@ -1284,33 +1284,6 @@ validate_package_metadata() {
 }
 
 ###############################################################################
-# STEP 5 — RPM TRANSACTION TEST
-# Run BEFORE stopping Splunk — validates without committing.
-###############################################################################
-
-step_rpm_test() {
-    log_section "STEP 6  ·  RPM Transaction Test"
-
-    local out code
-    set +e
-    out=$(rpm -Uvh --test "${PACKAGE_PATH}" 2>&1)
-    code=$?
-    set -e
-
-    _log_raw "[RPM_TEST]  exit=${code}  output=${out}"
-
-    if [ "${code}" -eq 0 ]; then
-        log_info "RPM transaction test passed  ✔"
-        track_step "rpm_test" "PASS"
-    else
-        log_error "RPM transaction test FAILED — aborting before stopping Splunk."
-        log_error "Splunk is still running. No changes were made."
-        log_to_file "rpm_test" "rpm -Uvh --test" "${out}"
-        track_step "rpm_test" "FAILED"; exit 1
-    fi
-}
-
-###############################################################################
 # DISK SPACE VALIDATION
 ###############################################################################
 
@@ -1385,11 +1358,11 @@ validate_disk_space() {
 }
 
 ###############################################################################
-# STEP 6 — PRE-UPGRADE HEALTH CHECKS
+# STEP 5 — PRE-UPGRADE HEALTH CHECKS
 ###############################################################################
 
 step_pre_upgrade_health() {
-    log_section "STEP 7  ·  Pre-Upgrade Health Checks"
+    log_section "STEP 5  ·  Pre-Upgrade Health Checks"
 
     # splunk status
     local st_out st_code
@@ -1431,11 +1404,11 @@ step_pre_upgrade_health() {
 }
 
 ###############################################################################
-# STEP 7 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
+# STEP 6 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
 ###############################################################################
 
 step_backup_reminder() {
-    log_section "STEP 8  ·  Backup / Snapshot Confirmation"
+    log_section "STEP 6  ·  Backup / Snapshot Confirmation"
 
     echo ""
     box_top
@@ -1542,13 +1515,13 @@ print_upgrade_summary() {
 }
 
 ###############################################################################
-# STEP 8 — OWNERSHIP VERIFICATION
+# STEP 7 — OWNERSHIP VERIFICATION
 # Default: read-only scan with warning.
 # --repair-ownership: apply targeted chown with -xdev, recheck, fail if any remain.
 ###############################################################################
 
 step_verify_ownership() {
-    log_section "STEP 9  ·  Ownership Verification"
+    log_section "STEP 7  ·  Ownership Verification"
 
     local check_dirs=(
         "${SPLUNK_HOME}/bin"
@@ -1625,11 +1598,11 @@ step_verify_ownership() {
 }
 
 ###############################################################################
-# STEP 9 — STOP SPLUNK (graceful — never force-kills)
+# STEP 8 — STOP SPLUNK (graceful — never force-kills)
 ###############################################################################
 
 step_stop_splunk() {
-    log_section "STEP 10  ·  Stop Splunk"
+    log_section "STEP 8  ·  Stop Splunk"
 
     if _splunk_is_running; then
         SPLUNK_WAS_RUNNING=true
@@ -1685,11 +1658,11 @@ step_stop_splunk() {
 }
 
 ###############################################################################
-# STEP 10 — RPM UPGRADE
+# STEP 9 — RPM UPGRADE
 ###############################################################################
 
 step_upgrade_rpm() {
-    log_section "STEP 11  ·  RPM Upgrade"
+    log_section "STEP 9  ·  RPM Upgrade"
 
     log_step "Running rpm -Uvh ..."
 
@@ -1718,11 +1691,11 @@ step_upgrade_rpm() {
 }
 
 ###############################################################################
-# STEP 11 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
+# STEP 10 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
 ###############################################################################
 
 step_start_splunk() {
-    log_section "STEP 12  ·  Start Splunk & Accept License"
+    log_section "STEP 10  ·  Start Splunk & Accept License"
 
     local svc_label
     [ "${USE_SYSTEMD}" = true ] && svc_label="systemd" || svc_label="CLI"
@@ -1748,11 +1721,11 @@ step_start_splunk() {
 }
 
 ###############################################################################
-# STEP 12 — READINESS VALIDATION
+# STEP 11 — READINESS VALIDATION
 ###############################################################################
 
 step_wait_for_ready() {
-    log_section "STEP 13  ·  Readiness Validation"
+    log_section "STEP 11  ·  Readiness Validation"
 
     log_step "Waiting for Splunk to become ready  (timeout: ${READY_TIMEOUT}s) ..."
 
@@ -1855,11 +1828,11 @@ step_wait_for_ready() {
 }
 
 ###############################################################################
-# STEP 13 — RESTORE ORIGINAL SERVICE STATE
+# STEP 12 — RESTORE ORIGINAL SERVICE STATE
 ###############################################################################
 
 step_restore_state() {
-    log_section "STEP 14  ·  Service State Restoration"
+    log_section "STEP 12  ·  Service State Restoration"
 
     if [ "${SPLUNK_WAS_RUNNING}" = true ]; then
         log_info "Splunk was running before upgrade — leaving it running."
@@ -1928,11 +1901,10 @@ print_summary() {
         "Dependencies"          "System"               "Splunk Home"
         "User / Group"          "Installed RPM"        "Topology"
         "Package Selection"     "Connectivity"         "Download"
-        "Checksum"              "RPM Metadata"         "GPG Signature"
-        "RPM Transaction Test"  "Disk Space"           "Pre-Upgrade Health"
-        "VM Snapshot"           "Ownership"            "Stop Splunk"
-        "RPM Upgrade"           "Start Splunk"         "Readiness"
-        "State Restoration"
+        "Checksum"              "RPM Metadata"         "Disk Space"           
+        "Pre-Upgrade Health"    "VM Snapshot"          "Ownership"            
+        "Stop Splunk"           "RPM Upgrade"          "Start Splunk"
+        "Readiness"             "State Restoration"
     )
 
     local i=0
@@ -1991,7 +1963,6 @@ main() {
     step_download_package
     step_verify_checksum          # optional; skipped if no checksum provided
     validate_package_metadata     # sets TARGET_VERSION; refuses downgrade/same-version
-    step_rpm_test                 # rpm -Uvh --test — runs BEFORE Splunk is stopped
     validate_disk_space
 
     # Phase 3 — Operator gates (BEFORE any destructive action)

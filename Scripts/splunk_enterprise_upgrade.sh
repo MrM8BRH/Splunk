@@ -2,7 +2,7 @@
 # ======================================================================================
 # Splunk Enterprise — Production Upgrade Script
 # Author  : @MrM8BRH
-# Version : 3.4.0
+# Version : 3.5.0
 #
 # Supported topology : Standalone, RPM-managed Splunk Enterprise only.
 # Clustered roles    : refused (indexer peer/manager, SHC member/deployer).
@@ -14,6 +14,10 @@
 
 set -Eeuo pipefail
 
+# Single source of truth for the version banner — keeps the header comment,
+# usage text, log preamble, and TUI banner from drifting out of sync.
+SCRIPT_VERSION="3.5.0"
+
 ###############################################################################
 # STATIC CONFIGURATION — edit these before deployment
 ###############################################################################
@@ -22,11 +26,6 @@ SPLUNK_HOME="/opt/splunk"
 SPLUNK_USER="splunk"
 SPLUNK_GROUP="splunk"
 SPLUNK_PAGE="https://www.splunk.com/en_us/download/splunk-enterprise.html"
-
-# SHA512 checksum URL suffix — appended to the RPM download URL.
-# Splunk convention: <rpm-url>.sha512
-# Example: https://download.splunk.com/products/splunk/releases/9.4.1/linux/splunk-9.4.1-....rpm.sha512
-SPLUNK_SHA512_URL_SUFFIX=".sha512"
 
 CONNECTIVITY_HOST="download.splunk.com"
 
@@ -75,9 +74,6 @@ IS_INTERACTIVE=true
 # CLI argument flags
 ARG_PACKAGE=""
 ARG_URL=""
-ARG_CHECKSUM=""
-ARG_AUTO_CHECKSUM=false
-ARG_GPG_KEY_URL=""
 ARG_NON_INTERACTIVE=false
 ARG_DRY_RUN=false
 ARG_SNAPSHOT_CONFIRMED=false
@@ -258,7 +254,7 @@ init_logging() {
     ln -sfn "${LOG_FILE}" "${LOG_DIR}/latest.log"
     {
         echo "════════════════════════════════════════════════════════════════"
-        echo "  Splunk Enterprise Upgrade Script v3.1.0"
+        echo "  Splunk Enterprise Upgrade Script v${SCRIPT_VERSION}"
         printf "  EXEC_ID    : %s\n" "${EXEC_ID}"
         printf "  HOST       : %s\n" "${HOSTNAME_SHORT}"
         printf "  DATE       : %s\n" "$(date '+%Y-%m-%d %H:%M:%S %Z')"
@@ -319,6 +315,35 @@ _exit_cleanup() {
 trap '_exit_cleanup' EXIT
 
 ###############################################################################
+# SAFE COMMAND CAPTURE
+#
+# IMPORTANT: `set +e; cmd; code=$?; set -e` does NOT suppress the global ERR
+# trap. In bash, a trap on ERR fires whenever a qualifying command fails,
+# independent of the current -e/+e state — only command *position* (the
+# condition of an if/while/until, either side of a still-open && or ||, a
+# non-final pipeline stage, or a negated command) exempts a failure from it.
+# Toggling -e around a command capture is therefore a no-op for trap purposes
+# and every such block would have hard-aborted the script via `_abort`
+# instead of taking its own graceful-failure branch.
+#
+# `capture` runs the command as the condition of an `if`, which bash always
+# exempts, so it is a true ERR-trap-safe replacement for that pattern.
+###############################################################################
+
+_CAP_OUT=""
+_CAP_CODE=0
+
+capture() {
+    # capture CMD [ARGS...]  →  sets _CAP_OUT (merged stdout+stderr) and
+    # _CAP_CODE, never triggers the ERR trap, safe under `set -e`.
+    if _CAP_OUT="$("$@" 2>&1)"; then
+        _CAP_CODE=0
+    else
+        _CAP_CODE=$?
+    fi
+}
+
+###############################################################################
 # EXECUTION LOCK
 ###############################################################################
 
@@ -348,19 +373,14 @@ init_environment() {
 ###############################################################################
 
 usage() {
-    cat << 'USAGE'
-Splunk Enterprise Upgrade Script v3.1.0
+    cat << USAGE
+Splunk Enterprise Upgrade Script v${SCRIPT_VERSION}
 
 Usage: splunk_enterprise_upgrade.sh [OPTIONS]
 
 Package selection (mutually exclusive):
   --package PATH        Path to a local RPM file
   --url URL             Approved download URL (must match download.splunk.com)
-
-Verification:
-  --checksum SHA512     Expected SHA512 of the RPM (skip auto-fetch)
-  --auto-checksum       Auto-fetch the .sha512 file from Splunk CDN
-  --gpg-key-url URL     Override the Splunk GPG public key URL
 
 Behaviour:
   --repair-ownership    Apply targeted ownership corrections (default: warn only)
@@ -381,9 +401,6 @@ parse_cli_args() {
         case "$1" in
             --package)            ARG_PACKAGE="$2";           shift 2 ;;
             --url)                ARG_URL="$2";               shift 2 ;;
-            --checksum)           ARG_CHECKSUM="$2";          shift 2 ;;
-            --auto-checksum)      ARG_AUTO_CHECKSUM=true;     shift   ;;
-            --gpg-key-url)        ARG_GPG_KEY_URL="$2";       shift 2 ;;
             --repair-ownership)   ARG_REPAIR_OWNERSHIP=true;  shift   ;;
             --keep-package)       ARG_KEEP_PACKAGE=true;      shift   ;;
             --non-interactive)    ARG_NON_INTERACTIVE=true;   shift   ;;
@@ -414,7 +431,7 @@ parse_cli_args() {
         fi
     fi
 
-    _log_raw "[ARGS]  package='${ARG_PACKAGE}'  url='${ARG_URL}'  dry_run=${ARG_DRY_RUN}  non_interactive=${ARG_NON_INTERACTIVE}  snapshot_confirmed=${ARG_SNAPSHOT_CONFIRMED}  auto_checksum=${ARG_AUTO_CHECKSUM}"
+    _log_raw "[ARGS]  package='${ARG_PACKAGE}'  url='${ARG_URL}'  dry_run=${ARG_DRY_RUN}  non_interactive=${ARG_NON_INTERACTIVE}  snapshot_confirmed=${ARG_SNAPSHOT_CONFIRMED}"
 }
 
 ###############################################################################
@@ -444,7 +461,7 @@ print_header() {
     printf "${LGRAY}├%s┤${Color_Off}\n" "${line}"
 
     local items=(
-        "Splunk Enterprise  ·  Upgrade Script  ·  v3.1.0:${CYAN}"
+        "Splunk Enterprise  ·  Upgrade Script  ·  v${SCRIPT_VERSION}:${CYAN}"
         "Author => @MrM8BRH:${CYAN}"
     )
     for entry in "${items[@]}"; do
@@ -473,7 +490,7 @@ validate_dependencies() {
 
     local required=(
         curl wget rpm flock mktemp pgrep id df find stat getent
-        su awk grep sed wc head tail basename tee sleep sha512sum ss
+        su awk grep sed wc head tail basename tee sleep ss
     )
     local missing=()
     for cmd in "${required[@]}"; do
@@ -569,10 +586,9 @@ validate_user_group() {
 
 validate_installed_rpm() {
     local rpm_out rpm_code
-    set +e
-    rpm_out=$(rpm -q splunk 2>&1)
-    rpm_code=$?
-    set -e
+    capture rpm -q splunk
+    rpm_out="${_CAP_OUT}"
+    rpm_code="${_CAP_CODE}"
 
     if [ "${rpm_code}" -ne 0 ]; then
         log_error "No 'splunk' RPM found in the RPM database."
@@ -582,9 +598,8 @@ validate_installed_rpm() {
         track_step "installed_rpm" "FAILED" "not found"; exit 1
     fi
 
-    set +e
-    INSTALLED_VERSION=$(rpm -q splunk --qf '%{VERSION}' 2>/dev/null)
-    set -e
+    capture rpm -q splunk --qf '%{VERSION}'
+    INSTALLED_VERSION="${_CAP_OUT}"
 
     log_info "Installed RPM     : ${rpm_out}"
     log_info "Installed version : ${INSTALLED_VERSION}"
@@ -592,9 +607,8 @@ validate_installed_rpm() {
 
         # Verify RPM install prefix – SPLUNK_HOME must be under the prefix
     local installed_prefix
-    set +e
-    installed_prefix=$(rpm -q splunk --qf '%{INSTPREFIXES}' 2>/dev/null)
-    set -e
+    capture rpm -q splunk --qf '%{INSTPREFIXES}'
+    installed_prefix="${_CAP_OUT}"
 
     local configured="${SPLUNK_HOME%/}"
     local installed="${installed_prefix%/}"
@@ -620,6 +634,7 @@ validate_installed_rpm() {
 ###############################################################################
 
 discover_splunk_config() {
+    local db_raw mgmt_raw
     # ----- SPLUNK_DB discovery -----
     set +e
     # Try btool first
@@ -733,19 +748,24 @@ detect_service_manager() {
     log_warn "No Splunk systemd unit found. Attempting to create one..."
     _log_raw "[SVC]  unit not found – attempting auto-creation"
 
-    local create_cmd="${SPLUNK_BIN} enable boot-start -systemd-managed 1 -create-polkit-rules 1 -user ${SPLUNK_USER} -group ${SPLUNK_GROUP}"
+    # Array form (never eval'd) — avoids re-parsing/word-splitting a string
+    # built from config values, and lets us capture output+exit code safely.
+    local create_cmd_arr=(
+        "${SPLUNK_BIN}" enable boot-start
+        -systemd-managed 1 -create-polkit-rules 1
+        -user "${SPLUNK_USER}" -group "${SPLUNK_GROUP}"
+    )
+    local create_cmd="${create_cmd_arr[*]}"   # display-only
 
     if [ "${ARG_NON_INTERACTIVE}" = true ]; then
         log_info "Non-interactive mode – creating systemd unit automatically."
-        set +e
-        eval "${create_cmd}" >> "${LOG_FILE}" 2>&1   # run directly as root
-        local ret=$?
-        set -e
-        if [ ${ret} -ne 0 ]; then
-            log_error "Failed to create systemd unit (exit ${ret})."
+        capture "${create_cmd_arr[@]}"
+        _log_raw "${_CAP_OUT}"
+        if [ "${_CAP_CODE}" -ne 0 ]; then
+            log_error "Failed to create systemd unit (exit ${_CAP_CODE})."
             log_error "Create it manually:"
             log_error "  ${create_cmd}"
-            _log_raw "[SVC]  auto-create failed with exit ${ret}"
+            _log_raw "[SVC]  auto-create failed with exit ${_CAP_CODE}"
             track_step "service_manager" "FAILED" "auto-create failed"; exit 1
         fi
     else
@@ -772,7 +792,13 @@ detect_service_manager() {
             track_step "service_manager" "FAILED" "creation declined"; exit 1
         fi
         log_info "Creating systemd unit..."
-        eval "${create_cmd}" >> "${LOG_FILE}" 2>&1
+        capture "${create_cmd_arr[@]}"
+        _log_raw "${_CAP_OUT}"
+        if [ "${_CAP_CODE}" -ne 0 ]; then
+            log_error "Failed to create systemd unit (exit ${_CAP_CODE})."
+            log_error "  ${create_cmd}"
+            track_step "service_manager" "FAILED" "auto-create failed"; exit 1
+        fi
         log_info "Systemd unit created."
     fi
 
@@ -816,14 +842,11 @@ _splunk_start_with_license() {
     # absent — it is brittle across Splunk versions and is not documented.
     if [ "${USE_SYSTEMD}" = true ]; then
         set +e
-        su - "${SPLUNK_USER}" \
-            -c "${SPLUNK_BIN} --accept-license --answer-yes" \
-            >> "${LOG_FILE}" 2>&1 || true
+        su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} --accept-license --answer-yes --no-prompt" >> "${LOG_FILE}" 2>&1 || true
         set -e
         systemctl start "${SYSTEMD_SERVICE}"
     else
-        su - "${SPLUNK_USER}" \
-            -c "${SPLUNK_BIN} start --accept-license --answer-yes"
+        su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} start --accept-license --answer-yes --no-prompt"
     fi
 }
 
@@ -924,15 +947,17 @@ detect_and_refuse_cluster_roles() {
 ###############################################################################
 
 fetch_latest_url() {
-    # Informational display only — never auto-selected.
-    set +e
+    # Informational display only — never auto-selected. Best-effort: any
+    # failure here (network hiccup, site change) must fall through to the
+    # manual URL/path prompt, never abort the script.
     local raw
-    raw=$(curl -s --max-time 15 -L \
+    capture curl -s --max-time 15 -L \
         -A "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0" \
         -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
-        "${SPLUNK_PAGE}" 2>/dev/null)
-    set -e
+        "${SPLUNK_PAGE}"
+    raw="${_CAP_OUT}"
 
+    [ "${_CAP_CODE}" -ne 0 ] && return 1
     [ -z "${raw}" ] && return 1
 
     local url
@@ -1059,10 +1084,9 @@ step_connectivity_check() {
     fi
 
     local out code
-    set +e
-    out=$(wget -q --spider "https://${CONNECTIVITY_HOST}" 2>&1)
-    code=$?
-    set -e
+    capture wget -q --spider "https://${CONNECTIVITY_HOST}"
+    out="${_CAP_OUT}"
+    code="${_CAP_CODE}"
 
     if [ "${code}" -ne 0 ]; then
         log_error "Cannot reach ${CONNECTIVITY_HOST}"
@@ -1110,15 +1134,22 @@ step_download_package() {
     printf "      %s\n" "${SPLUNK_DOWNLOAD_URL}"
     echo ""
 
-    set +e
-    # Use curl with progress bar and resume support
-    curl -# -L -o "${cached_file}" "${SPLUNK_DOWNLOAD_URL}" 2>&1
-    local wcode=$?
-    set -e
+    # Run curl directly (not captured into a variable) so its progress bar
+    # still renders live; it's the condition of this `if`, which bash always
+    # exempts from the ERR trap, so a non-zero exit here can't hard-abort.
+    # -f/--fail: treat HTTP 4xx/5xx as a failure instead of saving the error
+    # body to disk as if it were the RPM (curl exits 0 on those by default).
+    local wcode
+    if curl -f -# -L -o "${cached_file}" "${SPLUNK_DOWNLOAD_URL}"; then
+        wcode=0
+    else
+        wcode=$?
+    fi
 
-    if [ "${wcode}" -ne 0 ] || [ ! -f "${cached_file}" ]; then
+    if [ "${wcode}" -ne 0 ] || [ ! -s "${cached_file}" ]; then
         log_error "Download failed  [exit: ${wcode}]"
         log_to_file "download" "curl ${SPLUNK_DOWNLOAD_URL}" "exit ${wcode}"
+        rm -f "${cached_file}" 2>/dev/null || true
         track_step "download" "FAILED"; exit 1
     fi
 
@@ -1131,90 +1162,21 @@ step_download_package() {
 }
 
 ###############################################################################
-# STEP 3 — CHECKSUM VERIFICATION
-# Two modes:
-#   --checksum SHA512   : compare against administrator-supplied value
-#   --auto-checksum     : fetch <rpm-url>.sha512 from Splunk CDN
-###############################################################################
-
-step_verify_checksum() {
-    log_section "STEP 3  ·  Checksum Verification"
-
-    # Auto-fetch mode: download <rpm-url>.sha512
-    if [ "${ARG_AUTO_CHECKSUM}" = true ] && [ -n "${SPLUNK_DOWNLOAD_URL:-}" ]; then
-        local sha_url="${SPLUNK_DOWNLOAD_URL}${SPLUNK_SHA512_URL_SUFFIX}"
-        local sha_file="${WORK_DIR}/${PACKAGE_NAME}.sha512"
-        log_step "Fetching checksum from: ${sha_url}"
-
-        set +e
-        wget -q --timeout=30 -O "${sha_file}" "${sha_url}" 2>&1
-        local fetch_code=$?
-        set -e
-
-        if [ "${fetch_code}" -ne 0 ] || [ ! -s "${sha_file}" ]; then
-            log_warn "Could not fetch .sha512 file — checksum verification skipped."
-            _log_raw "[CHECKSUM]  auto_fetch_failed  url=${sha_url}"
-            track_step "checksum" "SKIPPED" "fetch failed"; return
-        fi
-
-        # Extract hash: try both formats
-        local expected_hash=""
-        # Format A: "hash  filename"
-        expected_hash=$(awk '{if (NF>=2) print $1}' "${sha_file}" | head -1)
-        # If that fails or looks like SHA512(...), try format B
-        if [[ -z "${expected_hash}" || "${expected_hash}" =~ ^SHA512\( ]]; then
-            # Format B: "SHA512(filename)= hash"
-            expected_hash=$(grep -oP '=\s*\K[0-9a-fA-F]{128}' "${sha_file}" | head -1)
-        fi
-
-        if [ -z "${expected_hash}" ]; then
-            log_warn "Could not parse checksum from ${sha_file} — verification skipped."
-            _log_raw "[CHECKSUM]  parse_failed  content=$(cat "${sha_file}" | head -1)"
-            track_step "checksum" "SKIPPED" "parse failed"; return
-        fi
-
-        ARG_CHECKSUM="${expected_hash}"
-        log_info "Checksum fetched from CDN."
-        _log_raw "[CHECKSUM]  auto_fetched  expected=${ARG_CHECKSUM}"
-    fi
-
-    if [ -z "${ARG_CHECKSUM:-}" ]; then
-        log_info "No checksum provided — verification skipped."
-        log_warn "Use --checksum or --auto-checksum to enable checksum verification."
-        track_step "checksum" "SKIPPED"; return
-    fi
-
-    log_step "Verifying SHA512 checksum ..."
-    local actual
-    actual=$(sha512sum "${PACKAGE_PATH}" | awk '{print $1}')
-
-    if [ "${actual}" = "${ARG_CHECKSUM}" ]; then
-        log_info "SHA512 checksum verified  ✔"
-        _log_raw "[CHECKSUM]  OK"
-        track_step "checksum" "PASS"
-    else
-        log_error "SHA512 checksum MISMATCH — package may be corrupt or tampered with."
-        log_error "  Expected : ${ARG_CHECKSUM}"
-        log_error "  Actual   : ${actual}"
-        _log_raw "[CHECKSUM]  FAIL  expected=${ARG_CHECKSUM}  actual=${actual}"
-        track_step "checksum" "FAILED"; exit 1
-    fi
-}
-
-###############################################################################
-# STEP 4 — RPM METADATA VALIDATION
+# STEP 3 — RPM METADATA VALIDATION
 ###############################################################################
 
 validate_package_metadata() {
-    log_section "STEP 4  ·  RPM Metadata Validation"
+    log_section "STEP 3  ·  RPM Metadata Validation"
 
-    # Suppress stderr (NOKEY warnings)
+    # Suppress stderr (NOKEY warnings) — kept out of `capture` deliberately,
+    # since merging it back in would corrupt the pipe-delimited fields below.
     local meta meta_code
-    set +e
-    meta=$(rpm -qp "${PACKAGE_PATH}" \
-        --queryformat '%{NAME}|%{VERSION}|%{RELEASE}|%{ARCH}|%{INSTPREFIXES}' 2>/dev/null)
-    meta_code=$?
-    set -e
+    if meta=$(rpm -qp "${PACKAGE_PATH}" \
+        --queryformat '%{NAME}|%{VERSION}|%{RELEASE}|%{ARCH}|%{INSTPREFIXES}' 2>/dev/null); then
+        meta_code=0
+    else
+        meta_code=$?
+    fi
 
     if [ "${meta_code}" -ne 0 ] || [ -z "${meta}" ]; then
         log_error "rpm -qp failed — package may be corrupt."
@@ -1350,28 +1312,26 @@ validate_disk_space() {
 }
 
 ###############################################################################
-# STEP 5 — PRE-UPGRADE HEALTH CHECKS
+# STEP 4 — PRE-UPGRADE HEALTH CHECKS
 ###############################################################################
 
 step_pre_upgrade_health() {
-    log_section "STEP 5  ·  Pre-Upgrade Health Checks"
+    log_section "STEP 4  ·  Pre-Upgrade Health Checks"
 
     # splunk status
     local st_out st_code
-    set +e
-    st_out=$(su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} status 2>&1" 2>&1)
-    st_code=$?
-    set -e
+    capture su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} status 2>&1"
+    st_out="${_CAP_OUT}"
+    st_code="${_CAP_CODE}"
     _log_raw "[HEALTH]  status exit=${st_code}  ${st_out}"
     [ "${st_code}" -eq 0 ] && log_info "splunk status: OK" \
                            || log_warn "splunk status returned ${st_code} — instance may be degraded."
 
     # btool check
     local bt_out bt_code
-    set +e
-    bt_out=$(su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} btool check 2>&1" 2>&1)
-    bt_code=$?
-    set -e
+    capture su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} btool check 2>&1"
+    bt_out="${_CAP_OUT}"
+    bt_code="${_CAP_CODE}"
     _log_raw "[HEALTH]  btool_check exit=${bt_code}  ${bt_out}"
     [ "${bt_code}" -eq 0 ] && log_info "btool check: clean" \
                            || log_warn "btool check reported issues — see log."
@@ -1396,11 +1356,11 @@ step_pre_upgrade_health() {
 }
 
 ###############################################################################
-# STEP 6 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
+# STEP 5 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
 ###############################################################################
 
 step_backup_reminder() {
-    log_section "STEP 6  ·  Backup / Snapshot Confirmation"
+    log_section "STEP 5  ·  Backup / Snapshot Confirmation"
 
     echo ""
     box_top
@@ -1507,13 +1467,13 @@ print_upgrade_summary() {
 }
 
 ###############################################################################
-# STEP 7 — OWNERSHIP VERIFICATION
+# STEP 6 — OWNERSHIP VERIFICATION
 # Default: read-only scan with warning.
 # --repair-ownership: apply targeted chown with -xdev, recheck, fail if any remain.
 ###############################################################################
 
 step_verify_ownership() {
-    log_section "STEP 7  ·  Ownership Verification"
+    log_section "STEP 6  ·  Ownership Verification"
 
     local check_dirs=(
         "${SPLUNK_HOME}/bin"
@@ -1558,12 +1518,14 @@ step_verify_ownership() {
 
     log_step "Applying targeted ownership corrections ..."
     for dir in "${mismatched_dirs[@]}"; do
-        set +e
-        find "${dir}" -xdev \
+        # A partial chown failure (e.g. a file removed mid-scan) must not
+        # abort the loop — the recheck below is the real pass/fail gate.
+        if find "${dir}" -xdev \
             -not -user "${SPLUNK_USER}" \
             -not -name "splunk" \
-            -exec chown "${SPLUNK_USER}:${SPLUNK_GROUP}" {} + 2>/dev/null
-        set -e
+            -exec chown "${SPLUNK_USER}:${SPLUNK_GROUP}" {} + 2>/dev/null; then
+            :
+        fi
     done
 
     # Recheck after repair
@@ -1590,11 +1552,11 @@ step_verify_ownership() {
 }
 
 ###############################################################################
-# STEP 8 — STOP SPLUNK (graceful — never force-kills)
+# STEP 7 — STOP SPLUNK (graceful — never force-kills)
 ###############################################################################
 
 step_stop_splunk() {
-    log_section "STEP 8  ·  Stop Splunk"
+    log_section "STEP 7  ·  Stop Splunk"
 
     if _splunk_is_running; then
         SPLUNK_WAS_RUNNING=true
@@ -1610,10 +1572,9 @@ step_stop_splunk() {
     log_step "Requesting graceful shutdown  (timeout: ${STOP_TIMEOUT}s) ..."
 
     local stop_out stop_code
-    set +e
-    stop_out=$(_splunk_stop 2>&1)
-    stop_code=$?
-    set -e
+    capture _splunk_stop
+    stop_out="${_CAP_OUT}"
+    stop_code="${_CAP_CODE}"
     _log_raw "[STOP]  cmd exit=${stop_code}  ${stop_out}"
 
     [ "${stop_code}" -ne 0 ] && \
@@ -1650,19 +1611,18 @@ step_stop_splunk() {
 }
 
 ###############################################################################
-# STEP 9 — RPM UPGRADE
+# STEP 8 — RPM UPGRADE
 ###############################################################################
 
 step_upgrade_rpm() {
-    log_section "STEP 9  ·  RPM Upgrade"
+    log_section "STEP 8  ·  RPM Upgrade"
 
     log_step "Running rpm -Uvh ..."
 
     local out code
-    set +e
-    out=$(rpm -Uvh "${PACKAGE_PATH}" 2>&1)
-    code=$?
-    set -e
+    capture rpm -Uvh "${PACKAGE_PATH}"
+    out="${_CAP_OUT}"
+    code="${_CAP_CODE}"
 
     _log_raw "[RPM_INSTALL]  exit=${code}"
     _log_raw "${out}"
@@ -1683,21 +1643,20 @@ step_upgrade_rpm() {
 }
 
 ###############################################################################
-# STEP 10 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
+# STEP 9 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
 ###############################################################################
 
 step_start_splunk() {
-    log_section "STEP 10  ·  Start Splunk & Accept License"
+    log_section "STEP 9  ·  Start Splunk & Accept License"
 
     local svc_label
     [ "${USE_SYSTEMD}" = true ] && svc_label="systemd" || svc_label="CLI"
     log_step "Starting Splunk  (${svc_label}) ..."
 
     local out code
-    set +e
-    out=$(_splunk_start_with_license 2>&1)
-    code=$?
-    set -e
+    capture _splunk_start_with_license
+    out="${_CAP_OUT}"
+    code="${_CAP_CODE}"
 
     _log_raw "[START]  exit=${code}  ${out}"
 
@@ -1713,11 +1672,11 @@ step_start_splunk() {
 }
 
 ###############################################################################
-# STEP 11 — READINESS VALIDATION
+# STEP 10 — READINESS VALIDATION
 ###############################################################################
 
 step_wait_for_ready() {
-    log_section "STEP 11  ·  Readiness Validation"
+    log_section "STEP 10  ·  Readiness Validation"
 
     log_step "Waiting for Splunk to become ready  (timeout: ${READY_TIMEOUT}s) ..."
 
@@ -1726,14 +1685,15 @@ step_wait_for_ready() {
     while [ "${waited}" -lt "${READY_TIMEOUT}" ]; do
         _splunk_is_running && process_ok=true
 
-        ss -tlnp 2>/dev/null | grep -q ":${MGMT_PORT}" && port_ok=true
+        # Anchored on a trailing boundary so port 8089 can't false-match a
+        # listener on 18089/28089/etc. that merely contains "8089".
+        ss -tlnp 2>/dev/null | grep -qE ":${MGMT_PORT}($|[[:space:]])" && port_ok=true
 
         if [ "${process_ok}" = true ] && [ "${port_ok}" = true ]; then
             local st_out st_code
-            set +e
-            st_out=$(su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} status 2>&1" 2>&1)
-            st_code=$?
-            set -e
+            capture su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} status 2>&1"
+            st_out="${_CAP_OUT}"
+            st_code="${_CAP_CODE}"
             if [ "${st_code}" -eq 0 ]; then
                 status_ok=true; break
             fi
@@ -1765,10 +1725,9 @@ step_wait_for_ready() {
 
     # btool check post-upgrade (warning only)
     local bt_out bt_code
-    set +e
-    bt_out=$(su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} btool check 2>&1" 2>&1)
-    bt_code=$?
-    set -e
+    capture su - "${SPLUNK_USER}" -c "${SPLUNK_BIN} btool check 2>&1"
+    bt_out="${_CAP_OUT}"
+    bt_code="${_CAP_CODE}"
     _log_raw "[READY]  btool_check exit=${bt_code}  ${bt_out}"
     [ "${bt_code}" -ne 0 ] \
         && log_warn "btool check reported issues post-upgrade — see log." \
@@ -1820,11 +1779,11 @@ step_wait_for_ready() {
 }
 
 ###############################################################################
-# STEP 12 — RESTORE ORIGINAL SERVICE STATE
+# STEP 11 — RESTORE ORIGINAL SERVICE STATE
 ###############################################################################
 
 step_restore_state() {
-    log_section "STEP 12  ·  Service State Restoration"
+    log_section "STEP 11  ·  Service State Restoration"
 
     if [ "${SPLUNK_WAS_RUNNING}" = true ]; then
         log_info "Splunk was running before upgrade — leaving it running."
@@ -1835,10 +1794,9 @@ step_restore_state() {
     log_step "Splunk was stopped before upgrade — stopping to restore original state ..."
 
     local stop_out stop_code
-    set +e
-    stop_out=$(_splunk_stop 2>&1)
-    stop_code=$?
-    set -e
+    capture _splunk_stop
+    stop_out="${_CAP_OUT}"
+    stop_code="${_CAP_CODE}"
     _log_raw "[STATE_RESTORE]  stop exit=${stop_code}  ${stop_out}"
 
     local waited=0
@@ -1885,18 +1843,18 @@ print_summary() {
 
     local ordered_keys=(
         dependencies system splunk_home user_group installed_rpm
-        topology package_select connectivity download checksum
-        metadata gpg rpm_test disk_space pre_health snapshot
+        topology package_select connectivity download
+        metadata disk_space pre_health snapshot
         ownership stop rpm_install start readiness state_restore
     )
     local labels=(
         "Dependencies"          "System"               "Splunk Home"
         "User / Group"          "Installed RPM"        "Topology"
         "Package Selection"     "Connectivity"         "Download"
-        "Checksum"              "RPM Metadata"         "Disk Space"           
-        "Pre-Upgrade Health"    "VM Snapshot"          "Ownership"            
-        "Stop Splunk"           "RPM Upgrade"          "Start Splunk"
-        "Readiness"             "State Restoration"
+        "RPM Metadata"          "Disk Space"           "Pre-Upgrade Health"
+        "VM Snapshot"           "Ownership"            "Stop Splunk"
+        "RPM Upgrade"           "Start Splunk"         "Readiness"
+        "State Restoration"
     )
 
     local i=0
@@ -1953,7 +1911,6 @@ main() {
     select_package                # sets PACKAGE_PATH
     step_connectivity_check
     step_download_package
-    step_verify_checksum          # optional; skipped if no checksum provided
     validate_package_metadata     # sets TARGET_VERSION; refuses downgrade/same-version
     validate_disk_space
 

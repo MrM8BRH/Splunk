@@ -2,7 +2,7 @@
 # ======================================================================================
 # Splunk Enterprise — Production Upgrade Script
 # Author  : @MrM8BRH
-# Version : 3.1.0
+# Version : 3.4.0
 #
 # Supported topology : Standalone, RPM-managed Splunk Enterprise only.
 # Clustered roles    : refused (indexer peer/manager, SHC member/deployer).
@@ -22,10 +22,6 @@ SPLUNK_HOME="/opt/splunk"
 SPLUNK_USER="splunk"
 SPLUNK_GROUP="splunk"
 SPLUNK_PAGE="https://www.splunk.com/en_us/download/splunk-enterprise.html"
-
-# Official Splunk PGP public key (referenced in Splunk docs):
-# https://docs.splunk.com/images/6/6b/SplunkPGPKey.pub
-SPLUNK_GPG_KEY_URL="https://docs.splunk.com/images/6/6b/SplunkPGPKey.pub"
 
 # SHA512 checksum URL suffix — appended to the RPM download URL.
 # Splunk convention: <rpm-url>.sha512
@@ -416,10 +412,6 @@ parse_cli_args() {
             log_error "Confirm a full VM backup/snapshot was created before re-running."
             exit 1
         fi
-    fi
-
-    if [ -n "${ARG_GPG_KEY_URL}" ]; then
-        SPLUNK_GPG_KEY_URL="${ARG_GPG_KEY_URL}"
     fi
 
     _log_raw "[ARGS]  package='${ARG_PACKAGE}'  url='${ARG_URL}'  dry_run=${ARG_DRY_RUN}  non_interactive=${ARG_NON_INTERACTIVE}  snapshot_confirmed=${ARG_SNAPSHOT_CONFIRMED}  auto_checksum=${ARG_AUTO_CHECKSUM}"

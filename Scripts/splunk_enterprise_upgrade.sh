@@ -825,13 +825,13 @@ _splunk_start_with_license() {
     if [ "${USE_SYSTEMD}" = true ]; then
         set +e
         su - "${SPLUNK_USER}" \
-            -c "${SPLUNK_BIN} --accept-license --answer-yes --no-prompt" \
+            -c "${SPLUNK_BIN} --accept-license --answer-yes" \
             >> "${LOG_FILE}" 2>&1 || true
         set -e
         systemctl start "${SYSTEMD_SERVICE}"
     else
         su - "${SPLUNK_USER}" \
-            -c "${SPLUNK_BIN} start --accept-license --answer-yes --no-prompt"
+            -c "${SPLUNK_BIN} start --accept-license --answer-yes"
     fi
 }
 

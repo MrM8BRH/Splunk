@@ -1216,7 +1216,7 @@ step_verify_checksum() {
 validate_package_metadata() {
     log_section "STEP 4  ·  RPM Metadata Validation"
 
-    # Suppress stderr (NOKEY warnings) – we handle GPG separately in step 5
+    # Suppress stderr (NOKEY warnings)
     local meta meta_code
     set +e
     meta=$(rpm -qp "${PACKAGE_PATH}" \
@@ -1284,106 +1284,7 @@ validate_package_metadata() {
 }
 
 ###############################################################################
-# STEP 5 — RPM SIGNATURE VERIFICATION
-###############################################################################
-
-step_verify_rpm_signature() {
-    log_section "STEP 5  ·  RPM Signature Verification"
-
-    # Run rpm -K and capture both stdout and stderr
-    local rpm_k_out rpm_k_code
-    set +e
-    rpm_k_out=$(rpm -K "${PACKAGE_PATH}" 2>&1)
-    rpm_k_code=$?
-    set -e
-
-    _log_raw "[GPG]  rpm -K exit=${rpm_k_code}  output=${rpm_k_out}"
-
-    # Case 1: Signature is valid (digests signatures OK)
-    if [ "${rpm_k_code}" -eq 0 ] && \
-       ! echo "${rpm_k_out}" | grep -qi "NOKEY" && \
-       ! echo "${rpm_k_out}" | grep -qi "BAD"; then
-        log_info "RPM signature: VALID  ✔"
-        _log_raw "[GPG]  result=VALID"
-        track_step "gpg" "PASS" "signature valid"; return
-    fi
-
-    # Case 2: NOKEY – signing key not imported
-    if echo "${rpm_k_out}" | grep -qi "NOKEY"; then
-        _log_raw "[GPG]  result=NOKEY"
-
-        if [ "${ARG_NON_INTERACTIVE}" = true ]; then
-            log_error "GPG key missing and non‑interactive mode is enabled."
-            log_error "Please import the key manually and re‑run:"
-            log_error "  rpm --import ${SPLUNK_GPG_KEY_URL}"
-            track_step "gpg" "FAILED" "NOKEY non-interactive"; exit 1
-        fi
-
-        # Interactive mode – offer to import
-        echo ""
-        log_warn "The Splunk RPM signing key is not installed on this system."
-        echo ""
-        local answer
-        read -rp "${LYELLOW}  [?] Download and import the official Splunk signing key? (yes/no): ${Color_Off}" answer
-        if [[ ! "${answer}" =~ ^[Yy](es)?$ ]]; then
-            log_error "GPG key import declined – aborting."
-            track_step "gpg" "FAILED" "NOKEY declined"; exit 1
-        fi
-
-        local key_file="${WORK_DIR}/splunk-pgp-key.pub"
-        log_step "Downloading key from ${SPLUNK_GPG_KEY_URL} ..."
-
-        set +e
-        curl -s -o "${key_file}" "${SPLUNK_GPG_KEY_URL}"
-        local dl_code=$?
-        set -e
-
-        if [ "${dl_code}" -ne 0 ] || [ ! -s "${key_file}" ]; then
-            log_error "Failed to download GPG key from ${SPLUNK_GPG_KEY_URL}"
-            track_step "gpg" "FAILED" "key download failed"; exit 1
-        fi
-
-        log_step "Importing key..."
-        set +e
-        rpm --import "${key_file}" 2>&1
-        local import_code=$?
-        set -e
-
-        if [ "${import_code}" -ne 0 ]; then
-            log_error "Key import failed (exit ${import_code})."
-            track_step "gpg" "FAILED" "import failed"; exit 1
-        fi
-
-        log_info "Splunk signing key imported."
-
-        # Re‑verify
-        set +e
-        rpm_k_out=$(rpm -K "${PACKAGE_PATH}" 2>&1)
-        rpm_k_code=$?
-        set -e
-        _log_raw "[GPG]  post-import rpm -K exit=${rpm_k_code}  output=${rpm_k_out}"
-
-        if [ "${rpm_k_code}" -eq 0 ] && ! echo "${rpm_k_out}" | grep -qi "BAD"; then
-            log_info "RPM signature: VALID (after import)  ✔"
-            _log_raw "[GPG]  result=VALID_AFTER_IMPORT"
-            track_step "gpg" "PASS" "valid after key import"; return
-        else
-            log_error "Signature verification still failed after key import."
-            log_error "rpm -K output: ${rpm_k_out}"
-            track_step "gpg" "FAILED" "verify failed post-import"; exit 1
-        fi
-    fi
-
-    # Case 3: BAD signature or any other error – hard abort
-    log_error "RPM signature verification FAILED."
-    log_error "rpm -K output: ${rpm_k_out}"
-    log_error "Do not install this package – it may be corrupt or tampered with."
-    _log_raw "[GPG]  result=BAD_OR_ERROR  output=${rpm_k_out}"
-    track_step "gpg" "FAILED" "BAD"; exit 1
-}
-
-###############################################################################
-# STEP 6 — RPM TRANSACTION TEST
+# STEP 5 — RPM TRANSACTION TEST
 # Run BEFORE stopping Splunk — validates without committing.
 ###############################################################################
 
@@ -1484,7 +1385,7 @@ validate_disk_space() {
 }
 
 ###############################################################################
-# STEP 7 — PRE-UPGRADE HEALTH CHECKS
+# STEP 6 — PRE-UPGRADE HEALTH CHECKS
 ###############################################################################
 
 step_pre_upgrade_health() {
@@ -1530,7 +1431,7 @@ step_pre_upgrade_health() {
 }
 
 ###############################################################################
-# STEP 8 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
+# STEP 7 — VM BACKUP / VSPHERE SNAPSHOT REMINDER
 ###############################################################################
 
 step_backup_reminder() {
@@ -1641,7 +1542,7 @@ print_upgrade_summary() {
 }
 
 ###############################################################################
-# STEP 9 — OWNERSHIP VERIFICATION
+# STEP 8 — OWNERSHIP VERIFICATION
 # Default: read-only scan with warning.
 # --repair-ownership: apply targeted chown with -xdev, recheck, fail if any remain.
 ###############################################################################
@@ -1724,7 +1625,7 @@ step_verify_ownership() {
 }
 
 ###############################################################################
-# STEP 10 — STOP SPLUNK (graceful — never force-kills)
+# STEP 9 — STOP SPLUNK (graceful — never force-kills)
 ###############################################################################
 
 step_stop_splunk() {
@@ -1784,7 +1685,7 @@ step_stop_splunk() {
 }
 
 ###############################################################################
-# STEP 11 — RPM UPGRADE
+# STEP 10 — RPM UPGRADE
 ###############################################################################
 
 step_upgrade_rpm() {
@@ -1817,7 +1718,7 @@ step_upgrade_rpm() {
 }
 
 ###############################################################################
-# STEP 12 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
+# STEP 11 — START SPLUNK + LICENSE ACCEPTANCE (single start, no double-start)
 ###############################################################################
 
 step_start_splunk() {
@@ -1847,7 +1748,7 @@ step_start_splunk() {
 }
 
 ###############################################################################
-# STEP 13 — READINESS VALIDATION
+# STEP 12 — READINESS VALIDATION
 ###############################################################################
 
 step_wait_for_ready() {
@@ -1954,7 +1855,7 @@ step_wait_for_ready() {
 }
 
 ###############################################################################
-# STEP 14 — RESTORE ORIGINAL SERVICE STATE
+# STEP 13 — RESTORE ORIGINAL SERVICE STATE
 ###############################################################################
 
 step_restore_state() {
@@ -2090,7 +1991,6 @@ main() {
     step_download_package
     step_verify_checksum          # optional; skipped if no checksum provided
     validate_package_metadata     # sets TARGET_VERSION; refuses downgrade/same-version
-    step_verify_rpm_signature     # rpm -K; GPG key import flow if NOKEY
     step_rpm_test                 # rpm -Uvh --test — runs BEFORE Splunk is stopped
     validate_disk_space
 

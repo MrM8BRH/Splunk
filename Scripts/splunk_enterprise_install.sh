@@ -59,6 +59,11 @@ IS_INTERACTIVE=true
 # Collected inputs
 INPUT_HOSTNAME=""
 
+# CLI argument flags
+ARG_PACKAGE=""
+ARG_URL=""
+ARG_NON_INTERACTIVE=false
+
 # Per-step status tracking
 declare -A STEP_STATUS=()
 
@@ -107,6 +112,19 @@ _repeat() {
     printf '%s' "${result}"
 }
 
+# _fit TEXT MAXLEN — truncates TEXT with a trailing ellipsis if it would
+# overflow MAXLEN visible columns; used by box_line so long descriptive
+# strings (e.g. wrapped sentences) never break the right border.
+_fit() {
+    local text="$1" maxlen="$2"
+    [ "${maxlen}" -lt 1 ] && maxlen=1
+    if [ "${#text}" -gt "${maxlen}" ]; then
+        printf '%s…' "${text:0:$(( maxlen - 1 ))}"
+    else
+        printf '%s' "${text}"
+    fi
+}
+
 box_top()   { printf "${LGRAY}┌%s┐${Color_Off}\n" "$(_repeat '─' $INNER)"; }
 box_mid()   { printf "${LGRAY}├%s┤${Color_Off}\n" "$(_repeat '─' $INNER)"; }
 box_bot()   { printf "${LGRAY}└%s┘${Color_Off}\n" "$(_repeat '─' $INNER)"; }
@@ -122,6 +140,8 @@ box_title() {
 
 box_kv() {
     local key="$1" val="$2" vcol="${3:-${LGREEN}}"
+    local maxval=$(( INNER - 2 - 16 - 2 - 1 ))
+    val="$(_fit "${val}" "${maxval}")"
     local vis=$(( 2 + 16 + 2 + ${#val} ))
     local pad=$(( INNER - vis - 1 ))
     [ $pad -lt 0 ] && pad=0
@@ -131,6 +151,8 @@ box_kv() {
 
 box_line() {
     local text="$1" indent="${2:-2}"
+    local maxtext=$(( INNER - indent - 1 ))
+    text="$(_fit "${text}" "${maxtext}")"
     local vis=$(( indent + ${#text} ))
     local pad=$(( INNER - vis - 1 ))
     [ $pad -lt 0 ] && pad=0
@@ -302,6 +324,53 @@ init_environment() {
     WORK_DIR=$(mktemp -d -p /var/tmp "splunk-install.XXXXXX")
     chmod 700 "${WORK_DIR}"
     _log_raw "[ENV]  WORK_DIR=${WORK_DIR}"
+}
+
+###############################################################################
+# CLI ARGUMENT PARSING
+###############################################################################
+
+usage() {
+    cat << USAGE
+Splunk Enterprise Installation Script
+
+Usage: splunk_enterprise_install.sh [OPTIONS]
+
+Package selection (mutually exclusive; default: scrape latest from splunk.com):
+  --url URL             Approved download URL (must match download.splunk.com)
+  --package PATH        Path to a local RPM file
+
+Behaviour:
+  --non-interactive     Suppress all prompts (hostname kept, kernel tuning and
+                         reboot skipped); requires --url or --package
+  --help                Show this message and exit
+USAGE
+    exit 0
+}
+
+parse_cli_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --url)                ARG_URL="$2";             shift 2 ;;
+            --package)             ARG_PACKAGE="$2";         shift 2 ;;
+            --non-interactive)    ARG_NON_INTERACTIVE=true;  shift   ;;
+            --help|-h)            usage ;;
+            *)
+                printf 'Unknown argument: %s  (run with --help)\n' "$1" >&2
+                exit 1
+                ;;
+        esac
+    done
+
+    if [ -n "${ARG_PACKAGE}" ] && [ -n "${ARG_URL}" ]; then
+        printf 'ERROR: --package and --url are mutually exclusive.\n' >&2
+        exit 1
+    fi
+
+    if [ "${ARG_NON_INTERACTIVE}" = true ] && [ -z "${ARG_PACKAGE}" ] && [ -z "${ARG_URL}" ]; then
+        printf 'ERROR: --non-interactive requires --url or --package.\n' >&2
+        exit 1
+    fi
 }
 
 ###############################################################################
@@ -671,6 +740,13 @@ step_set_hostname() {
     current_hostname=$(hostname -f 2>/dev/null || hostname)
     log_info "Current hostname : ${current_hostname}"
 
+    if [ "${ARG_NON_INTERACTIVE}" = true ]; then
+        INPUT_HOSTNAME="${current_hostname}"
+        log_warn "Non-interactive mode — hostname unchanged: ${INPUT_HOSTNAME}"
+        track_step "hostname" "SKIPPED" "non-interactive"
+        return
+    fi
+
     echo ""
     printf "${CYAN}  ➜  Enter the new hostname for this Splunk server${Color_Off}\n"
     printf "${DIM}     (leave blank to keep current: %s)${Color_Off}\n" "${current_hostname}"
@@ -898,6 +974,13 @@ step_kernel_tuning() {
     box_bot
     echo ""
 
+    local answer
+    if [ "${ARG_NON_INTERACTIVE}" = true ]; then
+        log_warn "Non-interactive mode — kernel tuning skipped by default."
+        track_step "kernel_tuning" "SKIPPED" "non-interactive"
+        return
+    fi
+
     printf "${CYAN}  ➜  Apply kernel network tuning? [y/N]: ${Color_Off}"
     read -r answer
 
@@ -955,6 +1038,13 @@ print_reboot_notice() {
     box_bot
     echo ""
 
+    local answer
+    if [ "${ARG_NON_INTERACTIVE}" = true ]; then
+        log_warn "Non-interactive mode — reboot skipped. Remember to reboot later."
+        _log_raw "[REBOOT]  skipped (non-interactive)"
+        return
+    fi
+
     printf "${LYELLOW}  ⚠  Reboot now? [y/N]: ${Color_Off}"
     read -r answer
     # Trim whitespace and convert to lowercase
@@ -1005,19 +1095,44 @@ print_firewall_domains() {
 step_download_splunk() {
     log_section "STEP 9  ·  Download Splunk Enterprise RPM"
 
-    log_step "Fetching latest RPM URL from ${SPLUNK_PAGE} ..."
+    # --package: use a local RPM verbatim, no network activity at all.
+    if [ -n "${ARG_PACKAGE}" ]; then
+        [ -f "${ARG_PACKAGE}" ] || {
+            log_error "Package file not found: ${ARG_PACKAGE}"
+            track_step "download" "FAILED" "local package missing"; exit 1
+        }
+        local rpm_filename; rpm_filename=$(basename "${ARG_PACKAGE}")
+        PACKAGE_PATH="${WORK_DIR}/${rpm_filename}"
+        cp "${ARG_PACKAGE}" "${PACKAGE_PATH}"
+        chmod 640 "${PACKAGE_PATH}"
+        log_info "Using local package: ${ARG_PACKAGE}"
+        _log_raw "[DOWNLOAD]  local=${ARG_PACKAGE}"
+        track_step "download" "PASS" "local"
+        return
+    fi
 
-    set +e
-    SPLUNK_DOWNLOAD_URL=$(curl -s --max-time 30 "${SPLUNK_PAGE}" | \
-        grep -oP 'https://download\.splunk\.com/products/splunk/releases/[^"]+x86_64\.rpm' | \
-        head -1)
-    set -e
+    # --url: caller-supplied pinned version, must match download.splunk.com.
+    if [ -n "${ARG_URL}" ]; then
+        if [[ ! "${ARG_URL}" =~ ^https://download\.splunk\.com/.*\.rpm$ ]]; then
+            log_error "--url must start with https://download.splunk.com/ and end with .rpm"
+            track_step "download" "FAILED" "invalid --url"; exit 1
+        fi
+        SPLUNK_DOWNLOAD_URL="${ARG_URL}"
+        log_info "Using pinned URL: ${SPLUNK_DOWNLOAD_URL}"
+    else
+        log_step "Fetching latest RPM URL from ${SPLUNK_PAGE} ..."
+        set +e
+        SPLUNK_DOWNLOAD_URL=$(curl -s --max-time 30 "${SPLUNK_PAGE}" | \
+            grep -oP 'https://download\.splunk\.com/products/splunk/releases/[^"]+x86_64\.rpm' | \
+            head -1)
+        set -e
 
-    if [ -z "${SPLUNK_DOWNLOAD_URL}" ]; then
-        log_error "Could not scrape a valid RPM URL from ${SPLUNK_PAGE}."
-        log_error "The page structure may have changed. Provide a direct URL manually."
-        track_step "download" "FAILED" "url scrape failed"
-        exit 1
+        if [ -z "${SPLUNK_DOWNLOAD_URL}" ]; then
+            log_error "Could not scrape a valid RPM URL from ${SPLUNK_PAGE}."
+            log_error "The page structure may have changed. Provide a direct URL manually via --url."
+            track_step "download" "FAILED" "url scrape failed"
+            exit 1
+        fi
     fi
 
     local rpm_filename; rpm_filename=$(basename "${SPLUNK_DOWNLOAD_URL}")
@@ -1032,6 +1147,7 @@ step_download_splunk() {
         -O "${PACKAGE_PATH}" "${SPLUNK_DOWNLOAD_URL}" 2>&1 | tee -a "${LOG_FILE}"
 
     # checksum
+    local checksum_url checksum_file computed_checksum expected_checksum
     checksum_url="${SPLUNK_DOWNLOAD_URL}.sha256"
     checksum_file="${WORK_DIR}/$(basename "${checksum_url}")"
     log_step "Fetching checksum file from ${checksum_url} ..."
@@ -1434,17 +1550,17 @@ print_summary() {
 
     local ordered_keys=(
         dependencies system static_ip ntp_local cpu_ram internet system_update
-        hostname selinux ulimits firewall thp kernel_tuning download credentials
-        rpm_install user_group boot_start start
+        hostname selinux ulimits firewall thp kernel_tuning download
+        rpm_install user_group fix_permissions boot_start web_config start
     )
     local labels=(
         "Dependencies"           "System Validation"      "Static IP"
         "NTP Local Server"       "CPU / RAM"              "Internet Connectivity"
         "System Update"          "Hostname"               "SELinux"
         "Ulimits"                "Host Firewall"          "Transparent Huge Pages"
-        "Kernel Tuning"          "RPM Download"           "Admin Credentials"
-        "RPM Installation"       "User / Group"           "Boot-Start (systemd)"
-        "First Start"
+        "Kernel Tuning"          "RPM Download"
+        "RPM Installation"       "User / Group"           "Fix Permissions"
+        "Boot-Start (systemd)"   "Web Interface"          "First Start"
     )
 
     local i=0
@@ -1503,6 +1619,7 @@ print_summary() {
 ###############################################################################
 
 main() {
+    parse_cli_args "$@"
     init_logging
     acquire_lock
     init_environment
